@@ -11,13 +11,9 @@ namespace SpaceTransit.Ships.Modules
 
         public ShipAssembly Assembly { get; set; }
 
-        public float speed;
-
         private Transform _t;
 
         private bool _first;
-
-        private float _positionInSpline;
 
         private void Awake()
         {
@@ -25,20 +21,20 @@ namespace SpaceTransit.Ships.Modules
             _t = transform;
         }
 
-        private void Start()
-        {
-            _first = Assembly.Modules[0] == this;
-            _positionInSpline = _t.localPosition.z;
-        }
+        private void Start() => _first = Assembly.Modules[0] == this;
 
-        private void Update()
+        private void FixedUpdate()
         {
-            if (!_first || Mathf.Approximately(0, speed))
+            if (Mathf.Approximately(0, Assembly.speed))
                 return;
-            var sample = Assembly.journey.GetSampleAtDistance(_positionInSpline);
-            _positionInSpline += Time.deltaTime * speed;
+            var sample = Assembly.journey.SampleNearest(_t.position);
             _t.position = sample.location;
             _t.rotation = sample.Rotation;
+            if (!_first)
+                return;
+            var forward = _t.forward;
+            Rigidbody.linearVelocity = Assembly.speed * forward;
+            Rigidbody.AddForce(forward);
         }
 
     }

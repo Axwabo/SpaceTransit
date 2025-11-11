@@ -14,6 +14,8 @@ namespace SpaceTransit.Ships
 
         public Spline journey;
 
+        public float speed;
+
         private void Awake()
         {
             Modules = this.GetComponentsInImmediateChildren<ShipModule>().ToArray();
@@ -25,12 +27,12 @@ namespace SpaceTransit.Ships
 
         private void Start()
         {
-            for (var i = 0; i < Modules.Count - 1; i++)
+            /*for (var i = 0; i < Modules.Count - 1; i++)
             {
                 var joint = Modules[i].gameObject.AddComponent<HingeJoint>();
                 joint.connectedBody = Modules[i + 1].Rigidbody;
                 joint.axis = Vector3.up;
-            }
+            }*/
         }
 
     }
