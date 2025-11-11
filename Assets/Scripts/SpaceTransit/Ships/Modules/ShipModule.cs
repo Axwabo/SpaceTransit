@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace SpaceTransit.Ships.Modules
 {
@@ -23,18 +24,26 @@ namespace SpaceTransit.Ships.Modules
 
         private void Start() => _first = Assembly.Modules[0] == this;
 
+        private void Update()
+        {
+            var sample = Assembly.journey.SampleNearest(_t.position);
+            Rigidbody.position = sample.location;
+            Rigidbody.rotation = sample.Rotation;
+        }
+
         private void FixedUpdate()
         {
             if (Mathf.Approximately(0, Assembly.speed))
                 return;
-            var sample = Assembly.journey.SampleNearest(_t.position);
-            _t.position = sample.location;
-            _t.rotation = sample.Rotation;
             if (!_first)
                 return;
             var forward = _t.forward;
-            Rigidbody.linearVelocity = Assembly.speed * forward;
-            Rigidbody.AddForce(forward);
+            Rigidbody.linearVelocity = Rigidbody.linearVelocity.magnitude * forward;
+            var move = InputSystem.actions["Move"].ReadValue<Vector2>();
+            if (move.y > 0)
+                Rigidbody.AddRelativeForce(Vector3.forward);
+            if (move.y < 0)
+                Rigidbody.AddRelativeForce(Vector3.back);
         }
 
     }
