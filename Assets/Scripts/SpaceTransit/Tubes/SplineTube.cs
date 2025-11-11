@@ -15,14 +15,14 @@ namespace SpaceTransit.Tubes
 
         public override float Length => length <= 0 ? spline.Length : length;
 
-        public override (Vector3, Quaternion) Sample(float distance)
+        public override (Vector3 Position, Quaternion Rotation) Sample(float distance)
         {
             var sample = spline.GetSampleAtDistance(distance);
             return (sample.location, sample.Rotation);
         }
 
         public override float GetDistance(Vector3 point)
-            => spline.GetProjectionSample(point).timeInCurve * Length;
+            => spline.GetProjectionSample(point).distanceInCurve;
 
     }
 

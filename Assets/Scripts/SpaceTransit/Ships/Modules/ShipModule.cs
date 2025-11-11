@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using SpaceTransit.Tubes;
+using UnityEngine;
 
 namespace SpaceTransit.Ships.Modules
 {
@@ -12,6 +12,8 @@ namespace SpaceTransit.Ships.Modules
 
         public ShipAssembly Assembly { get; set; }
 
+        private TubeBase _tube;
+
         private Transform _t;
 
         private bool _first;
@@ -22,28 +24,38 @@ namespace SpaceTransit.Ships.Modules
             _t = transform;
         }
 
-        private void Start() => _first = Assembly.Modules[0] == this;
+        private void Start()
+        {
+            _first = Assembly.Modules[0] == this;
+            _tube = Assembly.startTube;
+        }
 
         private void Update()
         {
-            var sample = Assembly.journey.SampleNearest(_t.position);
-            Rigidbody.position = sample.location;
-            Rigidbody.rotation = sample.Rotation;
-        }
+            var distance = _tube.GetDistance(_t.position);
+            var target = distance + Time.deltaTime * Assembly.speed;
+            if (target >= _tube.Length)
+            {
+                if (_tube.HasNext)
+                {
+                    distance = _tube.Length - target;
+                    _tube = _tube.Next;
+                }
+            }
+            else if (target <= 0)
+            {
+                if (_tube.HasPrevious)
+                {
+                    distance = target + _tube.Length;
+                    _tube = _tube.Previous;
+                }
+            }
+            else
+                distance = target;
 
-        private void FixedUpdate()
-        {
-            if (Mathf.Approximately(0, Assembly.speed))
-                return;
-            if (!_first)
-                return;
-            var forward = _t.forward;
-            Rigidbody.linearVelocity = Rigidbody.linearVelocity.magnitude * forward;
-            var move = InputSystem.actions["Move"].ReadValue<Vector2>();
-            if (move.y > 0)
-                Rigidbody.AddRelativeForce(Vector3.forward);
-            if (move.y < 0)
-                Rigidbody.AddRelativeForce(Vector3.back);
+            var sample = _tube.Sample(distance);
+            Rigidbody.position = sample.Position;
+            Rigidbody.rotation = sample.Rotation;
         }
 
     }

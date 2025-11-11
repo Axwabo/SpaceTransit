@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using SpaceTransit.Ships.Modules;
-using SplineMesh;
+using SpaceTransit.Tubes;
 using UnityEngine;
 
 namespace SpaceTransit.Ships
@@ -12,7 +12,7 @@ namespace SpaceTransit.Ships
 
         public IReadOnlyList<ShipModule> Modules { get; private set; }
 
-        public Spline journey;
+        public TubeBase startTube;
 
         public float speed;
 

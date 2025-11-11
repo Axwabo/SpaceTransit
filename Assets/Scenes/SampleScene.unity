@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1788353b5cfb40a0a902634cce02d267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.ShipAssembly
-  journey: {fileID: 698446583}
+  startTube: {fileID: 698446585}
   speed: 0
 --- !u!4 &304952451
 Transform:
@@ -567,6 +567,7 @@ GameObject:
   - component: {fileID: 698446584}
   - component: {fileID: 698446583}
   - component: {fileID: 698446582}
+  - component: {fileID: 698446585}
   m_Layer: 0
   m_Name: Spline
   m_TagString: Untagged
@@ -656,6 +657,21 @@ Transform:
   - {fileID: 1081401436}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &698446585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698446581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2fa6bd2fe47453bbaaf0ef35ee0f705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.SplineTube
+  <Next>k__BackingField: {fileID: 0}
+  spline: {fileID: 698446583}
+  length: 0
 --- !u!1001 &781858445
 PrefabInstance:
   m_ObjectHideFlags: 0
