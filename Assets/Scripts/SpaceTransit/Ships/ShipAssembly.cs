@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using SpaceTransit.Ships.Modules;
+using SplineMesh;
 using UnityEngine;
 
 namespace SpaceTransit.Ships
@@ -11,11 +12,15 @@ namespace SpaceTransit.Ships
 
         public IReadOnlyList<ShipModule> Modules { get; private set; }
 
+        public Spline journey;
+
         private void Awake()
         {
             Modules = this.GetComponentsInImmediateChildren<ShipModule>().ToArray();
             if (Modules.Count == 0)
                 throw new MissingComponentException("Ships must have at least 1 module");
+            foreach (var module in Modules)
+                module.Assembly = this;
         }
 
         private void Start()
