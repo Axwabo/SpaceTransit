@@ -3,6 +3,7 @@ using System.Linq;
 using SpaceTransit.Ships.Modules;
 using SpaceTransit.Tubes;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace SpaceTransit.Ships
 {
@@ -14,7 +15,19 @@ namespace SpaceTransit.Ships
 
         public TubeBase startTube;
 
-        public float speed;
+        [Header("Speed Controls")]
+        [SerializeField]
+        private float maxSpeed;
+
+        [SerializeField]
+        private float acceleration;
+
+        [SerializeField]
+        private float deceleration;
+
+        public ShipSpeed CurrentSpeed { get; private set; }
+
+        public ShipSpeed TargetSpeed { get; private set; }
 
         private void Awake()
         {
@@ -25,15 +38,20 @@ namespace SpaceTransit.Ships
                 module.Assembly = this;
         }
 
-        private void Start()
+        private void Update()
         {
-            /*for (var i = 0; i < Modules.Count - 1; i++)
-            {
-                var joint = Modules[i].gameObject.AddComponent<HingeJoint>();
-                joint.connectedBody = Modules[i + 1].Rigidbody;
-                joint.axis = Vector3.up;
-            }*/
+            var move = InputSystem.actions["Speed"].ReadValue<float>();
+            if (move > 0)
+                TargetSpeed += 2;
+            else if (move < 0)
+                TargetSpeed -= 2;
+            if (CurrentSpeed < TargetSpeed)
+                CurrentSpeed = CurrentSpeed.MoveTowards(TargetSpeed.Raw, Time.deltaTime * acceleration, maxSpeed);
+            else if (CurrentSpeed > TargetSpeed)
+                CurrentSpeed = CurrentSpeed.MoveTowards(TargetSpeed.Raw, Time.deltaTime * deceleration, maxSpeed);
         }
+
+        public void Reverse() => CurrentSpeed = CurrentSpeed.FlipReverse();
 
     }
 
