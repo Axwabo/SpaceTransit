@@ -14,6 +14,8 @@ namespace SpaceTransit.Movement
 
         public float jumpVelocity;
 
+        public Transform cameraTransform;
+
         private Transform _t;
 
         private CharacterController _cc;
@@ -38,6 +40,8 @@ namespace SpaceTransit.Movement
 
         private void Update()
         {
+            UpdateLook();
+
             if (_cc.isGrounded)
                 UpdateGrounded();
             else
@@ -48,6 +52,15 @@ namespace SpaceTransit.Movement
             move.y = _verticalVelocity;
             if (move != Vector3.zero)
                 _cc.Move(Time.deltaTime * speed * move);
+        }
+
+        private void UpdateLook()
+        {
+            var look = InputSystem.actions["Look"].ReadValue<Vector2>();
+            if (look == Vector2.zero)
+                return;
+            _t.Rotate(Vector3.up, look.x * 0.1f);
+            cameraTransform.Rotate(Vector3.right, look.y * -0.1f);
         }
 
         private void UpdateGrounded()
