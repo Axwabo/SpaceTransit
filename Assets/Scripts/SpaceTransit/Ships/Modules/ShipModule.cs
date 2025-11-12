@@ -23,9 +23,9 @@ namespace SpaceTransit.Ships.Modules
 
         private void Start() => _tube = Assembly.startTube;
 
-        private void Update()
+        private void FixedUpdate()
         {
-            var target = _distance + Assembly.CurrentSpeed * Time.deltaTime;
+            var target = _distance + Assembly.CurrentSpeed * Time.fixedDeltaTime;
             if (target >= _tube.Length)
             {
                 if (_tube.HasNext)

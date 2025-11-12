@@ -20,8 +20,6 @@ namespace SpaceTransit.Movement
 
         private Transform _mount;
 
-        private bool _isMounted;
-
         private Vector3 _mountOffset;
 
         private float _verticalVelocity;
@@ -29,7 +27,7 @@ namespace SpaceTransit.Movement
         public Transform Mount
         {
             get => _mount;
-            set => _isMounted = _t.parent = _mount = value;
+            set => _t.parent = _mount = value;
         }
 
         private void Awake()
@@ -50,15 +48,6 @@ namespace SpaceTransit.Movement
             move.y = _verticalVelocity;
             if (move != Vector3.zero)
                 _cc.Move(Time.deltaTime * speed * move);
-
-            if (_isMounted)
-                _mountOffset = _mount.InverseTransformPoint(_t.position);
-        }
-
-        private void LateUpdate()
-        {
-            if (_isMounted)
-                _t.position = _mount.TransformPoint(_mountOffset);
         }
 
         private void UpdateGrounded()
