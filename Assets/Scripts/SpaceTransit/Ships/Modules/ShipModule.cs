@@ -59,8 +59,8 @@ namespace SpaceTransit.Ships.Modules
             {
                 if (!_tube.HasPrevious)
                     return;
-                _distance = target + _tube.Length;
                 _tube = _tube.Previous;
+                _distance = target + _tube.Length;
             }
             else
                 _distance = target;
