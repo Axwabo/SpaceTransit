@@ -18,7 +18,7 @@ namespace SpaceTransit.Tubes
         public override (Vector3 Position, Quaternion Rotation) Sample(float distance)
         {
             var sample = spline.GetSampleAtDistance(distance);
-            return (sample.location, sample.Rotation);
+            return (Transform.TransformPoint(sample.location), Transform.rotation * sample.Rotation);
         }
 
         public override float GetDistance(Vector3 point)

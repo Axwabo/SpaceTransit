@@ -7,6 +7,8 @@ namespace SpaceTransit.Tubes
     public abstract class TubeBase : MonoBehaviour
     {
 
+        protected Transform Transform { get; private set; }
+
         [field: SerializeField]
         public TubeBase Next { get; private set; }
 
@@ -18,6 +20,7 @@ namespace SpaceTransit.Tubes
 
         protected virtual void Awake()
         {
+            Transform = transform;
             if (!Next)
                 return;
             Next.Previous = this;

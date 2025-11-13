@@ -26,7 +26,7 @@ namespace SpaceTransit.Ships.Modules
         private void Awake()
         {
             _t = transform;
-            _distance = _t.position.z;
+            _distance = _t.localPosition.z;
         }
 
         private void Start() => _tube = Assembly.startTube;
@@ -34,15 +34,15 @@ namespace SpaceTransit.Ships.Modules
         private void FixedUpdate()
         {
             var target = _distance + Assembly.CurrentSpeed * Time.fixedDeltaTime;
-            if (target >= _tube.Length)
+            if (target > _tube.Length)
             {
                 if (_tube.HasNext)
                 {
-                    _distance = _tube.Length - target;
+                    _distance = target - _tube.Length;
                     _tube = _tube.Next;
                 }
             }
-            else if (target <= 0)
+            else if (target < 0)
             {
                 if (_tube.HasPrevious)
                 {
