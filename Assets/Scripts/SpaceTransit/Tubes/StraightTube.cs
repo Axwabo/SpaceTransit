@@ -14,6 +14,7 @@ namespace SpaceTransit.Tubes
 
         protected override void Awake()
         {
+            base.Awake();
             _t = transform;
             _length = _t.lossyScale.z;
         }
@@ -32,10 +33,10 @@ namespace SpaceTransit.Tubes
             return (inverse.z + 0.5f) * _length;
         }
 
-        private void OnDrawGizmos()
+        private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawLine(transform.TransformPoint(Vector3.back * 0.5f), transform.TransformPoint(Vector3.forward * 0.5f));
+            Gizmos.DrawLine(_t.TransformPoint(Vector3.back * 0.5f), _t.TransformPoint(Vector3.forward * 0.5f));
         }
 
     }

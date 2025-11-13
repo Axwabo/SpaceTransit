@@ -3,6 +3,7 @@
 namespace SpaceTransit.Tubes
 {
 
+    [ExecuteInEditMode]
     public abstract class TubeBase : MonoBehaviour
     {
 
@@ -29,6 +30,14 @@ namespace SpaceTransit.Tubes
         public abstract (Vector3 Position, Quaternion Rotation) Sample(float distance);
 
         public abstract float GetDistance(Vector3 point);
+
+        protected virtual void OnDrawGizmos()
+        {
+            Gizmos.color = Color.orangeRed;
+            Gizmos.DrawSphere(Sample(0).Position, 0.1f);
+            Gizmos.color = Color.greenYellow;
+            Gizmos.DrawSphere(Sample(Length).Position, 0.1f);
+        }
 
     }
 
