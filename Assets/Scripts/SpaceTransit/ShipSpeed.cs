@@ -16,16 +16,16 @@ namespace SpaceTransit
 
         public float RawKmh => Raw * 3.6f;
 
-        public ShipSpeed Clamp(float max) => new(Mathf.Clamp(Raw, 0, max), IsReverse);
+        public ShipSpeed Clamp(float max) => new(Mathf.Min(Raw, max), IsReverse);
 
         public ShipSpeed MoveTowards(float target, float delta, float max)
-            => new(Mathf.Clamp(Mathf.MoveTowards(Raw, target, delta), 0, max), IsReverse);
+            => new(Mathf.Min(Mathf.MoveTowards(Raw, target, delta), max), IsReverse);
 
         public ShipSpeed FlipReverse() => new(Raw, !IsReverse);
 
         public ShipSpeed(float value, bool isReverse)
         {
-            Raw = Mathf.Abs(value);
+            Raw = Mathf.Max(0, value);
             IsReverse = isReverse;
         }
 
