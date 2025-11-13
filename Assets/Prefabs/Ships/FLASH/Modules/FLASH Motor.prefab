@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1606964169649122524}
   - component: {fileID: 3796149884259697778}
   - component: {fileID: 1042099504204741185}
+  - component: {fileID: 4975024282635214235}
   m_Layer: 0
   m_Name: FLASH Motor
   m_TagString: Untagged
@@ -47,6 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f100d23669394719a6dcd898271f3ef7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Modules.ShipModule
+  <AudioBounds>k__BackingField: {fileID: 4975024282635214235}
+  <Mount>k__BackingField: {fileID: 1042099504204741185}
 --- !u!65 &3796149884259697778
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -80,6 +83,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31dad284d5d4455b9278b0f94506e74c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Movement.Mountable
+--- !u!114 &4975024282635214235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101279141345807637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccf2d093b8aa4f509ae1802fbf275437, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Audio.ModuleAudioBounds
+  collider: {fileID: 3796149884259697778}
 --- !u!1001 &3248123548328510832
 PrefabInstance:
   m_ObjectHideFlags: 0

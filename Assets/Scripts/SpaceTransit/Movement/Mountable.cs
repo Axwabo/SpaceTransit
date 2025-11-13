@@ -6,19 +6,19 @@ namespace SpaceTransit.Movement
     public sealed class Mountable : MonoBehaviour
     {
 
-        private Transform _t;
+        public Transform Transform { get; private set; }
 
-        private void Awake() => _t = transform;
+        private void Awake() => Transform = transform;
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent(out MovementController controller))
-                controller.Mount = _t;
+                controller.Mount = Transform;
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.TryGetComponent(out MovementController controller) && controller.Mount == _t)
+            if (other.TryGetComponent(out MovementController controller) && controller.Mount == Transform)
                 controller.Mount = null;
         }
 

@@ -1,4 +1,5 @@
 ﻿using SpaceTransit.Audio;
+using SpaceTransit.Movement;
 using SpaceTransit.Tubes;
 using UnityEngine;
 
@@ -10,6 +11,9 @@ namespace SpaceTransit.Ships.Modules
 
         [field: SerializeField]
         public ModuleAudioBounds AudioBounds { get; private set; }
+
+        [field: SerializeField]
+        public Mountable Mount { get; private set; }
 
         public ShipAssembly Assembly { get; set; }
 

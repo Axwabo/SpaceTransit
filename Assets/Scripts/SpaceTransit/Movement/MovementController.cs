@@ -8,13 +8,19 @@ namespace SpaceTransit.Movement
     public sealed class MovementController : MonoBehaviour
     {
 
-        public float speed;
+        public static MovementController Current { get; private set; }
 
-        public float gravity;
+        [SerializeField]
+        private float speed;
 
-        public float jumpVelocity;
+        [SerializeField]
+        private float gravity;
 
-        public Transform cameraTransform;
+        [SerializeField]
+        private float jumpVelocity;
+
+        [SerializeField]
+        private Transform cameraTransform;
 
         private Transform _t;
 
@@ -32,10 +38,13 @@ namespace SpaceTransit.Movement
             set => _t.parent = _mount = value;
         }
 
+        public Vector3 Position => _t.position;
+
         private void Awake()
         {
             _t = transform;
             _cc = GetComponent<CharacterController>();
+            Current = this;
         }
 
         private void Update()
