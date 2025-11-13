@@ -35,7 +35,7 @@ namespace SpaceTransit.Ships
             if (Modules.Count == 0)
                 throw new MissingComponentException("Ships must have at least 1 module");
             foreach (var module in Modules)
-                module.Assembly = this;
+                module.Initialize(this);
         }
 
         private void Update()

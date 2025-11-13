@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Routes
+namespace SpaceTransit.Routes
 {
 
     public sealed class RouteDescriptor : MonoBehaviour
@@ -8,6 +8,9 @@ namespace Routes
 
         [SerializeField]
         private TimeOnly departure;
+
+        [SerializeField]
+        private bool reverse;
 
     }
 
