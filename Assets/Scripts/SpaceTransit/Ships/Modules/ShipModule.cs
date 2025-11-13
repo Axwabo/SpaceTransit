@@ -19,13 +19,14 @@ namespace SpaceTransit.Ships.Modules
 
         private ModuleComponentBase[] _components;
 
-        public void Initialize(ShipAssembly assembly)
+        private void Awake()
         {
-            Assembly = assembly;
             _components = GetComponentsInChildren<ModuleComponentBase>();
             foreach (var component in _components)
                 component.Initialize(this);
         }
+
+        public void Initialize(ShipAssembly assembly) => Assembly = assembly;
 
         public void OnStateChanged()
         {
