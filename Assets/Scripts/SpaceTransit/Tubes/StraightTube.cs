@@ -12,7 +12,7 @@ namespace SpaceTransit.Tubes
 
         private Quaternion _rotation;
 
-        private void Awake()
+        protected override void Awake()
         {
             _t = transform;
             _length = _t.lossyScale.z;
@@ -22,7 +22,7 @@ namespace SpaceTransit.Tubes
 
         public override (Vector3 Position, Quaternion Rotation) Sample(float distance)
         {
-            var position = _t.TransformPoint((Mathf.Clamp01(_length / distance) - 0.5f) * Vector3.forward);
+            var position = _t.TransformPoint((Mathf.Clamp01(distance / _length) - 0.5f) * Vector3.forward);
             return (position, _rotation);
         }
 
@@ -32,10 +32,10 @@ namespace SpaceTransit.Tubes
             return (inverse.z + 0.5f) * _length;
         }
 
-        private void OnDrawGizmosSelected()
+        private void OnDrawGizmos()
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawLine(_t.TransformPoint(Vector3.back * 0.5f), _t.TransformPoint(Vector3.forward * 0.5f));
+            Gizmos.DrawLine(transform.TransformPoint(Vector3.back * 0.5f), transform.TransformPoint(Vector3.forward * 0.5f));
         }
 
     }

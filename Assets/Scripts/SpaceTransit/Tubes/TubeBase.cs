@@ -15,7 +15,7 @@ namespace SpaceTransit.Tubes
 
         public bool HasPrevious { get; private set; }
 
-        private void Awake()
+        protected virtual void Awake()
         {
             if (!Next)
                 return;
