@@ -14,6 +14,7 @@ namespace SpaceTransit.Tubes
         {
             base.Awake();
             _length = Transform.lossyScale.z;
+            _rotation = Transform.rotation;
         }
 
         public override float Length => _length;
