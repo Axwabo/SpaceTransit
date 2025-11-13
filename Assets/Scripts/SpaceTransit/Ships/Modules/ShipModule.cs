@@ -29,33 +29,41 @@ namespace SpaceTransit.Ships.Modules
             _distance = _t.localPosition.z;
         }
 
-        private void Start() => _tube = Assembly.startTube;
+        private void Start()
+        {
+            _tube = Assembly.startTube;
+            UpdateLocation();
+        }
 
         private void FixedUpdate()
+        {
+            if (Assembly.CurrentSpeed.Raw == 0)
+                return;
+            UpdateDistance();
+            UpdateLocation();
+        }
+
+        private void UpdateLocation() => (_t.position, _t.rotation) = _tube.Sample(_distance);
+
+        private void UpdateDistance()
         {
             var target = _distance + Assembly.CurrentSpeed * Time.fixedDeltaTime;
             if (target > _tube.Length)
             {
-                if (_tube.HasNext)
-                {
-                    _distance = target - _tube.Length;
-                    _tube = _tube.Next;
-                }
+                if (!_tube.HasNext)
+                    return;
+                _distance = target - _tube.Length;
+                _tube = _tube.Next;
             }
             else if (target < 0)
             {
-                if (_tube.HasPrevious)
-                {
-                    _distance = target + _tube.Length;
-                    _tube = _tube.Previous;
-                }
+                if (!_tube.HasPrevious)
+                    return;
+                _distance = target + _tube.Length;
+                _tube = _tube.Previous;
             }
             else
                 _distance = target;
-
-            var sample = _tube.Sample(_distance);
-            _t.position = sample.Position;
-            _t.rotation = sample.Rotation;
         }
 
     }
