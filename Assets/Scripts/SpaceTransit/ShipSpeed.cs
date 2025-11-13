@@ -14,6 +14,8 @@ namespace SpaceTransit
 
         public float World => IsReverse ? -Raw : Raw; // TODO: convert from smaller scale
 
+        public float RawKmh => Raw * 3.6f;
+
         public ShipSpeed MoveTowards(float target, float delta, float max)
             => new(Mathf.Clamp(Mathf.MoveTowards(Raw, target, delta), 0, max), IsReverse);
 
