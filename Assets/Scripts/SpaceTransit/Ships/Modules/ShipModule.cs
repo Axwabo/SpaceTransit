@@ -1,4 +1,5 @@
-﻿using SpaceTransit.Tubes;
+﻿using SpaceTransit.Audio;
+using SpaceTransit.Tubes;
 using UnityEngine;
 
 namespace SpaceTransit.Ships.Modules
@@ -6,6 +7,9 @@ namespace SpaceTransit.Ships.Modules
 
     public sealed class ShipModule : MonoBehaviour
     {
+
+        [field: SerializeField]
+        public ModuleAudioBounds AudioBounds { get; private set; }
 
         public ShipAssembly Assembly { get; set; }
 
