@@ -4,10 +4,10 @@
     public enum ShipState
     {
 
-        Stopped,
+        Docked,
         WaitingForDeparture,
         LiftingOff,
-        Driving,
+        Sailing,
         Landing
 
     }

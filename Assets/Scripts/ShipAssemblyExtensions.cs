@@ -19,4 +19,6 @@ public static class ShipAssemblyExtensions
         return closest;
     }
 
+    public static bool IsStationary(this ShipAssembly assembly) => assembly.CurrentSpeed.Raw == 0;
+
 }
