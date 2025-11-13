@@ -13,15 +13,24 @@ namespace SpaceTransit.Audio
 
         protected ShipAssembly Assembly { get; private set; }
 
-        protected AudioSource Source { get; set; }
+        protected AudioSource[] Sources { get; private set; }
 
         protected bool IsPlayerMounted => Assembly.Modules.Any(e => e.Mount.Transform == MovementController.Current.Mount);
+
+        protected bool Mute
+        {
+            set
+            {
+                foreach (var source in Sources)
+                    source.mute = value;
+            }
+        }
 
         private void Awake()
         {
             Transform = transform;
             Assembly = GetComponentInParent<ShipAssembly>();
-            Source = GetComponent<AudioSource>();
+            Sources = GetComponentsInChildren<AudioSource>();
         }
 
     }

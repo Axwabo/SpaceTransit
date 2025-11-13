@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using SpaceTransit.Movement;
 using SpaceTransit.Ships.Modules;
 using SpaceTransit.Tubes;
 using UnityEngine;
@@ -37,6 +38,8 @@ namespace SpaceTransit.Ships
             set => _targetSpeed = value.Clamp(MaxSpeed);
         }
 
+        public bool IsPlayerMounted { get; private set; }
+
         private void Awake()
         {
             Controller = GetComponent<ShipController>();
@@ -53,6 +56,7 @@ namespace SpaceTransit.Ships
                 CurrentSpeed = CurrentSpeed.MoveTowards(TargetSpeed.Raw, Time.deltaTime * acceleration, MaxSpeed);
             else if (CurrentSpeed > TargetSpeed)
                 CurrentSpeed = CurrentSpeed.MoveTowards(TargetSpeed.Raw, Time.deltaTime * deceleration, MaxSpeed);
+            IsPlayerMounted = Modules.Any(e => e.Mount.Transform == MovementController.Current.Mount);
         }
 
         public void Reverse() => CurrentSpeed = CurrentSpeed.FlipReverse();

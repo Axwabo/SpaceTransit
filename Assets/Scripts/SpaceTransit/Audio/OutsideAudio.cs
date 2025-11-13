@@ -12,12 +12,12 @@ namespace SpaceTransit.Audio
         {
             if (IsPlayerMounted)
             {
-                Source.mute = true;
+                Mute = true;
                 return;
             }
 
             Transform.position = Assembly.ClosestPoint(MovementController.Current.Position);
-            Source.mute = false;
+            Mute = false;
         }
 
     }
