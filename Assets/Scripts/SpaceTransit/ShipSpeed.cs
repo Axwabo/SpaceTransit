@@ -33,9 +33,9 @@ namespace SpaceTransit
 
         public static float operator *(ShipSpeed speed, float scalar) => scalar * speed.World;
 
-        public static ShipSpeed operator +(ShipSpeed speed, float amount) => speed.Raw + amount;
+        public static ShipSpeed operator +(ShipSpeed speed, float amount) => new(speed.Raw + amount, speed.IsReverse);
 
-        public static ShipSpeed operator -(ShipSpeed speed, float amount) => speed.Raw - amount;
+        public static ShipSpeed operator -(ShipSpeed speed, float amount) => new(speed.Raw - amount, speed.IsReverse);
 
         public static bool operator >(ShipSpeed left, ShipSpeed right) => left.Raw > right.Raw;
 
