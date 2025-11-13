@@ -20,6 +20,8 @@ namespace SpaceTransit.Ships
 
         private float _liftDuration;
 
+        private ShipState _previousState;
+
         public ShipAssembly Assembly { get; private set; }
 
         public ShipState State { get; private set; }
@@ -32,6 +34,15 @@ namespace SpaceTransit.Ships
         {
             _t = transform;
             Assembly = GetComponent<ShipAssembly>();
+        }
+
+        private void Update()
+        {
+            if (_previousState == State)
+                return;
+            _previousState = State;
+            foreach (var module in Assembly.Modules)
+                module.OnStateChanged();
         }
 
         private void FixedUpdate()

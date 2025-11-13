@@ -27,6 +27,12 @@ namespace SpaceTransit.Ships.Modules
                 component.Initialize(this);
         }
 
+        public void OnStateChanged()
+        {
+            foreach (var component in _components)
+                component.OnStateChanged();
+        }
+
     }
 
 }
