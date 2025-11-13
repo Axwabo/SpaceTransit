@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using SpaceTransit.Ships.Driving;
 using SpaceTransit.Ships.Modules;
 using SpaceTransit.Tubes;
 using UnityEngine;
@@ -8,11 +7,11 @@ using UnityEngine;
 namespace SpaceTransit.Ships
 {
 
-    [RequireComponent(typeof(ShipDriver))]
+    [RequireComponent(typeof(ShipController))]
     public sealed class ShipAssembly : MonoBehaviour
     {
 
-        public ShipDriver Driver { get; private set; }
+        public ShipController Controller { get; private set; }
 
         public IReadOnlyList<ShipModule> Modules { get; private set; }
 
@@ -40,7 +39,7 @@ namespace SpaceTransit.Ships
 
         private void Awake()
         {
-            Driver = GetComponent<ShipDriver>();
+            Controller = GetComponent<ShipController>();
             Modules = this.GetComponentsInImmediateChildren<ShipModule>().ToArray();
             if (Modules.Count == 0)
                 throw new MissingComponentException("Ships must have at least 1 module");

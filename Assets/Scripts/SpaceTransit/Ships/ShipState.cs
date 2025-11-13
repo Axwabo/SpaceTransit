@@ -1,7 +1,7 @@
-﻿namespace SpaceTransit.Ships.Driving
+﻿namespace SpaceTransit.Ships
 {
 
-    public enum DriverState
+    public enum ShipState
     {
 
         Stopped,
