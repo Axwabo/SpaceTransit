@@ -1,15 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using SpaceTransit.Ships.Driving;
 using SpaceTransit.Ships.Modules;
 using SpaceTransit.Tubes;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace SpaceTransit.Ships
 {
 
+    [RequireComponent(typeof(ShipDriver))]
     public sealed class ShipAssembly : MonoBehaviour
     {
+
+        public ShipDriver Driver { get; private set; }
 
         public IReadOnlyList<ShipModule> Modules { get; private set; }
 
@@ -25,12 +28,19 @@ namespace SpaceTransit.Ships
         [SerializeField]
         private float deceleration;
 
+        private ShipSpeed _targetSpeed;
+
         public ShipSpeed CurrentSpeed { get; private set; }
 
-        public ShipSpeed TargetSpeed { get; private set; }
+        public ShipSpeed TargetSpeed
+        {
+            get => _targetSpeed;
+            set => _targetSpeed = value.Clamp(MaxSpeed);
+        }
 
         private void Awake()
         {
+            Driver = GetComponent<ShipDriver>();
             Modules = this.GetComponentsInImmediateChildren<ShipModule>().ToArray();
             if (Modules.Count == 0)
                 throw new MissingComponentException("Ships must have at least 1 module");
@@ -40,11 +50,6 @@ namespace SpaceTransit.Ships
 
         private void Update()
         {
-            var move = InputSystem.actions["Speed"].ReadValue<float>();
-            if (move > 0)
-                TargetSpeed += 2;
-            else if (move < 0)
-                TargetSpeed -= 2;
             if (CurrentSpeed < TargetSpeed)
                 CurrentSpeed = CurrentSpeed.MoveTowards(TargetSpeed.Raw, Time.deltaTime * acceleration, MaxSpeed);
             else if (CurrentSpeed > TargetSpeed)

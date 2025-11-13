@@ -1,4 +1,4 @@
-﻿namespace SpaceTransit.Driving
+﻿namespace SpaceTransit.Ships.Driving
 {
 
     public enum DriverState
