@@ -1,40 +1,23 @@
-﻿using System.Linq;
-using SpaceTransit.Movement;
-using SpaceTransit.Ships;
+﻿using SpaceTransit.Movement;
 using UnityEngine;
 
 namespace SpaceTransit.Audio
 {
 
     [RequireComponent(typeof(AudioSource))]
-    public sealed class OutsideAudio : MonoBehaviour
+    public sealed class OutsideAudio : ShipAudioBase
     {
-
-        private Transform _t;
-
-        private ShipAssembly _assembly;
-
-        private AudioSource _source;
-
-        private bool IsPlayerMounted => _assembly.Modules.Any(e => e.Mount.Transform == MovementController.Current.Mount);
-
-        private void Awake()
-        {
-            _t = transform;
-            _assembly = GetComponentInParent<ShipAssembly>();
-            _source = GetComponent<AudioSource>();
-        }
 
         private void Update()
         {
             if (IsPlayerMounted)
             {
-                _source.mute = true;
+                Source.mute = true;
                 return;
             }
 
-            _source.mute = false;
-            _t.position = _assembly.ClosestPoint(MovementController.Current.Position);
+            Transform.position = Assembly.ClosestPoint(MovementController.Current.Position);
+            Source.mute = false;
         }
 
     }
