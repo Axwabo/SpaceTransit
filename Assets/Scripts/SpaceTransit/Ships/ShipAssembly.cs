@@ -15,9 +15,9 @@ namespace SpaceTransit.Ships
 
         public TubeBase startTube;
 
-        [Header("Speed Controls")]
-        [SerializeField]
-        private float maxSpeed;
+        [field: Header("Speed Controls")]
+        [field: SerializeField]
+        public float MaxSpeed { get; private set; }
 
         [SerializeField]
         private float acceleration;
@@ -46,9 +46,9 @@ namespace SpaceTransit.Ships
             else if (move < 0)
                 TargetSpeed -= 2;
             if (CurrentSpeed < TargetSpeed)
-                CurrentSpeed = CurrentSpeed.MoveTowards(TargetSpeed.Raw, Time.deltaTime * acceleration, maxSpeed);
+                CurrentSpeed = CurrentSpeed.MoveTowards(TargetSpeed.Raw, Time.deltaTime * acceleration, MaxSpeed);
             else if (CurrentSpeed > TargetSpeed)
-                CurrentSpeed = CurrentSpeed.MoveTowards(TargetSpeed.Raw, Time.deltaTime * deceleration, maxSpeed);
+                CurrentSpeed = CurrentSpeed.MoveTowards(TargetSpeed.Raw, Time.deltaTime * deceleration, MaxSpeed);
         }
 
         public void Reverse() => CurrentSpeed = CurrentSpeed.FlipReverse();
