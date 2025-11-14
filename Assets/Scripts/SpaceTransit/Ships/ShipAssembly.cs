@@ -43,7 +43,7 @@ namespace SpaceTransit.Ships
         private void Awake()
         {
             var modules = new List<ShipModule>();
-            foreach (var component in this.GetComponentsInImmediateChildren<ShipComponentBase>())
+            foreach (var component in this.GetComponentsInImmediateChildren<ShipComponentBase>(true))
             {
                 Controller ??= component as ShipController;
                 component.Initialize(this);
