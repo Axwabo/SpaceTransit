@@ -1,11 +1,12 @@
 ﻿using System;
+using SpaceTransit.Ships.Modules;
 using UnityEngine;
 
 namespace SpaceTransit.Ships
 {
 
     [RequireComponent(typeof(ShipAssembly))]
-    public sealed class ShipController : MonoBehaviour
+    public sealed class ShipController : ShipComponentBase
     {
 
         [SerializeField]
@@ -22,19 +23,13 @@ namespace SpaceTransit.Ships
 
         private ShipState _previousState;
 
-        public ShipAssembly Assembly { get; private set; }
-
         public ShipState State { get; private set; }
 
         public bool CanLand => State == ShipState.Sailing && Assembly.CurrentSpeed.Raw == 0;
 
         public bool CanLiftOff => State == ShipState.Docked;
 
-        private void Awake()
-        {
-            _t = transform;
-            Assembly = GetComponent<ShipAssembly>();
-        }
+        private void Awake() => _t = transform;
 
         private void Update()
         {

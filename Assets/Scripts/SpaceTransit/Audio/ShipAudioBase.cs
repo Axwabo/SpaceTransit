@@ -1,17 +1,15 @@
 ﻿using System.Linq;
 using SpaceTransit.Movement;
-using SpaceTransit.Ships;
+using SpaceTransit.Ships.Modules;
 using UnityEngine;
 
 namespace SpaceTransit.Audio
 {
 
-    public abstract class ShipAudioBase : MonoBehaviour
+    public abstract class ShipAudioBase : ShipComponentBase
     {
 
         protected Transform Transform { get; private set; }
-
-        protected ShipAssembly Assembly { get; private set; }
 
         protected AudioSource[] Sources { get; private set; }
 
@@ -29,7 +27,6 @@ namespace SpaceTransit.Audio
         private void Awake()
         {
             Transform = transform;
-            Assembly = GetComponentInParent<ShipAssembly>();
             Sources = GetComponentsInChildren<AudioSource>();
         }
 

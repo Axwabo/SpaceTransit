@@ -42,12 +42,18 @@ namespace SpaceTransit.Ships
 
         private void Awake()
         {
-            Controller = GetComponent<ShipController>();
-            Modules = this.GetComponentsInImmediateChildren<ShipModule>().ToArray();
+            var modules = new List<ShipModule>();
+            foreach (var component in this.GetComponentsInImmediateChildren<ShipComponentBase>())
+            {
+                Controller ??= component as ShipController;
+                component.Initialize(this);
+                if (component is ShipModule module)
+                    modules.Add(module);
+            }
+
+            Modules = modules;
             if (Modules.Count == 0)
                 throw new MissingComponentException("Ships must have at least 1 module");
-            foreach (var module in Modules)
-                module.Initialize(this);
         }
 
         private void Update()

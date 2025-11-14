@@ -1,27 +1,21 @@
-﻿using SpaceTransit.Ships;
+﻿using SpaceTransit.Ships.Modules;
 using UnityEngine;
 
 namespace SpaceTransit.Audio
 {
 
     [RequireComponent(typeof(AudioSource))]
-    public sealed class SpeedBasedAudioPlayer : MonoBehaviour
+    public sealed class SpeedBasedAudioPlayer : ShipComponentBase
     {
 
         [SerializeField]
         private Operator op;
 
-        private ShipAssembly _assembly;
-
         private AudioSource _source;
 
         private float _targetVolume;
 
-        private void Awake()
-        {
-            _assembly = GetComponentInParent<ShipAssembly>();
-            _source = GetComponent<AudioSource>();
-        }
+        private void Awake() => _source = GetComponent<AudioSource>();
 
         private void Update()
         {
@@ -39,13 +33,13 @@ namespace SpaceTransit.Audio
             _source.Play();
         }
 
-        private void UpdateTargetVolume() => _targetVolume = _assembly.IsStationary()
+        private void UpdateTargetVolume() => _targetVolume = Assembly.IsStationary()
             ? 0
             : op switch
             {
-                Operator.Accelerating when _assembly.CurrentSpeed < _assembly.TargetSpeed => 1,
-                Operator.TargetSpeed when Mathf.Approximately(_assembly.CurrentSpeed.Raw, _assembly.TargetSpeed.Raw) => 1,
-                Operator.Decelerating when _assembly.CurrentSpeed > _assembly.TargetSpeed => 1,
+                Operator.Accelerating when Assembly.CurrentSpeed < Assembly.TargetSpeed => 1,
+                Operator.TargetSpeed when Mathf.Approximately(Assembly.CurrentSpeed.Raw, Assembly.TargetSpeed.Raw) => 1,
+                Operator.Decelerating when Assembly.CurrentSpeed > Assembly.TargetSpeed => 1,
                 _ => 0
             };
 

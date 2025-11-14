@@ -6,7 +6,7 @@ namespace SpaceTransit.Ships.Modules
 {
 
     [RequireComponent(typeof(ModuleThruster))]
-    public sealed class ShipModule : MonoBehaviour
+    public sealed class ShipModule : ShipComponentBase
     {
 
         [field: SerializeField]
@@ -14,8 +14,6 @@ namespace SpaceTransit.Ships.Modules
 
         [field: SerializeField]
         public Mountable Mount { get; private set; }
-
-        public ShipAssembly Assembly { get; private set; }
 
         private ModuleComponentBase[] _components;
 
@@ -26,9 +24,7 @@ namespace SpaceTransit.Ships.Modules
                 component.Initialize(this);
         }
 
-        public void Initialize(ShipAssembly assembly) => Assembly = assembly;
-
-        public void OnStateChanged()
+        public override void OnStateChanged()
         {
             foreach (var component in _components)
                 component.OnStateChanged();
