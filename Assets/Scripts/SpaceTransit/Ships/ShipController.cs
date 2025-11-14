@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using SpaceTransit.Ships.Modules;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ namespace SpaceTransit.Ships
 {
 
     [RequireComponent(typeof(ShipAssembly))]
-    public sealed class ShipController : ShipComponentBase
+    public sealed class ShipController : MonoBehaviour
     {
 
         [SerializeField]
@@ -17,6 +18,8 @@ namespace SpaceTransit.Ships
 
         private Transform _t;
 
+        private ShipComponentBase[] _components;
+
         private float _liftProgress = -1;
 
         private float _liftDuration;
@@ -25,19 +28,28 @@ namespace SpaceTransit.Ships
 
         public ShipState State { get; private set; }
 
+        public ShipAssembly Assembly { get; private set; }
+
         public bool CanLand => State == ShipState.Sailing && Assembly.CurrentSpeed.Raw == 0;
 
         public bool CanLiftOff => State == ShipState.Docked;
 
-        private void Awake() => _t = transform;
+        private void Awake()
+        {
+            _t = transform;
+            _components = this.GetComponentsInImmediateChildren<ShipComponentBase>(true).ToArray();
+            Assembly = _components.OfType<ShipAssembly>().First();
+            foreach (var component in _components)
+                component.Initialize(this);
+        }
 
         private void Update()
         {
             if (_previousState == State)
                 return;
             _previousState = State;
-            foreach (var module in Assembly.Modules)
-                module.OnStateChanged();
+            foreach (var component in _components)
+                component.OnStateChanged();
         }
 
         private void FixedUpdate()

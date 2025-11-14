@@ -9,10 +9,8 @@ namespace SpaceTransit.Ships
 {
 
     [RequireComponent(typeof(ShipController))]
-    public sealed class ShipAssembly : MonoBehaviour
+    public sealed class ShipAssembly : ShipComponentBase
     {
-
-        public ShipController Controller { get; private set; }
 
         public IReadOnlyList<ShipModule> Modules { get; private set; }
 
@@ -40,18 +38,11 @@ namespace SpaceTransit.Ships
 
         public bool IsPlayerMounted { get; private set; }
 
+        private ShipComponentBase[] _components;
+
         private void Awake()
         {
-            var modules = new List<ShipModule>();
-            foreach (var component in this.GetComponentsInImmediateChildren<ShipComponentBase>(true))
-            {
-                Controller ??= component as ShipController;
-                component.Initialize(this);
-                if (component is ShipModule module)
-                    modules.Add(module);
-            }
-
-            Modules = modules;
+            Modules = this.GetComponentsInImmediateChildren<ShipModule>().ToArray();
             if (Modules.Count == 0)
                 throw new MissingComponentException("Ships must have at least 1 module");
         }

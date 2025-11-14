@@ -6,9 +6,11 @@ namespace SpaceTransit.Ships.Modules
     public abstract class ShipComponentBase : MonoBehaviour
     {
 
-        public ShipAssembly Assembly { get; private set; }
+        public ShipController Controller { get; private set; }
 
-        public void Initialize(ShipAssembly assembly) => Assembly = assembly;
+        public ShipAssembly Assembly => Controller.Assembly;
+
+        public void Initialize(ShipController controller) => Controller = controller;
 
         public virtual void OnStateChanged()
         {
