@@ -8,7 +8,12 @@ namespace SpaceTransit.Routes
     {
 
         [SerializeField]
+        private StationId id;
+
+        [SerializeField]
         private Dock[] docks;
+
+        public string Name => id.name;
 
         public IReadOnlyList<Dock> Docks => docks;
 

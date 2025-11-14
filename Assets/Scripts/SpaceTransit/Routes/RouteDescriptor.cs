@@ -1,16 +1,27 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using SpaceTransit.Routes.Stops;
+using UnityEngine;
 
 namespace SpaceTransit.Routes
 {
 
-    public sealed class RouteDescriptor : MonoBehaviour
+    [CreateAssetMenu(fileName = "Route", menuName = "SpaceTransit/Route", order = 0)]
+    public sealed class RouteDescriptor : ScriptableObject
     {
 
         [SerializeField]
-        private TimeOnly departure;
+        private IntermediateStop[] intermediateStops;
 
-        [SerializeField]
-        private bool reverse;
+        [field: SerializeField]
+        public bool Reverse { get; private set; }
+
+        [field: SerializeField]
+        public Origin Origin { get; private set; }
+
+        public IReadOnlyList<IntermediateStop> IntermediateStops => intermediateStops;
+
+        [field: SerializeField]
+        public Destination Destination { get; private set; }
 
     }
 
