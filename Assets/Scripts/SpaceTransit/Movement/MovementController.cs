@@ -45,6 +45,7 @@ namespace SpaceTransit.Movement
             _t = transform;
             _cc = GetComponent<CharacterController>();
             Current = this;
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
         private void Update()
@@ -65,6 +66,13 @@ namespace SpaceTransit.Movement
 
         private void UpdateLook()
         {
+            if (InputSystem.actions["Menu"].IsPressed())
+            {
+                Cursor.lockState = CursorLockMode.None;
+                return;
+            }
+
+            Cursor.lockState = CursorLockMode.Locked;
             var look = InputSystem.actions["Look"].ReadValue<Vector2>();
             if (look == Vector2.zero)
                 return;
@@ -79,6 +87,8 @@ namespace SpaceTransit.Movement
             else if (_verticalVelocity < 0)
                 _verticalVelocity = 0;
         }
+
+        private void OnDestroy() => Cursor.lockState = CursorLockMode.None;
 
     }
 
