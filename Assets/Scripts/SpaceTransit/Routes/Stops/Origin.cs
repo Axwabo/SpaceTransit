@@ -11,6 +11,9 @@ namespace SpaceTransit.Routes.Stops
         [field: SerializeField]
         public TimeOnly Departure { get; private set; }
 
+        [field: SerializeField]
+        public StationId ExitTowards { get; private set; }
+
     }
 
 }

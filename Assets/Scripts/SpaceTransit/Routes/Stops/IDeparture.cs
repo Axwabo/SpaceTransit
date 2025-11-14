@@ -6,6 +6,8 @@
 
         TimeOnly Departure { get; }
 
+        StationId ExitTowards { get; }
+
     }
 
 }
