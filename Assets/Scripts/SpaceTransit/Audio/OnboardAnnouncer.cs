@@ -33,9 +33,12 @@ namespace SpaceTransit.Audio
                 return;
             }
 
-            if (!_wasSailing)
+            if (!_wasSailing && !_controller.Assembly.IsStationary())
+            {
                 _delay = 10;
-            _wasSailing = true;
+                _wasSailing = true;
+            }
+
             if (_delay > 0 && (_delay -= Time.deltaTime) <= 0)
             {
                 _player.Enqueue(signal);
