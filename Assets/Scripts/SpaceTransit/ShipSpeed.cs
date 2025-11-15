@@ -28,7 +28,7 @@ namespace SpaceTransit
         public ShipSpeed MoveTowards(float target, float delta, float max)
             => new(Mathf.Min(Mathf.MoveTowards(Raw, target, delta), max), IsReverse);
 
-        public ShipSpeed FlipReverse() => new(Raw, !IsReverse);
+        public ShipSpeed WithReverse(bool reverse) => new(Raw, reverse);
 
         public ShipSpeed(float value, bool isReverse)
         {

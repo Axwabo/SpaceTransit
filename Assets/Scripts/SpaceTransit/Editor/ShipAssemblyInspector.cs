@@ -14,10 +14,10 @@ namespace SpaceTransit.Editor
             base.OnInspectorGUI();
             var assembly = (ShipAssembly) target;
             GUILayout.Space(20);
-            GUILayout.Label($"Current speed: {assembly.CurrentSpeed.Relative} u/s");
-            GUILayout.Label($"Target speed: {assembly.TargetSpeed.Relative} u/s");
-            if (assembly.CurrentSpeed.Raw == 0 && GUILayout.Button("Reverse"))
-                assembly.Reverse();
+            GUILayout.Label($"Current speed: {assembly.CurrentSpeed.RawKmh} km/h");
+            GUILayout.Label($"Target speed: {assembly.TargetSpeed.RawKmh} km/h");
+            if (GUILayout.Button("Reverse"))
+                assembly.Reverse = !assembly.Reverse;
         }
 
         public override bool RequiresConstantRepaint() => true;

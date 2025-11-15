@@ -56,7 +56,15 @@ namespace SpaceTransit.Ships
             IsPlayerMounted = Modules.Any(e => e.Mount.Transform == MovementController.Current.Mount);
         }
 
-        public void Reverse() => CurrentSpeed = CurrentSpeed.FlipReverse();
+        public bool Reverse
+        {
+            get => CurrentSpeed.IsReverse;
+            set
+            {
+                CurrentSpeed = CurrentSpeed.WithReverse(value);
+                TargetSpeed = TargetSpeed.WithReverse(value);
+            }
+        }
 
     }
 
