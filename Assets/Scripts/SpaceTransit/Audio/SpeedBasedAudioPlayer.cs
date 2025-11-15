@@ -11,6 +11,12 @@ namespace SpaceTransit.Audio
         [SerializeField]
         private Operator op;
 
+        [SerializeField]
+        private float min;
+
+        [SerializeField]
+        private float max;
+
         private AudioSource _source;
 
         private ShipAssembly _assembly;
@@ -33,10 +39,12 @@ namespace SpaceTransit.Audio
         {
             var volume = _source.volume;
             _source.volume = Mathf.MoveTowards(volume, _targetVolume, Time.deltaTime);
-            if (_targetVolume == 0 || volume != 0)
+            if (_targetVolume == 0 || volume != 0 || _source.loop)
                 return;
-            _source.time = 0;
             _source.Play();
+            _source.time = op != Operator.Range
+                ? _assembly.CurrentSpeed.Raw / _assembly.MaxSpeed * (_source.clip.length * 0.95f)
+                : 0;
         }
 
         private void UpdateTargetVolume() => _targetVolume = _assembly.IsStationary()
@@ -44,8 +52,10 @@ namespace SpaceTransit.Audio
             : op switch
             {
                 Operator.Accelerating when _assembly.CurrentSpeed < _assembly.TargetSpeed => 1,
-                Operator.TargetSpeed when Mathf.Approximately(_assembly.CurrentSpeed.Raw, _assembly.TargetSpeed.Raw) => 1,
                 Operator.Decelerating when _assembly.CurrentSpeed > _assembly.TargetSpeed => 1,
+                Operator.Range when Mathf.Approximately(_assembly.CurrentSpeed.Raw, _assembly.TargetSpeed.Raw)
+                                    && _assembly.CurrentSpeed.Raw > min
+                                    && _assembly.CurrentSpeed.Raw <= max => 1,
                 _ => 0
             };
 
@@ -53,7 +63,7 @@ namespace SpaceTransit.Audio
         {
 
             Accelerating,
-            TargetSpeed,
+            Range,
             Decelerating
 
         }
