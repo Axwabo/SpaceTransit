@@ -19,9 +19,9 @@ namespace SpaceTransit.Ships.Driving
         public override void OnStateChanged()
         {
             if (State == ShipState.Landing)
-                Transform.Translate(Vector3.down * 0.02f);
+                Transform.Translate(Vector3.down * 0.002f);
             else if (State == ShipState.LiftingOff)
-                Transform.Translate(Vector3.up * 0.02f);
+                Transform.Translate(Vector3.up * 0.002f);
         }
 
     }
