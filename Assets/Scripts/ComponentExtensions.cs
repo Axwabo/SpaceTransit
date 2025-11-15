@@ -6,8 +6,9 @@ public static class ComponentExtensions
 
     public static IEnumerable<T> GetComponentsInImmediateChildren<T>(this Component parent, bool includeSelf = false)
     {
-        if (includeSelf && parent.TryGetComponent(out T self))
-            yield return self;
+        if (includeSelf)
+            foreach (var component in parent.GetComponents<T>())
+                yield return component;
         var t = parent.transform;
         var childCount = t.childCount;
         for (var i = 0; i < childCount; i++)
