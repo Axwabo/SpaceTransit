@@ -1,5 +1,6 @@
 ﻿using System;
 using SpaceTransit.Routes;
+using SpaceTransit.Routes.Stops;
 using SpaceTransit.Vaulter;
 using UnityEngine;
 
@@ -9,11 +10,11 @@ namespace SpaceTransit.Ships.Driving
     public sealed class AutomaticDriver : VaulterComponentBase
     {
 
-        private static TimeSpan Now => DateTime.Now.TimeOfDay;
+        private const int MinStaySeconds = 15;
 
         private float _remainingWait;
 
-        private bool _departed;
+        private bool _departed = true;
 
         private void Update()
         {
@@ -36,6 +37,16 @@ namespace SpaceTransit.Ships.Driving
 
         private void UpdateDocked()
         {
+            if (IsTerminus)
+                return;
+            if (_departed)
+            {
+                var stay = Mathf.Max(MinStaySeconds, Parent.Stop is IntermediateStop {MinStayMinutes: var minStay} ? minStay * 60 : 0);
+                var departIn = Parent.Stop is IDeparture {Departure: var departure} ? departure.Value - Clock.Now : TimeSpan.Zero;
+                _remainingWait = Mathf.Max((float) departIn.TotalSeconds, stay);
+                _departed = false;
+            }
+
             if ((_remainingWait -= Time.deltaTime) > 0)
                 return;
             Controller.MarkReady();
@@ -62,8 +73,11 @@ namespace SpaceTransit.Ships.Driving
                 if (!Station.TryGetLoadedStation(Parent.Stop.Station, out var station))
                     return false;
                 var tube = station.Docks[Parent.Stop.DockIndex].Tube;
-                var brakingDistance = Mathf.Pow(Assembly.CurrentSpeed.Raw, 2) * Mathf.Pow(Assembly.Deceleration, 2) * 0.5f;
-                var stopPoint = World.Current.TransformPoint(tube.Sample(Assembly.Reverse ? 10 : tube.Length - 10).Position);
+                var stopPoint = World.Current.TransformPoint(tube.Sample(Assembly.Reverse ? 15 : tube.Length - 15).Position);
+                var speed = Assembly.CurrentSpeed.Raw;
+                var deceleration = Assembly.Deceleration;
+                var brakingTime = speed / deceleration;
+                var brakingDistance = deceleration * brakingTime * brakingTime * 0.5f;
                 return Vector3.Distance(stopPoint, FrontPosition) <= brakingDistance * World.MetersToWorld;
             }
         }
