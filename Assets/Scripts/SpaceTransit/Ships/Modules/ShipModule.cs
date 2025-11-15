@@ -25,7 +25,7 @@ namespace SpaceTransit.Ships.Modules
                 component.Initialize(this);
         }
 
-        public override void OnStateChanged()
+        public override void OnStateChanged(ShipState previousState)
         {
             foreach (var component in _components)
                 component.OnStateChanged();

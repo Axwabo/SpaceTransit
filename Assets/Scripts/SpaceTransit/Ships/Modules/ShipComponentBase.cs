@@ -20,7 +20,7 @@ namespace SpaceTransit.Ships.Modules
         {
         }
 
-        public virtual void OnStateChanged()
+        public virtual void OnStateChanged(ShipState previousState)
         {
         }
 

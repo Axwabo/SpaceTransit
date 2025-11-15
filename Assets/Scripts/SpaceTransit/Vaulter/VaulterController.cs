@@ -1,5 +1,6 @@
 ﻿using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
+using SpaceTransit.Ships;
 using SpaceTransit.Ships.Modules;
 using UnityEngine;
 
@@ -21,6 +22,8 @@ namespace SpaceTransit.Vaulter
         public RouteDescriptor Route { get; private set; }
 
         public Stop Stop { get; private set; }
+
+        public bool IsInService => _stopIndex != OutOfService;
 
         protected override void OnInitialized()
         {
@@ -53,6 +56,12 @@ namespace SpaceTransit.Vaulter
                 Destination => Route.Destination,
                 _ => Route.IntermediateStops[index]
             };
+        }
+
+        public override void OnStateChanged(ShipState previousState)
+        {
+            if (_stopIndex is not (OutOfService or Destination) && Controller.State == ShipState.Sailing && previousState == ShipState.LiftingOff)
+                UpdateStop(_stopIndex >= Route.IntermediateStops.Count - 1 ? Destination : _stopIndex + 1);
         }
 
     }

@@ -47,9 +47,9 @@ namespace SpaceTransit.Ships
         {
             if (_previousState == State)
                 return;
-            _previousState = State;
             foreach (var component in _components)
-                component.OnStateChanged();
+                component.OnStateChanged(_previousState);
+            _previousState = State;
         }
 
         private void FixedUpdate()

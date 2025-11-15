@@ -38,6 +38,8 @@ namespace SpaceTransit.Ships
 
         public bool IsPlayerMounted { get; private set; }
 
+        public ShipModule FrontModule => CurrentSpeed.IsReverse ? Modules[^1] : Modules[0];
+
         private void Awake()
         {
             Modules = this.GetComponentsInImmediateChildren<ShipModule>().ToArray();
