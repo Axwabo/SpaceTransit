@@ -61,8 +61,13 @@ namespace SpaceTransit.Movement
             var desiredMove = InputSystem.actions["Move"].ReadValue<Vector2>();
             var move = _t.rotation * new Vector3(desiredMove.x, 0, desiredMove.y).normalized;
             move.y = _verticalVelocity;
-            if (move != Vector3.zero)
-                _cc.Move(Time.deltaTime * speed * 0.1f * move);
+            if (move == Vector3.zero)
+                return;
+            var previous = _t.localPosition;
+            _cc.Move(Time.deltaTime * speed * 0.1f * move);
+            var delta = _t.localPosition - previous;
+            if (delta != Vector3.zero)
+                World.Current.position -= _t.TransformVector(delta) * World.MetersToWorld;
         }
 
         private void UpdateLook()

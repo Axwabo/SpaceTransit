@@ -1,4 +1,5 @@
-﻿using SpaceTransit.Tubes;
+﻿using SpaceTransit.Movement;
+using SpaceTransit.Tubes;
 using UnityEngine;
 
 namespace SpaceTransit.Ships.Modules
@@ -28,8 +29,12 @@ namespace SpaceTransit.Ships.Modules
 
         private void UpdateLocation()
         {
+            var previousPosition = Transform.localPosition;
             var (position, rotation) = _tube.Sample(_distance);
-            Transform.SetLocalPositionAndRotation(position * World.WorldToMeters, rotation);
+            var currentPosition = position * World.WorldToMeters;
+            Transform.SetLocalPositionAndRotation(currentPosition, rotation);
+            if (previousPosition != currentPosition && Parent.Mount.Transform == MovementController.Current.Mount)
+                World.Current.position -= Transform.TransformVector(currentPosition - previousPosition);
         }
 
         private void UpdateDistance()
