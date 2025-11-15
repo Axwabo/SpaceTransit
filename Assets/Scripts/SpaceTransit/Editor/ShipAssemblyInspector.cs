@@ -14,8 +14,8 @@ namespace SpaceTransit.Editor
             base.OnInspectorGUI();
             var assembly = (ShipAssembly) target;
             GUILayout.Space(20);
-            GUILayout.Label($"Current speed: {assembly.CurrentSpeed.World} u/s");
-            GUILayout.Label($"Target speed: {assembly.TargetSpeed.World} u/s");
+            GUILayout.Label($"Current speed: {assembly.CurrentSpeed.Relative} u/s");
+            GUILayout.Label($"Target speed: {assembly.TargetSpeed.Relative} u/s");
             if (assembly.CurrentSpeed.Raw == 0 && GUILayout.Button("Reverse"))
                 assembly.Reverse();
         }

@@ -13,7 +13,7 @@ namespace SpaceTransit.Ships.Modules
 
         protected override void OnInitialized()
         {
-            _distance = Transform.localPosition.z;
+            _distance = Transform.localPosition.z * World.MetersToWorld;
             _tube = Assembly.startTube;
             UpdateLocation();
         }
@@ -29,7 +29,7 @@ namespace SpaceTransit.Ships.Modules
         private void UpdateLocation()
         {
             var (position, rotation) = _tube.Sample(_distance);
-            Transform.SetLocalPositionAndRotation(position * 10, rotation);
+            Transform.SetLocalPositionAndRotation(position * World.WorldToMeters, rotation);
         }
 
         private void UpdateDistance()

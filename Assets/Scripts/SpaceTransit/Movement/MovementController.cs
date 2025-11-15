@@ -62,7 +62,7 @@ namespace SpaceTransit.Movement
             var move = _t.rotation * new Vector3(desiredMove.x, 0, desiredMove.y).normalized;
             move.y = _verticalVelocity;
             if (move != Vector3.zero)
-                _cc.Move(Time.deltaTime * speed * 0.01f * move);
+                _cc.Move(Time.deltaTime * speed * 0.1f * move);
         }
 
         private void UpdateLook()

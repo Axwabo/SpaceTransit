@@ -60,7 +60,7 @@ namespace SpaceTransit.Ships
             _liftProgress += Time.fixedDeltaTime;
             var curve = lifting ? liftoff : land;
             var position = _t.position;
-            position.y = curve.Evaluate(_liftProgress);
+            position.y = curve.Evaluate(_liftProgress) * World.MetersToWorld;
             _t.position = position;
             if (_liftProgress < _liftDuration)
                 return;

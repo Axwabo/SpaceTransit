@@ -19,7 +19,7 @@ namespace SpaceTransit
 
         public bool IsReverse { get; }
 
-        public float World => IsReverse ? -Raw : Raw; // TODO: convert from smaller scale
+        public float Relative => IsReverse ? -Raw * World.MetersToWorld : Raw * World.MetersToWorld;
 
         public float RawKmh => Raw * 3.6f;
 
@@ -38,7 +38,7 @@ namespace SpaceTransit
 
         public static implicit operator ShipSpeed(float value) => new(value, value < 0);
 
-        public static float operator *(ShipSpeed speed, float scalar) => scalar * speed.World;
+        public static float operator *(ShipSpeed speed, float scalar) => scalar * speed.Relative;
 
         public static ShipSpeed operator +(ShipSpeed speed, float amount) => new(speed.Raw + amount, speed.IsReverse);
 
