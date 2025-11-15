@@ -6,7 +6,11 @@ namespace SpaceTransit
     public readonly struct ShipSpeed
     {
 
-        public const float MetersPerSecondToWorldUnits = 0.01f;
+        /*
+         1698.899643887 pixels = 106.69 km
+          1 pixel = 15.923700852 km
+          1 unit = 100m
+         */
 
         public float Raw { get; }
 
