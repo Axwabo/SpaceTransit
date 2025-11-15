@@ -34,7 +34,7 @@ namespace SpaceTransit.Ships
 
         public bool CanLiftOff => State == ShipState.Docked;
 
-        private void Awake()
+        private void Start()
         {
             _t = transform;
             _components = this.GetComponentsInImmediateChildren<ShipComponentBase>(true).ToArray();

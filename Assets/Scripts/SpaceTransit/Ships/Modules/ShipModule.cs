@@ -17,9 +17,10 @@ namespace SpaceTransit.Ships.Modules
 
         private ModuleComponentBase[] _components;
 
-        private void Awake()
+        private void Awake() => _components = GetComponentsInChildren<ModuleComponentBase>();
+
+        protected override void OnInitialized()
         {
-            _components = GetComponentsInChildren<ModuleComponentBase>();
             foreach (var component in _components)
                 component.Initialize(this);
         }

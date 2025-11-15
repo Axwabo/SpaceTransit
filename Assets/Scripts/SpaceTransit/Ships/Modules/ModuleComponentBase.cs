@@ -14,7 +14,15 @@ namespace SpaceTransit.Ships.Modules
 
         public ShipState State => Assembly.Controller.State;
 
-        public void Initialize(ShipModule module) => Module = module;
+        public void Initialize(ShipModule module)
+        {
+            Module = module;
+            OnInitialized();
+        }
+
+        protected virtual void OnInitialized()
+        {
+        }
 
         protected virtual void Awake() => Transform = transform;
 

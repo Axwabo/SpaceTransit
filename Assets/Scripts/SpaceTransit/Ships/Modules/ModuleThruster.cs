@@ -11,7 +11,7 @@ namespace SpaceTransit.Ships.Modules
 
         private float _distance;
 
-        private void Start()
+        protected override void OnInitialized()
         {
             _distance = Transform.localPosition.z;
             _tube = Assembly.startTube;

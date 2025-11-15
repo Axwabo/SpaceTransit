@@ -38,8 +38,6 @@ namespace SpaceTransit.Ships
 
         public bool IsPlayerMounted { get; private set; }
 
-        private ShipComponentBase[] _components;
-
         private void Awake()
         {
             Modules = this.GetComponentsInImmediateChildren<ShipModule>().ToArray();
