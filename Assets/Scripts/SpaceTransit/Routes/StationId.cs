@@ -8,6 +8,9 @@ namespace SpaceTransit.Routes
     public sealed class StationId : ScriptableObject
     {
 
+        [field: SerializeField]
+        public AudioClip Announcement { get; set; }
+
         [SerializeField]
         private int[] lines;
 
