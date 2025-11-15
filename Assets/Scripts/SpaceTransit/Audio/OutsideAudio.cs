@@ -6,7 +6,7 @@ namespace SpaceTransit.Audio
     public sealed class OutsideAudio : ShipAudioBase
     {
 
-        private void Update()
+        private void FixedUpdate()
         {
             if (IsPlayerMounted)
             {
