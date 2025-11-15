@@ -5,7 +5,7 @@ using UnityEngine;
 namespace SpaceTransit.Vaulter
 {
 
-    public abstract class VaulterComponent : SubcomponentBase<VaulterController>
+    public abstract class VaulterComponentBase : SubcomponentBase<VaulterController>
     {
 
         public bool IsInService => Parent.IsInService;
@@ -17,6 +17,14 @@ namespace SpaceTransit.Vaulter
                                             station.Docks[Parent.Stop.DockIndex].transform.position,
                                             Parent.Assembly.FrontModule.transform.position
                                         ) < 100; // TODO: optimize position getters
+
+        public virtual void OnRouteChanged()
+        {
+        }
+
+        public virtual void OnStopChanged()
+        {
+        }
 
     }
 

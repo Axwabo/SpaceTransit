@@ -16,6 +16,8 @@ namespace SpaceTransit.Vaulter
 
         private int _stopIndex = OutOfService;
 
+        private VaulterComponentBase[] _components;
+
         [SerializeField]
         private RouteDescriptor initialRoute;
 
@@ -25,8 +27,12 @@ namespace SpaceTransit.Vaulter
 
         public bool IsInService => _stopIndex != OutOfService;
 
+        protected override void Awake() => _components = GetComponentsInChildren<VaulterComponentBase>();
+
         protected override void OnInitialized()
         {
+            foreach (var component in _components)
+                component.Initialize(this);
             if (!initialRoute || !Station.TryGetLoadedStation(initialRoute.Origin.Station, out var station))
                 return;
             Assembly.startTube = station.Docks[initialRoute.Origin.DockIndex].Tube;
@@ -38,11 +44,13 @@ namespace SpaceTransit.Vaulter
             _stopIndex = OutOfService;
             Route = null;
             Stop = null;
+            NotifyRouteChanged();
         }
 
         public void BeginRoute(RouteDescriptor descriptor)
         {
             Route = descriptor;
+            NotifyRouteChanged();
             UpdateStop(Origin);
         }
 
@@ -56,12 +64,20 @@ namespace SpaceTransit.Vaulter
                 Destination => Route.Destination,
                 _ => Route.IntermediateStops[index]
             };
+            foreach (var component in _components)
+                component.OnStopChanged();
         }
 
         public override void OnStateChanged(ShipState previousState)
         {
             if (_stopIndex is not (OutOfService or Destination) && Parent.State == ShipState.Sailing && previousState == ShipState.LiftingOff)
                 UpdateStop(_stopIndex >= Route.IntermediateStops.Count - 1 ? Destination : _stopIndex + 1);
+        }
+
+        private void NotifyRouteChanged()
+        {
+            foreach (var component in _components)
+                component.OnRouteChanged();
         }
 
     }

@@ -6,7 +6,7 @@ namespace SpaceTransit.Audio
 {
 
     [RequireComponent(typeof(QueuePlayer))]
-    public sealed class OnboardAnnouncer : VaulterComponent
+    public sealed class OnboardAnnouncer : VaulterComponentBase
     {
 
         [SerializeField]
@@ -83,6 +83,10 @@ namespace SpaceTransit.Audio
                 _player.Enqueue(goodbye);
             _currentStopPlayed = true;
         }
+
+        public override void OnRouteChanged() => _welcomePlayed = false;
+
+        public override void OnStopChanged() => _currentStopPlayed = false;
 
     }
 
