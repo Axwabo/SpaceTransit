@@ -31,10 +31,9 @@ namespace SpaceTransit.Ships.Modules
         {
             var previousPosition = Transform.localPosition;
             var (position, rotation) = _tube.Sample(_distance);
-            var currentPosition = position * World.WorldToMeters;
-            Transform.SetLocalPositionAndRotation(currentPosition, rotation);
-            if (previousPosition != currentPosition && Parent.Mount.Transform == MovementController.Current.Mount)
-                World.Current.position -= Transform.TransformVector(currentPosition - previousPosition);
+            Transform.SetLocalPositionAndRotation(position, rotation);
+            if (previousPosition != position && Parent.Mount.Transform == MovementController.Current.Mount)
+                World.Current.position -= Transform.TransformVector(position - previousPosition);
         }
 
         private void UpdateDistance()

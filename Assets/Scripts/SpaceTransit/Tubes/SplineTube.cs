@@ -18,11 +18,19 @@ namespace SpaceTransit.Tubes
         public override (Vector3 Position, Quaternion Rotation) Sample(float distance)
         {
             var sample = spline.GetSampleAtDistance(distance);
-            return (Transform.TransformPoint(sample.location), Transform.rotation * sample.Rotation);
+            return (sample.location, sample.Rotation);
         }
 
         public override float GetDistance(Vector3 point)
             => spline.GetProjectionSample(point).distanceInCurve;
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.orangeRed;
+            Gizmos.DrawSphere(Transform.TransformPoint(Sample(0).Position), 0.01f);
+            Gizmos.color = Color.greenYellow;
+            Gizmos.DrawSphere(Transform.TransformPoint(Sample(Length).Position), 0.01f);
+        }
 
     }
 
