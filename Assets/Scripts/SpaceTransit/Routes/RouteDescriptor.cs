@@ -9,14 +9,17 @@ namespace SpaceTransit.Routes
     public sealed class RouteDescriptor : ScriptableObject
     {
 
-        [SerializeField]
-        private IntermediateStop[] intermediateStops;
+        [field: SerializeField]
+        public ServiceType Type { get; private set; }
 
         [field: SerializeField]
         public bool Reverse { get; private set; }
 
         [field: SerializeField]
         public Origin Origin { get; private set; }
+
+        [SerializeField]
+        private IntermediateStop[] intermediateStops;
 
         public IReadOnlyList<IntermediateStop> IntermediateStops => intermediateStops;
 
