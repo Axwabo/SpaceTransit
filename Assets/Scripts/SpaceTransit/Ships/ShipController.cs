@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using SpaceTransit.Ships.Modules;
+using SpaceTransit.Vaulter;
 using UnityEngine;
 
 namespace SpaceTransit.Ships
@@ -32,7 +33,7 @@ namespace SpaceTransit.Ships
 
         public bool CanLand => State == ShipState.Sailing && Assembly.CurrentSpeed.Raw == 0;
 
-        public bool CanLiftOff => State == ShipState.Docked;
+        public bool CanLiftOff => State == ShipState.WaitingForDeparture && Assembly.Modules.All(e => e.CanDepart);
 
         private void Start()
         {
@@ -68,6 +69,15 @@ namespace SpaceTransit.Ships
             State = lifting ? ShipState.Sailing : ShipState.Docked;
         }
 
+        public void MarkReady()
+        {
+            if (State == ShipState.WaitingForDeparture)
+                return;
+            if (State != ShipState.Docked)
+                throw new InvalidOperationException("Cannot depart while not docked");
+            State = ShipState.WaitingForDeparture;
+        }
+
         public void Land()
         {
             if (!CanLand)
@@ -80,10 +90,24 @@ namespace SpaceTransit.Ships
         public void LiftOff()
         {
             if (!CanLiftOff)
-                throw new InvalidOperationException("Cannot lift off while not docked");
+                throw new InvalidOperationException("Cannot lift off while not waiting for departure or a module prevents departure");
             _liftProgress = 0;
             _liftDuration = liftoff.Duration();
             State = ShipState.LiftingOff;
+        }
+
+        public bool TryGetVaulter(out VaulterController controller)
+        {
+            foreach (var component in _components)
+            {
+                if (component is not VaulterController vaulter)
+                    continue;
+                controller = vaulter;
+                return true;
+            }
+
+            controller = null;
+            return false;
         }
 
     }

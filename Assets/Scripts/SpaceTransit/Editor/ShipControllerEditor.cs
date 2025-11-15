@@ -15,10 +15,12 @@ namespace SpaceTransit.Editor
             var controller = (ShipController) target;
             GUILayout.Space(20);
             GUILayout.Label($"State: {controller.State}");
-            if (GUILayout.Button("Land"))
-                controller.Land();
+            if (GUILayout.Button("Mark Ready for Departure"))
+                controller.MarkReady();
             if (GUILayout.Button("Lift Off"))
                 controller.LiftOff();
+            if (GUILayout.Button("Land"))
+                controller.Land();
         }
 
         public override bool RequiresConstantRepaint() => true;

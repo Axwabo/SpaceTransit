@@ -23,4 +23,12 @@ public sealed class TimeOnly
 
     public static implicit operator TimeOnly(TimeSpan span) => new() {Value = span};
 
+    public static bool operator >(TimeOnly timeOnly, TimeSpan span) => timeOnly.Value > span;
+
+    public static bool operator >=(TimeOnly timeOnly, TimeSpan span) => timeOnly.Value >= span;
+
+    public static bool operator <(TimeOnly timeOnly, TimeSpan span) => timeOnly.Value < span;
+
+    public static bool operator <=(TimeOnly timeOnly, TimeSpan span) => timeOnly.Value <= span;
+
 }
