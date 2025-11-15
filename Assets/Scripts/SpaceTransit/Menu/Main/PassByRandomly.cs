@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace SpaceTransit.Menu
+namespace SpaceTransit.Menu.Main
 {
 
     public sealed class PassByRandomly : MonoBehaviour

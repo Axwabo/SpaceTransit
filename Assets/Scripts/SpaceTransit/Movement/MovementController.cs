@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SpaceTransit.Menu;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace SpaceTransit.Movement
@@ -66,13 +67,8 @@ namespace SpaceTransit.Movement
 
         private void UpdateLook()
         {
-            if (InputSystem.actions["Menu"].IsPressed())
-            {
-                Cursor.lockState = CursorLockMode.None;
+            if (MenuScreen.IsOpen)
                 return;
-            }
-
-            Cursor.lockState = CursorLockMode.Locked;
             var look = InputSystem.actions["Look"].ReadValue<Vector2>();
             if (look == Vector2.zero)
                 return;
