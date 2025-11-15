@@ -19,7 +19,7 @@ namespace SpaceTransit
 
         public bool IsReverse { get; }
 
-        public float Relative => IsReverse ? -Raw * World.MetersToWorld : Raw * World.MetersToWorld;
+        public float Relative => IsReverse ? -Raw : Raw;
 
         public float RawKmh => Raw * 3.6f;
 

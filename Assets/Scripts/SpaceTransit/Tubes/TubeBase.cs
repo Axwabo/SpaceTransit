@@ -37,9 +37,9 @@ namespace SpaceTransit.Tubes
         protected virtual void OnDrawGizmos()
         {
             Gizmos.color = Color.orangeRed;
-            Gizmos.DrawSphere(Sample(0).Position, 0.0001f);
+            Gizmos.DrawSphere(Sample(0).Position, 0.01f);
             Gizmos.color = Color.greenYellow;
-            Gizmos.DrawSphere(Sample(Length).Position, 0.0001f);
+            Gizmos.DrawSphere(Sample(Length).Position, 0.01f);
         }
 
     }

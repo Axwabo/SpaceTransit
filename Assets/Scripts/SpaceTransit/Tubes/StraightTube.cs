@@ -13,7 +13,7 @@ namespace SpaceTransit.Tubes
         protected override void Awake()
         {
             base.Awake();
-            _length = Transform.lossyScale.z;
+            _length = Transform.lossyScale.z * World.WorldToMeters;
             _rotation = Transform.rotation;
         }
 
