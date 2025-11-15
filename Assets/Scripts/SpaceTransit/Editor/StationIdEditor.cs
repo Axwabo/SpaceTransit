@@ -30,8 +30,12 @@ namespace SpaceTransit.Editor
                 .ToDictionary(e => e.name);
             Undo.RecordObjects(targets, "Assign Announcement");
             foreach (var o in targets)
-                if (assets.TryGetValue(o.name, out var clip))
-                    ((StationId) o).Announcement = clip;
+            {
+                if (!assets.TryGetValue(o.name, out var clip))
+                    continue;
+                ((StationId) o).Announcement = clip;
+                EditorUtility.SetDirty(o);
+            }
         }
 
     }
