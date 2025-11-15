@@ -49,6 +49,8 @@ namespace SpaceTransit.Movement
             Cursor.lockState = CursorLockMode.Locked;
         }
 
+        private void Start() => World.Current.position -= Position;
+
         private void Update()
         {
             UpdateLook();
