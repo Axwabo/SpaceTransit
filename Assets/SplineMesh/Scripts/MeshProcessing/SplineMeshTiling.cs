@@ -141,6 +141,7 @@ namespace SplineMesh
                 res = childTransform.gameObject;
             }
 
+            res.hideFlags = HideFlags.DontSaveInEditor | HideFlags.DontSaveInBuild;
             res.GetComponent<MeshRenderer>().material = material;
             res.GetComponent<MeshCollider>().material = physicMaterial;
             MeshBender mb = res.GetComponent<MeshBender>();
