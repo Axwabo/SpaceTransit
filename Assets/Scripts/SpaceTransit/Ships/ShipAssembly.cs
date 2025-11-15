@@ -20,11 +20,11 @@ namespace SpaceTransit.Ships
         [field: SerializeField]
         public float MaxSpeed { get; private set; }
 
-        [SerializeField]
-        private float acceleration;
+        [field: SerializeField]
+        public float Acceleration { get; private set; }
 
-        [SerializeField]
-        private float deceleration;
+        [field: SerializeField]
+        public float Deceleration { get; private set; }
 
         private ShipSpeed _targetSpeed;
 
@@ -34,6 +34,16 @@ namespace SpaceTransit.Ships
         {
             get => _targetSpeed;
             set => _targetSpeed = value.Clamp(MaxSpeed);
+        }
+
+        public bool Reverse
+        {
+            get => CurrentSpeed.IsReverse;
+            set
+            {
+                CurrentSpeed = CurrentSpeed.WithReverse(value);
+                TargetSpeed = TargetSpeed.WithReverse(value);
+            }
         }
 
         public bool IsPlayerMounted { get; private set; }
@@ -50,21 +60,13 @@ namespace SpaceTransit.Ships
         private void Update()
         {
             if (CurrentSpeed < TargetSpeed)
-                CurrentSpeed = CurrentSpeed.MoveTowards(TargetSpeed.Raw, Time.deltaTime * acceleration, MaxSpeed);
+                CurrentSpeed = CurrentSpeed.MoveTowards(TargetSpeed.Raw, Time.deltaTime * Acceleration, MaxSpeed);
             else if (CurrentSpeed > TargetSpeed)
-                CurrentSpeed = CurrentSpeed.MoveTowards(TargetSpeed.Raw, Time.deltaTime * deceleration, MaxSpeed);
+                CurrentSpeed = CurrentSpeed.MoveTowards(TargetSpeed.Raw, Time.deltaTime * Deceleration, MaxSpeed);
             IsPlayerMounted = Modules.Any(e => e.Mount.Transform == MovementController.Current.Mount);
         }
 
-        public bool Reverse
-        {
-            get => CurrentSpeed.IsReverse;
-            set
-            {
-                CurrentSpeed = CurrentSpeed.WithReverse(value);
-                TargetSpeed = TargetSpeed.WithReverse(value);
-            }
-        }
+        public void SetSpeed(float raw) => TargetSpeed = new ShipSpeed(raw, Reverse);
 
     }
 
