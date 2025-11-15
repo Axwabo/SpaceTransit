@@ -8,8 +8,11 @@ namespace SpaceTransit
 
         /*
          1698.899643887 pixels = 106.69 km
-          1 pixel = 15.923700852 km
-          1 unit = 100m
+          1 pixel = 0.062799472 km
+          1 pixel = 62.799472 m
+          1 unit = 10m
+          1 pixel = 6.2799472 units
+          0.159237008 pixels = 1 unit
          */
 
         public float Raw { get; }

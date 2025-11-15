@@ -29,7 +29,7 @@ namespace SpaceTransit.Ships.Modules
         private void UpdateLocation()
         {
             var (position, rotation) = _tube.Sample(_distance);
-            Transform.SetLocalPositionAndRotation(position * 100, rotation);
+            Transform.SetLocalPositionAndRotation(position * 10, rotation);
         }
 
         private void UpdateDistance()
