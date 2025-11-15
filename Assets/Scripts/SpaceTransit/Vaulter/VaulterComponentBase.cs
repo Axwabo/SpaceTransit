@@ -16,7 +16,7 @@ namespace SpaceTransit.Vaulter
                                         && Vector3.Distance(
                                             station.Docks[Parent.Stop.DockIndex].transform.position,
                                             Parent.Assembly.FrontModule.transform.position
-                                        ) < 100; // TODO: optimize position getters
+                                        ) < 20; // TODO: optimize position getters
 
         public virtual void OnRouteChanged()
         {

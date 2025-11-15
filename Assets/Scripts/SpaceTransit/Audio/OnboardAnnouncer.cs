@@ -61,7 +61,7 @@ namespace SpaceTransit.Audio
 
         private void PlayNextStop()
         {
-            _player.Enqueue(signal, 3);
+            PlaySignal();
             if (!_welcomePlayed)
             {
                 _player.Enqueue(welcomeStart);
@@ -78,11 +78,14 @@ namespace SpaceTransit.Audio
 
         private void PlayCurrentStop()
         {
+            PlaySignal();
             _player.Enqueue(Parent.Stop.Station.Announcement);
             if (IsTerminus)
                 _player.Enqueue(goodbye);
             _currentStopPlayed = true;
         }
+
+        private void PlaySignal() => _player.Enqueue(signal, 3);
 
         public override void OnRouteChanged() => _welcomePlayed = false;
 
