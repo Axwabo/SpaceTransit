@@ -29,6 +29,8 @@ namespace SpaceTransit.Menu.Main
 
         private Vector3 _end;
 
+        private double _startTime;
+
         private void Awake()
         {
             _t = transform;
@@ -41,7 +43,7 @@ namespace SpaceTransit.Menu.Main
         {
             if (source.isPlaying)
             {
-                _t.position = Vector3.Lerp(_start, _end, source.time / source.clip.length);
+                _t.position = Vector3.Lerp(_start, _end, (float) ((AudioSettings.dspTime - _startTime) / source.clip.length));
                 return;
             }
 
@@ -63,6 +65,7 @@ namespace SpaceTransit.Menu.Main
             _start.z += _z;
             _end.z += _z;
             _remaining = Random.Range(30, 60);
+            _startTime = AudioSettings.dspTime;
             _leftInUse |= _fromLeft;
             _rightInUse |= !_fromLeft;
         }
