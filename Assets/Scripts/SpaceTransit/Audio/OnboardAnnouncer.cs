@@ -1,5 +1,4 @@
-﻿using SpaceTransit.Routes;
-using SpaceTransit.Ships;
+﻿using SpaceTransit.Ships;
 using SpaceTransit.Vaulter;
 using UnityEngine;
 
@@ -7,7 +6,7 @@ namespace SpaceTransit.Audio
 {
 
     [RequireComponent(typeof(QueuePlayer))]
-    public sealed class OnboardAnnouncer : MonoBehaviour
+    public sealed class OnboardAnnouncer : VaulterComponent
     {
 
         [SerializeField]
@@ -28,8 +27,6 @@ namespace SpaceTransit.Audio
         [SerializeField]
         private AudioClip goodbye;
 
-        private VaulterController _controller;
-
         private QueuePlayer _player;
 
         private bool _wasSailing;
@@ -40,29 +37,17 @@ namespace SpaceTransit.Audio
 
         private bool _currentStopPlayed;
 
-        private bool IsNearStation => Station.TryGetLoadedStation(_controller.Stop.Station, out var station)
-                                      && Vector3.Distance(
-                                          station.Docks[_controller.Stop.DockIndex].transform.position,
-                                          _controller.Assembly.FrontModule.transform.position
-                                      ) < 100; // TODO: optimize position getters
-
-        private bool IsTerminus => _controller.Stop == _controller.Route.Destination;
-
-        private void Awake()
-        {
-            _controller = GetComponentInParent<VaulterController>();
-            _player = GetComponent<QueuePlayer>();
-        }
+        protected override void Awake() => _player = GetComponent<QueuePlayer>();
 
         private void Update()
         {
-            if (_controller.Controller.State != ShipState.Sailing || !_controller.IsInService)
+            if (Parent.Parent.State != ShipState.Sailing || !Parent.IsInService)
             {
                 _wasSailing = false;
                 return;
             }
 
-            if (!_wasSailing && !_controller.Assembly.IsStationary())
+            if (!_wasSailing && !Parent.Assembly.IsStationary())
             {
                 _delay = 10;
                 _wasSailing = true;
@@ -80,20 +65,20 @@ namespace SpaceTransit.Audio
             if (!_welcomePlayed)
             {
                 _player.Enqueue(welcomeStart);
-                _player.Enqueue(_controller.Route.Destination.Station.Announcement);
+                _player.Enqueue(Parent.Route.Destination.Station.Announcement);
                 _player.Enqueue(welcomeEnd);
                 _welcomePlayed = true;
             }
 
             _player.Enqueue(nextStop);
-            _player.Enqueue(_controller.Stop.Station.Announcement);
+            _player.Enqueue(Parent.Stop.Station.Announcement);
             if (IsTerminus)
                 _player.Enqueue(nextTerminus);
         }
 
         private void PlayCurrentStop()
         {
-            _player.Enqueue(_controller.Stop.Station.Announcement);
+            _player.Enqueue(Parent.Stop.Station.Announcement);
             if (IsTerminus)
                 _player.Enqueue(goodbye);
             _currentStopPlayed = true;

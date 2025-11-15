@@ -1,30 +1,12 @@
-﻿using UnityEngine;
-
-namespace SpaceTransit.Ships.Modules
+﻿namespace SpaceTransit.Ships.Modules
 {
 
-    public abstract class ModuleComponentBase : MonoBehaviour
+    public abstract class ModuleComponentBase : SubcomponentBase<ShipModule>
     {
 
-        protected Transform Transform { get; private set; }
+        public ShipAssembly Assembly => Parent.Assembly;
 
-        public ShipModule Module { get; private set; }
-
-        public ShipAssembly Assembly => Module.Assembly;
-
-        public ShipState State => Assembly.Controller.State;
-
-        public void Initialize(ShipModule module)
-        {
-            Module = module;
-            OnInitialized();
-        }
-
-        protected virtual void OnInitialized()
-        {
-        }
-
-        protected virtual void Awake() => Transform = transform;
+        public ShipState State => Assembly.Parent.State;
 
         public virtual void OnStateChanged()
         {

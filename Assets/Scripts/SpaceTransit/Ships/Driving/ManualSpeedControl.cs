@@ -14,7 +14,7 @@ namespace SpaceTransit.Ships.Driving
 
         private void Update()
         {
-            if (_assembly.Controller.State != ShipState.Sailing)
+            if (_assembly.Parent.State != ShipState.Sailing)
                 return;
             var move = InputSystem.actions["Speed"].ReadValue<float>();
             if (move > 0)

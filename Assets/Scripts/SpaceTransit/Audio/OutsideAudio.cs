@@ -1,10 +1,8 @@
 ﻿using SpaceTransit.Movement;
-using UnityEngine;
 
 namespace SpaceTransit.Audio
 {
 
-    [RequireComponent(typeof(AudioSource))]
     public sealed class OutsideAudio : ShipAudioBase
     {
 

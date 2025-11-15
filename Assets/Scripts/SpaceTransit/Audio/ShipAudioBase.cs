@@ -9,8 +9,6 @@ namespace SpaceTransit.Audio
     public abstract class ShipAudioBase : ShipComponentBase
     {
 
-        protected Transform Transform { get; private set; }
-
         protected AudioSource[] Sources { get; private set; }
 
         protected bool IsPlayerMounted => Assembly.Modules.Any(e => e.Mount.Transform == MovementController.Current.Mount);
@@ -24,9 +22,9 @@ namespace SpaceTransit.Audio
             }
         }
 
-        private void Awake()
+        protected override void Awake()
         {
-            Transform = transform;
+            base.Awake();
             Sources = GetComponentsInChildren<AudioSource>();
         }
 
