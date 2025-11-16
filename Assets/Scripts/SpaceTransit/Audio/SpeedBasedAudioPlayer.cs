@@ -47,15 +47,13 @@ namespace SpaceTransit.Audio
                 : 0;
         }
 
-        private void UpdateTargetVolume() => _targetVolume = _assembly.IsStationary()
+        private void UpdateTargetVolume() => _targetVolume = _assembly.IsStationary() || _assembly.CurrentSpeed.Raw <= min || _assembly.CurrentSpeed.Raw > max
             ? 0
             : op switch
             {
                 Operator.Accelerating when _assembly.CurrentSpeed < _assembly.TargetSpeed => 1,
                 Operator.Decelerating when _assembly.CurrentSpeed > _assembly.TargetSpeed => 1,
-                Operator.Range when Mathf.Approximately(_assembly.CurrentSpeed.Raw, _assembly.TargetSpeed.Raw)
-                                    && _assembly.CurrentSpeed.Raw > min
-                                    && _assembly.CurrentSpeed.Raw <= max => 1,
+                Operator.Range when Mathf.Approximately(_assembly.CurrentSpeed.Raw, _assembly.TargetSpeed.Raw) => 1,
                 _ => 0
             };
 
