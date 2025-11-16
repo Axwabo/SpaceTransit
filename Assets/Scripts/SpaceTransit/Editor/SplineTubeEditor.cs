@@ -36,6 +36,7 @@ namespace SpaceTransit.Editor
                 };
                 var splineClone = o.GetComponent<Spline>();
                 splineClone.nodes = nodes.Skip(i).Take(2).ToList();
+                splineClone.RefreshCurves();
                 ApplyTiling(o, hasTiling, tiling);
                 var tube = o.GetComponent<SplineTube>();
                 tube.Next = next;
