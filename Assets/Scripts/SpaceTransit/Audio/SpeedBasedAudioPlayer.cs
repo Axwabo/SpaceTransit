@@ -45,9 +45,14 @@ namespace SpaceTransit.Audio
             if (_targetVolume == 0 || volume != 0 || _source.loop)
                 return;
             _source.Play();
-            _source.time = !restart && op != Operator.Range
-                ? _assembly.CurrentSpeed.Raw / _assembly.MaxSpeed * (_source.clip.length * 0.95f)
-                : 0;
+            _source.time = restart
+                ? 0
+                : op switch
+                {
+                    Operator.Accelerating => _assembly.CurrentSpeed.Raw / _assembly.MaxSpeed * (_source.clip.length * 0.95f),
+                    Operator.Decelerating => (1 - _assembly.CurrentSpeed.Raw / _assembly.MaxSpeed) * (_source.clip.length * 0.95f),
+                    _ => 0
+                };
         }
 
         private void UpdateTargetVolume() => _targetVolume = _assembly.IsStationary() || _assembly.CurrentSpeed.Raw <= min || _assembly.CurrentSpeed.Raw > max
