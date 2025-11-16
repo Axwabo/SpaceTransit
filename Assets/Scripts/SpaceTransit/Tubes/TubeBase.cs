@@ -18,9 +18,10 @@ namespace SpaceTransit.Tubes
 
         public bool HasPrevious { get; private set; }
 
-        protected virtual void Awake()
+        protected virtual void Awake() => Transform = transform;
+
+        private void OnValidate()
         {
-            Transform = transform;
             if (!Next)
                 return;
             Next.Previous = this;

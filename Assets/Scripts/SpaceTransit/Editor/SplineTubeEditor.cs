@@ -24,7 +24,8 @@ namespace SpaceTransit.Editor
             var root = spline.transform.parent;
             var nodes = spline.nodes;
             var hasTiling = spline.TryGetComponent(out SplineMeshTiling tiling);
-            var next = ((SplineTube) target).Next;
+            var tube = (SplineTube) target;
+            var next = tube.Next;
             for (var i = nodes.Count - 2; i >= 0; i--)
             {
                 var o = new GameObject((i + 1).ToString(), typeof(Spline), typeof(SplineMeshTiling), typeof(SplineTube))
@@ -38,10 +39,13 @@ namespace SpaceTransit.Editor
                 splineClone.nodes = nodes.Skip(i).Take(2).ToList();
                 splineClone.RefreshCurves();
                 ApplyTiling(o, hasTiling, tiling);
-                var tube = o.GetComponent<SplineTube>();
-                tube.Next = next;
-                next = tube;
+                var tubeClone = o.GetComponent<SplineTube>();
+                tubeClone.Next = next;
+                next = tubeClone;
             }
+
+            if (tube.HasPrevious)
+                tube.Previous.Next = next;
         }
 
         private static void ApplyTiling(GameObject o, bool hasTiling, SplineMeshTiling tiling)
