@@ -1,6 +1,5 @@
 ﻿using SpaceTransit.Movement;
 using SpaceTransit.Tubes;
-using UnityEngine;
 
 namespace SpaceTransit.Ships.Modules
 {
@@ -38,7 +37,7 @@ namespace SpaceTransit.Ships.Modules
 
         private void UpdateDistance()
         {
-            var target = _distance + Assembly.CurrentSpeed * Time.fixedDeltaTime;
+            var target = _distance + Assembly.CurrentSpeed * Clock.FixedDelta;
             if (target > _tube.Length)
             {
                 if (!_tube.HasNext)

@@ -53,7 +53,7 @@ namespace SpaceTransit.Audio
                 _wasSailing = true;
             }
 
-            if (_delay > 0 && (_delay -= Time.deltaTime) <= 0)
+            if (_delay > 0 && (_delay -= Clock.Delta) <= 0)
                 PlayNextStop();
             if (_welcomePlayed && !_currentStopPlayed && IsNearStation)
                 PlayCurrentStop();

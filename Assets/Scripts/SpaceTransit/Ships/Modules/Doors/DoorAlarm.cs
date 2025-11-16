@@ -49,7 +49,7 @@ namespace SpaceTransit.Ships.Modules.Doors
                 return;
             }
 
-            if ((_remaining -= Time.deltaTime) > 0 || ++_count > max && max != 0)
+            if ((_remaining -= Clock.Delta) > 0 || ++_count > max && max != 0)
                 return;
             var odd = _count % 2 == 1;
             if (odd || !oddOnly)

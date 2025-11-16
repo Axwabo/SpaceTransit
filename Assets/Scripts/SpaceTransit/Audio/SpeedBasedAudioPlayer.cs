@@ -38,7 +38,7 @@ namespace SpaceTransit.Audio
         private void UpdateSource()
         {
             var volume = _source.volume;
-            _source.volume = Mathf.MoveTowards(volume, _targetVolume, Time.deltaTime);
+            _source.volume = Mathf.MoveTowards(volume, _targetVolume, Clock.Delta);
             if (_targetVolume == 0 || volume != 0 || _source.loop)
                 return;
             _source.Play();

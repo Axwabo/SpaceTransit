@@ -47,7 +47,7 @@ namespace SpaceTransit.Ships.Driving
                 _departed = false;
             }
 
-            if ((_remainingWait -= Time.deltaTime) > 0)
+            if ((_remainingWait -= Clock.Delta) > 0)
                 return;
             Controller.MarkReady();
             _departed = false;

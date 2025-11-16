@@ -58,7 +58,7 @@ namespace SpaceTransit.Movement
             if (_cc.isGrounded)
                 UpdateGrounded();
             else
-                _verticalVelocity += gravity * Time.deltaTime;
+                _verticalVelocity += gravity * Clock.Delta;
 
             var desiredMove = InputSystem.actions["Move"].ReadValue<Vector2>();
             var move = _t.rotation * new Vector3(desiredMove.x, 0, desiredMove.y).normalized;
@@ -66,7 +66,7 @@ namespace SpaceTransit.Movement
             if (move == Vector3.zero)
                 return;
             var previous = _t.localPosition;
-            _cc.Move(Time.deltaTime * speed * 0.1f * move);
+            _cc.Move(Clock.Delta * speed * 0.1f * move);
             var delta = _t.localPosition - previous;
             if (delta != Vector3.zero)
                 World.Current.position -= _t.TransformVector(delta) * World.MetersToWorld;

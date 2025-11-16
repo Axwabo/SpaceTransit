@@ -76,7 +76,7 @@ namespace SpaceTransit.Ships.Modules.Doors
                     Open();
                     break;
                 case DoorState.Open:
-                    if ((_time -= Time.deltaTime) > 0)
+                    if ((_time -= Clock.Delta) > 0)
                         break;
                     _state = DoorState.Closing;
                     _time = _duration;
@@ -92,7 +92,7 @@ namespace SpaceTransit.Ships.Modules.Doors
         private void Open()
         {
             Animate();
-            if ((_time += Time.deltaTime) <= _duration)
+            if ((_time += Clock.Delta) <= _duration)
                 return;
             _state = DoorState.Open;
             _time = 10;
@@ -101,7 +101,7 @@ namespace SpaceTransit.Ships.Modules.Doors
         private void Close()
         {
             Animate();
-            if ((_time -= Time.deltaTime) >= 0)
+            if ((_time -= Clock.Delta) >= 0)
                 return;
             _state = DoorState.Closed;
             _time = 0;

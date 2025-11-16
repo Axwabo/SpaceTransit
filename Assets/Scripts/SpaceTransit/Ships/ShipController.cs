@@ -58,7 +58,7 @@ namespace SpaceTransit.Ships
             if (_liftProgress < 0)
                 return;
             var lifting = State == ShipState.LiftingOff;
-            _liftProgress += Time.fixedDeltaTime;
+            _liftProgress += Clock.FixedDelta;
             var curve = lifting ? liftoff : land;
             var position = _t.localPosition;
             position.y = curve.Evaluate(_liftProgress);

@@ -60,9 +60,9 @@ namespace SpaceTransit.Ships
         private void Update()
         {
             if (CurrentSpeed < TargetSpeed)
-                CurrentSpeed = CurrentSpeed.MoveTowards(TargetSpeed.Raw, Time.deltaTime * Acceleration, MaxSpeed);
+                CurrentSpeed = CurrentSpeed.MoveTowards(TargetSpeed.Raw, Clock.Delta * Acceleration, MaxSpeed);
             else if (CurrentSpeed > TargetSpeed)
-                CurrentSpeed = CurrentSpeed.MoveTowards(TargetSpeed.Raw, Time.deltaTime * Deceleration, MaxSpeed);
+                CurrentSpeed = CurrentSpeed.MoveTowards(TargetSpeed.Raw, Clock.Delta * Deceleration, MaxSpeed);
             IsPlayerMounted = Modules.Any(e => e.Mount.Transform == MovementController.Current.Mount);
         }
 
