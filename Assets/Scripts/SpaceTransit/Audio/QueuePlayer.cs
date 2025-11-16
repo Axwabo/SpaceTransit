@@ -28,12 +28,15 @@ namespace SpaceTransit.Audio
                 _queue.Enqueue((clip, length));
         }
 
+        public void Delay(float length) => _queue.Enqueue((null, length));
+
         private void Update()
         {
             var dspTime = AudioSettings.dspTime;
             if (_playAt > dspTime || !_queue.TryDequeue(out var tuple))
                 return;
-            _source.PlayOneShot(tuple.Item1);
+            if (tuple.Item1)
+                _source.PlayOneShot(tuple.Item1);
             _playAt = dspTime + tuple.Item2;
         }
 
