@@ -1,4 +1,5 @@
-﻿using SpaceTransit.Movement;
+﻿using System;
+using SpaceTransit.Movement;
 using SpaceTransit.Tubes;
 
 namespace SpaceTransit.Ships.Modules
@@ -18,12 +19,16 @@ namespace SpaceTransit.Ships.Modules
             UpdateLocation();
         }
 
+        private void Update()
+        {
+            if (Assembly.CurrentSpeed.Raw != 0)
+                UpdateLocation();
+        }
+
         private void FixedUpdate()
         {
-            if (Assembly.CurrentSpeed.Raw == 0)
-                return;
-            UpdateDistance();
-            UpdateLocation();
+            if (Assembly.CurrentSpeed.Raw != 0)
+                UpdateDistance();
         }
 
         private void UpdateLocation()
@@ -37,7 +42,7 @@ namespace SpaceTransit.Ships.Modules
 
         private void UpdateDistance()
         {
-            var target = _distance + Assembly.CurrentSpeed * Clock.FixedDelta;
+            var target = _distance + Assembly.CurrentSpeed * Clock.Delta;
             if (target > Tube.Length)
             {
                 if (!Tube.HasNext)

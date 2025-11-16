@@ -39,6 +39,8 @@ namespace SpaceTransit.Movement
 
         public Vector3 Position => _t.position;
 
+        public Vector3 LastPosition { get; private set; }
+
         private void Awake()
         {
             _t = transform;
@@ -68,6 +70,7 @@ namespace SpaceTransit.Movement
             var delta = _t.localPosition - previous;
             if (delta != Vector3.zero)
                 World.Current.position -= _t.TransformVector(delta) * World.MetersToWorld;
+            LastPosition = Position;
         }
 
         private void UpdateLook()

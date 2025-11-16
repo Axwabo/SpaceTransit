@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace SplineMesh {
     /// <summary>
@@ -58,15 +59,21 @@ namespace SplineMesh {
         /// <param name="b"></param>
         /// <param name="t"></param>
         /// <returns></returns>
-        public static CurveSample Lerp(CurveSample a, CurveSample b, float t) {
+        public static CurveSample Lerp(CurveSample a, CurveSample b, float t)
+        {
+            var tangent = Vector3.LerpUnclamped(a.tangent, b.tangent, t);
+            var magnitude = (float)Math.Sqrt((double) tangent.x * tangent.x + (double) tangent.y * tangent.y + (double) tangent.z * tangent.z);
+            tangent.x /= magnitude;
+            tangent.y /= magnitude;
+            tangent.z /= magnitude;
             return new CurveSample(
-                Vector3.Lerp(a.location, b.location, t),
-                Vector3.Lerp(a.tangent, b.tangent, t).normalized,
-                Vector3.Lerp(a.up, b.up, t),
-                Vector2.Lerp(a.scale, b.scale, t),
-                Mathf.Lerp(a.roll, b.roll, t),
-                Mathf.Lerp(a.distanceInCurve, b.distanceInCurve, t),
-                Mathf.Lerp(a.timeInCurve, b.timeInCurve, t),
+                Vector3.LerpUnclamped(a.location, b.location, t),
+                tangent.normalized,
+                Vector3.LerpUnclamped(a.up, b.up, t),
+                Vector2.LerpUnclamped(a.scale, b.scale, t),
+                Mathf.LerpUnclamped(a.roll, b.roll, t),
+                Mathf.LerpUnclamped(a.distanceInCurve, b.distanceInCurve, t),
+                Mathf.LerpUnclamped(a.timeInCurve, b.timeInCurve, t),
                 a.curve);
         }
 

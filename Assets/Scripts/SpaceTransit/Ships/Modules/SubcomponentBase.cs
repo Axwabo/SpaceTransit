@@ -6,7 +6,7 @@ namespace SpaceTransit.Ships.Modules
     public abstract class SubcomponentBase<T> : MonoBehaviour
     {
 
-        protected Transform Transform { get; private set; }
+        public Transform Transform { get; private set; }
 
         public T Parent { get; private set; }
 

@@ -24,6 +24,7 @@ namespace SpaceTransit.Ships.Modules
 
         protected override void Awake()
         {
+            base.Awake();
             _components = GetComponentsInChildren<ModuleComponentBase>();
             Thruster = _components.OfType<ModuleThruster>().First();
         }

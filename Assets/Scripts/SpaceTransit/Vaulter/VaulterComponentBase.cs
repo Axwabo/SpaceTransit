@@ -23,7 +23,7 @@ namespace SpaceTransit.Vaulter
                                             FrontPosition
                                         ) < 20f;
 
-        protected Vector3 FrontPosition => Parent.Assembly.FrontModule.transform.position;
+        protected Vector3 FrontPosition => Parent.Assembly.FrontModule.Transform.position;
 
         public virtual void OnRouteChanged()
         {
