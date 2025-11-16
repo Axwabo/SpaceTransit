@@ -28,20 +28,20 @@ namespace SpaceTransit.Editor
             var next = tube.Next;
             for (var i = nodes.Count - 2; i >= 0; i--)
             {
-                var o = new GameObject((i + 1).ToString(), typeof(Spline), typeof(SplineMeshTiling), typeof(SplineTube))
-                {
-                    transform =
-                    {
-                        parent = root
-                    }
-                };
+                var o = new GameObject((i + 1).ToString(), typeof(Spline));
+                var t = o.transform;
+                t.SetParent(root, false);
+                t.SetAsFirstSibling();
                 var splineClone = o.GetComponent<Spline>();
-                splineClone.nodes = nodes.Skip(i).Take(2).ToList();
-                splineClone.RefreshCurves();
+                splineClone.nodes = nodes.Skip(i).Take(2).Select(e => new SplineNode(e.Position, e.Direction)).ToList();
                 ApplyTiling(o, hasTiling, tiling);
-                var tubeClone = o.GetComponent<SplineTube>();
+                splineClone.RefreshCurves();
+                var tubeClone = o.AddComponent<SplineTube>();
                 tubeClone.Next = next;
                 next = tubeClone;
+                using var serialized = new SerializedObject(tubeClone);
+                serialized.FindProperty("spline").boxedValue = splineClone;
+                serialized.ApplyModifiedProperties();
             }
 
             if (tube.HasPrevious)
@@ -50,19 +50,17 @@ namespace SpaceTransit.Editor
 
         private static void ApplyTiling(GameObject o, bool hasTiling, SplineMeshTiling tiling)
         {
-            var tilingClone = o.GetComponent<SplineMeshTiling>();
             if (!hasTiling)
-            {
-                DestroyImmediate(tilingClone);
                 return;
-            }
-
+            var tilingClone = o.AddComponent<SplineMeshTiling>();
+            tilingClone.mesh = tiling.mesh;
             tilingClone.material = tiling.material;
-            tilingClone.updateInPlayMode = tilingClone.updateInPlayMode;
-            tilingClone.scale = tilingClone.scale;
-            tilingClone.translation = tilingClone.translation;
-            tilingClone.rotation = tilingClone.rotation;
-            tilingClone.generateCollider = tilingClone.generateCollider;
+            tilingClone.updateInPlayMode = tiling.updateInPlayMode;
+            tilingClone.scale = tiling.scale;
+            tilingClone.translation = tiling.translation;
+            tilingClone.rotation = tiling.rotation;
+            tilingClone.generateCollider = tiling.generateCollider;
+            tilingClone.mode = tiling.mode;
         }
 
     }
