@@ -99,7 +99,7 @@ namespace SplineMesh {
                     // place a handle on the node and manage position change
 
                     // TODO place the handle depending on user params (local or world)
-                    Vector3 newPosition = spline.transform.InverseTransformPoint(Handles.PositionHandle(spline.transform.TransformPoint(selection.Position), spline.transform.rotation));
+                    Vector3 newPosition = spline.transform.InverseTransformPoint(Handles.PositionHandle(spline.transform.TransformPoint(selection.Position), Quaternion.LookRotation(selection.Direction - selection.Position)));
                     if (newPosition != selection.Position) {
                         // position handle has been moved
                         if (mustCreateNewNode) {
@@ -114,7 +114,7 @@ namespace SplineMesh {
                     }
                     break;
                 case SelectionType.Direction:
-                    var result = Handles.PositionHandle(spline.transform.TransformPoint(selection.Direction), Quaternion.identity);
+                    var result = Handles.PositionHandle(spline.transform.TransformPoint(selection.Direction), Quaternion.LookRotation(selection.Direction- selection.Position));
                     selection.Direction = spline.transform.InverseTransformPoint(result);
                     break;
                 case SelectionType.InverseDirection:
