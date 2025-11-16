@@ -127,20 +127,21 @@ namespace SpaceTransit.Ships
             if (!TryGetVaulter(out var controller)
                 || !controller.IsInService
                 || controller.Stop is not IDeparture {ExitTowards: var id}
-                || !Station.TryGetLoadedStation(id, out var station))
+                || !Station.TryGetLoadedStation(controller.Stop.Station, out var station)
+                || !Station.TryGetLoadedStation(id, out var towards))
             {
                 exit = null;
                 return false;
             }
 
             var dock = station.Docks[controller.Stop.DockIndex];
-            if (dock.FrontExit && dock.FrontExit.ConnectedStation == station)
+            if (dock.FrontExit && dock.FrontExit.ConnectedStation == towards)
             {
                 exit = dock.FrontExit;
                 return true;
             }
 
-            if (dock.BackExit && dock.BackExit.ConnectedStation == station)
+            if (dock.BackExit && dock.BackExit.ConnectedStation == towards)
             {
                 exit = dock.BackExit;
                 return true;
