@@ -9,7 +9,9 @@ namespace SpaceTransit
     public sealed class Clock : MonoBehaviour
     {
 
-        public static TimeSpan Now => new TimeSpan(7, 29, 50).Add(TimeSpan.FromSeconds(Time.timeAsDouble));
+        private static TimeSpan _startTime = DateTime.Now.TimeOfDay;
+
+        public static TimeSpan Now => _startTime.Add(TimeSpan.FromSeconds(Time.timeAsDouble));
 
         public static float UnscaledDelta => Mathf.Min(0.3f, Time.unscaledDeltaTime);
 
@@ -19,7 +21,15 @@ namespace SpaceTransit
 
         private TextMeshProUGUI _text;
 
-        private void Awake() => _text = GetComponent<TextMeshProUGUI>();
+        [SerializeField]
+        private string start;
+
+        private void Awake()
+        {
+            _text = GetComponent<TextMeshProUGUI>();
+            if (TimeSpan.TryParse(start, out var startTime))
+                _startTime = startTime;
+        }
 
         private void Update() => _text.text = Now.ToString("hh':'mm':'ss");
 
