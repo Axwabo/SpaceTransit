@@ -98,6 +98,8 @@ namespace SpaceTransit.Ships.Driving
 
         public override void OnRouteChanged() => _departed = true;
 
+        private void OnEnable() => _departed = true;
+
     }
 
 }
