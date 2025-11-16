@@ -17,6 +17,9 @@ namespace SpaceTransit.Audio
         [SerializeField]
         private float max;
 
+        [SerializeField]
+        private bool restart;
+
         private AudioSource _source;
 
         private ShipAssembly _assembly;
@@ -42,7 +45,7 @@ namespace SpaceTransit.Audio
             if (_targetVolume == 0 || volume != 0 || _source.loop)
                 return;
             _source.Play();
-            _source.time = op != Operator.Range
+            _source.time = !restart && op != Operator.Range
                 ? _assembly.CurrentSpeed.Raw / _assembly.MaxSpeed * (_source.clip.length * 0.95f)
                 : 0;
         }
