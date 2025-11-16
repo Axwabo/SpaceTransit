@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using SpaceTransit.Routes;
+using SpaceTransit.Routes.Stops;
 using SpaceTransit.Ships.Modules;
 using SpaceTransit.Vaulter;
 using UnityEngine;
@@ -69,6 +71,8 @@ namespace SpaceTransit.Ships
                 return;
             _liftProgress = -1;
             State = lifting ? ShipState.Sailing : ShipState.Docked;
+            if (lifting && TryGetExit(out var exit))
+                exit.UsedBy.Add(Assembly);
         }
 
         public void MarkReady()
@@ -77,7 +81,8 @@ namespace SpaceTransit.Ships
                 return;
             if (State != ShipState.Docked)
                 throw new InvalidOperationException("Cannot depart while not docked");
-            State = ShipState.WaitingForDeparture;
+            if (!TryGetExit(out var exit) || exit.IsFreeFor(Assembly))
+                State = ShipState.WaitingForDeparture;
         }
 
         public void Land()
@@ -109,6 +114,34 @@ namespace SpaceTransit.Ships
             }
 
             controller = null;
+            return false;
+        }
+
+        private bool TryGetExit(out Exit exit)
+        {
+            if (!TryGetVaulter(out var controller)
+                || !controller.IsInService
+                || controller.Stop is not IDeparture {ExitTowards: var id}
+                || !Station.TryGetLoadedStation(id, out var station))
+            {
+                exit = null;
+                return false;
+            }
+
+            var dock = station.Docks[controller.Stop.DockIndex];
+            if (dock.FrontExit && dock.FrontExit.ConnectedStation == station)
+            {
+                exit = dock.FrontExit;
+                return true;
+            }
+
+            if (dock.BackExit && dock.BackExit.ConnectedStation == station)
+            {
+                exit = dock.BackExit;
+                return true;
+            }
+
+            exit = null;
             return false;
         }
 
