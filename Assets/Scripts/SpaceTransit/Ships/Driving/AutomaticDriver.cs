@@ -14,7 +14,23 @@ namespace SpaceTransit.Ships.Driving
 
         private float _remainingWait;
 
-        private bool _departed = true;
+        private bool _departed;
+
+        private bool ShouldStop
+        {
+            get
+            {
+                if (!Station.TryGetLoadedStation(Parent.Stop.Station, out var station))
+                    return false;
+                var tube = station.Docks[Parent.Stop.DockIndex].Tube;
+                var stopPoint = World.Current.TransformPoint(tube.Sample(Assembly.Reverse ? 15 : tube.Length - 15).Position);
+                var speed = Assembly.CurrentSpeed.Raw;
+                var deceleration = Assembly.Deceleration;
+                var brakingTime = speed / deceleration;
+                var brakingDistance = deceleration * brakingTime * brakingTime * 0.5f;
+                return Vector3.Distance(stopPoint, FrontPosition) <= brakingDistance * World.MetersToWorld;
+            }
+        }
 
         private void Update()
         {
@@ -78,21 +94,7 @@ namespace SpaceTransit.Ships.Driving
                 Assembly.SetSpeed(Assembly.MaxSpeed.Limit(Assembly.FrontModule.Thruster.Tube.SpeedLimit));
         }
 
-        private bool ShouldStop
-        {
-            get
-            {
-                if (!Station.TryGetLoadedStation(Parent.Stop.Station, out var station))
-                    return false;
-                var tube = station.Docks[Parent.Stop.DockIndex].Tube;
-                var stopPoint = World.Current.TransformPoint(tube.Sample(Assembly.Reverse ? 15 : tube.Length - 15).Position);
-                var speed = Assembly.CurrentSpeed.Raw;
-                var deceleration = Assembly.Deceleration;
-                var brakingTime = speed / deceleration;
-                var brakingDistance = deceleration * brakingTime * brakingTime * 0.5f;
-                return Vector3.Distance(stopPoint, FrontPosition) <= brakingDistance * World.MetersToWorld;
-            }
-        }
+        public override void OnRouteChanged() => _departed = true;
 
     }
 
