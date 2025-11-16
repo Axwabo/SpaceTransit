@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -15,8 +14,8 @@ namespace SplineMesh {
     [Serializable]
     public class CubicBezierCurve {
 
-        private const int STEP_COUNT = 30;
-        private const float T_STEP = 1.0f / STEP_COUNT;
+        private const int STEP_COUNT = 300;
+        private const float T_STEP = 1f / STEP_COUNT;
 
         private readonly List<CurveSample> samples = new List<CurveSample>(STEP_COUNT);
 
@@ -26,6 +25,10 @@ namespace SplineMesh {
         /// Length of the curve in world unit.
         /// </summary>
         public float Length { get; private set; }
+
+        private float _count;
+
+        private CurveSample[] _samplesFast = Array.Empty<CurveSample>();
 
         /// <summary>
         /// This event is raised when of of the control points has moved.
@@ -134,6 +137,8 @@ namespace SplineMesh {
             samples.Add(CreateSample(Length, 1));
 
             if (Changed != null) Changed.Invoke();
+            _count = samples.Count;
+            _samplesFast = samples.ToArray();
         }
 
         private CurveSample CreateSample(float distance, float time) {
@@ -167,7 +172,7 @@ namespace SplineMesh {
                 previous = cp;
             }
             if (!found) throw new Exception("Can't find curve samples.");
-            float t = next == previous ? 0 : (time - previous.timeInCurve) / (next.timeInCurve - previous.timeInCurve);
+            float t = next.Equals(previous) ? 0 : (time - previous.timeInCurve) / (next.timeInCurve - previous.timeInCurve);
 
             return CurveSample.Lerp(previous, next, t);
         }
@@ -181,19 +186,26 @@ namespace SplineMesh {
             if (d < 0 || d > Length)
                 throw new ArgumentException("Distance must be positive and less than curve length. Length = " + Length + ", given distance was " + d);
 
-            CurveSample previous = samples[0];
+            var span = _samplesFast.AsSpan();
+            CurveSample previous = span[0];
             CurveSample next = default(CurveSample);
             bool found = false;
-            foreach (CurveSample cp in samples) {
-                if (cp.distanceInCurve >= d) {
+            var count = _count;
+            for (var i = 0; i < count; i++)
+            {
+                var cp = span[i];
+                if (cp.distanceInCurve >= d)
+                {
                     next = cp;
                     found = true;
                     break;
                 }
+
                 previous = cp;
             }
+
             if (!found) throw new Exception("Can't find curve samples.");
-            float t = next == previous ? 0 : (d - previous.distanceInCurve) / (next.distanceInCurve - previous.distanceInCurve);
+            float t = next.Equals(previous) ? 0 : (d - previous.distanceInCurve) / (next.distanceInCurve - previous.distanceInCurve);
 
             return CurveSample.Lerp(previous, next, t);
         }

@@ -65,7 +65,7 @@ namespace SplineMesh
             spline = GetComponentInParent<Spline>();
             spline.NodeListChanged += (s, e) => toUpdate = true;
 
-            toUpdate = true;
+            CreateMeshes();
         }
 
         private void OnValidate()

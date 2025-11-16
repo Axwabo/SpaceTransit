@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace SplineMesh {
     /// <summary>
@@ -46,32 +42,14 @@ namespace SplineMesh {
             rotation = Quaternion.identity;
         }
 
-        public override bool Equals(object obj) {
-            if (obj == null || GetType() != obj.GetType()) {
-                return false;
-            }
-            CurveSample other = (CurveSample)obj;
-            return location == other.location &&
-                tangent == other.tangent &&
-                up == other.up &&
-                scale == other.scale &&
-                roll == other.roll &&
-                distanceInCurve == other.distanceInCurve &&
-                timeInCurve == other.timeInCurve;
-
-        }
-
-        public override int GetHashCode() {
-            return base.GetHashCode();
-        }
-
-        public static bool operator ==(CurveSample cs1, CurveSample cs2) {
-            return cs1.Equals(cs2);
-        }
-
-        public static bool operator !=(CurveSample cs1, CurveSample cs2) {
-            return !cs1.Equals(cs2);
-        }
+        public bool Equals(CurveSample other)
+            => location == other.location &&
+               tangent == other.tangent &&
+               up == other.up &&
+               scale == other.scale &&
+               roll == other.roll &&
+               distanceInCurve == other.distanceInCurve &&
+               timeInCurve == other.timeInCurve;
 
         /// <summary>
         /// Linearly interpolates between two curve samples.
