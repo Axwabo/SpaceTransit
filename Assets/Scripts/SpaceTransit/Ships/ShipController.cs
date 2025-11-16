@@ -46,6 +46,8 @@ namespace SpaceTransit.Ships
 
         private void Update()
         {
+            if (!Assembly.FrontModule.Thruster.Tube.Safety.CanProceed(Assembly))
+                Assembly.SetSpeed(0);
             if (_previousState == State)
                 return;
             foreach (var component in _components)

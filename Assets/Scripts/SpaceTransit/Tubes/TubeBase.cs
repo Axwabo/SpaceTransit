@@ -27,9 +27,10 @@ namespace SpaceTransit.Tubes
         protected virtual void Awake()
         {
             Transform = transform;
-            Safety = TryGetComponent(out SafetyEnsurer ensurer)
-                ? ensurer
-                : gameObject.AddComponent<TwoSegmentsSafety>();
+            if (Application.isPlaying)
+                Safety = TryGetComponent(out SafetyEnsurer ensurer)
+                    ? ensurer
+                    : gameObject.AddComponent<TwoSegmentsSafety>();
         }
 
         private void OnValidate()

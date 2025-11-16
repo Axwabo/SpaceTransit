@@ -17,7 +17,7 @@ namespace SpaceTransit.Cosmos
 
         private void Awake() => Tube = GetComponent<TubeBase>();
 
-        protected bool IsFreeFor(ShipAssembly assembly)
+        public bool IsFreeFor(ShipAssembly assembly)
         {
             foreach (var module in Occupants)
                 if (module.Assembly != assembly)
@@ -25,7 +25,7 @@ namespace SpaceTransit.Cosmos
             return true;
         }
 
-        public virtual bool CanProceed(ShipAssembly assembly) => IsFreeFor(assembly);
+        public abstract bool CanProceed(ShipAssembly assembly);
 
         public virtual void OnEntered(ShipModule module) => Occupants.Add(module);
 
