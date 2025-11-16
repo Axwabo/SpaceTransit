@@ -19,7 +19,7 @@ namespace SpaceTransit.Movement
         private void OnTriggerExit(Collider other)
         {
             if (other.TryGetComponent(out MovementController controller) && controller.Mount == Transform)
-                controller.Mount = null;
+                controller.Mount = World.Current;
         }
 
     }

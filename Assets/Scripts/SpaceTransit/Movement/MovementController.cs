@@ -29,8 +29,6 @@ namespace SpaceTransit.Movement
 
         private Transform _mount;
 
-        private Vector3 _mountOffset;
-
         private float _verticalVelocity;
 
         public Transform Mount
