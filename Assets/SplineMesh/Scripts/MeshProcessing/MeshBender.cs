@@ -225,7 +225,7 @@ namespace SplineMesh {
             var uv6 = new List<Vector2>();
             var uv7 = new List<Vector2>();
             var uv8 = new List<Vector2>();
-            for (int i = 0; i < repetitionCount; i++) {
+            for (int i = 0; i <= repetitionCount; i++) {
                 foreach (var index in source.Triangles) {
                     triangles.Add(index + source.Vertices.Count * i);
                 }
@@ -244,12 +244,12 @@ namespace SplineMesh {
             // computing vertices and normals
             var bentVertices = new List<MeshVertex>(source.Vertices.Count);
             float offset = 0;
-            for (int i = 0; i < repetitionCount; i++) {
+            for (int i = 0; i <= repetitionCount; i++) {
 
                 sampleCache.Clear();
                 // for each mesh vertex, we found its projection on the curve
                 foreach (var vert in source.Vertices) {
-                    float distance = vert.position.x - source.MinX + offset;
+                    float distance = Mathf.Min(intervalLength, vert.position.x - source.MinX + offset);
                     CurveSample sample;
                     if (!sampleCache.TryGetValue(distance, out sample)) {
                         if (!useSpline) {
