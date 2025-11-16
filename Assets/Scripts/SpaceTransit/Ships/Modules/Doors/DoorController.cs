@@ -18,6 +18,15 @@ namespace SpaceTransit.Ships.Modules.Doors
         [SerializeField]
         private Transform right;
 
+        [SerializeField]
+        private AudioSource source;
+
+        [SerializeField]
+        private AudioClip open;
+
+        [SerializeField]
+        private AudioClip close;
+
         private float _time;
 
         private float _duration;
@@ -39,10 +48,12 @@ namespace SpaceTransit.Ships.Modules.Doors
 
         public void RequestOpen()
         {
-            if (State != ShipState.Docked || _state != DoorState.Closed)
+            if (State != ShipState.Docked || _state is DoorState.Opening or DoorState.Open)
                 return;
             _state = DoorState.Opening;
-            _time = 0;
+            source.clip = open;
+            source.Play();
+            source.time = _time;
         }
 
         private void Update()
@@ -56,7 +67,9 @@ namespace SpaceTransit.Ships.Modules.Doors
                     if ((_time -= Time.deltaTime) > 0)
                         break;
                     _state = DoorState.Closing;
-                    _time = 0;
+                    _time = _duration;
+                    source.clip = close;
+                    source.Play();
                     break;
                 case DoorState.Closing:
                     Close();
@@ -66,7 +79,7 @@ namespace SpaceTransit.Ships.Modules.Doors
 
         private void Open()
         {
-            Animate(_time);
+            Animate();
             if ((_time += Time.deltaTime) <= _duration)
                 return;
             _state = DoorState.Open;
@@ -75,19 +88,19 @@ namespace SpaceTransit.Ships.Modules.Doors
 
         private void Close()
         {
-            Animate(_duration - _time);
-            if ((_time += Time.deltaTime) <= _duration)
+            Animate();
+            if ((_time -= Time.deltaTime) >= 0)
                 return;
             _state = DoorState.Closed;
             _time = 0;
         }
 
-        private void Animate(float time)
+        private void Animate()
         {
-            var x = sideways.Evaluate(time);
-            var z = forwards.Evaluate(time);
-            left.localPosition = _leftOffset + new Vector3(-x, 0, z);
-            right.localPosition = _rightOffset + new Vector3(x, 0, z);
+            var x = sideways.Evaluate(_time);
+            var z = forwards.Evaluate(_time);
+            left.localPosition = _leftOffset + new Vector3(z, 0, -x);
+            right.localPosition = _rightOffset + new Vector3(z, 0, x);
         }
 
         private enum DoorState
