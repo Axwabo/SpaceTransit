@@ -27,6 +27,9 @@ namespace SpaceTransit.Ships.Modules.Doors
         [SerializeField]
         private bool oddOnly;
 
+        [SerializeField]
+        private int max;
+
         private Material _inactive;
 
         private float _remaining;
@@ -46,9 +49,9 @@ namespace SpaceTransit.Ships.Modules.Doors
                 return;
             }
 
-            if ((_remaining -= Time.deltaTime) > 0)
+            if ((_remaining -= Time.deltaTime) > 0 || ++_count > max && max != 0)
                 return;
-            var odd = ++_count % 2 == 1;
+            var odd = _count % 2 == 1;
             if (odd || !oddOnly)
                 source.PlayOneShot(beep);
             meshRenderer.sharedMaterial = odd ? active : _inactive;
