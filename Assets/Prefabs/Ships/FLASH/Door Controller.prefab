@@ -265,6 +265,7 @@ GameObject:
   - component: {fileID: 1111783154091933961}
   - component: {fileID: 4530858828060569431}
   - component: {fileID: 2043003171070750549}
+  - component: {fileID: 159796614518965083}
   m_Layer: 0
   m_Name: Door Controller
   m_TagString: Untagged
@@ -398,6 +399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e9db298a0a447b8b647f72ac40e5435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Modules.Doors.DoorController
+  isLeftSide: 0
   sideways:
     serializedVersion: 2
     m_Curve:
@@ -460,3 +462,19 @@ MonoBehaviour:
   source: {fileID: 4530858828060569431}
   open: {fileID: 0}
   close: {fileID: 8300000, guid: 2026b1040d975f04986e36b596a6efcf, type: 3}
+--- !u!114 &159796614518965083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8320358125520757997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67d949f90c8e4e23aa9e2e0c797fc186, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Modules.Doors.DoorAlarm
+  controller: {fileID: 2043003171070750549}
+  source: {fileID: 0}
+  beep: {fileID: 8300000, guid: fbc1ee3f3dc770047b95020a650b2e38, type: 3}
+  interval: 1

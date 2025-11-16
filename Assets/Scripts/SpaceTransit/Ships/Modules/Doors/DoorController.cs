@@ -49,6 +49,8 @@ namespace SpaceTransit.Ships.Modules.Doors
                                       && station.Docks[controller.Stop.DockIndex] is {Left: var openLeft, Right: var openRight}
                                       && (isLeftSide ? openLeft : openRight);
 
+        public bool AlarmActive => _state == DoorState.Closing || _state == DoorState.Open && _time < 2f;
+
         protected override void Awake()
         {
             _leftOffset = left.localPosition;
