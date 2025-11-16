@@ -18,9 +18,15 @@ namespace SpaceTransit.Ships.Modules
 
         public bool CanDepart => _components.All(e => e is not IDepartureBlocker {CanDepart: false});
 
+        public ModuleThruster Thruster { get; private set; }
+
         private ModuleComponentBase[] _components;
 
-        protected override void Awake() => _components = GetComponentsInChildren<ModuleComponentBase>();
+        protected override void Awake()
+        {
+            _components = GetComponentsInChildren<ModuleComponentBase>();
+            Thruster = _components.OfType<ModuleThruster>().First();
+        }
 
         protected override void OnInitialized()
         {

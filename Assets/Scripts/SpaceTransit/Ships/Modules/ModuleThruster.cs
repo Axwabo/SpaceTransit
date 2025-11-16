@@ -7,14 +7,14 @@ namespace SpaceTransit.Ships.Modules
     public sealed class ModuleThruster : ModuleComponentBase
     {
 
-        private TubeBase _tube;
+        public TubeBase Tube { get; private set; }
 
         private float _distance;
 
         protected override void OnInitialized()
         {
             _distance = Transform.localPosition.z;
-            _tube = Assembly.startTube;
+            Tube = Assembly.startTube;
             UpdateLocation();
         }
 
@@ -29,7 +29,7 @@ namespace SpaceTransit.Ships.Modules
         private void UpdateLocation()
         {
             var previousPosition = Transform.localPosition;
-            var (position, rotation) = _tube.Sample(_distance);
+            var (position, rotation) = Tube.Sample(_distance);
             Transform.SetLocalPositionAndRotation(position, rotation);
             if (previousPosition != position && Parent.Mount.Transform == MovementController.Current.Mount)
                 World.Current.position -= Transform.TransformVector(position - previousPosition);
@@ -38,19 +38,19 @@ namespace SpaceTransit.Ships.Modules
         private void UpdateDistance()
         {
             var target = _distance + Assembly.CurrentSpeed * Clock.FixedDelta;
-            if (target > _tube.Length)
+            if (target > Tube.Length)
             {
-                if (!_tube.HasNext)
+                if (!Tube.HasNext)
                     return;
-                _distance = target - _tube.Length;
-                _tube = _tube.Next;
+                _distance = target - Tube.Length;
+                Tube = Tube.Next;
             }
             else if (target < 0)
             {
-                if (!_tube.HasPrevious)
+                if (!Tube.HasPrevious)
                     return;
-                _tube = _tube.Previous;
-                _distance = target + _tube.Length;
+                Tube = Tube.Previous;
+                _distance = target + Tube.Length;
             }
             else
                 _distance = target;

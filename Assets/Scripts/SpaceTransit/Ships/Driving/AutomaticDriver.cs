@@ -57,13 +57,25 @@ namespace SpaceTransit.Ships.Driving
         {
             if (!_departed)
             {
-                Assembly.SetSpeed(Assembly.MaxSpeed);
+                Assembly.SetSpeed(Assembly.MaxSpeed.Limit(Assembly.NextTube().SpeedLimit));
                 _departed = true;
+                return;
             }
-            else if (Assembly.TargetSpeed.Raw != 0 && ShouldStop)
+
+            if (Assembly.TargetSpeed.Raw != 0 && ShouldStop)
+            {
                 Assembly.SetSpeed(0);
-            else if (Controller.CanLand)
+                return;
+            }
+
+            if (Controller.CanLand)
+            {
                 Controller.Land();
+                return;
+            }
+
+            if (Assembly.TargetSpeed.Raw != 0)
+                Assembly.SetSpeed(Assembly.MaxSpeed.Limit(Assembly.FrontModule.Thruster.Tube.SpeedLimit));
         }
 
         private bool ShouldStop
