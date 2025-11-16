@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Globalization;
 using TMPro;
 using UnityEngine;
 
 namespace SpaceTransit
 {
 
-    [RequireComponent(typeof(TextMeshProUGUI))]
     public sealed class Clock : MonoBehaviour
     {
 
@@ -26,8 +26,9 @@ namespace SpaceTransit
 
         private void Awake()
         {
-            _text = GetComponent<TextMeshProUGUI>();
-            if (TimeSpan.TryParse(start, out var startTime))
+            if (!TryGetComponent(out _text))
+                Destroy(this);
+            if (TimeSpan.TryParse(start, CultureInfo.InvariantCulture, out var startTime))
                 _startTime = startTime;
         }
 
