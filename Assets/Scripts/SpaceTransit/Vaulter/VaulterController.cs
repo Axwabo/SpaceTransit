@@ -21,6 +21,9 @@ namespace SpaceTransit.Vaulter
         [SerializeField]
         private RouteDescriptor initialRoute;
 
+        [SerializeField]
+        public int initialStopIndex = Origin;
+
         public RouteDescriptor Route { get; private set; }
 
         public Stop Stop { get; private set; }
@@ -33,10 +36,11 @@ namespace SpaceTransit.Vaulter
         {
             foreach (var component in _components)
                 component.Initialize(this);
-            if (!initialRoute || !Station.TryGetLoadedStation(initialRoute.Origin.Station, out var station))
+            Stop origin = initialStopIndex == Origin ? initialRoute.Origin : initialRoute.IntermediateStops[initialStopIndex];
+            if (!initialRoute || !Station.TryGetLoadedStation(origin.Station, out var station))
                 return;
-            Assembly.startTube = station.Docks[initialRoute.Origin.DockIndex].Tube;
-            BeginRoute(initialRoute);
+            Assembly.startTube = station.Docks[origin.DockIndex].Tube;
+            BeginRoute(initialRoute, initialStopIndex);
         }
 
         public void ExitService()
@@ -47,11 +51,11 @@ namespace SpaceTransit.Vaulter
             NotifyRouteChanged();
         }
 
-        public void BeginRoute(RouteDescriptor descriptor)
+        public void BeginRoute(RouteDescriptor descriptor, int stopIndex)
         {
             Route = descriptor;
             NotifyRouteChanged();
-            UpdateStop(Origin);
+            UpdateStop(stopIndex);
         }
 
         private void UpdateStop(int index)

@@ -15,7 +15,7 @@ namespace SpaceTransit.Editor
             window.Show();
         }
 
-        private void OnGUI() => Time.timeScale = EditorGUILayout.Slider("Scale", Time.timeScale, 0.1f, 10);
+        private void OnGUI() => Time.timeScale = EditorGUILayout.Slider("Scale", Time.timeScale, 0.1f, 20);
 
     }
 
