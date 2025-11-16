@@ -54,6 +54,7 @@ namespace SpaceTransit.Vaulter
         public void BeginRoute(RouteDescriptor descriptor, int stopIndex)
         {
             Route = descriptor;
+            Assembly.Reverse = descriptor.Reverse;
             NotifyRouteChanged();
             UpdateStop(stopIndex);
         }
