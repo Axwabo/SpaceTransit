@@ -67,7 +67,7 @@ namespace SpaceTransit.Audio
                 _player.Enqueue(welcomeStart);
                 _player.Enqueue(Parent.Route.Destination.Station.Announcement);
                 _player.Enqueue(welcomeEnd);
-                _player.Delay(3);
+                _player.Delay(2);
                 _welcomePlayed = true;
             }
 
@@ -84,6 +84,7 @@ namespace SpaceTransit.Audio
             _player.Enqueue(Parent.Stop.Station.Announcement);
             if (IsTerminus)
                 _player.Enqueue(goodbye);
+            _player.Delay(3);
             _currentStopPlayed = true;
         }
 
