@@ -82,6 +82,8 @@ namespace SpaceTransit.Editor
                     node.Position += transformedOffset;
                     node.Direction += transformedOffset;
                 }
+
+                spline.RefreshCurves();
             }
         }
 
