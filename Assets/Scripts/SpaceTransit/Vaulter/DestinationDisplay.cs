@@ -1,8 +1,7 @@
-﻿using SpaceTransit.Vaulter;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
-namespace SpaceTransit.Ships.Modules.Displays
+namespace SpaceTransit.Vaulter
 {
 
     [RequireComponent(typeof(TextMeshProUGUI))]

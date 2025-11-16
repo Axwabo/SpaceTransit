@@ -1,8 +1,8 @@
-﻿using SpaceTransit.Vaulter;
+﻿using SpaceTransit.Ships;
 using TMPro;
 using UnityEngine;
 
-namespace SpaceTransit.Ships.Modules.Displays
+namespace SpaceTransit.Vaulter
 {
 
     [RequireComponent(typeof(TextMeshProUGUI))]
@@ -16,7 +16,7 @@ namespace SpaceTransit.Ships.Modules.Displays
         private InformationType _type;
 
         private string Prefix => Controller.State is ShipState.LiftingOff or ShipState.Sailing ? "Next Stop: " : "";
-        
+
         protected override void Awake() => _text = GetComponent<TextMeshProUGUI>();
 
         private void Update()
