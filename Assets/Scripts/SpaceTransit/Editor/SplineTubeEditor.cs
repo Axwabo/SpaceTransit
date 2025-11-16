@@ -11,16 +11,23 @@ namespace SpaceTransit.Editor
     public sealed class SplineTubeEditor : UnityEditor.Editor
     {
 
+        private float _offset;
+
+        private Spline Spline => (Spline) serializedObject.FindProperty("spline").boxedValue;
+
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
             if (GUILayout.Button("Split"))
                 Split();
+            _offset = EditorGUILayout.FloatField("Offset By X", _offset);
+            if (GUILayout.Button("Offset"))
+                Offset();
         }
 
         private void Split()
         {
-            var spline = (Spline) serializedObject.FindProperty("spline").boxedValue;
+            var spline = Spline;
             var root = spline.transform.parent;
             var nodes = spline.nodes;
             var hasTiling = spline.TryGetComponent(out SplineMeshTiling tiling);
@@ -61,6 +68,18 @@ namespace SpaceTransit.Editor
             tilingClone.rotation = tiling.rotation;
             tilingClone.generateCollider = tiling.generateCollider;
             tilingClone.mode = tiling.mode;
+        }
+
+        private void Offset()
+        {
+            var spline = Spline;
+            var offset = Vector3.right * _offset;
+            foreach (var node in spline.nodes)
+            {
+                var transformedOffset = node.Rotation() * offset;
+                node.Position += transformedOffset;
+                node.Direction += transformedOffset;
+            }
         }
 
     }
