@@ -1,10 +1,14 @@
-﻿using UnityEngine;
+﻿using SpaceTransit.Routes;
+using UnityEngine;
 
 namespace SpaceTransit.Ships.Modules.Doors
 {
 
     public sealed class DoorController : ModuleComponentBase, IDepartureBlocker
     {
+
+        [SerializeField]
+        private bool isLeftSide;
 
         [SerializeField]
         private AnimationCurve sideways;
@@ -39,6 +43,12 @@ namespace SpaceTransit.Ships.Modules.Doors
 
         public bool CanDepart => _state == DoorState.Closed;
 
+        private bool IsCorrectSide => !Controller.TryGetVaulter(out var controller)
+                                      || controller.IsInService
+                                      && Station.TryGetLoadedStation(controller.Stop.Station, out var station)
+                                      && station.Docks[controller.Stop.DockIndex] is {Left: var openLeft, Right: var openRight}
+                                      && (isLeftSide ? openLeft : openRight);
+
         protected override void Awake()
         {
             _leftOffset = left.localPosition;
@@ -48,7 +58,7 @@ namespace SpaceTransit.Ships.Modules.Doors
 
         public void RequestOpen()
         {
-            if (State != ShipState.Docked || _state is DoorState.Opening or DoorState.Open)
+            if (State != ShipState.Docked || _state is DoorState.Opening or DoorState.Open || !IsCorrectSide)
                 return;
             _state = DoorState.Opening;
             source.clip = open;
@@ -97,10 +107,12 @@ namespace SpaceTransit.Ships.Modules.Doors
 
         private void Animate()
         {
-            var x = sideways.Evaluate(_time);
-            var z = forwards.Evaluate(_time);
-            left.localPosition = _leftOffset + new Vector3(z, 0, -x);
-            right.localPosition = _rightOffset + new Vector3(z, 0, x);
+            var z = sideways.Evaluate(_time);
+            var x = forwards.Evaluate(_time);
+            if (isLeftSide)
+                x = -x;
+            left.localPosition = _leftOffset + new Vector3(x, 0, -z);
+            right.localPosition = _rightOffset + new Vector3(x, 0, z);
         }
 
         private enum DoorState
