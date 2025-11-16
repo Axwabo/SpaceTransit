@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SpaceTransit.Cosmos;
+using UnityEngine;
 
 namespace SpaceTransit.Tubes
 {
@@ -21,7 +22,15 @@ namespace SpaceTransit.Tubes
 
         public bool HasPrevious { get; private set; }
 
-        protected virtual void Awake() => Transform = transform;
+        public SafetyEnsurer Safety { get; private set; }
+
+        protected virtual void Awake()
+        {
+            Transform = transform;
+            Safety = TryGetComponent(out SafetyEnsurer ensurer)
+                ? ensurer
+                : gameObject.AddComponent<TwoSegmentsSafety>();
+        }
 
         private void OnValidate()
         {
