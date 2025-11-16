@@ -12,6 +12,8 @@ namespace SpaceTransit.Ships.Modules
 
         private float _distance;
 
+        private bool _updated;
+
         protected override void OnInitialized()
         {
             _distance = Transform.localPosition.z;
@@ -21,14 +23,20 @@ namespace SpaceTransit.Ships.Modules
 
         private void Update()
         {
+            _updated = false;
             if (Assembly.CurrentSpeed.Raw != 0)
                 UpdateLocation();
         }
 
         private void FixedUpdate()
         {
-            if (Assembly.CurrentSpeed.Raw != 0)
-                UpdateDistance();
+            if (Assembly.CurrentSpeed.Raw == 0)
+                return;
+            UpdateDistance();
+            if (_updated)
+                return;
+            UpdateLocation();
+            _updated = true;
         }
 
         private void UpdateLocation()
