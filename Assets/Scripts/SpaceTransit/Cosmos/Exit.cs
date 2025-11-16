@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using SpaceTransit.Routes;
 using SpaceTransit.Ships;
 using UnityEngine;
 
-namespace SpaceTransit.Routes
+namespace SpaceTransit.Cosmos
 {
 
     public sealed class Exit : MonoBehaviour

@@ -15,6 +15,8 @@ namespace SpaceTransit.Cosmos
 
         protected TubeBase Tube { get; private set; }
 
+        public bool IsOccupied => Occupants.Count != 0;
+
         private void Awake() => Tube = GetComponent<TubeBase>();
 
         public bool IsFreeFor(ShipAssembly assembly)

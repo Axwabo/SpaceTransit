@@ -1,5 +1,4 @@
-﻿using System;
-using SpaceTransit.Movement;
+﻿using SpaceTransit.Movement;
 using SpaceTransit.Tubes;
 
 namespace SpaceTransit.Ships.Modules
@@ -18,6 +17,7 @@ namespace SpaceTransit.Ships.Modules
         {
             _distance = Transform.localPosition.z;
             Tube = Assembly.startTube;
+            Tube.Safety.OnEntered(Parent);
             UpdateLocation();
         }
 
@@ -55,15 +55,19 @@ namespace SpaceTransit.Ships.Modules
             {
                 if (!Tube.HasNext)
                     return;
+                Tube.Safety.OnExited(Parent);
                 _distance = target - Tube.Length;
                 Tube = Tube.Next;
+                Tube.Safety.OnEntered(Parent);
             }
             else if (target < 0)
             {
                 if (!Tube.HasPrevious)
                     return;
+                Tube.Safety.OnExited(Parent);
                 Tube = Tube.Previous;
                 _distance = target + Tube.Length;
+                Tube.Safety.OnEntered(Parent);
             }
             else
                 _distance = target;

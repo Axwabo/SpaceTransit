@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using SpaceTransit.Cosmos;
 using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
 using SpaceTransit.Ships.Modules;
@@ -71,8 +72,6 @@ namespace SpaceTransit.Ships
                 return;
             _liftProgress = -1;
             State = lifting ? ShipState.Sailing : ShipState.Docked;
-            if (lifting && TryGetExit(out var exit))
-                exit.UsedBy.Add(Assembly);
         }
 
         public void MarkReady()
@@ -81,8 +80,14 @@ namespace SpaceTransit.Ships
                 return;
             if (State != ShipState.Docked)
                 throw new InvalidOperationException("Cannot depart while not docked");
-            if (!TryGetExit(out var exit) || exit.IsFreeFor(Assembly))
-                State = ShipState.WaitingForDeparture;
+            if (TryGetExit(out var exit))
+            {
+                if (!exit.IsFreeFor(Assembly))
+                    return;
+                exit.UsedBy.Add(Assembly);
+            }
+
+            State = ShipState.WaitingForDeparture;
         }
 
         public void Land()
