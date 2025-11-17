@@ -31,6 +31,7 @@ namespace SpaceTransit.Tubes
                 Safety = TryGetComponent(out SafetyEnsurer ensurer)
                     ? ensurer
                     : gameObject.AddComponent<NextSegmentSafety>();
+            OnValidate();
         }
 
         private void OnValidate()
