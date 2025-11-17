@@ -36,7 +36,9 @@ namespace SpaceTransit.Ships
 
         public bool CanLand => State == ShipState.Sailing && Assembly.CurrentSpeed.Raw == 0;
 
-        public bool CanLiftOff => State == ShipState.WaitingForDeparture && Assembly.Modules.All(e => e.CanDepart);
+        public bool CanLiftOff => State == ShipState.WaitingForDeparture
+                                  && Assembly.Modules.All(e => e.CanDepart)
+                                  && Assembly.FrontModule.Thruster.Tube.Safety.CanProceed(Assembly);
 
         private void Start()
         {
