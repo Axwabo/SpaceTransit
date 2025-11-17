@@ -16,7 +16,7 @@ namespace SpaceTransit.Vaulter
         public override void OnStopChanged()
         {
             if (Parent.Stop is IDeparture {Departure: var time})
-                _text.text = $"Depart at: {time.Value:hh:mm}";
+                _text.text = $"Depart at: {time.Value:hh':'mm}";
         }
 
     }
