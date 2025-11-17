@@ -11,7 +11,7 @@ namespace SpaceTransit
 
         private static TimeSpan _startTime = DateTime.Now.TimeOfDay;
 
-        public static TimeSpan Now => _startTime.Add(TimeSpan.FromSeconds(Time.timeAsDouble));
+        public static TimeSpan Now => _startTime.Add(TimeSpan.FromSeconds(Time.timeSinceLevelLoadAsDouble));
 
         public static float UnscaledDelta => Mathf.Min(0.3f, Time.unscaledDeltaTime);
 
