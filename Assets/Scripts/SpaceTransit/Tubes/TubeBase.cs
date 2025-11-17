@@ -18,7 +18,7 @@ namespace SpaceTransit.Tubes
 
         public bool HasNext { get; private set; }
 
-        public TubeBase Previous { get; private set; }
+        public TubeBase Previous { get; set; }
 
         public bool HasPrevious { get; private set; }
 

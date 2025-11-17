@@ -82,14 +82,8 @@ namespace SpaceTransit.Ships
                 return;
             if (State != ShipState.Docked)
                 throw new InvalidOperationException("Cannot depart while not docked");
-            if (TryGetExit(out var exit))
-            {
-                if (!exit.IsFreeFor(Assembly))
-                    return;
-                exit.UsedBy.Add(Assembly);
-            }
-
-            State = ShipState.WaitingForDeparture;
+            if (!TryGetExit(out var exit) || exit.Lock(Assembly))
+                State = ShipState.WaitingForDeparture;
         }
 
         public void Land()
