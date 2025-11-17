@@ -22,7 +22,8 @@ The COSMOS ensures ship safety.
 If the player chooses to take control, they must respect the COSMOS signals.
 Overriding automatic actions performed by the ship can lead to catastrophic effects.
 
-The game will end upon a ship crashing as the system is designed to prevent such conditions.
+~~The game will end upon a ship crashing as the system is designed to prevent such conditions.~~
+not yet implemented
 
 # Acronyms
 
