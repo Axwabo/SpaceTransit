@@ -74,3 +74,7 @@ I recorded train sounds, and used [Vocal Remover](https://vocalremover.org/next/
 speech and sound effects.
 
 No SpaceTransit code was written by AI.
+
+# Models
+
+I made the models myself, and as someone who's barely blended (Blender) before, it's painful
