@@ -14,7 +14,7 @@ namespace SpaceTransit.Cosmos
         public override bool CanProceed(ShipAssembly assembly)
         {
             foreach (var tube in tubes)
-                if (!tube.Safety.CanProceed(assembly))
+                if (!tube.Safety.IsFreeFor(assembly))
                     return false;
             return true;
         }
