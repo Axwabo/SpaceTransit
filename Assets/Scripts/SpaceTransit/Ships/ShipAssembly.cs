@@ -50,6 +50,8 @@ namespace SpaceTransit.Ships
 
         public ShipModule FrontModule => CurrentSpeed.IsReverse ? Modules[^1] : Modules[0];
 
+        public ShipModule BackModule => CurrentSpeed.IsReverse ? Modules[0] : Modules[^1];
+
         protected override void Awake()
         {
             Modules = this.GetComponentsInImmediateChildren<ShipModule>().ToArray();

@@ -34,7 +34,19 @@ namespace SpaceTransit.Ships
 
         public ShipAssembly Assembly { get; private set; }
 
-        public bool CanLand => State == ShipState.Sailing && Assembly.CurrentSpeed.Raw == 0;
+        public bool CanLand => State == ShipState.Sailing
+                               && Assembly.CurrentSpeed.Raw == 0
+                               && Physics.Raycast(
+                                   Assembly.FrontModule.Transform.position,
+                                   Vector3.down,
+                                   1,
+                                   LayerMask.GetMask("Dock")
+                               ) && Physics.Raycast(
+                                   Assembly.BackModule.Transform.position,
+                                   Vector3.down,
+                                   1,
+                                   LayerMask.GetMask("Dock")
+                               );
 
         public bool CanLiftOff => State == ShipState.WaitingForDeparture
                                   && Assembly.Modules.All(e => e.CanDepart)
