@@ -41,11 +41,6 @@ namespace SpaceTransit.Ships
                                    Vector3.down,
                                    1,
                                    LayerMask.GetMask("Dock")
-                               ) && Physics.Raycast(
-                                   Assembly.BackModule.Transform.position,
-                                   Vector3.down,
-                                   1,
-                                   LayerMask.GetMask("Dock")
                                );
 
         public bool CanLiftOff => State == ShipState.WaitingForDeparture

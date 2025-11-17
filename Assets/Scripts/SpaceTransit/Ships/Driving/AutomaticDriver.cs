@@ -17,6 +17,8 @@ namespace SpaceTransit.Ships.Driving
 
         private bool _departed;
 
+        private bool _stopping;
+
         private bool ShouldStop
         {
             get
@@ -41,6 +43,7 @@ namespace SpaceTransit.Ships.Driving
             switch (Controller.State)
             {
                 case ShipState.Docked:
+                    _stopping = false;
                     UpdateDocked();
                     break;
                 case ShipState.WaitingForDeparture:
@@ -82,15 +85,10 @@ namespace SpaceTransit.Ships.Driving
                 return;
             }
 
-            if (Assembly.TargetSpeed.Raw != 0 && ShouldStop)
+            if (ShouldStop)
             {
+                _stopping = true;
                 Assembly.SetSpeed(0);
-                return;
-            }
-
-            if (!Controller.CanProceed)
-            {
-                _departed = false;
                 return;
             }
 
@@ -100,7 +98,7 @@ namespace SpaceTransit.Ships.Driving
                 return;
             }
 
-            if (Assembly.TargetSpeed.Raw != 0)
+            if (!_stopping && Controller.CanProceed)
                 Assembly.SetSpeed(Assembly.MaxSpeed.Limit(Assembly.FrontModule.Thruster.Tube.SpeedLimit));
         }
 
