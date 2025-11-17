@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v5
         
       - name: Create Docker image with Blender
-        run: docker build --build-arg GAME_CI_UNITY_EDITOR_IMAGE=unityci/editor:ubuntu-6000.2.10f1-webgl-3.2.0 . -t unity-blender
+        run: docker build --build-arg GAME_CI_UNITY_EDITOR_IMAGE=unityci/editor:ubuntu-6000.2.10f1-webgl-3.2.0 . -t axwabo/unity-blender
 
       - uses: game-ci/unity-builder@v4.7.0
         env:
@@ -24,7 +24,7 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: WebGL
-          customImage: unity-blender
+          customImage: axwabo/unity-blender
 
       - uses: actions/upload-pages-artifact@v3
         with:
