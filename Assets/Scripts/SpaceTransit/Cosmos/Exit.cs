@@ -23,8 +23,9 @@ namespace SpaceTransit.Cosmos
 
         public bool Lock(ShipAssembly assembly)
         {
-            if (!UsedBy.Add(assembly) && UsedBy.Count == 1)
+            if (UsedBy.Count != 0 && !UsedBy.Contains(assembly))
                 return false;
+            UsedBy.Add(assembly);
             if (!connectTo)
                 return true;
             if (assembly.Reverse)
