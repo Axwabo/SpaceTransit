@@ -34,6 +34,8 @@ namespace SpaceTransit.Cosmos
             return true;
         }
 
+        private void Update() => UsedBy.RemoveWhere(e => !e);
+
     }
 
 }

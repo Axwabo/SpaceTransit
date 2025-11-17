@@ -39,6 +39,8 @@ namespace SpaceTransit.Ships.Modules
             _updated = true;
         }
 
+        private void OnDestroy() => Tube.Safety.OnExited(Parent);
+
         private void UpdateLocation()
         {
             var previousPosition = Transform.localPosition;

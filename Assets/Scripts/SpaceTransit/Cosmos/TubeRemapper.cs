@@ -16,7 +16,7 @@ namespace SpaceTransit.Cosmos
 
         public override void OnEntered(ShipModule module)
         {
-            if (ensurer.IsOccupied)
+            if (!ensurer.IsOccupied)
                 Remap(module.Assembly.Reverse);
             base.OnEntered(module);
         }
