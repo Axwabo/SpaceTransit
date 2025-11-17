@@ -28,9 +28,9 @@ namespace SpaceTransit.Cosmos
             if (!connectTo)
                 return true;
             if (assembly.Reverse)
-                connectTo.Previous = connectTube;
+                connectTube.Previous = connectTo;
             else
-                connectTo.Next = connectTube;
+                connectTube.Next = connectTo;
             return true;
         }
 

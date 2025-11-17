@@ -24,9 +24,9 @@ namespace SpaceTransit.Cosmos
         private void Remap(bool reverse)
         {
             if (reverse)
-                connectTo.Previous = connectTube;
+                connectTube.Previous = connectTo;
             else
-                connectTo.Next = connectTube;
+                connectTube.Next = connectTo;
         }
 
     }
