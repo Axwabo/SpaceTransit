@@ -1,5 +1,11 @@
 ﻿# SpaceTransit
 
+> [!IMPORTANT]
+> I really rushed to get the game to a playable state in a week,
+> but I underestimated how much time it would take.
+> 
+> Updates coming soon™ :3
+
 A tra(i)nsit simulator game made in Unity, set in a fictional space country.
 
 Ships travel in fixed tubes, as if they were on train tracks.
