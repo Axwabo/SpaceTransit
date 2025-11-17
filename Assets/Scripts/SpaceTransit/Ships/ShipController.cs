@@ -52,6 +52,8 @@ namespace SpaceTransit.Ships
                                   && Assembly.Modules.All(e => e.CanDepart)
                                   && Assembly.FrontModule.Thruster.Tube.Safety.CanProceed(Assembly);
 
+        public bool CanProceed { get; private set; }
+
         private void Start()
         {
             _t = transform;
@@ -63,7 +65,8 @@ namespace SpaceTransit.Ships
 
         private void Update()
         {
-            if (!Assembly.FrontModule.Thruster.Tube.Safety.CanProceed(Assembly))
+            CanProceed = Assembly.FrontModule.Thruster.Tube.Safety.CanProceed(Assembly);
+            if (!CanProceed)
                 Assembly.SetSpeed(0);
             if (_previousState == State)
                 return;

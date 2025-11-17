@@ -75,6 +75,8 @@ namespace SpaceTransit.Ships.Driving
         {
             if (!_departed)
             {
+                if (!Controller.CanProceed)
+                    return;
                 Assembly.SetSpeed(Assembly.MaxSpeed.Limit(Assembly.NextTube().SpeedLimit));
                 _departed = true;
                 return;
@@ -83,6 +85,12 @@ namespace SpaceTransit.Ships.Driving
             if (Assembly.TargetSpeed.Raw != 0 && ShouldStop)
             {
                 Assembly.SetSpeed(0);
+                return;
+            }
+
+            if (!Controller.CanProceed)
+            {
+                _departed = false;
                 return;
             }
 
