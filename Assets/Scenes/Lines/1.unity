@@ -2182,7 +2182,6 @@ GameObject:
   - component: {fileID: 213162271}
   - component: {fileID: 213162270}
   - component: {fileID: 213162269}
-  - component: {fileID: 213162268}
   m_Layer: 0
   m_Name: 6
   m_TagString: Untagged
@@ -2206,22 +2205,6 @@ Transform:
   - {fileID: 595770842}
   m_Father: {fileID: 1241863464}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &213162268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 213162266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42172e678ab24d2d8fb4fb6e0da3da42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.SpecificSegmentsSafety
-  tubes:
-  - {fileID: 1424949222}
-  - {fileID: 733531538}
-  - {fileID: 760660975}
 --- !u!114 &213162269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9821,6 +9804,7 @@ GameObject:
   - component: {fileID: 733531540}
   - component: {fileID: 733531539}
   - component: {fileID: 733531538}
+  - component: {fileID: 733531541}
   m_Layer: 0
   m_Name: 6
   m_TagString: Untagged
@@ -9926,6 +9910,22 @@ MonoBehaviour:
   CurveChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &733531541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733531536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42172e678ab24d2d8fb4fb6e0da3da42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.SpecificSegmentsSafety
+  tubes:
+  - {fileID: 760660975}
+  - {fileID: 1424949222}
+  - {fileID: 213162269}
 --- !u!1 &735284204
 GameObject:
   m_ObjectHideFlags: 0
