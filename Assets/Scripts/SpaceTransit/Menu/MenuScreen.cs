@@ -12,6 +12,8 @@ namespace SpaceTransit.Menu
         [SerializeField]
         private GameObject ui;
 
+        private void Awake() => IsOpen = true;
+
         private void Update()
         {
             if (InputSystem.actions["Menu"].WasPressedThisFrame())

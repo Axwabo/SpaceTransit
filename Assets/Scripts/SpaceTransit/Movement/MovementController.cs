@@ -46,6 +46,7 @@ namespace SpaceTransit.Movement
             _t = transform;
             _cc = GetComponent<CharacterController>();
             Current = this;
+            Time.timeScale = 1;
         }
 
         private void Start() => World.Current.position -= Position;
@@ -91,7 +92,11 @@ namespace SpaceTransit.Movement
                 _verticalVelocity = 0;
         }
 
-        private void OnDestroy() => Cursor.lockState = CursorLockMode.None;
+        private void OnDestroy()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Time.timeScale = 1;
+        }
 
     }
 
