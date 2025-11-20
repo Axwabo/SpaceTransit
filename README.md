@@ -22,6 +22,10 @@ Currently, only 1 line has been built.
 
 # Gameplay
 
+> [!IMPORTANT]
+> If the world doesn't load, or you fall out, press `Tab` to (re)open the menu, click `Exit`
+> to go back to the main menu and try again.
+
 Ships are automatically controlled by default. The player can choose to manually "drive" a ship.
 
 The COSMOS ensures ship safety.
