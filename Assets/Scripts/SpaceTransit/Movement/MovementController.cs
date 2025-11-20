@@ -46,7 +46,6 @@ namespace SpaceTransit.Movement
             _t = transform;
             _cc = GetComponent<CharacterController>();
             Current = this;
-            Cursor.lockState = CursorLockMode.Locked;
         }
 
         private void Start() => World.Current.position -= Position;
