@@ -26,11 +26,15 @@ Currently, only 1 line has been built.
 > If the world doesn't load, or you fall out, press `Tab` to (re)open the menu, click `Exit`
 > to go back to the main menu and try again.
 
+https://github.com/user-attachments/assets/2ece0849-6b37-45b2-a3f9-036c407437ce
+
 Ships are automatically controlled by default. The player can choose to manually "drive" a ship.
 
 The COSMOS ensures ship safety.
 If the player chooses to take control, they must respect the COSMOS signals.
 Overriding automatic actions performed by the ship can lead to catastrophic effects.
+
+To reverse the ship in manual mode, make sure it's stationary and go into the back module.
 
 ~~The game will end upon a ship crashing as the system is designed to prevent such conditions.~~
 not yet implemented
