@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SpaceTransit.Audio;
 using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
@@ -11,6 +12,20 @@ namespace SpaceTransit.Stations
     public sealed class StationAnnouncer : MonoBehaviour
     {
 
+        [Header("Signals")]
+        [SerializeField]
+        private AudioClip genericSignal;
+
+        [SerializeField]
+        private float genericDuration;
+
+        [SerializeField]
+        private AudioClip interHubSignal;
+
+        [SerializeField]
+        private float interHubDuration;
+
+        [Header("Conjunctions")]
         [SerializeField]
         private AudioClip at;
 
@@ -29,13 +44,20 @@ namespace SpaceTransit.Stations
         [SerializeField]
         private AudioClip and;
 
-        [Header("Common Phrases")]
+        [Header("Ships")]
         [SerializeField]
         private AudioClip passenger;
 
         [SerializeField]
+        private AudioClip fast;
+
+        [SerializeField]
+        private AudioClip interHub;
+
+        [SerializeField]
         private AudioClip ship;
 
+        [Header("Common Phrases")]
         [SerializeField]
         private AudioClip departsFor;
 
@@ -112,6 +134,8 @@ namespace SpaceTransit.Stations
                 if (GetAnnouncement(route, index, departure) is not { } announcement)
                     continue;
                 _announced[route] = departure.DepartureMinutes();
+                var inter = route.Type == ServiceType.InterHub;
+                _queue.Enqueue(inter ? interHubSignal : genericSignal, inter ? interHubDuration : genericDuration);
                 foreach (var clip in announcement)
                     _queue.Enqueue(clip);
             }
@@ -135,7 +159,7 @@ namespace SpaceTransit.Stations
         private IEnumerable<AudioClip> In(int deltaMinutes, RouteDescriptor route, IDeparture departure) => new[]
         {
             the,
-            passenger,
+            Type(route),
             ship,
             to,
             route.Destination.Station.Announcement,
@@ -152,7 +176,7 @@ namespace SpaceTransit.Stations
         private IEnumerable<AudioClip> Immediate(RouteDescriptor route, IDeparture departure) => new[]
         {
             the,
-            passenger,
+            Type(route),
             ship,
             to,
             route.Destination.Station.Announcement,
@@ -166,7 +190,7 @@ namespace SpaceTransit.Stations
 
         private IEnumerable<AudioClip> Arriving(RouteDescriptor route, int index, IDeparture departure)
         {
-            yield return passenger;
+            yield return Type(route);
             yield return ship;
             yield return arrivingFrom;
             yield return route.Origin.Station.Announcement;
@@ -194,6 +218,14 @@ namespace SpaceTransit.Stations
                 yield return route.IntermediateStops[i].Station.Announcement;
             }
         }
+
+        private AudioClip Type(RouteDescriptor route) => route.Type switch
+        {
+            ServiceType.Passenger => passenger,
+            ServiceType.Fast => fast,
+            ServiceType.InterHub => interHub,
+            _ => throw new ArgumentOutOfRangeException()
+        };
 
         private IEnumerable<AudioClip> Number(int n, bool padZero = false)
         {

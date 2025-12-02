@@ -1,0 +1,204 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5103777101694187841
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7990137690494662867}
+  - component: {fileID: 4090866045988901270}
+  - component: {fileID: 7901069855833453099}
+  - component: {fileID: 272483473769546504}
+  m_Layer: 0
+  m_Name: Announcer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7990137690494662867
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5103777101694187841}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &4090866045988901270
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5103777101694187841}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 50
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &7901069855833453099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5103777101694187841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3531672802514364a1539b6a911c0487, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Audio.QueuePlayer
+--- !u!114 &272483473769546504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5103777101694187841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c43d907fa232464dabc5a8136218e9ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Stations.StationAnnouncer
+  genericSignal: {fileID: 8300000, guid: e9d700743074024429a2021799e6ff9c, type: 3}
+  genericDuration: 2
+  interHubSignal: {fileID: 8300000, guid: d4cc37ca41f329a49ac03fddfbc53799, type: 3}
+  interHubDuration: 3
+  at: {fileID: 8300000, guid: ba87c3f8d09e44e4790b48adbbde84bc, type: 3}
+  the: {fileID: 8300000, guid: 4719be5e958358845a53252bbcbf737b, type: 3}
+  to: {fileID: 8300000, guid: b6a8e1a054c21634697e375630b469e5, type: 3}
+  from: {fileID: 0}
+  in: {fileID: 0}
+  and: {fileID: 8300000, guid: 6491c3615c43a844fbe9c957b89be822, type: 3}
+  passenger: {fileID: 8300000, guid: b165fac2c4e91de468f4f38f7f004233, type: 3}
+  fast: {fileID: 8300000, guid: 2151f8d1080a17346ae965a6cce093e5, type: 3}
+  interHub: {fileID: 8300000, guid: a1c907af0daa1144893e581e631dd745, type: 3}
+  ship: {fileID: 8300000, guid: 2328957b3f12e8f45af1d9b488a1007b, type: 3}
+  departsFor: {fileID: 8300000, guid: 69b5cd5326f7d75429112002b7c88224, type: 3}
+  arrivingFrom: {fileID: 8300000, guid: 2162dc8e49291184690af9d073dda153, type: 3}
+  dock: {fileID: 8300000, guid: 932b6518bfc3a37408ab92f75bf0c3e8, type: 3}
+  shipStop: {fileID: 8300000, guid: 2870919d65a962d4f977fcbcd728b1f0, type: 3}
+  everyStation: {fileID: 8300000, guid: 40b4e0304bece8a43bc2da536e55fb65, type: 3}
+  onlyAt: {fileID: 0}
+  departing: {fileID: 8300000, guid: 068ac3a37e9d2cd4eb6075256e1f477c, type: 3}
+  pleaseBoard: {fileID: 8300000, guid: 761c5bed1dc1b4742b7263af085aae85, type: 3}
+  minutes: {fileID: 0}
+  immediately: {fileID: 8300000, guid: 8d45b7cb2924bec4b9be8cb7b39ad529, type: 3}
+  stopBoarding: {fileID: 8300000, guid: 595cd654ce1188e45b16847bb10f926f, type: 3}
+  numbersTo20:
+  - {fileID: 8300000, guid: 1b55b37f8a1f3ad489caaa7d06a9b28e, type: 3}
+  - {fileID: 8300000, guid: 5cf3e3549fc70e740a2b78d5be32eab3, type: 3}
+  - {fileID: 8300000, guid: cc793a0e2e9b84a46a78a71d78dea372, type: 3}
+  - {fileID: 8300000, guid: 54ba106c855e081499a149b47f7329d9, type: 3}
+  - {fileID: 8300000, guid: a560fede3d352c840bef6ce89d45caef, type: 3}
+  - {fileID: 8300000, guid: 62a1ef6eb3143a0499305f9a8f3f397c, type: 3}
+  - {fileID: 8300000, guid: 30ad456867e7422429084228938dc098, type: 3}
+  - {fileID: 8300000, guid: 5dbb910b246136249b67827d7429afd6, type: 3}
+  - {fileID: 8300000, guid: 1623d81258c0d934f877063898575452, type: 3}
+  - {fileID: 8300000, guid: 9145430b0a39d1c4eb1685d352f0fd73, type: 3}
+  - {fileID: 8300000, guid: d41576ee4b65cb34b97a2e284af2dada, type: 3}
+  - {fileID: 8300000, guid: cffeea854cc1ddd439b34fbad50382b5, type: 3}
+  - {fileID: 8300000, guid: 624bdfd1a7e927644a0a4bd2a8b24567, type: 3}
+  - {fileID: 8300000, guid: c305325f6ecf88a4ab3903422a7f04aa, type: 3}
+  - {fileID: 8300000, guid: 70cb38c92714b0f4f99296e0ce959051, type: 3}
+  - {fileID: 8300000, guid: 23332d8d68f12a145804a91539c38c12, type: 3}
+  - {fileID: 8300000, guid: ed632c82d5dacef4ba63bcc734771932, type: 3}
+  - {fileID: 8300000, guid: b368a044a089f5c4d94c98ae1e82b28b, type: 3}
+  - {fileID: 8300000, guid: e040567af80445d43bc1a9483f89264b, type: 3}
+  - {fileID: 8300000, guid: 917dc7cdd86dbab41a7f862c88763b61, type: 3}
+  oh: {fileID: 0}
