@@ -47,12 +47,12 @@ namespace SpaceTransit.Ships.Modules
             var (position, rotation) = Tube.Sample(_distance);
             Transform.SetLocalPositionAndRotation(position, rotation);
             if (previousPosition != position && Parent.Mount.Transform == MovementController.Current.Mount)
-                World.Current.position -= Transform.TransformVector(position - previousPosition);
+                World.Current.position -= position - previousPosition;
         }
 
         private void UpdateDistance()
         {
-            var target = _distance + Assembly.CurrentSpeed * Clock.Delta;
+            var target = _distance + Assembly.CurrentSpeed * Clock.Delta * World.MetersToWorld;
             if (target > Tube.Length)
             {
                 if (!Tube.HasNext)
