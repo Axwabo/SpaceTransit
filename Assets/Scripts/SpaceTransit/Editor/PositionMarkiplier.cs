@@ -20,11 +20,11 @@ namespace SpaceTransit.Editor
         private void OnGUI()
         {
             _multiplier = EditorGUILayout.FloatField("Multiplier", _multiplier);
-            var selection = Selection.gameObjects;
+            var selection = Selection.transforms;
             if (selection.Length == 0 || !GUILayout.Button("Update"))
                 return;
-            foreach (var o in selection)
-                o.transform.localPosition *= _multiplier;
+            foreach (var t in selection)
+                t.localPosition *= _multiplier;
         }
 
     }
