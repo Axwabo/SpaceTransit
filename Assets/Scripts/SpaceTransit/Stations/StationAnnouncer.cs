@@ -52,6 +52,9 @@ namespace SpaceTransit.Stations
         private AudioClip everyStation;
 
         [SerializeField]
+        private AudioClip onlyAt;
+
+        [SerializeField]
         private AudioClip departing;
 
         [SerializeField]
@@ -161,21 +164,36 @@ namespace SpaceTransit.Stations
             stopBoarding
         };
 
-        private IEnumerable<AudioClip> Arriving(RouteDescriptor route, int index, IDeparture departure) => new[]
+        private IEnumerable<AudioClip> Arriving(RouteDescriptor route, int index, IDeparture departure)
         {
-            passenger,
-            ship,
-            arrivingFrom,
-            route.Origin.Station.Announcement,
-            at,
-            dock,
-            numbersTo20[departure.DockIndex],
-            and,
-            departsFor,
-            route.Destination.Station.Announcement,
-            shipStop,
-            (route.EveryStation ? everyStation : null) //TODO,
-        };
+            yield return passenger;
+            yield return ship;
+            yield return arrivingFrom;
+            yield return route.Origin.Station.Announcement;
+            yield return at;
+            yield return dock;
+            yield return numbersTo20[departure.DockIndex];
+            yield return and;
+            yield return departsFor;
+            yield return route.Destination.Station.Announcement;
+            var intermediateStops = route.IntermediateStops.Count;
+            if (index == intermediateStops - 1)
+                yield break;
+            yield return shipStop;
+            if (route.EveryStation)
+            {
+                yield return everyStation;
+                yield break;
+            }
+
+            yield return onlyAt;
+            for (var i = index + 1; i < intermediateStops; i++)
+            {
+                if (i != index + 1 && i == intermediateStops - 1)
+                    yield return and;
+                yield return route.IntermediateStops[i].Station.Announcement;
+            }
+        }
 
         private IEnumerable<AudioClip> Number(int n, bool padZero = false)
         {
