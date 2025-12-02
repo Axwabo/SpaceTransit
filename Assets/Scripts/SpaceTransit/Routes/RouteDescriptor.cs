@@ -13,6 +13,9 @@ namespace SpaceTransit.Routes
         public ServiceType Type { get; private set; }
 
         [field: SerializeField]
+        public bool EveryStation { get; private set; }
+
+        [field: SerializeField]
         public bool Reverse { get; private set; }
 
         [field: SerializeField]
