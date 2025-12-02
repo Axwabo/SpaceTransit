@@ -8,12 +8,15 @@ namespace SpaceTransit.Tubes
 
         private float _length;
 
+        private Vector3 _position;
+
         private Quaternion _rotation;
 
         protected override void Awake()
         {
             base.Awake();
-            _length = Transform.lossyScale.z * World.WorldToMeters;
+            _length = Transform.lossyScale.z;
+            _position = Transform.position;
             _rotation = Transform.rotation;
         }
 
@@ -21,8 +24,7 @@ namespace SpaceTransit.Tubes
 
         public override (Vector3 Position, Quaternion Rotation) Sample(float distance)
         {
-            var point = Transform.TransformPoint((Mathf.Clamp01(distance / _length) - 0.5f) * Vector3.forward);
-            var position = Transform.root.InverseTransformPoint(point);
+            var position = _position + _rotation * new Vector3(0, 0, (Mathf.Clamp01(distance / _length) - 0.5f) * _length);
             return (position, _rotation);
         }
 
@@ -35,9 +37,9 @@ namespace SpaceTransit.Tubes
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.orangeRed;
-            Gizmos.DrawSphere(Transform.root.TransformPoint(Sample(0).Position), 0.01f);
+            Gizmos.DrawSphere(Sample(0).Position, 0.01f);
             Gizmos.color = Color.greenYellow;
-            Gizmos.DrawSphere(Transform.root.TransformPoint(Sample(Length).Position), 0.01f);
+            Gizmos.DrawSphere(Sample(Length).Position, 0.01f);
         }
 
         private void OnDrawGizmosSelected()
