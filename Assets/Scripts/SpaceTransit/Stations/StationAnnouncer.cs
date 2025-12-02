@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using SpaceTransit.Audio;
 using SpaceTransit.Routes;
+using SpaceTransit.Routes.Stops;
 using UnityEngine;
 
 namespace SpaceTransit.Stations
@@ -60,39 +60,78 @@ namespace SpaceTransit.Stations
 
         private QueuePlayer _queue;
 
-        private readonly HashSet<RouteDescriptor> _alreadyAnnounced = new();
+        private readonly Dictionary<RouteDescriptor, int> _announced = new();
+
+        private readonly List<(RouteDescriptor, int, IDeparture)> _applicableRoutes = new();
 
         private void Awake() => _queue = GetComponent<QueuePlayer>();
 
-        private void Update()
+        private void Start()
         {
-            var nextMinute = Clock.Now + TimeSpan.FromMinutes(1);
+            var id = GetComponentInParent<Station>().ID;
             foreach (var route in World.Routes)
             {
-                if (route.Origin.Departure.Value > nextMinute || !_alreadyAnnounced.Add(route))
+                if (route.Origin.Station == id)
+                {
+                    _applicableRoutes.Add((route, -1, route.Origin));
                     continue;
-                _queue.Enqueue(the); // TODO
-                _queue.Enqueue(passenger); // TODO
-                _queue.Enqueue(ship);
-                _queue.Enqueue(to);
-                // _queue.Enqueue(departsFor);
-                _queue.Enqueue(route.Destination.Station.Announcement);
-                _queue.Enqueue(departing);
-                _queue.Enqueue(from);
-                _queue.Enqueue(dock);
-                EnqueueNumber(route.Origin.DockIndex + 1);
-                _queue.Enqueue(immediately);
-                _queue.Enqueue(stopBoarding);
-                // _queue.Enqueue(at);
+                }
+
+                for (var i = 0; i < route.IntermediateStops.Count; i++)
+                {
+                    var stop = route.IntermediateStops[i];
+                    if (stop.Station != id)
+                        break;
+                    _applicableRoutes.Add((route, i, stop));
+                }
             }
         }
 
-        private void EnqueueNumber(int n, bool padZero = false)
+        private void Update()
+        {
+            foreach (var (route, index, departure) in _applicableRoutes)
+            {
+                if (GetAnnouncement(route, index, departure) is not { } announcement)
+                    continue;
+                _announced[route] = departure.DepartureMinutes();
+                foreach (var clip in announcement)
+                    _queue.Enqueue(clip);
+            }
+        }
+
+        private IEnumerable<AudioClip> GetAnnouncement(RouteDescriptor route, int index, IDeparture departure)
+        {
+            var remaining = departure.MinutesToDeparture();
+            var announcementDelta = departure.DepartureMinutes() - _announced.GetValueOrDefault(route, ushort.MaxValue);
+            return (remaining, announcementDelta) switch
+            {
+                (0, not 0) => Immediate(route),
+                _ => null
+            };
+        }
+
+        private IEnumerable<AudioClip> Immediate(RouteDescriptor route)
+        {
+            yield return the;
+            yield return passenger;
+            yield return ship;
+            yield return to;
+            yield return route.Destination.Station.Announcement;
+            yield return departing;
+            yield return from;
+            yield return dock;
+            foreach (var clip in Number(route.Origin.DockIndex + 1))
+                yield return clip;
+            yield return immediately;
+            yield return stopBoarding;
+        }
+
+        private IEnumerable<AudioClip> Number(int n, bool padZero = false)
         {
             if (n is >= 1 and <= 20)
             {
-                _queue.Enqueue(numbersTo20[n - 1]);
-                return;
+                yield return numbersTo20[n - 1];
+                yield break;
             }
             // TODO
         }

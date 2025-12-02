@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SpaceTransit.Routes
 {
@@ -12,13 +13,14 @@ namespace SpaceTransit.Routes
         public static bool TryGetLoadedStation(StationId id, out Station station)
             => Loaded.TryGetValue(id.name, out station);
 
-        [SerializeField]
-        private StationId id;
+        [field: SerializeField]
+        [field: FormerlySerializedAs("id")]
+        public StationId ID { get; private set; }
 
         [SerializeField]
         private Dock[] docks;
 
-        public string Name => id.name;
+        public string Name => ID.name;
 
         public IReadOnlyList<Dock> Docks => docks;
 

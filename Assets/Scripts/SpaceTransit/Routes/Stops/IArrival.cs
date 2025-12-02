@@ -1,7 +1,7 @@
 ﻿namespace SpaceTransit.Routes.Stops
 {
 
-    public interface IArrival
+    public interface IArrival : IStop
     {
 
         TimeOnly Arrival { get; }

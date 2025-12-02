@@ -5,7 +5,7 @@ namespace SpaceTransit.Routes.Stops
 {
 
     [Serializable]
-    public abstract class Stop
+    public abstract class Stop : IStop
     {
 
         [field: SerializeField]
