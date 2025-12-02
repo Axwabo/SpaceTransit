@@ -26,6 +26,9 @@ namespace SpaceTransit.Stations
         [SerializeField]
         private AudioClip @in;
 
+        [SerializeField]
+        private AudioClip and;
+
         [Header("Common Phrases")]
         [SerializeField]
         private AudioClip passenger;
@@ -35,6 +38,9 @@ namespace SpaceTransit.Stations
 
         [SerializeField]
         private AudioClip departsFor;
+
+        [SerializeField]
+        private AudioClip arrivingFrom;
 
         [SerializeField]
         private AudioClip dock;
@@ -114,10 +120,11 @@ namespace SpaceTransit.Stations
             if (announcementDelta == 0)
                 return null;
             var remaining = departure.MinutesToDeparture();
-            return remaining switch
+            return (remaining, index) switch
             {
-                1 => Immediate(route, departure),
-                3 or 5 => In(remaining, route, departure),
+                (1, -1) => Immediate(route, departure),
+                (3 or 5, -1) => In(remaining, route, departure),
+                (1, _) => Arriving(route, index, departure),
                 _ => null
             };
         }
@@ -152,6 +159,22 @@ namespace SpaceTransit.Stations
             numbersTo20[departure.DockIndex],
             immediately,
             stopBoarding
+        };
+
+        private IEnumerable<AudioClip> Arriving(RouteDescriptor route, int index, IDeparture departure) => new[]
+        {
+            passenger,
+            ship,
+            arrivingFrom,
+            route.Origin.Station.Announcement,
+            at,
+            dock,
+            numbersTo20[departure.DockIndex],
+            and,
+            departsFor,
+            route.Destination.Station.Announcement,
+            shipStop,
+            (route.EveryStation ? everyStation : null) //TODO,
         };
 
         private IEnumerable<AudioClip> Number(int n, bool padZero = false)
