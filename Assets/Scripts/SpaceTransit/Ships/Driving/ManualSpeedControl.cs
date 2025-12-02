@@ -1,5 +1,4 @@
-﻿using SpaceTransit.Movement;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace SpaceTransit.Ships.Driving
@@ -17,8 +16,6 @@ namespace SpaceTransit.Ships.Driving
         {
             if (_assembly.Parent.State != ShipState.Sailing)
                 return;
-            if (_assembly.IsStationary())
-                _assembly.Reverse = MovementController.Current.Mount == _assembly.BackModule.Mount.Transform;
             var move = InputSystem.actions["Speed"].ReadValue<float>();
             if (move > 0)
                 _assembly.TargetSpeed += 2;
