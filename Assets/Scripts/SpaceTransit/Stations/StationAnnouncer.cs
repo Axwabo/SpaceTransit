@@ -133,7 +133,7 @@ namespace SpaceTransit.Stations
             {
                 if (GetAnnouncement(route, index, departure) is not { } announcement)
                     continue;
-                _announced[route] = departure.DepartureMinutes();
+                _announced[route] = (int) Clock.Now.TotalMinutes;
                 var inter = route.Type == ServiceType.InterHub;
                 _queue.Enqueue(inter ? interHubSignal : genericSignal, inter ? interHubDuration : genericDuration);
                 foreach (var clip in announcement)
@@ -143,14 +143,13 @@ namespace SpaceTransit.Stations
 
         private IEnumerable<AudioClip> GetAnnouncement(RouteDescriptor route, int index, IDeparture departure)
         {
-            var announcementDelta = departure.DepartureMinutes() - _announced.GetValueOrDefault(route, ushort.MaxValue);
-            if (announcementDelta == 0)
+            if ((int) Clock.Now.TotalMinutes == _announced.GetValueOrDefault(route, -1))
                 return null;
             var remaining = departure.MinutesToDeparture();
             return (remaining, index) switch
             {
-                (1, -1) => Immediate(route, departure),
                 (3 or 5, -1) => In(remaining, route, departure),
+                (1, -1) => Immediate(route, departure),
                 (1, _) => Arriving(route, index, departure),
                 _ => null
             };
