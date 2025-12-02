@@ -69,7 +69,7 @@ namespace SpaceTransit.Movement
             _cc.Move(Clock.Delta * speed * 0.1f * move);
             var delta = _t.localPosition - previous;
             if (delta != Vector3.zero)
-                World.Current.position -= _t.TransformVector(delta) * World.MetersToWorld;
+                World.Current.position -= _t.parent.TransformVector(delta);
             LastPosition = Position;
         }
 
