@@ -11,6 +11,9 @@ namespace SpaceTransit.Ships.Modules.Doors
         private bool isLeftSide;
 
         [SerializeField]
+        private bool backwards;
+
+        [SerializeField]
         private AnimationCurve sideways;
 
         [SerializeField]
@@ -113,6 +116,8 @@ namespace SpaceTransit.Ships.Modules.Doors
             var x = forwards.Evaluate(_time);
             if (isLeftSide)
                 x = -x;
+            if (backwards)
+                z = -z;
             left.localPosition = _leftOffset + new Vector3(x, 0, -z);
             right.localPosition = _rightOffset + new Vector3(x, 0, z);
         }
