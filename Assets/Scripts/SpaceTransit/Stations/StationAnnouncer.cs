@@ -131,7 +131,8 @@ namespace SpaceTransit.Stations
         {
             foreach (var (route, index, departure) in _applicableRoutes)
             {
-                if (GetAnnouncement(route, index, departure) is not { } announcement)
+                if (departure.Departure.Value > Clock.Now
+                    || GetAnnouncement(route, index, departure) is not { } announcement)
                     continue;
                 _announced[route] = (int) Clock.Now.TotalMinutes;
                 var inter = route.Type == ServiceType.InterHub;
