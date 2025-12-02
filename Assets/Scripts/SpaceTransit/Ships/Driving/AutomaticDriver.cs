@@ -27,7 +27,7 @@ namespace SpaceTransit.Ships.Driving
                     return false;
                 var tube = station.Docks[Parent.Stop.DockIndex].Tube;
                 var overscan = DefaultOverscan * World.MetersToWorld * Mathf.Sqrt(Time.timeScale);
-                var stopPoint = tube.Sample(Assembly.Reverse ? overscan : tube.Length - overscan).Position;
+                var stopPoint = World.Current.TransformPoint(tube.Sample(Assembly.Reverse ? overscan : tube.Length - overscan).Position);
                 var speed = Assembly.CurrentSpeed.Raw;
                 var deceleration = Assembly.Deceleration;
                 var brakingTime = speed / deceleration;

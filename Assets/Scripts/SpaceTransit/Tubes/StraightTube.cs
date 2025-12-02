@@ -8,12 +8,15 @@ namespace SpaceTransit.Tubes
 
         private float _length;
 
+        private Vector3 _position;
+
         private Quaternion _rotation;
 
         protected override void Awake()
         {
             base.Awake();
             _length = Transform.lossyScale.z;
+            _position = Transform.position;
             _rotation = Transform.rotation;
         }
 
@@ -21,7 +24,7 @@ namespace SpaceTransit.Tubes
 
         public override (Vector3 Position, Quaternion Rotation) Sample(float distance)
         {
-            var position = Transform.TransformPoint((Mathf.Clamp01(distance / _length) - 0.5f) * Vector3.forward);
+            var position = _position + _rotation * new Vector3(0, 0, (Mathf.Clamp01(distance / _length) - 0.5f) * _length);
             return (position, _rotation);
         }
 
