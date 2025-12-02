@@ -49,7 +49,7 @@ namespace SpaceTransit.Movement
             Time.timeScale = 1;
         }
 
-        private void Start() => World.Current.position -= Position;
+        // private void Start() => World.Current.position -= Position; TODO
 
         private void Update()
         {
@@ -67,9 +67,9 @@ namespace SpaceTransit.Movement
                 return;
             var previous = _t.localPosition;
             _cc.Move(Clock.Delta * speed * 0.1f * move);
-            var delta = _t.localPosition - previous;
+            /*var delta = _t.localPosition - previous;
             if (delta != Vector3.zero)
-                World.Current.position -= _t.TransformVector(delta) * World.MetersToWorld;
+                World.Current.position -= _t.TransformVector(delta) * World.MetersToWorld; TODO*/
             LastPosition = Position;
         }
 

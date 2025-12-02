@@ -1,5 +1,4 @@
-﻿using SpaceTransit.Movement;
-using SpaceTransit.Tubes;
+﻿using SpaceTransit.Tubes;
 
 namespace SpaceTransit.Ships.Modules
 {
@@ -46,8 +45,8 @@ namespace SpaceTransit.Ships.Modules
             var previousPosition = Transform.localPosition;
             var (position, rotation) = Tube.Sample(_distance);
             Transform.SetLocalPositionAndRotation(position, rotation);
-            if (previousPosition != position && Parent.Mount.Transform == MovementController.Current.Mount)
-                World.Current.position -= position - previousPosition;
+            /*if (previousPosition != position && Parent.Mount.Transform == MovementController.Current.Mount)
+                World.Current.position -= position - previousPosition; TODO*/
         }
 
         private void UpdateDistance()
