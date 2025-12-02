@@ -23,6 +23,9 @@ namespace SpaceTransit.Stations
         [SerializeField]
         private AudioClip from;
 
+        [SerializeField]
+        private AudioClip @in;
+
         [Header("Common Phrases")]
         [SerializeField]
         private AudioClip passenger;
@@ -44,6 +47,12 @@ namespace SpaceTransit.Stations
 
         [SerializeField]
         private AudioClip departing;
+
+        [SerializeField]
+        private AudioClip pleaseBoard;
+
+        [SerializeField]
+        private AudioClip minutes;
 
         [SerializeField]
         private AudioClip immediately;
@@ -101,30 +110,49 @@ namespace SpaceTransit.Stations
 
         private IEnumerable<AudioClip> GetAnnouncement(RouteDescriptor route, int index, IDeparture departure)
         {
-            var remaining = departure.MinutesToDeparture();
             var announcementDelta = departure.DepartureMinutes() - _announced.GetValueOrDefault(route, ushort.MaxValue);
-            return (remaining, announcementDelta) switch
+            if (announcementDelta == 0)
+                return null;
+            var remaining = departure.MinutesToDeparture();
+            return remaining switch
             {
-                (0, not 0) => Immediate(route),
+                1 => Immediate(route, departure),
+                3 or 5 => In(remaining, route, departure),
                 _ => null
             };
         }
 
-        private IEnumerable<AudioClip> Immediate(RouteDescriptor route)
+        private IEnumerable<AudioClip> In(int deltaMinutes, RouteDescriptor route, IDeparture departure) => new[]
         {
-            yield return the;
-            yield return passenger;
-            yield return ship;
-            yield return to;
-            yield return route.Destination.Station.Announcement;
-            yield return departing;
-            yield return from;
-            yield return dock;
-            foreach (var clip in Number(route.Origin.DockIndex + 1))
-                yield return clip;
-            yield return immediately;
-            yield return stopBoarding;
-        }
+            the,
+            passenger,
+            ship,
+            to,
+            route.Destination.Station.Announcement,
+            departing,
+            from,
+            dock,
+            numbersTo20[departure.DockIndex],
+            @in,
+            numbersTo20[deltaMinutes - 1],
+            minutes,
+            pleaseBoard
+        };
+
+        private IEnumerable<AudioClip> Immediate(RouteDescriptor route, IDeparture departure) => new[]
+        {
+            the,
+            passenger,
+            ship,
+            to,
+            route.Destination.Station.Announcement,
+            departing,
+            from,
+            dock,
+            numbersTo20[departure.DockIndex],
+            immediately,
+            stopBoarding
+        };
 
         private IEnumerable<AudioClip> Number(int n, bool padZero = false)
         {
