@@ -22,11 +22,7 @@ namespace SpaceTransit.Audio
                 _queue.Enqueue((clip, clip.length));
         }
 
-        public void Enqueue(AudioClip clip, float length)
-        {
-            if (clip)
-                _queue.Enqueue((clip, length));
-        }
+        public void Enqueue(AudioClip clip, float length) => _queue.Enqueue((clip, length));
 
         public void Delay(float length) => _queue.Enqueue((null, length));
 

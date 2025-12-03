@@ -60,14 +60,15 @@ namespace SpaceTransit.Stations
         {
             foreach (var (route, index, departure) in _applicableRoutes)
             {
-                if (departure.Departure.Value > Clock.Now
+                if (departure.Departure.Value < Clock.Now
                     || announcementCreator.GetAnnouncement(route, index, departure, _announced.GetValueOrDefault(route, -1)) is not { } announcement)
                     continue;
                 _announced[route] = (int) Clock.Now.TotalMinutes;
                 var inter = route.Type == ServiceType.InterHub;
                 _queue.Enqueue(inter ? interHubSignal : genericSignal, inter ? interHubDuration : genericDuration);
                 foreach (var clip in announcement)
-                    _queue.Enqueue(clip);
+                    _queue.Enqueue(clip.Clip, clip.Length);
+                _queue.Delay(3);
             }
         }
 

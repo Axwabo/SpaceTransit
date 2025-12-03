@@ -11,6 +11,8 @@ namespace SpaceTransit.Stations
     public sealed class AnnouncementCreator : ScriptableObject
     {
 
+        private static readonly AnnouncementClip FullStop = 0.5f;
+
         [Header("Conjunctions")]
         [SerializeField]
         private AudioClip at;
@@ -84,7 +86,7 @@ namespace SpaceTransit.Stations
         [SerializeField]
         private AudioClip oh;
 
-        public IEnumerable<AudioClip> GetAnnouncement(RouteDescriptor route, int index, IDeparture departure, int lastAnnounced)
+        public IEnumerable<AnnouncementClip> GetAnnouncement(RouteDescriptor route, int index, IDeparture departure, int lastAnnounced)
         {
             if ((int) Clock.Now.TotalMinutes == lastAnnounced)
                 return null;
@@ -98,7 +100,7 @@ namespace SpaceTransit.Stations
             };
         }
 
-        private IEnumerable<AudioClip> In(int deltaMinutes, RouteDescriptor route, IDeparture departure) => new[]
+        private IEnumerable<AnnouncementClip> In(int deltaMinutes, RouteDescriptor route, IDeparture departure) => new[]
         {
             the,
             Type(route),
@@ -112,10 +114,11 @@ namespace SpaceTransit.Stations
             @in,
             numbersTo20[deltaMinutes - 1],
             minutes,
+            FullStop,
             pleaseBoard
         };
 
-        private IEnumerable<AudioClip> Immediate(RouteDescriptor route, IDeparture departure) => new[]
+        private IEnumerable<AnnouncementClip> Immediate(RouteDescriptor route, IDeparture departure) => new[]
         {
             the,
             Type(route),
@@ -127,10 +130,11 @@ namespace SpaceTransit.Stations
             dock,
             numbersTo20[departure.DockIndex],
             immediately,
+            FullStop,
             stopBoarding
         };
 
-        private IEnumerable<AudioClip> Arriving(RouteDescriptor route, int index, IDeparture departure)
+        private IEnumerable<AnnouncementClip> Arriving(RouteDescriptor route, int index, IDeparture departure)
         {
             yield return Type(route);
             yield return ship;
@@ -145,6 +149,7 @@ namespace SpaceTransit.Stations
             var intermediateStops = route.IntermediateStops.Count;
             if (index == intermediateStops - 1)
                 yield break;
+            yield return FullStop;
             yield return shipStop;
             if (route.EveryStation)
             {
@@ -155,6 +160,7 @@ namespace SpaceTransit.Stations
             yield return onlyAt;
             for (var i = index + 1; i < intermediateStops; i++)
             {
+                yield return 0.3f;
                 if (i != index + 1 && i == intermediateStops - 1)
                     yield return and;
                 yield return route.IntermediateStops[i].Station.Announcement;
