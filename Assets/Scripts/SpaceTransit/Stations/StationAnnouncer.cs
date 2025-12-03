@@ -54,6 +54,8 @@ namespace SpaceTransit.Stations
                     _applicableRoutes.Add((route, i, stop));
                 }
             }
+
+            _applicableRoutes.Sort((a, b) => b.Item1.Type.CompareTo(a.Item1.Type));
         }
 
         private void Update()
