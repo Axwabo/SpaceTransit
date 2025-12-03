@@ -65,12 +65,9 @@ namespace SpaceTransit.Movement
             move.y = _verticalVelocity;
             if (move == Vector3.zero)
                 return;
-            var previous = _t.localPosition;
             _cc.Move(Clock.Delta * speed * 0.1f * move);
-            var delta = _t.localPosition - previous;
-            if (delta != Vector3.zero)
-                World.Current.position -= _t.parent.TransformVector(delta);
-            LastPosition = Position;
+            var current = Position;
+            LastPosition = current;
         }
 
         private void UpdateLook()
