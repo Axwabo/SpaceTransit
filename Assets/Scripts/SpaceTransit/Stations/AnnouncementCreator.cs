@@ -84,6 +84,18 @@ namespace SpaceTransit.Stations
         private AudioClip[] numbersTo20;
 
         [SerializeField]
+        private AudioClip twenty;
+
+        [SerializeField]
+        private AudioClip thirty;
+
+        [SerializeField]
+        private AudioClip forty;
+
+        [SerializeField]
+        private AudioClip fifty;
+
+        [SerializeField]
         private AudioClip oh;
 
         public IEnumerable<AnnouncementClip> GetAnnouncement(RouteDescriptor route, int index, IDeparture departure, int lastAnnounced)
@@ -179,10 +191,21 @@ namespace SpaceTransit.Stations
         {
             if (n is >= 1 and <= 20)
             {
+                if (padZero && n < 10)
+                    yield return oh;
                 yield return numbersTo20[n - 1];
                 yield break;
             }
-            // TODO
+
+            yield return n switch
+            {
+                < 30 => twenty,
+                < 40 => thirty,
+                < 50 => forty,
+                < 60 => fifty,
+                _ => throw new ArgumentOutOfRangeException(nameof(n), "Cannot parse numbers < 0 or >= 60")
+            };
+            yield return numbersTo20[n % 10 - 1];
         }
 
     }
