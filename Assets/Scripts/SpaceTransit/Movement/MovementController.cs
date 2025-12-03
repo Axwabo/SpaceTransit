@@ -95,6 +95,12 @@ namespace SpaceTransit.Movement
             Time.timeScale = 1;
         }
 
+        public void Teleport(Vector3 to)
+        {
+            _t.position = to;
+            World.Current.position -= LastPosition - to;
+        }
+
     }
 
 }

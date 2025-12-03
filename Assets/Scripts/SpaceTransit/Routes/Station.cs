@@ -11,6 +11,8 @@ namespace SpaceTransit.Routes
 
         private static readonly Dictionary<string, Station> Loaded = new();
 
+        public static IReadOnlyCollection<Station> LoadedStations => Loaded.Values;
+
         public static bool TryGetLoadedStation(StationId id, out Station station)
             => Loaded.TryGetValue(id.name, out station);
 
@@ -23,6 +25,11 @@ namespace SpaceTransit.Routes
 
         [SerializeField]
         private GameObject active;
+
+        [SerializeField]
+        private Vector3 spawnpoint;
+
+        public Vector3 Spawnpoint => transform.TransformPoint(spawnpoint);
 
         private bool _previouslyActive;
 
@@ -41,6 +48,12 @@ namespace SpaceTransit.Routes
                 return;
             _previouslyActive = activate;
             active.SetActive(activate);
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawSphere(Spawnpoint, 0.5f);
         }
 
     }
