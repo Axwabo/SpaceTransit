@@ -34,6 +34,18 @@ namespace SpaceTransit.Tubes
             OnValidate();
         }
 
+        private void Start()
+        {
+            if (!HasNext)
+                return;
+            var (position, rotation) = Next.Sample(0);
+            var forwardsSign = Instantiate(World.SpeedLimitSignPrefab, position, rotation, Transform);
+            forwardsSign.transform.SetLocalPositionAndRotation(position, rotation);
+            forwardsSign.Forwards.text = Next.SpeedLimit is 0 ? "--" : (Next.SpeedLimit * 3.6f).ToString("N0");
+            var backwardsSign = Instantiate(World.SpeedLimitSignPrefab, position, rotation * Quaternion.Euler(0, 180, 0), Transform);
+            backwardsSign.Forwards.text = SpeedLimit is 0 ? "--" : (SpeedLimit * 3.6f).ToString("N0");
+        }
+
         private void OnValidate()
         {
             if (!Next)
