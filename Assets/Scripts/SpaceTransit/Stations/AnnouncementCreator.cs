@@ -108,6 +108,7 @@ namespace SpaceTransit.Stations
                 (3 or 5, -1) => In(remaining, route, departure),
                 (1, -1) => Immediate(route, departure),
                 (1, _) => Arriving(route, index, departure),
+                (_, -1) when lastAnnounced == -1 => At(route, index, departure),
                 _ => null
             };
         }
@@ -158,6 +159,12 @@ namespace SpaceTransit.Stations
             yield return and;
             yield return departsFor;
             yield return route.Destination.Station.Announcement;
+            foreach (var clip in Stops(route, index))
+                yield return clip;
+        }
+
+        private IEnumerable<AnnouncementClip> Stops(RouteDescriptor route, int index)
+        {
             var intermediateStops = route.IntermediateStops.Count;
             if (index == intermediateStops - 1)
                 yield break;
@@ -177,6 +184,25 @@ namespace SpaceTransit.Stations
                     yield return and;
                 yield return route.IntermediateStops[i].Station.Announcement;
             }
+        }
+
+        private IEnumerable<AnnouncementClip> At(RouteDescriptor route, int index, IDeparture departure)
+        {
+            yield return Type(route);
+            yield return ship;
+            yield return departsFor;
+            yield return route.Destination.Station.Announcement;
+            yield return from;
+            yield return dock;
+            yield return numbersTo20[departure.DockIndex];
+            yield return at;
+            foreach (var clip in Number(departure.Departure.Value.Hours, true))
+                yield return clip;
+            yield return 0.1f;
+            foreach (var clip in Number(departure.Departure.Value.Minutes, true))
+                yield return clip;
+            foreach (var clip in Stops(route, index))
+                yield return clip;
         }
 
         private AudioClip Type(RouteDescriptor route) => route.Type switch
@@ -205,7 +231,8 @@ namespace SpaceTransit.Stations
                 < 60 => fifty,
                 _ => throw new ArgumentOutOfRangeException(nameof(n), "Cannot parse numbers < 0 or >= 60")
             };
-            yield return numbersTo20[n % 10 - 1];
+            if (n % 10 != 0)
+                yield return numbersTo20[n % 10 - 1];
         }
 
     }
