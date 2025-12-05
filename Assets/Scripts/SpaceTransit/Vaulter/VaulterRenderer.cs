@@ -3,7 +3,7 @@
 namespace SpaceTransit.Vaulter
 {
 
-    public sealed class VaulterRenderer : MonoBehaviour
+    public sealed class VaulterRenderer : VaulterComponentBase
     {
 
         [SerializeField]
@@ -20,15 +20,23 @@ namespace SpaceTransit.Vaulter
 
         public RenderTexture Texture { get; private set; }
 
-        private void Awake()
+        protected override void Awake()
         {
-            Texture = RenderTexture.GetTemporary(width, height);
+            base.Awake();
+            Texture = RenderTexture.GetTemporary(width, height, 1);
             cam.targetTexture = Texture;
             canvas.worldCamera = cam;
-            transform.parent = null;
         }
 
-        private void OnDestroy() => RenderTexture.ReleaseTemporary(Texture);
+        private void Start() => Transform.SetParent(null, false);
+
+        private void OnDestroy()
+        {
+            RenderTexture.ReleaseTemporary(Texture);
+            Parent.Renderers.Remove(name);
+        }
+
+        protected override void OnInitialized() => Parent.Renderers[name] = this;
 
     }
 

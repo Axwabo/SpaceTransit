@@ -1,4 +1,6 @@
-﻿using SpaceTransit.Routes;
+﻿using System;
+using System.Collections.Generic;
+using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
 using SpaceTransit.Ships;
 using SpaceTransit.Ships.Modules;
@@ -29,6 +31,8 @@ namespace SpaceTransit.Vaulter
         public Stop Stop { get; private set; }
 
         public bool IsInService => _stopIndex != OutOfService;
+
+        public Dictionary<string, VaulterRenderer> Renderers { get; } = new(StringComparer.InvariantCultureIgnoreCase);
 
         protected override void Awake() => _components = GetComponentsInChildren<VaulterComponentBase>();
 
