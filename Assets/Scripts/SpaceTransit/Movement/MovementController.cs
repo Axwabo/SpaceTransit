@@ -60,17 +60,14 @@ namespace SpaceTransit.Movement
             else
                 _verticalVelocity += gravity * Clock.Delta;
 
-            var desiredMove = MenuScreen.IsOpen ? Vector2.zero : InputSystem.actions["Move"].ReadValue<Vector2>();
+            var desiredMove = InputSystem.actions["Move"].ReadValue<Vector2>();
             var move = _t.rotation * new Vector3(desiredMove.x, 0, desiredMove.y).normalized;
             move.y = _verticalVelocity;
             if (move == Vector3.zero)
-            {
-                LastPosition = Position;
                 return;
-            }
-
             _cc.Move(Clock.Delta * speed * 0.1f * move);
-            LastPosition = Position;
+            var current = Position;
+            LastPosition = current;
         }
 
         private void UpdateLook()
