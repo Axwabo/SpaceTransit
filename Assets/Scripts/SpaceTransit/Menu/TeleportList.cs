@@ -1,4 +1,5 @@
-﻿using SpaceTransit.Movement;
+﻿using System.Linq;
+using SpaceTransit.Movement;
 using SpaceTransit.Routes;
 using TMPro;
 using UnityEngine;
@@ -16,7 +17,7 @@ namespace SpaceTransit.Menu
         private void Start()
         {
             var t = transform;
-            foreach (var station in Station.LoadedStations)
+            foreach (var station in Station.LoadedStations.OrderBy(e => e.Name))
                 Instantiate(prefab, t).AddComponent<Teleport>().Station = station;
         }
 
