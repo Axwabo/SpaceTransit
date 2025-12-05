@@ -22,7 +22,12 @@ namespace SpaceTransit
         [SerializeField]
         private SpeedLimitSign speedLimitSignPrefab;
 
+        [SerializeField]
+        private Transform stationSignPrefab;
+
         public static SpeedLimitSign SpeedLimitSignPrefab { get; private set; }
+
+        public static Transform StationSignPrefab { get; private set; }
 
         public static Transform Current { get; private set; }
 
@@ -30,6 +35,7 @@ namespace SpaceTransit
         {
             Current = transform;
             SpeedLimitSignPrefab = speedLimitSignPrefab;
+            StationSignPrefab = stationSignPrefab;
             RouteCache.UnionWith(routes);
         }
 

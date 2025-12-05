@@ -7855,7 +7855,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.World
   routes:
   - {fileID: 11400000, guid: 4242f90edd8c59b4abecd0e38019d231, type: 2}
-  speedLimitSignPrefab: {fileID: 2367720440479773326, guid: 1fc69007d0e0bac45b9858d1a885671a, type: 3}
+  speedLimitSignPrefab: {fileID: 4865539001538094997, guid: 1b219a4df7fa12a48849495a1389784a, type: 3}
+  stationSignPrefab: {fileID: 8456968034853950967, guid: e71e74ef257513e408c9378be7f7860f, type: 3}
 --- !u!114 &533906740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9402,7 +9403,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0004982914}
+  m_AnchoredPosition: {x: 0, y: 0.000628861}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &612239544
@@ -9527,7 +9528,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 506511699}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9858303
+  m_Size: 0.9856532
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -21183,6 +21184,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2001492145}
     m_Modifications:
+    - target: {fileID: 103689272946742995, guid: d565d6906fc20f346a869be32968e482, type: 3}
+      propertyPath: forwards
+      value: 
+      objectReference: {fileID: 2052872613}
     - target: {fileID: 135793295557507964, guid: d565d6906fc20f346a869be32968e482, type: 3}
       propertyPath: id
       value: 
@@ -27700,6 +27705,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1721577725}
   - component: {fileID: 1721577726}
+  - component: {fileID: 1721577727}
   m_Layer: 0
   m_Name: Gyuard
   m_TagString: Untagged
@@ -27749,6 +27755,21 @@ MonoBehaviour:
   - {fileID: 1917166476}
   active: {fileID: 456841521}
   spawnpoint: {x: 0, y: 0, z: 0}
+--- !u!114 &1721577727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1721577724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d3262aa2bb7484482e341f5d53fca6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Routes.StationSignPlacer
+  forwards: {fileID: 2451446575180066765}
+  backwards: {fileID: 0}
+  distance: 1050
 --- !u!4 &1731230273 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7987418763307056947, guid: d565d6906fc20f346a869be32968e482, type: 3}

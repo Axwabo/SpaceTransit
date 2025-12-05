@@ -8,7 +8,7 @@ namespace SpaceTransit.Tubes
     public abstract class TubeBase : MonoBehaviour
     {
 
-        protected Transform Transform { get; private set; }
+        public Transform Transform { get; private set; }
 
         [field: SerializeField]
         public float SpeedLimit { get; private set; }
