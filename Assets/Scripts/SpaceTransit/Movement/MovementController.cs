@@ -34,7 +34,11 @@ namespace SpaceTransit.Movement
         public Transform Mount
         {
             get => _mount;
-            set => _t.parent = _mount = value;
+            set
+            {
+                _mount = value;
+                _t.parent = value ? value : World.Current;
+            }
         }
 
         public Vector3 Position => _t.position;
