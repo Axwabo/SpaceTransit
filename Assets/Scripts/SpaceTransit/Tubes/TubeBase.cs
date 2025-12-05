@@ -36,14 +36,22 @@ namespace SpaceTransit.Tubes
 
         private void Start()
         {
-            if (!HasNext)
+            if (!Application.isPlaying)
                 return;
-            var (position, rotation) = Next.Sample(0);
-            var forwardsSign = Instantiate(World.SpeedLimitSignPrefab, position, rotation, Transform);
-            forwardsSign.transform.SetLocalPositionAndRotation(position, rotation);
-            forwardsSign.Forwards.text = Next.SpeedLimit is 0 ? "--" : (Next.SpeedLimit * 3.6f).ToString("N0");
-            var backwardsSign = Instantiate(World.SpeedLimitSignPrefab, position, rotation * Quaternion.Euler(0, 180, 0), Transform);
-            backwardsSign.Forwards.text = SpeedLimit is 0 ? "--" : (SpeedLimit * 3.6f).ToString("N0");
+            if (HasNext)
+                PlaceSign(Next, 0, Quaternion.identity);
+            if (HasPrevious)
+                PlaceSign(Previous, Previous.Length, Quaternion.Euler(0, 180, 0));
+        }
+
+        private void PlaceSign(TubeBase tube, float distance, Quaternion rotationOffset)
+        {
+            if (Mathf.Approximately(SpeedLimit, tube.SpeedLimit))
+                return;
+            var (position, rotation) = tube.Sample(distance);
+            var forwardsSign = Instantiate(World.SpeedLimitSignPrefab, Transform);
+            forwardsSign.transform.SetLocalPositionAndRotation(position, rotation * rotationOffset);
+            forwardsSign.Forwards.text = tube.SpeedLimit is 0 ? "--" : (tube.SpeedLimit * 3.6f).ToString("N0");
         }
 
         private void OnValidate()

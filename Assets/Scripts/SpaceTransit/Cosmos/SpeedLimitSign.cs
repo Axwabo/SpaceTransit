@@ -10,9 +10,6 @@ namespace SpaceTransit.Cosmos
         [field: SerializeField]
         public TextMeshProUGUI Forwards { get; private set; }
 
-        [field: SerializeField]
-        public TextMeshProUGUI Backwards { get; private set; }
-
     }
 
 }
