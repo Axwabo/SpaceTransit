@@ -102,6 +102,7 @@ namespace SpaceTransit.Movement
         public void Teleport(Vector3 to)
         {
             _t.position = to;
+            _verticalVelocity = 0;
             World.Current.position -= LastPosition - to;
         }
 
