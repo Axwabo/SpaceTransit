@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using SpaceTransit.Movement;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -24,14 +23,9 @@ namespace SpaceTransit.Routes
         private Dock[] docks;
 
         [SerializeField]
-        private GameObject active;
-
-        [SerializeField]
         private Vector3 spawnpoint;
 
         public Vector3 Spawnpoint => transform.TransformPoint(spawnpoint);
-
-        private bool _previouslyActive;
 
         public string Name => ID.name;
 
@@ -40,15 +34,6 @@ namespace SpaceTransit.Routes
         private void OnEnable() => Loaded[Name] = this;
 
         private void OnDisable() => Loaded.Remove(Name);
-
-        private void Update()
-        {
-            var activate = Vector3.Distance(MovementController.Current.LastPosition, transform.position) < 10;
-            if (_previouslyActive == activate)
-                return;
-            _previouslyActive = activate;
-            active.SetActive(activate);
-        }
 
         private void OnDrawGizmosSelected()
         {
