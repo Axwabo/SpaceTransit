@@ -10,10 +10,10 @@ namespace SpaceTransit.Routes.Stops
     {
 
         [field: SerializeField]
-        public TimeOnly Arrival { get; private set; }
+        public TimeOnly Arrival { get; set; }
 
         [field: SerializeField]
-        public TimeOnly Departure { get; private set; }
+        public TimeOnly Departure { get; set; }
 
         [field: FormerlySerializedAs("<ExitTowards>k__BackingField")]
         [field: SerializeField]
