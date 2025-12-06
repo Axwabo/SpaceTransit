@@ -19,6 +19,8 @@ namespace SpaceTransit.Ships.Driving
 
         private bool _stopping;
 
+        private bool _entryRequested;
+
         private bool ShouldStop
         {
             get
@@ -43,7 +45,7 @@ namespace SpaceTransit.Ships.Driving
             switch (Controller.State)
             {
                 case ShipState.Docked:
-                    _stopping = false;
+                    _entryRequested = _stopping = false;
                     UpdateDocked();
                     break;
                 case ShipState.WaitingForDeparture:
@@ -101,7 +103,7 @@ namespace SpaceTransit.Ships.Driving
             if (!Controller.CanProceed)
                 return;
             var tube = Assembly.FrontModule.Thruster.Tube;
-            if (tube.TryGetEntryEnsurer(Assembly.Reverse, out var ensurer))
+            if (!_entryRequested && tube.TryGetEntryEnsurer(Assembly.Reverse, out var ensurer))
                 Enter(ensurer.station);
             if (!_stopping)
                 Assembly.SetSpeed(Assembly.MaxSpeed.Limit(tube.SpeedLimit));
@@ -109,12 +111,8 @@ namespace SpaceTransit.Ships.Driving
 
         private void Enter(Station station)
         {
-            if (Parent.Stop is not IArrival arrival || station.Name != arrival.Station.name)
-                return;
-            var dock = station.Docks[arrival.DockIndex];
-            var entry = Assembly.Reverse ? dock.FrontEntry : dock.BackEntry;
-            if (entry)
-                entry.Lock(Assembly);
+            if (Parent.Stop is IArrival arrival && station.Name == arrival.Station.name)
+                _entryRequested = Assembly.FrontModule.DockList.Enter(arrival.DockIndex);
         }
 
         public override void OnRouteChanged() => _departed = true;

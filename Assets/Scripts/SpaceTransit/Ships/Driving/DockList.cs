@@ -77,6 +77,19 @@ namespace SpaceTransit.Ships.Driving
             _list[index].Selected = true;
         }
 
+        public bool Enter(int index)
+        {
+            if (index == -1 || _list.Count == 0)
+                return false;
+            var dock = TowardsStation.Docks[index];
+            var entry = Assembly.Reverse ? dock.FrontEntry : dock.BackEntry;
+            if (!entry)
+                return false;
+            var locked = entry.Lock(Assembly);
+            _list[index].Pick(locked);
+            return locked;
+        }
+
         public int Selected => _list.FindIndex(static e => e.Selected);
 
     }

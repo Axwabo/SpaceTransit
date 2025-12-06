@@ -2,6 +2,7 @@
 using System.Linq;
 using SpaceTransit.Audio;
 using SpaceTransit.Movement;
+using SpaceTransit.Ships.Driving;
 using SpaceTransit.Ships.Modules.Doors;
 using UnityEngine;
 
@@ -45,6 +46,8 @@ namespace SpaceTransit.Ships.Modules
             foreach (var component in _components)
                 component.OnStateChanged();
         }
+
+        public DockList DockList => _components.OfType<DockList>().First();
 
     }
 

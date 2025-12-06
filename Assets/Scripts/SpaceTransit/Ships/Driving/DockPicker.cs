@@ -9,6 +9,8 @@ namespace SpaceTransit.Ships.Driving
     {
 
         private static readonly Color SelectedColor = new(1f, 1f, 0f, 0.24f);
+        private static readonly Color EnteringColor = new(0, 1, 0, 0.24f);
+        private static readonly Color FailedColor = new(1, 0, 0, 0.24f);
 
         private int _index;
 
@@ -33,6 +35,8 @@ namespace SpaceTransit.Ships.Driving
             get => background.color == SelectedColor;
             set => background.color = value ? SelectedColor : Color.clear;
         }
+
+        public void Pick(bool locked) => background.color = locked ? EnteringColor : FailedColor;
 
     }
 
