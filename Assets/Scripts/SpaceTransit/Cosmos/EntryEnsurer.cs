@@ -9,7 +9,7 @@ namespace SpaceTransit.Cosmos
     {
 
         [SerializeField]
-        private Station station;
+        public Station station;
 
         [SerializeField]
         private bool backwards;

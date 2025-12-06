@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using SpaceTransit.Routes;
 using SpaceTransit.Ships;
 using SpaceTransit.Tubes;
-using UnityEditor;
 using UnityEngine;
 
 namespace SpaceTransit.Cosmos
@@ -35,13 +33,6 @@ namespace SpaceTransit.Cosmos
                 return true;
             connectTube.SetNext(connectTo);
             return true;
-        }
-
-        [ContextMenu("Request Entry")]
-        public void RequestEntry()
-        {
-            if (!Lock(ShipAssembly.Instances.First()))
-                EditorUtility.DisplayDialog("lock failed", "Couldn't request entry", "kurwa");
         }
 
         private void Update() => UsedBy.RemoveWhere(e => !e);
