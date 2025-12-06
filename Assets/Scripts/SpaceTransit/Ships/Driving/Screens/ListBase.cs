@@ -41,7 +41,7 @@ namespace SpaceTransit.Ships.Driving.Screens
             if (_list.Count == 0)
                 return;
             var previous = Selected;
-            var index = previous + (forwards ? 1 : 0);
+            var index = previous + (forwards ? 1 : -1);
             if (index >= _list.Count)
                 index = 0;
             else if (index < 0)
