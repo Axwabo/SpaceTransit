@@ -13,10 +13,11 @@ namespace SpaceTransit.Cosmos
 
         private void Start() => _dock = GetComponent<Dock>();
 
-        public override void OnExited(ShipModule module)
+        public override void OnEntered(ShipModule module)
         {
-            base.OnExited(module);
-            if (ensurer.IsOccupied)
+            var count = ensurer.Occupants.Count;
+            base.OnEntered(module);
+            if (count != module.Assembly.Modules.Count)
                 return;
             var entry = module.Assembly.Reverse ? _dock.FrontEntry : _dock.BackEntry;
             if (entry)

@@ -60,9 +60,6 @@ namespace SpaceTransit.Ships
 
         private void Update()
         {
-            CanProceed = Assembly.FrontModule.Thruster.Tube.Safety.CanProceed(Assembly);
-            if (!CanProceed)
-                Assembly.SetSpeed(0);
             if (_previousState == State)
                 return;
             foreach (var component in _components)
@@ -84,6 +81,13 @@ namespace SpaceTransit.Ships
                 return;
             _liftProgress = -1;
             State = lifting ? ShipState.Sailing : ShipState.Docked;
+        }
+
+        private void LateUpdate()
+        {
+            CanProceed = Assembly.FrontModule.Thruster.Tube.Safety.CanProceed(Assembly);
+            if (!CanProceed)
+                Assembly.SetSpeed(0);
         }
 
         public void MarkReady()

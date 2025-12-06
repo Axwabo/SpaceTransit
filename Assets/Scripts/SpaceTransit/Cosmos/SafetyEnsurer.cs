@@ -11,7 +11,7 @@ namespace SpaceTransit.Cosmos
     public abstract class SafetyEnsurer : MonoBehaviour
     {
 
-        protected HashSet<ShipModule> Occupants { get; } = new();
+        public HashSet<ShipModule> Occupants { get; } = new();
 
         protected TubeBase Tube { get; private set; }
 
