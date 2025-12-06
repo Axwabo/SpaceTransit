@@ -21,7 +21,7 @@ namespace SpaceTransit.Cosmos
                 return;
             var entry = module.Assembly.Reverse ? _dock.FrontEntry : _dock.BackEntry;
             if (entry)
-                entry.UsedBy.Remove(module.Assembly);
+                entry.Release(module.Assembly);
         }
 
     }

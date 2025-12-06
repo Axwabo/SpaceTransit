@@ -25,7 +25,7 @@ namespace SpaceTransit.Cosmos
             foreach (var dock in station.Docks)
             {
                 var entry = assembly.Reverse ? dock.FrontEntry : dock.BackEntry;
-                if (entry && entry.UsedBy.Contains(assembly))
+                if (entry && entry.IsUsedOnlyBy(assembly))
                     return true;
             }
 

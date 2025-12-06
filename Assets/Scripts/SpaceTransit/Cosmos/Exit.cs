@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using SpaceTransit.Routes;
+﻿using SpaceTransit.Routes;
 using SpaceTransit.Ships;
 using SpaceTransit.Tubes;
 using UnityEngine;
@@ -10,6 +9,9 @@ namespace SpaceTransit.Cosmos
 
     public sealed class Exit : MonoBehaviour
     {
+
+        [SerializeField]
+        private Lock @lock;
 
         [field: FormerlySerializedAs("<ExitTowards>k__BackingField")]
         [field: FormerlySerializedAs("<ConnectedStation>k__BackingField")]
@@ -24,20 +26,17 @@ namespace SpaceTransit.Cosmos
         [SerializeField]
         private TubeBase connectTo;
 
-        public HashSet<ShipAssembly> UsedBy { get; } = new();
-
         public bool Lock(ShipAssembly assembly)
         {
-            if (UsedBy.Count != 0 && !UsedBy.Contains(assembly))
+            if (!@lock.Claim(assembly))
                 return false;
-            UsedBy.Add(assembly);
             if (!connectTo)
                 return true;
             connectTube.SetNext(connectTo);
             return true;
         }
 
-        private void Update() => UsedBy.RemoveWhere(e => !e);
+        public void Release(ShipAssembly assembly) => @lock.Release(assembly);
 
     }
 

@@ -20,7 +20,7 @@ namespace SpaceTransit.Cosmos
         {
             base.OnExited(module);
             if (!ensurer.IsOccupied && (module.Assembly.Reverse ? backwards : forwards))
-                exit.UsedBy.Remove(module.Assembly);
+                exit.Release(module.Assembly);
         }
 
     }
