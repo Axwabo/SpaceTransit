@@ -39,12 +39,6 @@ namespace SpaceTransit.Cosmos
 
         private void Update() => UsedBy.RemoveWhere(e => !e);
 
-        public void Clear(ShipAssembly assembly)
-        {
-            UsedBy.Remove(assembly);
-            exit.UsedBy.Remove(assembly);
-        }
-
     }
 
 }
