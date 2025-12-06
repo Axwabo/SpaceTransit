@@ -13,6 +13,8 @@ namespace SpaceTransit.Cosmos
         [field: SerializeField]
         public Station ConnectedStation { get; private set; }
 
+        public Dock Dock { get; set; }
+
         [SerializeField]
         private Exit exit;
 
@@ -26,7 +28,7 @@ namespace SpaceTransit.Cosmos
 
         public bool Lock(ShipAssembly assembly)
         {
-            if (!exit.Lock(assembly) || UsedBy.Count != 0 && !UsedBy.Contains(assembly))
+            if (Dock.Tube.Safety.IsOccupied || !exit.Lock(assembly) || UsedBy.Count != 0 && !UsedBy.Contains(assembly))
                 return false;
             UsedBy.Add(assembly);
             if (!connectTo)

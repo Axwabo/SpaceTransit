@@ -33,6 +33,14 @@ namespace SpaceTransit.Routes
 
         public HashSet<ShipAssembly> UsedBy { get; } = new();
 
+        private void Start()
+        {
+            if (FrontEntry)
+                FrontEntry.Dock = this;
+            if (BackEntry)
+                BackEntry.Dock = this;
+        }
+
     }
 
 }

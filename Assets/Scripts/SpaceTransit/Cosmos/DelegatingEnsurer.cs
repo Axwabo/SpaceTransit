@@ -11,6 +11,8 @@ namespace SpaceTransit.Cosmos
         [SerializeField]
         protected SafetyEnsurer ensurer;
 
+        public override bool IsOccupied => ensurer.IsOccupied;
+
         public override bool CanProceed(ShipAssembly assembly) => ensurer.CanProceed(assembly);
 
         public override void OnEntered(ShipModule module) => ensurer.OnEntered(module);
