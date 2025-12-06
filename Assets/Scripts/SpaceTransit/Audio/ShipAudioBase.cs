@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using SpaceTransit.Movement;
-using SpaceTransit.Ships.Modules;
+﻿using SpaceTransit.Ships.Modules;
 using UnityEngine;
 
 namespace SpaceTransit.Audio
@@ -11,7 +9,7 @@ namespace SpaceTransit.Audio
 
         protected AudioSource[] Sources { get; private set; }
 
-        protected bool IsPlayerMounted => Assembly.Modules.Any(e => e.Mount.Transform == MovementController.Current.Mount);
+        protected bool IsPlayerMounted => Assembly.IsPlayerMounted;
 
         protected bool Mute
         {

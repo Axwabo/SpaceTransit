@@ -31,13 +31,16 @@ namespace SpaceTransit.Movement
 
         private float _verticalVelocity;
 
+        public bool IsMounted { get; private set; }
+
         public Transform Mount
         {
             get => _mount;
             set
             {
+                IsMounted = value;
                 _mount = value;
-                _t.parent = value ? value : World.Current;
+                _t.parent = IsMounted ? value : World.Current;
             }
         }
 
