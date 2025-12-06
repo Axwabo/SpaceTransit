@@ -11255,7 +11255,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c43dfdd9e06143cc9745b3f999851f85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
-  lock: {fileID: 1280462914}
+  locks:
+  - {fileID: 1280462914}
+  - {fileID: 811499163}
   <ConnectedStation>k__BackingField: {fileID: 1402746484}
   connectTube: {fileID: 8420451524270578508}
   connectTo: {fileID: 659460994}
@@ -12958,6 +12960,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 496939808}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &811499161
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 811499162}
+  - component: {fileID: 811499163}
+  m_Layer: 0
+  m_Name: 1 To L
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &811499162
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 811499161}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -25.001366, y: 0, z: 75.0031}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1571396119}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &811499163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 811499161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166d277a1b5444daae45515d0c1a0690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Lock
 --- !u!1 &812523897
 GameObject:
   m_ObjectHideFlags: 0
@@ -13395,7 +13441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c43dfdd9e06143cc9745b3f999851f85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
-  lock: {fileID: 0}
+  locks: []
   <ConnectedStation>k__BackingField: {fileID: 1617634471}
   connectTube: {fileID: 50568478}
   connectTo: {fileID: 629117165}
@@ -15066,7 +15112,7 @@ GameObject:
   - component: {fileID: 945991657}
   - component: {fileID: 945991658}
   m_Layer: 0
-  m_Name: Left
+  m_Name: To L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20797,7 +20843,7 @@ GameObject:
   - component: {fileID: 1280462913}
   - component: {fileID: 1280462914}
   m_Layer: 0
-  m_Name: Right
+  m_Name: To R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20991,7 +21037,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c43dfdd9e06143cc9745b3f999851f85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
-  lock: {fileID: 0}
+  locks: []
   <ConnectedStation>k__BackingField: {fileID: 1617634471}
   connectTube: {fileID: 272384535}
   connectTo: {fileID: 2055315671}
@@ -24684,7 +24730,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c43dfdd9e06143cc9745b3f999851f85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
-  lock: {fileID: 1280462914}
+  locks:
+  - {fileID: 1280462914}
   <ConnectedStation>k__BackingField: {fileID: 1402746484}
   connectTube: {fileID: 0}
   connectTo: {fileID: 0}
@@ -26558,6 +26605,7 @@ Transform:
   - {fileID: 712982310}
   - {fileID: 1476848091}
   - {fileID: 1280462913}
+  - {fileID: 811499162}
   - {fileID: 945991657}
   m_Father: {fileID: 1721577725}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -26636,7 +26684,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06b6e80414e34af586eb2985c30c263a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Entry
-  lock: {fileID: 945991658}
+  locks: []
   <ConnectedStation>k__BackingField: {fileID: 1402746484}
   connectTube: {fileID: 1510448874}
   connectTo: {fileID: 1159859966}
@@ -28412,7 +28460,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c43dfdd9e06143cc9745b3f999851f85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
-  lock: {fileID: 0}
+  locks: []
   <ConnectedStation>k__BackingField: {fileID: 1875844697}
   connectTube: {fileID: 272384535}
   connectTo: {fileID: 324168561}
@@ -28885,7 +28933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c43dfdd9e06143cc9745b3f999851f85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
-  lock: {fileID: 0}
+  locks: []
   <ConnectedStation>k__BackingField: {fileID: 1769025573}
   connectTube: {fileID: 0}
   connectTo: {fileID: 0}
@@ -33007,7 +33055,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06b6e80414e34af586eb2985c30c263a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Entry
-  lock: {fileID: 945991658}
+  locks:
+  - {fileID: 811499163}
   <ConnectedStation>k__BackingField: {fileID: 1402746484}
   connectTube: {fileID: 8420451524270578508}
   connectTo: {fileID: 1084256658}

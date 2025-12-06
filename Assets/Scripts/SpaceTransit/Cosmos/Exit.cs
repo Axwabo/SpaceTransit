@@ -11,7 +11,7 @@ namespace SpaceTransit.Cosmos
     {
 
         [SerializeField]
-        private Lock @lock;
+        private Lock[] locks;
 
         [field: FormerlySerializedAs("<ExitTowards>k__BackingField")]
         [field: FormerlySerializedAs("<ConnectedStation>k__BackingField")]
@@ -28,15 +28,16 @@ namespace SpaceTransit.Cosmos
 
         public bool Lock(ShipAssembly assembly)
         {
-            if (!@lock.Claim(assembly))
+            if (!locks.CanClaim(assembly))
                 return false;
+            locks.Claim(assembly);
             if (!connectTo)
                 return true;
             connectTube.SetNext(connectTo);
             return true;
         }
 
-        public void Release(ShipAssembly assembly) => @lock.Release(assembly);
+        public void Release(ShipAssembly assembly) => locks.Release(assembly);
 
     }
 

@@ -12,12 +12,12 @@ namespace SpaceTransit.Cosmos
 
         public bool IsUsedOnlyBy(ShipAssembly assembly) => _usedBy.Count == 1 && _usedBy.Contains(assembly);
 
-        public bool Claim(ShipAssembly assembly)
+        public bool CanClaim(ShipAssembly assembly) => _usedBy.Count == 0 || IsUsedOnlyBy(assembly);
+
+        public void Claim(ShipAssembly assembly)
         {
-            if (_usedBy.Count != 0 && !IsUsedOnlyBy(assembly))
-                return false;
-            _usedBy.Add(assembly);
-            return true;
+            if (CanClaim(assembly)) 
+                _usedBy.Add(assembly);
         }
 
         public void Release(ShipAssembly assembly) => _usedBy.Remove(assembly);
