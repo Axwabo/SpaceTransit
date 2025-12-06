@@ -197,9 +197,10 @@ namespace SpaceTransit.Stations
             yield return onlyAt;
             for (var i = index + 1; i < intermediateStops; i++)
             {
-                yield return 0.3f;
                 if (i != index + 1 && i == intermediateStops - 1)
                     yield return and;
+                else if (i != index + 1)
+                    yield return 0.3f;
                 yield return route.IntermediateStops[i].Station.Announcement;
             }
         }
