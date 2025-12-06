@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using SpaceTransit.Audio;
 using SpaceTransit.Routes;
-using SpaceTransit.Routes.Stops;
+using SpaceTransit.Vaulter;
 using UnityEngine;
 
 namespace SpaceTransit.Stations
@@ -31,36 +32,21 @@ namespace SpaceTransit.Stations
 
         private readonly Dictionary<RouteDescriptor, int> _announced = new();
 
-        private readonly List<(RouteDescriptor, int, IDeparture)> _applicableRoutes = new();
+        private List<DepartureEntry> _departures;
 
         private void Awake() => _queue = GetComponent<QueuePlayer>();
 
         private void Start()
         {
-            var id = GetComponentInParent<Station>().ID;
-            foreach (var route in World.Routes)
-            {
-                if (route.Origin.Station == id)
-                {
-                    _applicableRoutes.Add((route, -1, route.Origin));
-                    continue;
-                }
-
-                for (var i = 0; i < route.IntermediateStops.Count; i++)
-                {
-                    var stop = route.IntermediateStops[i];
-                    if (stop.Station != id)
-                        break;
-                    _applicableRoutes.Add((route, i, stop));
-                }
-            }
-
-            _applicableRoutes.Sort((a, b) => b.Item1.Type.CompareTo(a.Item1.Type));
+            var cache = GetComponentInParent<DeparturesArrivals>();
+            _departures = cache.Departures.OrderBy(static e => e.Departure.Departure.Value.TotalMinutes)
+                .ThenBy(static e => e.Route.Type)
+                .ToList();
         }
 
         private void Update()
         {
-            foreach (var (route, index, departure) in _applicableRoutes)
+            foreach (var (route, index, departure) in _departures)
             {
                 if (departure.Departure.Value < Clock.Now
                     || announcementCreator.GetAnnouncement(route, index, departure, _announced.GetValueOrDefault(route, -1)) is not { } announcement)
