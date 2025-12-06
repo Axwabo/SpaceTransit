@@ -49,13 +49,14 @@ namespace SpaceTransit.Ships.Modules.Doors
                 return;
             }
 
-            if ((_remaining -= Clock.Delta) > 0 || ++_count > max && max != 0)
+            if ((_remaining -= Clock.Delta) > 0 || max != 0 && _count >= max)
                 return;
-            if (lightRate == 1 || _count % lightRate == 0)
+            if (_count % lightRate == 0)
                 meshRenderer.sharedMaterial = meshRenderer.sharedMaterial == _inactive ? active : _inactive;
-            if (soundRate == 1 || _count % soundRate == 0)
+            if (_count % soundRate == 0)
                 source.PlayOneShot(beep);
             _remaining += interval;
+            _count++;
         }
 
         private void Deactivate()
