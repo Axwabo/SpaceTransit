@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using SpaceTransit.Routes;
 using SpaceTransit.Ships;
 using SpaceTransit.Tubes;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -38,7 +40,8 @@ namespace SpaceTransit.Cosmos
         {
             if (UsedBy.Count != 0 && !UsedBy.Contains(assembly))
                 return false;
-            UsedBy.Add(assembly);
+            if (!UsedBy.Add(assembly))
+                return true;
             if (exiting)
                 Connect(connectExitTube, connectExitTo, assembly);
             else
@@ -54,6 +57,13 @@ namespace SpaceTransit.Cosmos
                 which.Previous = to;
             else
                 which.Next = to;
+        }
+
+        [ContextMenu("Request Entry")]
+        private void Enter()
+        {
+            if (!Lock(ShipAssembly.Instances.First(), false))
+                EditorUtility.DisplayDialog("Entry Failed", "Couldn't request entry", "kurwa");
         }
 
         private void Update() => UsedBy.RemoveWhere(e => !e);

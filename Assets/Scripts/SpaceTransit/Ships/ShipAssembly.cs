@@ -12,6 +12,10 @@ namespace SpaceTransit.Ships
     public sealed class ShipAssembly : ShipComponentBase
     {
 
+        private static readonly HashSet<ShipAssembly> Assemblies = new();
+
+        public static IReadOnlyCollection<ShipAssembly> Instances => Assemblies;
+
         public IReadOnlyList<ShipModule> Modules { get; private set; }
 
         public TubeBase startTube;
@@ -57,6 +61,7 @@ namespace SpaceTransit.Ships
             Modules = this.GetComponentsInImmediateChildren<ShipModule>().ToArray();
             if (Modules.Count == 0)
                 throw new MissingComponentException("Ships must have at least 1 module");
+            Assemblies.Add(this);
         }
 
         private void Update()
@@ -74,6 +79,8 @@ namespace SpaceTransit.Ships
                 break;
             }
         }
+
+        private void OnDestroy() => Assemblies.Remove(this);
 
         public void SetSpeed(float raw) => TargetSpeed = new ShipSpeed(raw, Reverse);
 
