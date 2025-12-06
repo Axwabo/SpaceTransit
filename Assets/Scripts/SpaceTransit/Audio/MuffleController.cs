@@ -34,14 +34,21 @@ namespace SpaceTransit.Audio
         {
             if (!Assembly.IsPlayerMounted)
                 return;
-            var score = 0f;
+            var volumeScore = 0f;
+            var cutoffScore = 0f;
             var position = MovementController.Current.LastPosition;
             foreach (var module in Assembly.Modules)
             foreach (var door in module.Doors)
+            {
                 if (door.CanDepart)
-                    score += 1 - Mathf.Clamp01((Vector3.Distance(position, door.Transform.position) + minDoorDistance) / maxDoorDistance);
-            mixer.SetFloat(volumeParameter, volume.Evaluate(score));
-            mixer.SetFloat(cutoffParameter, cutoff.Evaluate(score));
+                    continue;
+                var distance = Vector3.Distance(position, door.Transform.position) - minDoorDistance;
+                volumeScore += (1 - Mathf.Clamp01(distance / maxDoorDistance)) * (1 - Mathf.Pow(1 - door.Openness, 2));
+                cutoffScore += door.Openness;
+            }
+
+            mixer.SetFloat(volumeParameter, volume.Evaluate(volumeScore));
+            mixer.SetFloat(cutoffParameter, cutoff.Evaluate(cutoffScore));
         }
 
     }

@@ -218,6 +218,7 @@ GameObject:
   - component: {fileID: 8005429676571019481}
   - component: {fileID: 8487033805383027773}
   - component: {fileID: 5681455420245758272}
+  - component: {fileID: 6126567854730910341}
   m_Layer: 0
   m_Name: Departure
   m_TagString: Untagged
@@ -362,6 +363,19 @@ MonoBehaviour:
   min: -1
   max: 30
   restart: 0
+--- !u!114 &6126567854730910341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3076424315521750836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1cd68e138cc481484c9dcb888d3babd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Audio.MountBasedMixerSetter
+  onboardGroup: {fileID: -3068737554344247453, guid: d180209a54469ec478c6696d196e7b79, type: 2}
 --- !u!1 &3477208902206184141
 GameObject:
   m_ObjectHideFlags: 0
@@ -419,6 +433,7 @@ GameObject:
   - component: {fileID: 839297446893814377}
   - component: {fileID: 4707861732321945050}
   - component: {fileID: 5212376258669006603}
+  - component: {fileID: 4121585422042775813}
   m_Layer: 0
   m_Name: ROSS Assembly
   m_TagString: Untagged
@@ -548,6 +563,71 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Vaulter.VaulterController
   initialRoute: {fileID: 0}
   initialStopIndex: -1
+--- !u!114 &4121585422042775813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3772819651179930821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 380f91abbf58418fb4f7d8ef3a7ae913, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.MuffleController
+  minDoorDistance: 0.2
+  maxDoorDistance: 1
+  mixer: {fileID: 24100000, guid: d180209a54469ec478c6696d196e7b79, type: 2}
+  volume:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: -16
+      inSlope: 39.074844
+      outSlope: 39.074844
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.058495823
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 3.8852823
+      outSlope: 3.8852823
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.12256265
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  cutoff:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 800
+      inSlope: 48136.586
+      outSlope: 48136.586
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.05292479
+    - serializedVersion: 3
+      time: 1
+      value: 22000
+      inSlope: 3451.3005
+      outSlope: 3451.3005
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.1476323
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  volumeParameter: Volume
+  cutoffParameter: Cutoff
 --- !u!1 &7747355031329079953
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,6 +639,7 @@ GameObject:
   - component: {fileID: 7189027574513000345}
   - component: {fileID: 2416663177195591921}
   - component: {fileID: 5580602854250315674}
+  - component: {fileID: 682287302362333835}
   m_Layer: 0
   m_Name: Arrival
   m_TagString: Untagged
@@ -703,6 +784,19 @@ MonoBehaviour:
   min: 0
   max: 29
   restart: 1
+--- !u!114 &682287302362333835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7747355031329079953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1cd68e138cc481484c9dcb888d3babd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Audio.MountBasedMixerSetter
+  onboardGroup: {fileID: -3068737554344247453, guid: d180209a54469ec478c6696d196e7b79, type: 2}
 --- !u!1001 &828161267091915894
 PrefabInstance:
   m_ObjectHideFlags: 0

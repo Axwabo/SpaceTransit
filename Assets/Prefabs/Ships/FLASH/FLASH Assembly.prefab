@@ -218,6 +218,7 @@ GameObject:
   - component: {fileID: 8005429676571019481}
   - component: {fileID: 8487033805383027773}
   - component: {fileID: 5681455420245758272}
+  - component: {fileID: 5664120959320970614}
   m_Layer: 0
   m_Name: Departure
   m_TagString: Untagged
@@ -371,6 +372,19 @@ MonoBehaviour:
   min: -1
   max: 30
   restart: 0
+--- !u!114 &5664120959320970614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3076424315521750836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1cd68e138cc481484c9dcb888d3babd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Audio.MountBasedMixerSetter
+  onboardGroup: {fileID: -3068737554344247453, guid: d180209a54469ec478c6696d196e7b79, type: 2}
 --- !u!1 &3330704545328336012
 GameObject:
   m_ObjectHideFlags: 0
@@ -719,41 +733,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 380f91abbf58418fb4f7d8ef3a7ae913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.MuffleController
-  minDoorDistance: 0
-  maxDoorDistance: 0
-  mixer: {fileID: 0}
+  minDoorDistance: 0.2
+  maxDoorDistance: 1
+  mixer: {fileID: 24100000, guid: d180209a54469ec478c6696d196e7b79, type: 2}
   volume:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: -80
-      inSlope: 80
-      outSlope: 80
-      tangentMode: 34
+      value: -16
+      inSlope: 39.074844
+      outSlope: 39.074844
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 0.058495823
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: 80
-      outSlope: 80
-      tangentMode: 34
+      inSlope: 3.8852823
+      outSlope: 3.8852823
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.12256265
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   cutoff:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 800
+      inSlope: 48136.586
+      outSlope: 48136.586
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.05292479
+    - serializedVersion: 3
+      time: 1
+      value: 22000
+      inSlope: 3451.3005
+      outSlope: 3451.3005
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.1476323
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  volumeParameter: 
-  cutoffParameter: 
+  volumeParameter: Volume
+  cutoffParameter: Cutoff
 --- !u!1 &6127539050790823095
 GameObject:
   m_ObjectHideFlags: 0
@@ -1203,6 +1235,7 @@ GameObject:
   - component: {fileID: 7189027574513000345}
   - component: {fileID: 2416663177195591921}
   - component: {fileID: 5580602854250315674}
+  - component: {fileID: 2706701730499677659}
   m_Layer: 0
   m_Name: Arrival
   m_TagString: Untagged
@@ -1356,6 +1389,19 @@ MonoBehaviour:
   min: 0
   max: 29
   restart: 1
+--- !u!114 &2706701730499677659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7747355031329079953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1cd68e138cc481484c9dcb888d3babd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Audio.MountBasedMixerSetter
+  onboardGroup: {fileID: -3068737554344247453, guid: d180209a54469ec478c6696d196e7b79, type: 2}
 --- !u!1 &8166084356067681349
 GameObject:
   m_ObjectHideFlags: 0

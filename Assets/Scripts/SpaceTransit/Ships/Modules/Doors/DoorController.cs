@@ -44,6 +44,8 @@ namespace SpaceTransit.Ships.Modules.Doors
 
         private DoorState _state;
 
+        private float _maxSideways;
+
         public bool CanDepart => _state == DoorState.Closed;
 
         private bool IsCorrectSide => !Controller.TryGetVaulter(out var controller)
@@ -54,12 +56,14 @@ namespace SpaceTransit.Ships.Modules.Doors
 
         public bool AlarmActive => _state == DoorState.Closing || _state == DoorState.Open && _time < 2f;
 
-        public float Openness { get; private set; } // TODO
+        public float Openness { get; private set; }
 
         protected override void Awake()
         {
+            base.Awake();
             _leftOffset = left.localPosition;
             _rightOffset = right.localPosition;
+            _maxSideways = sideways.Evaluate(ushort.MaxValue);
             _duration = Mathf.Max(sideways.Duration(), forwards.Duration());
         }
 
@@ -79,6 +83,7 @@ namespace SpaceTransit.Ships.Modules.Doors
             {
                 case DoorState.Opening:
                     Open();
+                    Animate();
                     break;
                 case DoorState.Open:
                     if ((_time -= Clock.Delta) > 0)
@@ -90,13 +95,13 @@ namespace SpaceTransit.Ships.Modules.Doors
                     break;
                 case DoorState.Closing:
                     Close();
+                    Animate();
                     break;
             }
         }
 
         private void Open()
         {
-            Animate();
             if ((_time += Clock.Delta) <= _duration)
                 return;
             _state = DoorState.Open;
@@ -105,7 +110,6 @@ namespace SpaceTransit.Ships.Modules.Doors
 
         private void Close()
         {
-            Animate();
             if ((_time -= Clock.Delta) >= 0)
                 return;
             _state = DoorState.Closed;
@@ -122,6 +126,7 @@ namespace SpaceTransit.Ships.Modules.Doors
                 z = -z;
             left.localPosition = _leftOffset + new Vector3(x, 0, -z);
             right.localPosition = _rightOffset + new Vector3(x, 0, z);
+            Openness = z / _maxSideways;
         }
 
         private enum DoorState
