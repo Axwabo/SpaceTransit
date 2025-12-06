@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using SpaceTransit.Audio;
 using SpaceTransit.Movement;
+using SpaceTransit.Ships.Modules.Doors;
 using UnityEngine;
 
 namespace SpaceTransit.Ships.Modules
@@ -16,7 +18,9 @@ namespace SpaceTransit.Ships.Modules
         [field: SerializeField]
         public Mountable Mount { get; private set; }
 
-        public bool CanDepart => _components.All(e => e is not IDepartureBlocker {CanDepart: false});
+        public bool CanDepart => _components.All(static e => e is not IDepartureBlocker {CanDepart: false});
+
+        public IReadOnlyCollection<DoorController> Doors { get; private set; }
 
         public ModuleThruster Thruster { get; private set; }
 
@@ -27,6 +31,7 @@ namespace SpaceTransit.Ships.Modules
             base.Awake();
             _components = GetComponentsInChildren<ModuleComponentBase>();
             Thruster = _components.OfType<ModuleThruster>().First();
+            Doors = _components.OfType<DoorController>().ToArray();
         }
 
         protected override void OnInitialized()

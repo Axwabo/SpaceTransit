@@ -54,6 +54,8 @@ namespace SpaceTransit.Ships.Modules.Doors
 
         public bool AlarmActive => _state == DoorState.Closing || _state == DoorState.Open && _time < 2f;
 
+        public float Openness { get; private set; } // TODO
+
         protected override void Awake()
         {
             _leftOffset = left.localPosition;
