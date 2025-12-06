@@ -114,11 +114,11 @@ namespace SpaceTransit.Stations
         }
 
         public IEnumerable<AnnouncementClip> GetAnnouncement(RouteDescriptor route, IArrival arrival, int lastAnnounced)
-            => lastAnnounced != -1
-               || (int) Clock.Now.TotalMinutes == lastAnnounced
-               || arrival.MinutesToArrival() is not (1 or 2)
-                ? null
-                : GetArrival(route, arrival);
+            => lastAnnounced == -1
+               && (int) Clock.Now.TotalMinutes != lastAnnounced
+               && arrival.MinutesToArrival() is 1 or 2
+                ? GetArrival(route, arrival)
+                : null;
 
         private IEnumerable<AnnouncementClip> GetArrival(RouteDescriptor route, IArrival arrival)
         {
