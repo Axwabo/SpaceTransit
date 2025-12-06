@@ -113,6 +113,24 @@ namespace SpaceTransit.Stations
             };
         }
 
+        public IEnumerable<AnnouncementClip> GetAnnouncement(RouteDescriptor route, IArrival arrival, int lastAnnounced)
+            => lastAnnounced != -1
+               || (int) Clock.Now.TotalMinutes == lastAnnounced
+               || arrival.MinutesToArrival() is not (1 or 2)
+                ? null
+                : GetArrival(route, arrival);
+
+        private IEnumerable<AnnouncementClip> GetArrival(RouteDescriptor route, IArrival arrival)
+        {
+            yield return Type(route);
+            yield return ship;
+            yield return arrivingFrom;
+            yield return route.Origin.Station.Announcement;
+            yield return at;
+            yield return dock;
+            yield return numbersTo20[arrival.DockIndex];
+        }
+
         private IEnumerable<AnnouncementClip> In(int deltaMinutes, RouteDescriptor route, IDeparture departure) => new[]
         {
             the,

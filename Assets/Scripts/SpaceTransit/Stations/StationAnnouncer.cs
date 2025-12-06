@@ -30,34 +30,54 @@ namespace SpaceTransit.Stations
 
         private QueuePlayer _queue;
 
+        private DeparturesArrivals _cache;
+
         private readonly Dictionary<RouteDescriptor, int> _announced = new();
 
         private List<DepartureEntry> _departures;
 
-        private void Awake() => _queue = GetComponent<QueuePlayer>();
+        private List<ArrivalEntry> _arrivals;
 
-        private void Start()
+        private void Awake()
         {
-            var cache = GetComponentInParent<DeparturesArrivals>();
-            _departures = cache.Departures.OrderBy(static e => e.Departure.Departure.Value.TotalMinutes)
-                .ThenBy(static e => e.Route.Type)
-                .ToList();
+            _queue = GetComponent<QueuePlayer>();
+            _cache = GetComponentInParent<DeparturesArrivals>();
         }
 
         private void Update()
         {
+            EnsureCached();
             foreach (var (route, index, departure) in _departures)
-            {
-                if (departure.Departure.Value < Clock.Now
-                    || announcementCreator.GetAnnouncement(route, index, departure, _announced.GetValueOrDefault(route, -1)) is not { } announcement)
-                    continue;
-                _announced[route] = (int) Clock.Now.TotalMinutes;
-                var inter = route.Type == ServiceType.InterHub;
-                _queue.Enqueue(inter ? interHubSignal : genericSignal, inter ? interHubDuration : genericDuration);
-                foreach (var clip in announcement)
-                    _queue.Enqueue(clip.Clip, clip.Length);
-                _queue.Delay(3);
-            }
+                if (departure.Departure.Value >= Clock.Now
+                    && announcementCreator.GetAnnouncement(route, index, departure, _announced.GetValueOrDefault(route, -1)) is { } announcement)
+                    Announce(route, announcement);
+            foreach (var (route, _, arrival) in _arrivals)
+                if (arrival.Arrival.Value >= Clock.Now
+                    && announcementCreator.GetAnnouncement(route, arrival, _announced.GetValueOrDefault(route, -1)) is { } announcement)
+                    Announce(route, announcement);
+        }
+
+        private void EnsureCached()
+        {
+            if (_departures != null)
+                return;
+            _departures = _cache.Departures.OrderBy(static e => e.Departure.Departure.Value.TotalMinutes)
+                .ThenByDescending(static e => e.Route.Type)
+                .ToList();
+            _arrivals = _cache.Arrivals.Where(static e => e.Index == -1)
+                .OrderBy(static e => e.Arrival.Arrival.Value.TotalMinutes)
+                .ThenByDescending(static e => e.Route.Type)
+                .ToList();
+        }
+
+        private void Announce(RouteDescriptor route, IEnumerable<AnnouncementClip> announcement)
+        {
+            _announced[route] = (int) Clock.Now.TotalMinutes;
+            var inter = route.Type == ServiceType.InterHub;
+            _queue.Enqueue(inter ? interHubSignal : genericSignal, inter ? interHubDuration : genericDuration);
+            foreach (var clip in announcement)
+                _queue.Enqueue(clip.Clip, clip.Length);
+            _queue.Delay(3);
         }
 
     }

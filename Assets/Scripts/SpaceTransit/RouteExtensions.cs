@@ -8,7 +8,7 @@ namespace SpaceTransit
 
         public static int MinutesToDeparture(this IDeparture departure) => (int) (departure.Departure.Value - Clock.Now).TotalMinutes + 1;
 
-        public static int DepartureMinutes(this IDeparture departure) => (int) departure.Departure.Value.TotalMinutes;
+        public static int MinutesToArrival(this IArrival arrival) => (int) (arrival.Arrival.Value - Clock.Now).TotalMinutes + 1;
 
     }
 

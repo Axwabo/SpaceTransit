@@ -13,6 +13,8 @@ public sealed class Cullable : MonoBehaviour
     {
         if (!target)
             enabled = false;
+        else
+            _previouslyActive = target.activeSelf;
     }
 
     private void Update()
