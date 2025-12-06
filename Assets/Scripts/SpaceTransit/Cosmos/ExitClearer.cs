@@ -10,10 +10,16 @@ namespace SpaceTransit.Cosmos
         [SerializeField]
         private Exit exit;
 
+        [SerializeField]
+        private bool forwards;
+
+        [SerializeField]
+        private bool backwards;
+
         public override void OnExited(ShipModule module)
         {
             base.OnExited(module);
-            if (!ensurer.IsOccupied)
+            if (!ensurer.IsOccupied && module.Assembly.Reverse ? backwards : forwards)
                 exit.UsedBy.Remove(module.Assembly);
         }
 
