@@ -20,6 +20,12 @@ namespace SpaceTransit.Routes
         public Exit[] BackExits { get; private set; }
 
         [field: SerializeField]
+        public Entry FrontEntry { get; private set; }
+
+        [field: SerializeField]
+        public Entry BackEntry { get; private set; }
+
+        [field: SerializeField]
         public bool Left { get; private set; }
 
         [field: SerializeField]

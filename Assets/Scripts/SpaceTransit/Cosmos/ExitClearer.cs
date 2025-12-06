@@ -19,7 +19,7 @@ namespace SpaceTransit.Cosmos
         public override void OnExited(ShipModule module)
         {
             base.OnExited(module);
-            if (!ensurer.IsOccupied && module.Assembly.Reverse ? backwards : forwards)
+            if (!ensurer.IsOccupied && (module.Assembly.Reverse ? backwards : forwards))
                 exit.UsedBy.Remove(module.Assembly);
         }
 

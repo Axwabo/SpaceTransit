@@ -43,7 +43,7 @@ namespace SpaceTransit.Editor
                 ApplyTiling(o, hasTiling, tiling);
                 splineClone.RefreshCurves();
                 var tubeClone = o.AddComponent<SplineTube>();
-                tubeClone.Next = next;
+                tubeClone.SetNext(next);
                 next = tubeClone;
                 using var serialized = new SerializedObject(tubeClone);
                 serialized.FindProperty("spline").boxedValue = splineClone;
@@ -51,7 +51,7 @@ namespace SpaceTransit.Editor
             }
 
             if (tube.HasPrevious)
-                tube.Previous.Next = next;
+                tube.Previous.SetNext(next);
         }
 
         private static void ApplyTiling(GameObject o, bool hasTiling, SplineMeshTiling tiling)

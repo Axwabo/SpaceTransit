@@ -17,16 +17,8 @@ namespace SpaceTransit.Cosmos
         public override void OnEntered(ShipModule module)
         {
             if (!ensurer.IsOccupied)
-                Remap(module.Assembly.Reverse);
+                connectTube.SetNext(connectTo);
             base.OnEntered(module);
-        }
-
-        private void Remap(bool reverse)
-        {
-            if (reverse)
-                connectTube.Previous = connectTo;
-            else
-                connectTube.Next = connectTo;
         }
 
     }

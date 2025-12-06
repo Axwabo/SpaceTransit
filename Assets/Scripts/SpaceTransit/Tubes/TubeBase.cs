@@ -14,11 +14,11 @@ namespace SpaceTransit.Tubes
         public float SpeedLimit { get; private set; }
 
         [field: SerializeField]
-        public TubeBase Next { get; set; }
+        public TubeBase Next { get; private set; }
 
         public bool HasNext { get; private set; }
 
-        public TubeBase Previous { get; set; }
+        public TubeBase Previous { get; private set; }
 
         public bool HasPrevious { get; private set; }
 
@@ -68,6 +68,12 @@ namespace SpaceTransit.Tubes
         public abstract (Vector3 Position, Quaternion Rotation) Sample(float distance);
 
         public abstract float GetDistance(Vector3 point);
+
+        public void SetNext(TubeBase tube)
+        {
+            Next = tube;
+            OnValidate();
+        }
 
     }
 
