@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using SpaceTransit.Routes;
-using SpaceTransit.Ships.Modules;
+using SpaceTransit.Ships.Driving.Screens;
 using UnityEngine;
 
 namespace SpaceTransit.Ships.Driving
 {
 
-    public sealed class DockList : ModuleComponentBase
+    public sealed class DockList : ScreenBase
     {
 
         private readonly List<DockPicker> _list = new();
@@ -22,6 +22,12 @@ namespace SpaceTransit.Ships.Driving
         {
             if (State != ShipState.Sailing)
                 Clear();
+        }
+
+        private void OnEnable()
+        {
+            if (didStart)
+                Update();
         }
 
         private void Update()
@@ -62,7 +68,7 @@ namespace SpaceTransit.Ships.Driving
             }
         }
 
-        public void Select(bool forwards)
+        public override void Navigate(bool forwards)
         {
             if (_list.Count == 0)
                 return;
@@ -77,7 +83,7 @@ namespace SpaceTransit.Ships.Driving
             _list[index].Selected = true;
         }
 
-        public bool Enter(int index)
+        public bool Select(int index)
         {
             if (index == -1 || _list.Count == 0)
                 return false;
@@ -87,6 +93,8 @@ namespace SpaceTransit.Ships.Driving
             _list[index].Pick(locked);
             return locked;
         }
+
+        public override void Confirm() => Select(Selected);
 
         public int Selected => _list.FindIndex(static e => e.Selected);
 

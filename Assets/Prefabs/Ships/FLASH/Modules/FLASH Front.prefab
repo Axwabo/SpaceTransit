@@ -1,5 +1,54 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &311993370535380549
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6435313355832803635}
+  - component: {fileID: 9066367831338901287}
+  m_Layer: 5
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &6435313355832803635
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 311993370535380549}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5218593886564874664}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &9066367831338901287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 311993370535380549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b3aff0dd8704516b4da1465e7f4e5a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Driving.DockList
+  prefab: {fileID: 0}
 --- !u!1 &1101279141345807637
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,7 +437,7 @@ GameObject:
   - component: {fileID: 2518927346707674953}
   - component: {fileID: 8147414208638457326}
   m_Layer: 0
-  m_Name: Request Entry
+  m_Name: OK
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -500,7 +549,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb44dc301f34e7990b3b19216ba0773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Driving.RequestEntryButton
-  list: {fileID: 6612733014581233340}
+  slot: {fileID: 8502079790574078735}
 --- !u!1 &1999901128890323570
 GameObject:
   m_ObjectHideFlags: 0
@@ -627,7 +676,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84b504fcade5471ab12d83cd967a0c4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Driving.UpButton
-  list: {fileID: 6612733014581233340}
+  slot: {fileID: 8502079790574078735}
   down: 0
 --- !u!1 &2128640375660298901
 GameObject:
@@ -2402,9 +2451,9 @@ GameObject:
   - component: {fileID: 5218593886564874664}
   - component: {fileID: 5158303947565812749}
   - component: {fileID: 8014490300465901569}
-  - component: {fileID: 6861280096478020011}
+  - component: {fileID: 8502079790574078735}
   m_Layer: 5
-  m_Name: Vaulter Display
+  m_Name: Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2423,12 +2472,13 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8672980787909316540}
+  - {fileID: 6435313355832803635}
   m_Father: {fileID: 990728219054669069}
   m_LocalEulerAnglesHint: {x: 65.656, y: -0.18, z: 1.981}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -0.512, y: 1.46}
-  m_SizeDelta: {x: 0.6, y: 0.4}
+  m_SizeDelta: {x: 0.5, y: 0.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &5158303947565812749
 Canvas:
@@ -2476,7 +2526,7 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 1
---- !u!114 &6861280096478020011
+--- !u!114 &8502079790574078735
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2485,14 +2535,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6463150532010503678}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Script: {fileID: 11500000, guid: 871e6d63258d42778bd7ed6c8495bf4f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Driving.Screens.ScreenSlot
+  dockList: {fileID: 6612733014581233340}
+  um: {fileID: 9066367831338901287}
 --- !u!1 &6878257444254271534
 GameObject:
   m_ObjectHideFlags: 0
@@ -3077,7 +3124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84b504fcade5471ab12d83cd967a0c4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Driving.UpButton
-  list: {fileID: 6612733014581233340}
+  slot: {fileID: 8502079790574078735}
   down: 1
 --- !u!1 &9139203107692545372
 GameObject:

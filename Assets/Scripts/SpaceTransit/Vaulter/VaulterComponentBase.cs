@@ -1,4 +1,5 @@
 ﻿using SpaceTransit.Routes;
+using SpaceTransit.Routes.Stops;
 using SpaceTransit.Ships;
 using SpaceTransit.Ships.Modules;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace SpaceTransit.Vaulter
 
         protected bool IsInService => Parent.IsInService;
 
-        protected bool IsTerminus => Parent.Stop == Parent.Route.Destination;
+        protected bool IsTerminus => Parent.Stop is Destination;
 
         protected bool IsNearStation => Station.TryGetLoadedStation(Parent.Stop.Station, out var station)
                                         && Vector3.Distance(
