@@ -1,17 +1,11 @@
 ﻿using System.Collections.Generic;
 using SpaceTransit.Routes;
-using UnityEngine;
 
 namespace SpaceTransit.Ships.Driving.Screens
 {
 
-    public sealed class DockList : ScreenBase
+    public sealed class DockList : ListBase<Dock, DockPicker>
     {
-
-        private readonly List<DockPicker> _list = new();
-
-        [SerializeField]
-        private DockPicker prefab;
 
         private string _previousStationName;
 
@@ -38,13 +32,6 @@ namespace SpaceTransit.Ships.Driving.Screens
                 Clear();
         }
 
-        private void Clear()
-        {
-            foreach (var picker in _list)
-                Destroy(picker.gameObject);
-            _list.Clear();
-        }
-
         private void UpdateStation(StationId id)
         {
             var stationName = id.name;
@@ -59,43 +46,20 @@ namespace SpaceTransit.Ships.Driving.Screens
             }
 
             TowardsStation = station;
-            for (var i = 0; i < station.Docks.Count; i++)
-            {
-                var clone = Instantiate(prefab, Transform);
-                clone.Index = i;
-                _list.Add(clone);
-            }
+            SetUp();
         }
 
-        public override void Navigate(bool forwards)
-        {
-            if (_list.Count == 0)
-                return;
-            var previous = Selected;
-            var index = previous + (forwards ? 1 : 0);
-            if (index >= _list.Count)
-                index = 0;
-            else if (index < 0)
-                index = _list.Count - 1;
-            if (previous != -1 && previous != index)
-                _list[previous].Selected = false;
-            _list[index].Selected = true;
-        }
+        protected override IReadOnlyList<Dock> Source => TowardsStation.Docks;
 
-        public bool Select(int index)
+        protected override bool Select(Dock item, DockPicker picker)
         {
-            if (index == -1 || _list.Count == 0)
-                return false;
-            var dock = TowardsStation.Docks[index];
-            var entry = Assembly.Reverse ? dock.FrontEntry : dock.BackEntry;
+            var entry = Assembly.Reverse ? item.FrontEntry : item.BackEntry;
             var locked = entry && entry.Lock(Assembly);
-            _list[index].Pick(locked);
+            picker.Pick(locked);
             return locked;
         }
 
-        public override void Confirm() => Select(Selected);
-
-        public int Selected => _list.FindIndex(static e => e.Selected);
+        protected override string GetContent(int index, Dock item) => $"{index + 1}";
 
     }
 

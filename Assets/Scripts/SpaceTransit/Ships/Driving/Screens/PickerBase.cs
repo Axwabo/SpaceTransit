@@ -8,24 +8,19 @@ namespace SpaceTransit.Ships.Driving.Screens
     public abstract class PickerBase : MonoBehaviour
     {
 
-        private int _index;
-
         [SerializeField]
-        protected TextMeshProUGUI text;
+        private TextMeshProUGUI text;
 
         [SerializeField]
         private Image background;
 
         private static readonly Color SelectedColor = new(1f, 1f, 0f, 0.24f);
 
-        public int Index
+        public int Index { get; set; }
+
+        public string Text
         {
-            get => _index;
-            set
-            {
-                _index = value;
-                Text = $"{value + 1}";
-            }
+            set => text.text = value;
         }
 
         public bool Selected
@@ -38,8 +33,6 @@ namespace SpaceTransit.Ships.Driving.Screens
         {
             set => background.color = value;
         }
-
-        protected abstract string Text { set; }
 
     }
 
