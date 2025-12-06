@@ -1,7 +1,8 @@
 ﻿using SpaceTransit.Interactions;
+using SpaceTransit.Ships.Driving.Screens;
 using UnityEngine;
 
-namespace SpaceTransit.Ships.Driving.Screens
+namespace SpaceTransit.Ships.Driving
 {
 
     public sealed class NavigateButton : MonoBehaviour, IInteractable

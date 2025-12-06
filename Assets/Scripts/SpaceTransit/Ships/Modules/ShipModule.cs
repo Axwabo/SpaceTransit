@@ -2,7 +2,7 @@
 using System.Linq;
 using SpaceTransit.Audio;
 using SpaceTransit.Movement;
-using SpaceTransit.Ships.Driving;
+using SpaceTransit.Ships.Driving.Screens;
 using SpaceTransit.Ships.Modules.Doors;
 using UnityEngine;
 

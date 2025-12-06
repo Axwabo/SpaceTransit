@@ -12,16 +12,17 @@ namespace SpaceTransit.Ships.Driving.Screens
         private ScreenBase dockList;
 
         [SerializeField]
-        private ScreenBase um; // TODO
+        private ScreenBase um;
 
         public ScreenBase Current { get; private set; }
 
-        private bool _wasDockShown;
+        private bool _wasDockShown = true;
 
         protected override void Awake()
         {
             base.Awake();
             Current = dockList;
+            um.gameObject.SetActive(false);
         }
 
         public override void OnStateChanged()

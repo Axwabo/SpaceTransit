@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using SpaceTransit.Routes;
-using SpaceTransit.Ships.Driving.Screens;
 using UnityEngine;
 
-namespace SpaceTransit.Ships.Driving
+namespace SpaceTransit.Ships.Driving.Screens
 {
 
     public sealed class DockList : ScreenBase

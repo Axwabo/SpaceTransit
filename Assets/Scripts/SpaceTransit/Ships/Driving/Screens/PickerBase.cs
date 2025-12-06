@@ -2,23 +2,21 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SpaceTransit.Ships.Driving
+namespace SpaceTransit.Ships.Driving.Screens
 {
 
-    public sealed class DockPicker : MonoBehaviour
+    public abstract class PickerBase : MonoBehaviour
     {
-
-        private static readonly Color SelectedColor = new(1f, 1f, 0f, 0.24f);
-        private static readonly Color EnteringColor = new(0, 1, 0, 0.24f);
-        private static readonly Color FailedColor = new(1, 0, 0, 0.24f);
 
         private int _index;
 
         [SerializeField]
-        private TextMeshProUGUI text;
+        protected TextMeshProUGUI text;
 
         [SerializeField]
         private Image background;
+
+        private static readonly Color SelectedColor = new(1f, 1f, 0f, 0.24f);
 
         public int Index
         {
@@ -26,7 +24,7 @@ namespace SpaceTransit.Ships.Driving
             set
             {
                 _index = value;
-                text.text = $"{value + 1}";
+                Text = $"{value + 1}";
             }
         }
 
@@ -36,7 +34,12 @@ namespace SpaceTransit.Ships.Driving
             set => background.color = value ? SelectedColor : Color.clear;
         }
 
-        public void Pick(bool locked) => background.color = locked ? EnteringColor : FailedColor;
+        protected Color BackgroundColor
+        {
+            set => background.color = value;
+        }
+
+        protected abstract string Text { set; }
 
     }
 
