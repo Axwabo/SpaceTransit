@@ -83,9 +83,7 @@ namespace SpaceTransit.Ships.Driving
                 return false;
             var dock = TowardsStation.Docks[index];
             var entry = Assembly.Reverse ? dock.FrontEntry : dock.BackEntry;
-            if (!entry)
-                return false;
-            var locked = entry.Lock(Assembly);
+            var locked = entry && entry.Lock(Assembly);
             _list[index].Pick(locked);
             return locked;
         }
