@@ -14,10 +14,10 @@ namespace SpaceTransit.Routes
         public TubeBase Tube { get; private set; }
 
         [field: SerializeField]
-        public Exit FrontExit { get; private set; }
+        public Exit[] FrontExits { get; private set; }
 
         [field: SerializeField]
-        public Exit BackExit { get; private set; }
+        public Exit[] BackExits { get; private set; }
 
         [field: SerializeField]
         public bool Left { get; private set; }

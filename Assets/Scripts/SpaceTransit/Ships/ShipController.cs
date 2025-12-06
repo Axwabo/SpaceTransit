@@ -141,15 +141,19 @@ namespace SpaceTransit.Ships
             }
 
             var dock = station.Docks[controller.Stop.DockIndex];
-            if (dock.FrontExit && dock.FrontExit.ConnectedStation == towards)
+            foreach (var front in dock.FrontExits)
             {
-                exit = dock.FrontExit;
+                if (front.ConnectedStation != towards)
+                    continue;
+                exit = front;
                 return true;
             }
 
-            if (dock.BackExit && dock.BackExit.ConnectedStation == towards)
+            foreach (var back in dock.BackExits)
             {
-                exit = dock.BackExit;
+                if (back.ConnectedStation != towards)
+                    continue;
+                exit = back;
                 return true;
             }
 
