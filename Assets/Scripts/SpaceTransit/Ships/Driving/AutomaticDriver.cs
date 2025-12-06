@@ -98,8 +98,23 @@ namespace SpaceTransit.Ships.Driving
                 return;
             }
 
-            if (!_stopping && Controller.CanProceed)
-                Assembly.SetSpeed(Assembly.MaxSpeed.Limit(Assembly.FrontModule.Thruster.Tube.SpeedLimit));
+            if (!Controller.CanProceed)
+                return;
+            var tube = Assembly.FrontModule.Thruster.Tube;
+            if (tube.TryGetEntryEnsurer(Assembly.Reverse, out var ensurer))
+                Enter(ensurer.station);
+            if (!_stopping)
+                Assembly.SetSpeed(Assembly.MaxSpeed.Limit(tube.SpeedLimit));
+        }
+
+        private void Enter(Station station)
+        {
+            if (Parent.Stop is not IArrival arrival || station.Name != arrival.Station.name)
+                return;
+            var dock = station.Docks[arrival.DockIndex];
+            var entry = Assembly.Reverse ? dock.FrontEntry : dock.BackEntry;
+            if (entry)
+                entry.Lock(Assembly);
         }
 
         public override void OnRouteChanged() => _departed = true;

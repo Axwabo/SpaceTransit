@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using SpaceTransit.Cosmos;
 using SpaceTransit.Routes;
 using SpaceTransit.Ships.Modules;
-using SpaceTransit.Tubes;
 using UnityEngine;
 
 namespace SpaceTransit.Ships.Driving
@@ -29,10 +27,8 @@ namespace SpaceTransit.Ships.Driving
         private void Update()
         {
             var tube = Assembly.FrontModule.Thruster.Tube;
-            if (UpdateStation(tube))
-                return;
-            if (Assembly.Reverse ? tube.HasPrevious : tube.HasNext)
-                UpdateStation(tube.Next(Assembly.Reverse));
+            if (tube.TryGetEntryEnsurer(Assembly.Reverse, out var ensurer))
+                UpdateStation(ensurer.station.ID);
             else
                 Clear();
         }
@@ -42,14 +38,6 @@ namespace SpaceTransit.Ships.Driving
             foreach (var picker in _list)
                 Destroy(picker.gameObject);
             _list.Clear();
-        }
-
-        private bool UpdateStation(TubeBase tube)
-        {
-            if (tube.Safety is not EntryEnsurer {station: var station, Backwards: var backwards} || backwards != Assembly.Reverse)
-                return false;
-            UpdateStation(station.ID);
-            return true;
         }
 
         private void UpdateStation(StationId id)
