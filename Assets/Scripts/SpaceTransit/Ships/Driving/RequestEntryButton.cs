@@ -1,7 +1,7 @@
-﻿using SpaceTransit.Cosmos;
-using SpaceTransit.Interactions;
+﻿using SpaceTransit.Interactions;
 using SpaceTransit.Ships.Modules;
 using UnityEditor;
+using UnityEngine;
 
 namespace SpaceTransit.Ships.Driving
 {
@@ -9,13 +9,16 @@ namespace SpaceTransit.Ships.Driving
     public sealed class RequestEntryButton : ModuleComponentBase, IInteractable
     {
 
-        // TODO: refactor
+        [SerializeField]
+        private DockList list;
+
         public void OnInteracted()
         {
-            if (Assembly.FrontModule.Thruster.Tube.Safety is not EntryEnsurer {station: var station})
+            if (list.Selected is not (not -1 and var selected))
                 return;
-            var dock = station.Docks[0];
+            var dock = list.TowardsStation.Docks[selected];
             var entry = Assembly.Reverse ? dock.FrontEntry : dock.BackEntry;
+            // TODO: refactor
             if (entry && !entry.Lock(Assembly))
                 EditorUtility.DisplayDialog("lock failed", "Couldn't request entry", "kurwa");
         }

@@ -1,6 +1,7 @@
 ﻿using SpaceTransit.Routes;
 using SpaceTransit.Ships;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace SpaceTransit.Cosmos
 {
@@ -11,14 +12,15 @@ namespace SpaceTransit.Cosmos
         [SerializeField]
         public Station station;
 
-        [SerializeField]
-        private bool backwards;
+        [field: SerializeField]
+        [field: FormerlySerializedAs("backwards")]
+        public bool Backwards { get; private set; }
 
         public override bool CanProceed(ShipAssembly assembly)
         {
             if (!base.CanProceed(assembly))
                 return false;
-            if (assembly.Reverse != backwards)
+            if (assembly.Reverse != Backwards)
                 return true;
             foreach (var dock in station.Docks)
             {
