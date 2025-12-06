@@ -12,17 +12,18 @@ namespace SpaceTransit.Ships.Driving.Screens
         private ScreenBase dockList;
 
         [SerializeField]
-        private ScreenBase um;
+        private ScreenBase routes;
 
         public ScreenBase Current { get; private set; }
 
         private bool _wasDockShown = true;
 
+        private bool _routesDisabled;
+
         protected override void Awake()
         {
             base.Awake();
             Current = dockList;
-            um.gameObject.SetActive(false);
         }
 
         public override void OnStateChanged()
@@ -32,8 +33,17 @@ namespace SpaceTransit.Ships.Driving.Screens
                 return;
             _wasDockShown = dock;
             dockList.gameObject.SetActive(dock);
-            um.gameObject.SetActive(!dock);
-            Current = dock ? dockList : um;
+            if (_routesDisabled)
+                routes.gameObject.SetActive(!dock);
+            Current = dock ? dockList : routes;
+        }
+
+        private void Update()
+        {
+            if (_routesDisabled)
+                return;
+            _routesDisabled = true;
+            routes.gameObject.SetActive(!_wasDockShown);
         }
 
     }

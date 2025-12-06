@@ -45,13 +45,15 @@ namespace SpaceTransit.Vaulter
 
         public void ExitService()
         {
+            if (!IsInService)
+                return;
             _stopIndex = OutOfService;
             Route = null;
             Stop = null;
             NotifyRouteChanged();
         }
 
-        public void BeginRoute(RouteDescriptor descriptor, int stopIndex)
+        public void BeginRoute(RouteDescriptor descriptor, int stopIndex = Origin)
         {
             Route = descriptor;
             Assembly.Reverse = descriptor.Reverse;
