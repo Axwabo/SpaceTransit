@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using SpaceTransit.Routes;
 using SpaceTransit.Ships;
 using SpaceTransit.Tubes;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -13,57 +11,33 @@ namespace SpaceTransit.Cosmos
     public sealed class Exit : MonoBehaviour
     {
 
+        [field: FormerlySerializedAs("<ExitTowards>k__BackingField")]
         [field: FormerlySerializedAs("<ConnectedStation>k__BackingField")]
         [field: SerializeField]
-        public Station ExitTowards { get; private set; }
+        public Station ConnectedStation { get; private set; }
 
-        [field: SerializeField]
-        public Station EnterTowards { get; private set; }
-
-        [FormerlySerializedAs("connectTube")]
+        [FormerlySerializedAs("connectExitTube")]
         [SerializeField]
-        private TubeBase connectExitTube;
+        private TubeBase connectTube;
 
-        [FormerlySerializedAs("connectTo")]
+        [FormerlySerializedAs("connectExitTo")]
         [SerializeField]
-        private TubeBase connectExitTo;
-
-        [SerializeField]
-        private TubeBase connectEntryTube;
-
-        [SerializeField]
-        private TubeBase connectEntryTo;
+        private TubeBase connectTo;
 
         public HashSet<ShipAssembly> UsedBy { get; } = new();
 
-        public bool Lock(ShipAssembly assembly, bool exiting)
+        public bool Lock(ShipAssembly assembly)
         {
             if (UsedBy.Count != 0 && !UsedBy.Contains(assembly))
                 return false;
-            if (!UsedBy.Add(assembly))
+            UsedBy.Add(assembly);
+            if (!connectTo)
                 return true;
-            if (exiting)
-                Connect(connectExitTube, connectExitTo, assembly);
-            else
-                Connect(connectEntryTube, connectEntryTo, assembly);
-            return true;
-        }
-
-        private void Connect(TubeBase which, TubeBase to, ShipAssembly assembly)
-        {
-            if (!to)
-                return;
             if (assembly.Reverse)
-                which.Previous = to;
+                connectTube.Previous = connectTo;
             else
-                which.Next = to;
-        }
-
-        [ContextMenu("Request Entry")]
-        private void Enter()
-        {
-            if (!Lock(ShipAssembly.Instances.First(), false))
-                EditorUtility.DisplayDialog("Entry Failed", "Couldn't request entry", "kurwa");
+                connectTube.Next = connectTo;
+            return true;
         }
 
         private void Update() => UsedBy.RemoveWhere(e => !e);

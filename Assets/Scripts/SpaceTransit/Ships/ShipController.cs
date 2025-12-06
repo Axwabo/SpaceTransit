@@ -92,7 +92,7 @@ namespace SpaceTransit.Ships
                 return;
             if (State != ShipState.Docked)
                 throw new InvalidOperationException("Cannot depart while not docked");
-            if (!TryGetExit(out var exit) || exit.Lock(Assembly, true))
+            if (!TryGetExit(out var exit) || exit.Lock(Assembly))
                 State = ShipState.WaitingForDeparture;
         }
 
@@ -143,7 +143,7 @@ namespace SpaceTransit.Ships
             var dock = station.Docks[controller.Stop.DockIndex];
             foreach (var front in dock.FrontExits)
             {
-                if (front.ExitTowards != towards)
+                if (front.ConnectedStation != towards)
                     continue;
                 exit = front;
                 return true;
@@ -151,7 +151,7 @@ namespace SpaceTransit.Ships
 
             foreach (var back in dock.BackExits)
             {
-                if (back.ExitTowards != towards)
+                if (back.ConnectedStation != towards)
                     continue;
                 exit = back;
                 return true;
