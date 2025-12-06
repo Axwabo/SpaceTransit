@@ -25,7 +25,10 @@ namespace SpaceTransit.Ships.Modules.Doors
         private float interval;
 
         [SerializeField]
-        private bool oddOnly;
+        private int lightRate = 1;
+
+        [SerializeField]
+        private int soundRate = 1;
 
         [SerializeField]
         private int max;
@@ -42,20 +45,25 @@ namespace SpaceTransit.Ships.Modules.Doors
         {
             if (!controller.AlarmActive)
             {
-                if (_count != 0)
-                    meshRenderer.sharedMaterial = _inactive;
-                _remaining = 0;
-                _count = 0;
+                Deactivate();
                 return;
             }
 
             if ((_remaining -= Clock.Delta) > 0 || ++_count > max && max != 0)
                 return;
-            var odd = _count % 2 == 1;
-            if (odd || !oddOnly)
+            if (lightRate == 1 || _count % lightRate == 0)
+                meshRenderer.sharedMaterial = meshRenderer.sharedMaterial == _inactive ? active : _inactive;
+            if (soundRate == 1 || _count % soundRate == 0)
                 source.PlayOneShot(beep);
-            meshRenderer.sharedMaterial = odd ? active : _inactive;
-            _remaining = interval;
+            _remaining += interval;
+        }
+
+        private void Deactivate()
+        {
+            if (_count != 0)
+                meshRenderer.sharedMaterial = _inactive;
+            _remaining = 0;
+            _count = 0;
         }
 
     }
