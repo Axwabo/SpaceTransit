@@ -1,10 +1,10 @@
 ﻿using SpaceTransit.Ships.Modules;
 using UnityEngine;
 
-namespace SpaceTransit.Cosmos
+namespace SpaceTransit.Cosmos.Actions
 {
 
-    public sealed class ExitClearer : DelegatingEnsurer
+    public sealed class ExitClearer : SafetyActionBase
     {
 
         [SerializeField]
@@ -18,8 +18,7 @@ namespace SpaceTransit.Cosmos
 
         public override void OnExited(ShipModule module)
         {
-            base.OnExited(module);
-            if (!ensurer.IsOccupied && (module.Assembly.Reverse ? backwards : forwards))
+            if (!Ensurer.IsOccupied && (module.Assembly.Reverse ? backwards : forwards))
                 exit.Release(module.Assembly);
         }
 

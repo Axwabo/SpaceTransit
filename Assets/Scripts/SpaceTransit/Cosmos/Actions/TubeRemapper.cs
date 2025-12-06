@@ -2,10 +2,10 @@
 using SpaceTransit.Tubes;
 using UnityEngine;
 
-namespace SpaceTransit.Cosmos
+namespace SpaceTransit.Cosmos.Actions
 {
 
-    public sealed class TubeRemapper : DelegatingEnsurer
+    public sealed class TubeRemapper : SafetyActionBase
     {
 
         [SerializeField]
@@ -16,10 +16,11 @@ namespace SpaceTransit.Cosmos
 
         public override void OnEntered(ShipModule module)
         {
-            if (!ensurer.IsOccupied)
-                connectTube.SetNext(connectTo);
-            base.OnEntered(module);
+            if (Ensurer.Occupants.Count == 1)
+                Remap();
         }
+
+        public void Remap() => connectTube.SetNext(connectTo);
 
     }
 
