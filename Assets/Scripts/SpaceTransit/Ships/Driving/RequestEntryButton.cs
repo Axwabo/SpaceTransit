@@ -1,7 +1,9 @@
 ﻿using SpaceTransit.Interactions;
 using SpaceTransit.Ships.Modules;
-using UnityEditor;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace SpaceTransit.Ships.Driving
 {
@@ -20,7 +22,11 @@ namespace SpaceTransit.Ships.Driving
             var entry = Assembly.Reverse ? dock.FrontEntry : dock.BackEntry;
             // TODO: refactor
             if (entry && !entry.Lock(Assembly))
+#if UNITY_EDITOR
                 EditorUtility.DisplayDialog("lock failed", "Couldn't request entry", "kurwa");
+#else
+                ;
+#endif
         }
 
     }
