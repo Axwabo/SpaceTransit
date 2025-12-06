@@ -557,9 +557,9 @@ Transform:
   m_GameObject: {fileID: 642503200}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20, y: 0, z: -75}
-  m_LocalScale: {x: 1, y: 1, z: 150}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 2, y: 0, z: -7.5}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 15}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 979239949}
   - {fileID: 1805729262}
@@ -578,9 +578,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3e9090ceb3742f096734cbcd3cd6e46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Routes.Station
-  id: {fileID: 11400000, guid: cadb8cee2cb568b4aa5ecf8a3bd2aeaf, type: 2}
+  <ID>k__BackingField: {fileID: 11400000, guid: cadb8cee2cb568b4aa5ecf8a3bd2aeaf, type: 2}
   docks:
   - {fileID: 1805729264}
+  active: {fileID: 0}
+  spawnpoint: {x: 0, y: 0, z: 0}
 --- !u!1 &698446581
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,9 +617,9 @@ MonoBehaviour:
   mesh: {fileID: 4300000, guid: fb43eafc466d9714ea870793754e3118, type: 2}
   material: {fileID: 2100000, guid: 61e30df0606e31d448e541b5cfd26d0a, type: 2}
   physicMaterial: {fileID: 0}
-  translation: {x: 0, y: 3, z: 0}
+  translation: {x: 0, y: 0.3, z: 0}
   rotation: {x: 0, y: 90, z: 0}
-  scale: {x: 10, y: 8, z: 8}
+  scale: {x: 1, y: 0.8, z: 0.8}
   generateCollider: 1
   updateInPlayMode: 1
   curveSpace: 0
@@ -635,33 +637,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SplineMesh.Spline
   nodes:
-  - position: {x: 20, y: 0, z: 0}
-    direction: {x: 20, y: 0, z: 400}
+  - position: {x: 2, y: 0, z: 0}
+    direction: {x: 2, y: 0, z: 40}
     up: {x: 0, y: 1, z: 0}
     scale: {x: 1, y: 1}
     roll: 0
-  - position: {x: 520, y: 0, z: 500}
-    direction: {x: 720, y: 0, z: 500}
+  - position: {x: 52, y: 0, z: 50}
+    direction: {x: 72, y: 0, z: 50}
     up: {x: 0, y: 1, z: 0}
     scale: {x: 1, y: 1}
     roll: 0
   curves:
   - n1:
-      position: {x: 20, y: 0, z: 0}
-      direction: {x: 20, y: 0, z: 400}
+      position: {x: 2, y: 0, z: 0}
+      direction: {x: 2, y: 0, z: 40}
       up: {x: 0, y: 1, z: 0}
       scale: {x: 1, y: 1}
       roll: 0
     n2:
-      position: {x: 520, y: 0, z: 500}
-      direction: {x: 720, y: 0, z: 500}
+      position: {x: 52, y: 0, z: 50}
+      direction: {x: 72, y: 0, z: 50}
       up: {x: 0, y: 1, z: 0}
       scale: {x: 1, y: 1}
       roll: 0
     Changed:
       m_PersistentCalls:
         m_Calls: []
-  Length: 799.42755
+  Length: 79.94273
   isLoop: 0
   CurveChanged:
     m_PersistentCalls:
@@ -806,8 +808,8 @@ RectTransform:
   m_GameObject: {fileID: 784833235}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 112775251}
   m_Father: {fileID: 1204775526}
@@ -1152,6 +1154,8 @@ MonoBehaviour:
   routes:
   - {fileID: 11400000, guid: 45b1b731982b0e14e9f75d2fa2c36f8a, type: 2}
   - {fileID: 11400000, guid: c363124f9181c3848b8b8e9860c8c9e9, type: 2}
+  speedLimitSignPrefab: {fileID: 0}
+  stationSignPrefab: {fileID: 0}
 --- !u!4 &1204775526
 Transform:
   m_ObjectHideFlags: 0
@@ -1162,7 +1166,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 698446584}
@@ -1330,8 +1334,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Routes.Dock
   <Tube>k__BackingField: {fileID: 1578808689}
-  <FrontExit>k__BackingField: {fileID: 0}
-  <BackExit>k__BackingField: {fileID: 0}
+  <FrontExits>k__BackingField: []
+  <BackExits>k__BackingField: []
+  <FrontEntry>k__BackingField: {fileID: 0}
+  <BackEntry>k__BackingField: {fileID: 0}
   <Left>k__BackingField: 0
   <Right>k__BackingField: 1
 --- !u!114 &1578808689
@@ -1374,9 +1380,9 @@ Transform:
   m_GameObject: {fileID: 1714957015}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 595, y: 0, z: 500}
-  m_LocalScale: {x: 1, y: 1, z: 150}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 59.5, y: 0, z: 50}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 15}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 22884973}
   - {fileID: 1578808687}
@@ -1395,9 +1401,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3e9090ceb3742f096734cbcd3cd6e46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Routes.Station
-  id: {fileID: 11400000, guid: 3ba4d24d53308984a9c0dd1d600a593d, type: 2}
+  <ID>k__BackingField: {fileID: 11400000, guid: 3ba4d24d53308984a9c0dd1d600a593d, type: 2}
   docks:
   - {fileID: 1578808688}
+  active: {fileID: 0}
+  spawnpoint: {x: 0, y: 0, z: 0}
 --- !u!1 &1805729261
 GameObject:
   m_ObjectHideFlags: 0
@@ -1458,8 +1466,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Routes.Dock
   <Tube>k__BackingField: {fileID: 1805729263}
-  <FrontExit>k__BackingField: {fileID: 0}
-  <BackExit>k__BackingField: {fileID: 0}
+  <FrontExits>k__BackingField: []
+  <BackExits>k__BackingField: []
+  <FrontEntry>k__BackingField: {fileID: 0}
+  <BackEntry>k__BackingField: {fileID: 0}
   <Left>k__BackingField: 1
   <Right>k__BackingField: 0
 --- !u!1001 &3700754842667366800
