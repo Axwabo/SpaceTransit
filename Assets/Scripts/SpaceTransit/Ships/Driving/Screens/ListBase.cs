@@ -10,19 +10,30 @@ namespace SpaceTransit.Ships.Driving.Screens
         [SerializeField]
         private TPicker prefab;
 
-        private readonly List<TPicker> _list = new();
+        protected readonly List<TPicker> Pickers = new();
 
         protected abstract IReadOnlyList<TItem> Source { get; }
 
         protected abstract string GetContent(int index, TItem item);
 
-        public int Selected => _list.FindIndex(static e => e.Selected);
+        public int Selected => Pickers.FindIndex(static e => e.Selected);
+
+        protected bool HasPicked
+        {
+            get
+            {
+                foreach (var p in Pickers)
+                    if (p.Picked)
+                        return true;
+                return false;
+            }
+        }
 
         protected void Clear()
         {
-            foreach (var picker in _list)
+            foreach (var picker in Pickers)
                 Destroy(picker.gameObject);
-            _list.Clear();
+            Pickers.Clear();
         }
 
         protected void SetUp()
@@ -32,26 +43,26 @@ namespace SpaceTransit.Ships.Driving.Screens
                 var clone = Instantiate(prefab, Transform);
                 clone.Index = i;
                 clone.Text = GetContent(i, Source[i]);
-                _list.Add(clone);
+                Pickers.Add(clone);
             }
         }
 
         public override void Navigate(bool forwards)
         {
-            if (_list.Count == 0)
+            if (Pickers.Count == 0 || HasPicked)
                 return;
             var previous = Selected;
             var index = previous + (forwards ? 1 : -1);
-            if (index >= _list.Count)
+            if (index >= Pickers.Count)
                 index = 0;
             else if (index < 0)
-                index = _list.Count - 1;
+                index = Pickers.Count - 1;
             if (previous != -1 && previous != index)
-                _list[previous].Selected = false;
-            _list[index].Selected = true;
+                Pickers[previous].Selected = false;
+            Pickers[index].Selected = true;
         }
 
-        public bool Select(int index) => index != -1 && _list.Count != 0 && Select(Source[index], _list[index]);
+        public bool Select(int index) => index != -1 && Pickers.Count != 0 && Select(Source[index], Pickers[index]);
 
         protected abstract bool Select(TItem item, TPicker picker);
 

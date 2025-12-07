@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace SpaceTransit.Ships.Driving.Screens
 {
 
-    public class PickerBase : MonoBehaviour
+    public abstract class PickerBase : MonoBehaviour
     {
 
         [SerializeField]
@@ -31,8 +31,11 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         protected Color BackgroundColor
         {
+            get => background.color;
             set => background.color = value;
         }
+
+        public virtual bool Picked => false;
 
     }
 

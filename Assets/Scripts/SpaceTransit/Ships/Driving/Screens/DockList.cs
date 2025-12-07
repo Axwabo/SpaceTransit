@@ -53,6 +53,8 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         protected override bool Select(Dock item, DockPicker picker)
         {
+            if (HasPicked)
+                return false;
             var entry = Assembly.Reverse ? item.FrontEntry : item.BackEntry;
             var locked = entry && entry.Lock(Assembly);
             picker.Pick(locked);

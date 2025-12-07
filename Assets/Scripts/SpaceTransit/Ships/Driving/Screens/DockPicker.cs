@@ -11,6 +11,8 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         public void Pick(bool locked) => BackgroundColor = locked ? EnteringColor : FailedColor;
 
+        public override bool Picked => BackgroundColor == EnteringColor;
+
     }
 
 }
