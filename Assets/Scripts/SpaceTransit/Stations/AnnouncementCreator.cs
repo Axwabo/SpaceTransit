@@ -100,27 +100,26 @@ namespace SpaceTransit.Stations
 
         public IEnumerable<AnnouncementClip> GetAnnouncement(RouteDescriptor route, int index, IDeparture departure, int lastAnnounced)
         {
-            if ((int) Clock.Now.TotalMinutes == lastAnnounced)
+            if ((int) Clock.Now.TotalMinutes == lastAnnounced || index != -1)
                 return null;
             var remaining = departure.MinutesToDeparture();
-            return (remaining, index) switch
+            return remaining switch
             {
-                (3 or 5, -1) => In(remaining, route, departure),
-                (1, -1) => Immediate(route, departure),
-                (1, _) => Arriving(route, index, departure),
-                (_, -1) when lastAnnounced == -1 => At(route, index, departure),
+                3 or 5 => In(remaining, route, departure),
+                1 => Immediate(route, departure),
+                < 15 when lastAnnounced == -1 => At(route, index, departure),
                 _ => null
             };
         }
 
-        public IEnumerable<AnnouncementClip> GetAnnouncement(RouteDescriptor route, IArrival arrival, int lastAnnounced)
-            => lastAnnounced == -1
-               && (int) Clock.Now.TotalMinutes != lastAnnounced
-               && arrival.MinutesToArrival() is 1 or 2
-                ? GetArrival(route, arrival)
-                : null;
+        public IEnumerable<AnnouncementClip> GetAnnouncement(RouteDescriptor route, int index, IArrival arrival, int lastAnnounced)
+            => (int) Clock.Now.TotalMinutes == lastAnnounced || arrival.MinutesToArrival() is not (1 or 2)
+                ? null
+                : index == -1
+                    ? Arriving(route, arrival)
+                    : ArrivingAndDeparts(route, index, arrival);
 
-        private IEnumerable<AnnouncementClip> GetArrival(RouteDescriptor route, IArrival arrival)
+        private IEnumerable<AnnouncementClip> Arriving(RouteDescriptor route, IArrival arrival)
         {
             yield return Type(route);
             yield return ship;
@@ -165,7 +164,7 @@ namespace SpaceTransit.Stations
             stopBoarding
         };
 
-        private IEnumerable<AnnouncementClip> Arriving(RouteDescriptor route, int index, IDeparture departure)
+        private IEnumerable<AnnouncementClip> ArrivingAndDeparts(RouteDescriptor route, int index, IArrival arrival)
         {
             yield return Type(route);
             yield return ship;
@@ -173,7 +172,7 @@ namespace SpaceTransit.Stations
             yield return route.Origin.Station.Announcement;
             yield return at;
             yield return dock;
-            yield return numbersTo20[departure.DockIndex];
+            yield return numbersTo20[arrival.DockIndex];
             yield return and;
             yield return departsFor;
             yield return route.Destination.Station.Announcement;

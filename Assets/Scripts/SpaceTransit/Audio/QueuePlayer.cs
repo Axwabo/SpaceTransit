@@ -14,6 +14,8 @@ namespace SpaceTransit.Audio
 
         private readonly Queue<(AudioClip, float)> _queue = new();
 
+        public bool IsYapping => _playAt > AudioSettings.dspTime || _source.isPlaying;
+
         private void Awake() => _source = GetComponent<AudioSource>();
 
         public void Enqueue(AudioClip clip)

@@ -41,20 +41,32 @@ namespace SpaceTransit.Stations
         private void Awake()
         {
             _queue = GetComponent<QueuePlayer>();
+            _queue.Delay(0.5f);
             _cache = GetComponentInParent<DeparturesArrivals>();
         }
 
         private void Update()
         {
             EnsureCached();
+            if (_queue.IsYapping)
+                return;
             foreach (var (route, index, departure) in _departures)
-                if (departure.Departure.Value >= Clock.Now
-                    && announcementCreator.GetAnnouncement(route, index, departure, _announced.GetValueOrDefault(route, -1)) is { } announcement)
-                    Announce(route, announcement);
-            foreach (var (route, _, arrival) in _arrivals)
-                if (arrival.Arrival.Value >= Clock.Now
-                    && announcementCreator.GetAnnouncement(route, arrival, _announced.GetValueOrDefault(route, -1)) is { } announcement)
-                    Announce(route, announcement);
+            {
+                if (departure.Departure.Value < Clock.Now
+                    || announcementCreator.GetAnnouncement(route, index, departure, _announced.GetValueOrDefault(route, -1)) is not { } announcement)
+                    continue;
+                Announce(route, announcement);
+                return;
+            }
+
+            foreach (var (route, index, arrival) in _arrivals)
+            {
+                if (arrival.Arrival.Value < Clock.Now
+                    || announcementCreator.GetAnnouncement(route, index, arrival, _announced.GetValueOrDefault(route, -1)) is not { } announcement)
+                    continue;
+                Announce(route, announcement);
+                break;
+            }
         }
 
         private void EnsureCached()
