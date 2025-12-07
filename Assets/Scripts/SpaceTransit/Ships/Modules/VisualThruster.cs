@@ -7,6 +7,8 @@ namespace SpaceTransit.Ships.Modules
     public sealed class VisualThruster : ModuleComponentBase
     {
 
+        private const float MovementRate = 5;
+
         private AudioSource _source;
 
         private ParticleSystem _particles;
@@ -15,11 +17,33 @@ namespace SpaceTransit.Ships.Modules
 
         private float _emissionRate;
 
+        private Vector3 _targetPosition;
+
+        private Quaternion _targetRotation;
+
         [SerializeField]
         private AudioClip liftoff;
 
         [SerializeField]
         private AudioClip land;
+
+        [SerializeField]
+        private Vector3 hoverPosition;
+
+        [SerializeField]
+        private Quaternion hoverRotation;
+
+        [SerializeField]
+        private Vector3 forwardsPosition;
+
+        [SerializeField]
+        private Quaternion forwardsRotation;
+
+        [SerializeField]
+        private Vector3 backwardsPosition;
+
+        [SerializeField]
+        private Quaternion backwardsRotation;
 
         protected override void Awake()
         {
@@ -30,22 +54,72 @@ namespace SpaceTransit.Ships.Modules
             _swap = liftoff != land;
         }
 
-        private void Start()
+        private void Start() => Emit(0);
+
+        private void Emit(float rate)
         {
             var emission = _particles.emission;
-            emission.rateOverTimeMultiplier = 0;
+            emission.rateOverTimeMultiplier = rate;
+        }
+
+        private void Play(AudioClip clip)
+        {
+            if (_swap)
+                _source.clip = clip;
+            _source.Play();
         }
 
         public override void OnStateChanged()
         {
-            var emission = _particles.emission;
-            emission.rateOverTimeMultiplier = State is ShipState.Docked or ShipState.WaitingForDeparture ? 0 : _emissionRate;
-            if (State is not (ShipState.LiftingOff or ShipState.Landing))
-                return;
-            if (_swap)
-                _source.clip = State == ShipState.LiftingOff ? liftoff : land;
-            _source.Play();
+            switch (State)
+            {
+                case ShipState.Docked:
+                    Emit(0);
+                    (_targetPosition, _targetRotation) = (Vector3.zero, hoverRotation);
+                    break;
+                case ShipState.WaitingForDeparture:
+                    Emit(_emissionRate * 0.1f);
+                    break;
+                case ShipState.LiftingOff:
+                    Play(liftoff);
+                    Emit(_emissionRate * 2);
+                    (_targetPosition, _targetRotation) = (hoverPosition, hoverRotation);
+                    break;
+                case ShipState.Sailing:
+                    Emit(_emissionRate);
+                    (_targetPosition, _targetRotation) = Assembly.Reverse
+                        ? (backwardsPosition, backwardsRotation)
+                        : (hoverPosition, hoverRotation);
+                    break;
+                case ShipState.Landing:
+                    Play(land);
+                    Emit(_emissionRate * 0.5f);
+                    (_targetPosition, _targetRotation) = (hoverPosition, hoverRotation);
+                    break;
+            }
         }
+
+        private void Update()
+        {
+            if (State is ShipState.Docked or ShipState.WaitingForDeparture)
+                return;
+            if (State == ShipState.Sailing)
+                UpdateTargetsBasedOnSpeed();
+            Transform.GetLocalPositionAndRotation(out var position, out var rotation);
+            var newRotation = Quaternion.Lerp(rotation, _targetRotation, Clock.Delta * MovementRate);
+            Transform.SetLocalPositionAndRotation(
+                Vector3.Lerp(position, _targetPosition, Clock.Delta * MovementRate),
+                newRotation
+            );
+            var main = _particles.main;
+            main.startRotationX = new ParticleSystem.MinMaxCurve(newRotation.x);
+        }
+
+        private void UpdateTargetsBasedOnSpeed() => (_targetPosition, _targetRotation) = Assembly.IsStationary()
+            ? (hoverPosition, hoverRotation)
+            : Assembly.CurrentSpeed > Assembly.MaxSpeed != Assembly.Reverse
+                ? (backwardsPosition, backwardsRotation)
+                : (forwardsPosition, forwardsRotation);
 
     }
 
