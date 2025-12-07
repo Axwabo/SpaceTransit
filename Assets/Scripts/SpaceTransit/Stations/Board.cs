@@ -46,15 +46,14 @@ namespace SpaceTransit.Stations
                 var index = i++;
                 TPrefab item;
                 if (_list.Count < index)
-                    item = _list[index];
+                    (item = _list[index]).gameObject.SetActive(true);
                 else
                     _list.Add(item = Instantiate(prefab, _t));
                 item.Apply(entry);
             }
 
             for (var j = i; j < _list.Count; j++)
-                Destroy(_list[i]);
-            _list.RemoveRange(i, _list.Count - i);
+                _list[i].gameObject.SetActive(false);
         }
 
     }
