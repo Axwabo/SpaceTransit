@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace SpaceTransit.Ships.Driving.Screens
 {
 
-    public abstract class PickerBase : MonoBehaviour
+    public class PickerBase : MonoBehaviour
     {
 
         [SerializeField]
