@@ -8,6 +8,8 @@ namespace SpaceTransit.Ships.Driving.Screens
     public sealed class RouteList : ListBase<RouteDescriptor, PickerBase>
     {
 
+        private static readonly HashSet<string> AvailableExits = new();
+
         private readonly List<RouteDescriptor> _routes = new();
 
         private bool _enabled;
@@ -24,20 +26,32 @@ namespace SpaceTransit.Ships.Driving.Screens
 
             _routes.Clear();
             _routes.Add(null);
-            var station = Assembly.FrontModule.Thruster.Tube.GetComponentInParent<Station>();
-            if (!station)
-                return;
-            foreach (var route in Cache.Routes)
-                if (route.Origin.Station.name == station.Name)
-                    _routes.Add(route);
             Clear();
+            if (!Assembly.FrontModule.Thruster.Tube.TryGetComponent(out Dock dock))
+                return;
+            var station = dock.GetComponentInParent<Station>();
+            var stationName = station.name;
+            CacheExits(station);
+            foreach (var route in Cache.Routes)
+                if (route.Origin.Station.name == stationName && AvailableExits.Contains(route.Origin.ExitTowards.name))
+                    _routes.Add(route);
             SetUp();
         }
 
+        private static void CacheExits(Station station)
+        {
+            AvailableExits.Clear();
+            foreach (var dock in station.Docks)
+            {
+                foreach (var exit in dock.FrontExits)
+                    AvailableExits.Add(exit.ConnectedStation.Name);
+                foreach (var exit in dock.BackExits)
+                    AvailableExits.Add(exit.ConnectedStation.Name);
+            }
+        }
+
         protected override string GetContent(int index, RouteDescriptor item)
-            => item == null
-                ? "Exit Service"
-                : $"{item.name} {item.Origin.Station.name} {item.Origin.Departure.Value:hh':'mm} - {item.Destination.Station.name} {item.Destination.Arrival.Value:hh':'mm}";
+            => item == null ? "Exit Service" : RouteDisplay.Format(item);
 
         protected override bool Select(RouteDescriptor item, PickerBase picker)
         {
