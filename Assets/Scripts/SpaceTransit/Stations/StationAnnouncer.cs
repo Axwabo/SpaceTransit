@@ -73,10 +73,12 @@ namespace SpaceTransit.Stations
         {
             if (_departures != null)
                 return;
-            _departures = _cache.Departures.OrderBy(static e => e.Departure.Departure.Value.TotalMinutes)
+            _departures = _cache.Departures
+                .Where(static e => e.Index == -1)
+                .OrderBy(static e => e.Departure.Departure.Value.TotalMinutes)
                 .ThenByDescending(static e => e.Route.Type)
                 .ToList();
-            _arrivals = _cache.Arrivals.Where(static e => e.Index == -1)
+            _arrivals = _cache.Arrivals
                 .OrderBy(static e => e.Arrival.Arrival.Value.TotalMinutes)
                 .ThenByDescending(static e => e.Route.Type)
                 .ToList();
