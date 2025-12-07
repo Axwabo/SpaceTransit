@@ -1,4 +1,5 @@
-﻿using SpaceTransit.Routes.Stops;
+﻿using System;
+using SpaceTransit.Routes.Stops;
 using SpaceTransit.Ships.Modules;
 using UnityEngine;
 
@@ -14,36 +15,67 @@ namespace SpaceTransit.Ships.Driving.Screens
         [SerializeField]
         private ScreenBase routes;
 
+        [SerializeField]
+        private ScreenBase exitList;
+
         public ScreenBase Current { get; private set; }
 
-        private bool _wasDockShown = true;
+        private Slot _previous = Slot.Exits;
 
-        private bool _routesDisabled;
+        private bool _disabled;
 
         protected override void Awake()
         {
             base.Awake();
-            Current = dockList;
+            Current = exitList;
         }
 
-        public override void OnStateChanged()
+        public override void OnStateChanged() => Show(
+            State != ShipState.Docked
+                ? Slot.Docks
+                : Controller.TryGetVaulter(out var vaulter) && (!vaulter.IsInService || vaulter.Stop is not Destination)
+                    ? Slot.Exits
+                    : Slot.Routes
+        );
+
+        public void Show(Slot slot)
         {
-            var dock = State != ShipState.Docked || Controller.TryGetVaulter(out var vaulter) && vaulter.Stop is not Destination;
-            if (_wasDockShown == dock)
+            if (_previous == slot)
                 return;
-            _wasDockShown = dock;
-            dockList.gameObject.SetActive(dock);
-            if (_routesDisabled)
-                routes.gameObject.SetActive(!dock);
-            Current = dock ? dockList : routes;
+            _previous = slot;
+            exitList.gameObject.SetActive(slot == Slot.Exits);
+            if (_disabled)
+            {
+                routes.gameObject.SetActive(_previous == Slot.Routes);
+                dockList.gameObject.SetActive(_previous == Slot.Docks);
+            }
+
+            Current = slot switch
+            {
+                Slot.Docks => dockList,
+                Slot.Routes => routes,
+                Slot.Exits => exitList,
+                _ => throw new ArgumentOutOfRangeException()
+            };
         }
 
         private void Update()
         {
-            if (_routesDisabled)
+            if (_disabled)
                 return;
-            _routesDisabled = true;
-            routes.gameObject.SetActive(!_wasDockShown);
+            _disabled = true;
+            routes.gameObject.SetActive(_previous == Slot.Routes);
+            dockList.gameObject.SetActive(_previous == Slot.Docks);
+            enabled = false;
+        }
+
+        public enum Slot
+        {
+
+            Docks,
+            Routes,
+            Exits
+
         }
 
     }

@@ -3,7 +3,7 @@
 namespace SpaceTransit.Ships.Driving.Screens
 {
 
-    public sealed class DockPicker : PickerBase
+    public sealed class PickablePicker : PickerBase
     {
 
         private static readonly Color EnteringColor = new(0, 1, 0, 0.24f);

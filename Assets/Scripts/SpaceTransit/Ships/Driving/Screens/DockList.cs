@@ -4,7 +4,7 @@ using SpaceTransit.Routes;
 namespace SpaceTransit.Ships.Driving.Screens
 {
 
-    public sealed class DockList : ListBase<Dock, DockPicker>
+    public sealed class DockList : ListBase<Dock, PickablePicker>
     {
 
         private string _previousStationName;
@@ -51,7 +51,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         protected override IReadOnlyList<Dock> Source => TowardsStation.Docks;
 
-        protected override bool Select(Dock item, DockPicker picker)
+        protected override bool Select(Dock item, PickablePicker picker)
         {
             if (HasPicked)
                 return false;
