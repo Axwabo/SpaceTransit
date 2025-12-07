@@ -11,6 +11,9 @@ public sealed class Cullable : MonoBehaviour
     [SerializeField]
     private GameObject target;
 
+    [SerializeField]
+    private float range = 20;
+
     private void Awake()
     {
         if (!target)
@@ -22,7 +25,7 @@ public sealed class Cullable : MonoBehaviour
 
     private void Update()
     {
-        var activate = Vector3.Distance(MovementController.Current.LastPosition, _t.position) < 20;
+        var activate = Vector3.Distance(MovementController.Current.LastPosition, _t.position) < range;
         if (_previouslyActive == activate)
             return;
         _previouslyActive = activate;
