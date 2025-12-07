@@ -7,8 +7,12 @@ namespace SpaceTransit.Cosmos
     {
 
         public override bool CanProceed(ShipAssembly assembly)
-            => (assembly.Reverse ? !Tube.HasPrevious : !Tube.HasNext)
-               || Tube.Next(assembly.Reverse).Safety.IsFreeFor(assembly);
+        {
+            if (assembly.Reverse ? !Tube.HasPrevious : !Tube.HasNext)
+                return true;
+            var next = Tube.Next(assembly.Reverse);
+            return !next || next.Safety.IsFreeFor(assembly);
+        }
 
     }
 
