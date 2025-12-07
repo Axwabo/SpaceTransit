@@ -49,7 +49,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         public void Mark(Exit exit)
         {
-            if (!isActiveAndEnabled)
+            if (!isActiveAndEnabled || Pickers.Count == 0)
                 return;
             var index = _exits.IndexOf(exit);
             if (index != -1)
