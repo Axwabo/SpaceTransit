@@ -8,7 +8,7 @@ namespace SpaceTransit.Stations
 
         public override void Apply(ArrivalEntry item) => Apply(
             item.Route.Type,
-            item.Route.Destination.Station.name,
+            item.Route.Origin.Station.name,
             item.Arrival.Arrival.Value,
             item.Arrival.DockIndex
         );
