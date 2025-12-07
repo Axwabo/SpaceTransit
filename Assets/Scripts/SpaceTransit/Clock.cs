@@ -21,6 +21,8 @@ namespace SpaceTransit
 
         private TextMeshProUGUI _text;
 
+        private int _previous;
+
         [SerializeField]
         private string start;
 
@@ -32,7 +34,15 @@ namespace SpaceTransit
                 _startTime = startTime;
         }
 
-        private void Update() => _text.text = Now.ToString("hh':'mm':'ss");
+        private void Update()
+        {
+            var now = Now;
+            var seconds = now.Seconds;
+            if (seconds == _previous)
+                return;
+            _text.text = now.ToString("hh':'mm':'ss");
+            _previous = seconds;
+        }
 
     }
 
