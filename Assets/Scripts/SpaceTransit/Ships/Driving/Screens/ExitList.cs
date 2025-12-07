@@ -10,10 +10,20 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private readonly List<Exit> _exits = new();
 
+        private bool _loaded;
+
         private void OnEnable()
         {
             if (didStart)
                 OnStateChanged();
+        }
+
+        private void Update()
+        {
+            if (_loaded)
+                return;
+            _loaded = true;
+            UpdateList();
         }
 
         public override void OnStateChanged()
@@ -23,8 +33,6 @@ namespace SpaceTransit.Ships.Driving.Screens
             if (State == ShipState.Docked)
                 UpdateList();
         }
-
-        protected override void OnInitialized() => UpdateList();
 
         private void UpdateList()
         {
