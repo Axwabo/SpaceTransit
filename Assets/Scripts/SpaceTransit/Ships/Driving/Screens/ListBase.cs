@@ -7,7 +7,7 @@ namespace SpaceTransit.Ships.Driving.Screens
     public abstract class ListBase<TItem, TPicker> : ScreenBase where TPicker : PickerBase
     {
 
-        [SerializeField]
+        [SerializeReference]
         private TPicker prefab;
 
         protected readonly List<TPicker> Pickers = new();
