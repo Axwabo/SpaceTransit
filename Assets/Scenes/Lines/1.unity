@@ -1932,7 +1932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.SplineTube
   <SpeedLimit>k__BackingField: 0
-  <Next>k__BackingField: {fileID: 794508345}
+  <Next>k__BackingField: {fileID: 766105081}
   spline: {fileID: 169423826}
   length: 0
 --- !u!114 &169423825
@@ -12422,6 +12422,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 647609662}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &766105081 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8420451524998793839, guid: d565d6906fc20f346a869be32968e482, type: 3}
+  m_PrefabInstance: {fileID: 794508344}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62eaaf0abe3a4924ab04802daa7fcd96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.StraightTube
 --- !u!1 &766928271
 GameObject:
   m_ObjectHideFlags: 0
@@ -15133,6 +15144,7 @@ GameObject:
   - component: {fileID: 939616893}
   - component: {fileID: 939616892}
   - component: {fileID: 939616891}
+  - component: {fileID: 939616894}
   m_Layer: 0
   m_Name: 1
   m_TagString: Untagged
@@ -15238,6 +15250,20 @@ MonoBehaviour:
   CurveChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &939616894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 939616889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0160ff52a8e42e69102a716af77b90a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.TubeRemapper
+  connectTube: {fileID: 1769025571}
+  connectTo: {fileID: 939616891}
 --- !u!1 &945991656
 GameObject:
   m_ObjectHideFlags: 0
