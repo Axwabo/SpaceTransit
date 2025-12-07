@@ -55,8 +55,7 @@ namespace SpaceTransit.Ships.Driving.Screens
         {
             if (HasPicked)
                 return false;
-            var entry = Assembly.Reverse ? item.FrontEntry : item.BackEntry;
-            var locked = entry && entry.Lock(Assembly);
+            var locked = item.LockEntry(Assembly);
             picker.Pick(locked);
             return locked;
         }
