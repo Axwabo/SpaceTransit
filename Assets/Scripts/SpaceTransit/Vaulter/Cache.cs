@@ -12,9 +12,9 @@ namespace SpaceTransit.Vaulter
 
         private static StationId[] _stations;
 
-        public static IReadOnlyCollection<RouteDescriptor> Routes => _routes ??= Resources.LoadAll<RouteDescriptor>("Routes");
+        public static IReadOnlyList<RouteDescriptor> Routes => _routes ??= Resources.LoadAll<RouteDescriptor>("Routes");
 
-        public static IReadOnlyCollection<StationId> Stations => _stations ??= Resources.LoadAll<StationId>("Stations");
+        public static IReadOnlyList<StationId> Stations => _stations ??= Resources.LoadAll<StationId>("Stations");
 
     }
 
