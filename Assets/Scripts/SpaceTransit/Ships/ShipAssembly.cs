@@ -71,6 +71,8 @@ namespace SpaceTransit.Ships
             else if (CurrentSpeed > TargetSpeed)
                 CurrentSpeed = CurrentSpeed.MoveTowards(TargetSpeed.Raw, Clock.Delta * Deceleration, MaxSpeed);
             IsPlayerMounted = false;
+            if (!MovementController.Current.IsMounted)
+                return;
             foreach (var module in Modules)
             {
                 if (module.Mount.transform != MovementController.Current.Mount)

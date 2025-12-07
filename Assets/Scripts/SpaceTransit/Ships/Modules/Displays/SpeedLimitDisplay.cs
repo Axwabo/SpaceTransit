@@ -1,5 +1,4 @@
-﻿using SpaceTransit.Tubes;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 namespace SpaceTransit.Ships.Modules.Displays
@@ -16,13 +15,24 @@ namespace SpaceTransit.Ships.Modules.Displays
 
         private bool _everDisplayed;
 
+        private float _previous;
+
+        private float _previousNext;
+
         private void Update()
         {
             if (_everDisplayed && Assembly.IsStationary())
                 return;
             _everDisplayed = true;
             var tube = Assembly.FrontModule.Thruster.Tube;
-            main.text = Limit(tube);
+            var limit = tube.SpeedLimit;
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            if (limit != _previous)
+            {
+                main.text = Limit(limit);
+                _previous = limit;
+            }
+
             if (Assembly.Reverse ? !tube.HasPrevious : !tube.HasNext)
             {
                 next.text = "";
@@ -30,10 +40,14 @@ namespace SpaceTransit.Ships.Modules.Displays
             }
 
             var nextTube = Assembly.Reverse ? tube.Previous : tube.Next;
-            next.text = Mathf.Approximately(nextTube.SpeedLimit, tube.SpeedLimit) ? "" : $"Next: {Limit(nextTube)}";
+            var nextLimit = nextTube.SpeedLimit;
+            if (Mathf.Approximately(nextLimit, _previousNext))
+                return;
+            next.text = Mathf.Approximately(nextLimit, limit) ? "" : $"Next: {Limit(nextLimit)}";
+            _previousNext = nextLimit;
         }
 
-        private static string Limit(TubeBase tube) => tube.SpeedLimit == 0 ? "--" : (tube.SpeedLimit * 3.6).ToString("N0");
+        private static string Limit(float limit) => limit == 0 ? "--" : (limit * 3.6).ToString("N0");
 
     }
 

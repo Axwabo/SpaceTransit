@@ -10,6 +10,8 @@ namespace SpaceTransit.Ships.Modules.Displays
 
         private TextMeshProUGUI _text;
 
+        private ShipSpeed _previous;
+
         [SerializeField]
         private bool max;
 
@@ -19,9 +21,23 @@ namespace SpaceTransit.Ships.Modules.Displays
             _text = GetComponent<TextMeshProUGUI>();
         }
 
-        private void Update() => _text.text = max && Mathf.Approximately(Assembly.MaxSpeed, Assembly.CurrentSpeed.Raw)
-            ? "MAX"
-            : Assembly.CurrentSpeed.RawKmh.ToString("N0");
+        private void Update()
+        {
+            var current = Assembly.CurrentSpeed;
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            if (current.Raw != _previous.Raw)
+                UpdateText(current);
+        }
+
+        protected override void OnInitialized() => UpdateText(Assembly.CurrentSpeed);
+
+        private void UpdateText(ShipSpeed current)
+        {
+            _text.text = max && Mathf.Approximately(Assembly.MaxSpeed, current.Raw)
+                ? "MAX"
+                : current.RawKmh.ToString("N0");
+            _previous = current;
+        }
 
     }
 

@@ -74,6 +74,7 @@ namespace SplineMesh
             toUpdate = true;
         }
 
+#if !UNITY_EDITOR
         private void Update()
         {
             // we can prevent the generated content to be updated during playmode to preserve baked data saved in the scene
@@ -85,6 +86,7 @@ namespace SplineMesh
                 CreateMeshes();
             }
         }
+#endif
 
         public void CreateMeshes()
         {
