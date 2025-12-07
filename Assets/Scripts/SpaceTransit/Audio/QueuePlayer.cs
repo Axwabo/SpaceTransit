@@ -38,6 +38,13 @@ namespace SpaceTransit.Audio
             _playAt = dspTime + tuple.Item2;
         }
 
+        public void Clear()
+        {
+            _playAt = 0;
+            _queue.Clear();
+            _source.Stop();
+        }
+
     }
 
 }

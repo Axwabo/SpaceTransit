@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using SpaceTransit.Cosmos;
-using SpaceTransit.Routes;
+﻿using SpaceTransit.Cosmos;
 using UnityEngine;
 
 namespace SpaceTransit
@@ -11,13 +9,6 @@ namespace SpaceTransit
 
         public const float MetersToWorld = 0.1f;
         public const float WorldToMeters = 10;
-
-        private static readonly HashSet<RouteDescriptor> RouteCache = new();
-
-        public static IReadOnlyCollection<RouteDescriptor> Routes => RouteCache;
-
-        [SerializeField]
-        private RouteDescriptor[] routes;
 
         [SerializeField]
         private SpeedLimitSign speedLimitSignPrefab;
@@ -36,10 +27,7 @@ namespace SpaceTransit
             Current = transform;
             SpeedLimitSignPrefab = speedLimitSignPrefab;
             StationSignPrefab = stationSignPrefab;
-            RouteCache.UnionWith(routes);
         }
-
-        private void OnDestroy() => RouteCache.ExceptWith(routes);
 
     }
 

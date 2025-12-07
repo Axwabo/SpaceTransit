@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using SpaceTransit.Routes;
+using SpaceTransit.Vaulter;
 
 namespace SpaceTransit.Ships.Driving.Screens
 {
@@ -26,7 +27,7 @@ namespace SpaceTransit.Ships.Driving.Screens
             var station = Assembly.FrontModule.Thruster.Tube.GetComponentInParent<Station>();
             if (!station)
                 return;
-            foreach (var route in World.Routes)
+            foreach (var route in Cache.Routes)
                 if (route.Origin.Station.name == station.Name)
                     _routes.Add(route);
             Clear();

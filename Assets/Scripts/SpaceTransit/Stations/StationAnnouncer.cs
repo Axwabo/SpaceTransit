@@ -41,13 +41,25 @@ namespace SpaceTransit.Stations
         private void Awake()
         {
             _queue = GetComponent<QueuePlayer>();
-            _queue.Delay(0.5f);
             _cache = GetComponentInParent<DeparturesArrivals>();
+        }
+
+        private void Start()
+        {
+            _departures = _cache.Departures
+                .Where(static e => e.Index == -1)
+                .OrderBy(static e => e.Departure.Departure.Value.TotalMinutes)
+                .ThenByDescending(static e => e.Route.Type)
+                .ToList();
+            _arrivals = _cache.Arrivals
+                .OrderBy(static e => e.Arrival.Arrival.Value.TotalMinutes)
+                .ThenByDescending(static e => e.Route.Type)
+                .ToList();
+            _queue.Delay(0.5f);
         }
 
         private void Update()
         {
-            EnsureCached();
             if (_queue.IsYapping)
                 return;
             foreach (var (route, index, departure) in _departures)
@@ -69,20 +81,7 @@ namespace SpaceTransit.Stations
             }
         }
 
-        private void EnsureCached()
-        {
-            if (_departures != null)
-                return;
-            _departures = _cache.Departures
-                .Where(static e => e.Index == -1)
-                .OrderBy(static e => e.Departure.Departure.Value.TotalMinutes)
-                .ThenByDescending(static e => e.Route.Type)
-                .ToList();
-            _arrivals = _cache.Arrivals
-                .OrderBy(static e => e.Arrival.Arrival.Value.TotalMinutes)
-                .ThenByDescending(static e => e.Route.Type)
-                .ToList();
-        }
+        private void OnDisable() => _queue.Clear();
 
         private void Announce(RouteDescriptor route, IEnumerable<AnnouncementClip> announcement)
         {

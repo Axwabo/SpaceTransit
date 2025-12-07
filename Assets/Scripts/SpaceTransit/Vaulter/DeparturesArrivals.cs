@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using SpaceTransit.Routes;
-using SpaceTransit.Stations;
 using UnityEngine;
 
 namespace SpaceTransit.Vaulter
@@ -14,12 +13,12 @@ namespace SpaceTransit.Vaulter
 
         public IReadOnlyList<ArrivalEntry> Arrivals { get; private set; }
 
-        private void Start()
+        private void Awake()
         {
             var departures = new List<DepartureEntry>();
             var arrivals = new List<ArrivalEntry>();
             var id = GetComponent<Station>().ID;
-            foreach (var route in World.Routes)
+            foreach (var route in Cache.Routes)
             {
                 if (route.Origin.Station.name == id.name)
                 {
