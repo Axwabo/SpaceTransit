@@ -33,7 +33,10 @@ namespace SpaceTransit.Ships.Driving.Screens
             SetUp();
         }
 
-        protected override string GetContent(int index, RouteDescriptor item) => item == null ? "Exit Service" : item.Destination.Station.name;
+        protected override string GetContent(int index, RouteDescriptor item)
+            => item == null
+                ? "Exit Service"
+                : $"{item.name} {item.Origin.Station.name} {item.Origin.Departure.Value:hh':'mm} - {item.Destination.Station.name} {item.Destination.Arrival.Value:hh':'mm}";
 
         protected override bool Select(RouteDescriptor item, PickerBase picker)
         {
