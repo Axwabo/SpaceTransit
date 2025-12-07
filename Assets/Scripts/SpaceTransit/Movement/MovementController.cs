@@ -1,4 +1,5 @@
 ﻿using SpaceTransit.Menu;
+using SpaceTransit.Routes;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +11,8 @@ namespace SpaceTransit.Movement
     {
 
         public static MovementController Current { get; private set; }
+
+        public static StationId StartingStation { get; set; }
 
         [SerializeField]
         private float speed;
@@ -56,7 +59,19 @@ namespace SpaceTransit.Movement
             Time.timeScale = 1;
         }
 
-        private void Start() => World.Current.position -= Position;
+        private void Start()
+        {
+            if (!StartingStation || !Station.TryGetLoadedStation(StartingStation, out var station))
+            {
+                World.Current.position -= Position;
+                return;
+            }
+
+            var spawnpoint = station.Spawnpoint;
+            _t.position = spawnpoint;
+            World.Current.position = -spawnpoint;
+            StartingStation = null;
+        }
 
         private void Update()
         {
