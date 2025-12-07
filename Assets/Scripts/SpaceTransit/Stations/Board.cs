@@ -45,7 +45,7 @@ namespace SpaceTransit.Stations
                     continue;
                 var index = i++;
                 TPrefab item;
-                if (_list.Count < index)
+                if (_list.Count > index)
                     (item = _list[index]).gameObject.SetActive(true);
                 else
                     _list.Add(item = Instantiate(prefab, _t));
