@@ -35,6 +35,8 @@ namespace SpaceTransit.Vaulter
                 AddIntermediateStops(route, id, departures, arrivals);
             }
 
+            departures.Sort(static (a, b) => a.Departure.Departure.Value.CompareTo(b.Departure.Departure.Value));
+            arrivals.Sort(static (a, b) => a.Arrival.Arrival.Value.CompareTo(b.Arrival.Arrival.Value));
             Departures = departures;
             Arrivals = arrivals;
         }
