@@ -112,7 +112,7 @@ namespace SpaceTransit.Ships.Driving
 
         private void Enter(Station station)
         {
-            if (Parent.Stop is IArrival arrival && station.Name == arrival.Station.Name)
+            if (Parent.Stop is IArrival arrival && station.Name == arrival.Station.name)
                 _entryRequested = Assembly.FrontModule.DockList.Select(arrival.DockIndex);
         }
 

@@ -28,7 +28,7 @@ namespace SpaceTransit.Ships.Driving.Screens
             if (!station)
                 return;
             foreach (var route in Cache.Routes)
-                if (route.Origin.Station.Name == station.Name)
+                if (route.Origin.Station.name == station.Name)
                     _routes.Add(route);
             Clear();
             SetUp();
@@ -37,7 +37,7 @@ namespace SpaceTransit.Ships.Driving.Screens
         protected override string GetContent(int index, RouteDescriptor item)
             => item == null
                 ? "Exit Service"
-                : $"{item.name} {item.Origin.Station.Name} {item.Origin.Departure.Value:hh':'mm} - {item.Destination.Station.Name} {item.Destination.Arrival.Value:hh':'mm}";
+                : $"{item.name} {item.Origin.Station.name} {item.Origin.Departure.Value:hh':'mm} - {item.Destination.Station.name} {item.Destination.Arrival.Value:hh':'mm}";
 
         protected override bool Select(RouteDescriptor item, PickerBase picker)
         {

@@ -20,13 +20,13 @@ namespace SpaceTransit.Vaulter
             var id = GetComponent<Station>().ID;
             foreach (var route in Cache.Routes)
             {
-                if (route.Origin.Station.Name == id.Name)
+                if (route.Origin.Station.name == id.name)
                 {
                     departures.Add(new DepartureEntry(route, -1, route.Origin));
                     continue;
                 }
 
-                if (route.Destination.Station.Name == id.Name)
+                if (route.Destination.Station.name == id.name)
                 {
                     arrivals.Add(new ArrivalEntry(route, -1, route.Destination));
                     continue;
@@ -44,7 +44,7 @@ namespace SpaceTransit.Vaulter
             for (var i = 0; i < route.IntermediateStops.Count; i++)
             {
                 var stop = route.IntermediateStops[i];
-                if (stop.Station.Name != id.Name)
+                if (stop.Station.name != id.name)
                     break;
                 departures.Add(new DepartureEntry(route, i, stop));
                 arrivals.Add(new ArrivalEntry(route, i, stop));

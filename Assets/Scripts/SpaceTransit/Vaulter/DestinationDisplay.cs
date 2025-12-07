@@ -12,7 +12,7 @@ namespace SpaceTransit.Vaulter
 
         protected override void Awake() => _text = GetComponent<TextMeshProUGUI>();
 
-        public override void OnRouteChanged() => _text.text = IsInService ? Parent.Route.Destination.Station.Name : "";
+        public override void OnRouteChanged() => _text.text = IsInService ? Parent.Route.Destination.Station.name : "";
 
     }
 

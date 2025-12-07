@@ -13,7 +13,7 @@ namespace SpaceTransit.Routes
         public static IReadOnlyCollection<Station> LoadedStations => Loaded.Values;
 
         public static bool TryGetLoadedStation(StationId id, out Station station)
-            => Loaded.TryGetValue(id.Name, out station);
+            => Loaded.TryGetValue(id.name, out station);
 
         [field: SerializeField]
         [field: FormerlySerializedAs("id")]
@@ -27,7 +27,7 @@ namespace SpaceTransit.Routes
 
         public Vector3 Spawnpoint => transform.TransformPoint(spawnpoint);
 
-        public string Name => ID.Name;
+        public string Name => ID.name;
 
         public IReadOnlyList<Dock> Docks => docks;
 

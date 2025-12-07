@@ -22,9 +22,7 @@ namespace SplineMesh
 
         private GameObject generated;
         private Spline spline = null;
-#if UNITY_EDITOR
         private bool toUpdate = false;
-#endif
 
         [Tooltip("Mesh to bend along the spline.")]
         public Mesh mesh;
@@ -65,20 +63,18 @@ namespace SplineMesh
             generated = generatedTranform != null ? generatedTranform.gameObject : UOUtility.Create(generatedName, gameObject);
 
             spline = GetComponentInParent<Spline>();
-#if UNITY_EDITOR
             spline.NodeListChanged += (s, e) => toUpdate = true;
-#endif
 
             CreateMeshes();
         }
 
-#if UNITY_EDITOR
         private void OnValidate()
         {
             if (spline == null) return;
             toUpdate = true;
         }
 
+#if !UNITY_EDITOR
         private void Update()
         {
             // we can prevent the generated content to be updated during playmode to preserve baked data saved in the scene

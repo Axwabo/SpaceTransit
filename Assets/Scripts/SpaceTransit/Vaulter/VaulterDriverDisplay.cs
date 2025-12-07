@@ -18,7 +18,7 @@ namespace SpaceTransit.Vaulter
 
         public override void OnStopChanged()
         {
-            Builder.Clear().AppendLine(Parent.Stop.Station.Name);
+            Builder.Clear().AppendLine(Parent.Stop.Station.name);
             if (Parent.Stop is IArrival {Arrival: var arrival})
                 Builder.AppendLine($"Arrive at {arrival.Value:hh':'mm}");
             if (Parent.Stop is IDeparture {Departure: var time})
