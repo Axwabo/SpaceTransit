@@ -6,6 +6,8 @@ public sealed class Cullable : MonoBehaviour
 
     private bool _previouslyActive;
 
+    private Transform _t;
+
     [SerializeField]
     private GameObject target;
 
@@ -15,11 +17,12 @@ public sealed class Cullable : MonoBehaviour
             enabled = false;
         else
             _previouslyActive = target.activeSelf;
+        _t = transform;
     }
 
     private void Update()
     {
-        var activate = Vector3.Distance(MovementController.Current.LastPosition, transform.position) < 10;
+        var activate = Vector3.Distance(MovementController.Current.LastPosition, _t.position) < 10;
         if (_previouslyActive == activate)
             return;
         _previouslyActive = activate;
