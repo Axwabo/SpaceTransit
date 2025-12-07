@@ -8,6 +8,10 @@ namespace SpaceTransit.Routes
     public sealed class StationId : ScriptableObject
     {
 
+        private string _name;
+
+        public string Name => _name ??= name;
+
         [field: SerializeField]
         public AudioClip Announcement { get; set; }
 

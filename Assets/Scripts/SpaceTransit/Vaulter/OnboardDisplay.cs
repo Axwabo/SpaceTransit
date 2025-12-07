@@ -28,8 +28,8 @@ namespace SpaceTransit.Vaulter
                 _type = InformationType.Route;
             _text.text = _type switch
             {
-                InformationType.Route => $"» {Parent.Route.Destination.Station.name}",
-                InformationType.NextStop => $"{Prefix}{Parent.Stop.Station.name}",
+                InformationType.Route => $"» {Parent.Route.Destination.Station.Name}",
+                InformationType.NextStop => $"{Prefix}{Parent.Stop.Station.Name}",
                 InformationType.Time => Clock.Now.ToString("hh':'mm"),
                 _ => ""
             };

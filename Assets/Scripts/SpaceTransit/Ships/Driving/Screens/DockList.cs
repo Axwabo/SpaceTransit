@@ -34,7 +34,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private void UpdateStation(StationId id)
         {
-            var stationName = id.name;
+            var stationName = id.Name;
             if (_previousStationName == stationName)
                 return;
             _previousStationName = stationName;
