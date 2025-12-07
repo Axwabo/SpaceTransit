@@ -862,10 +862,10 @@ PrefabInstance:
     - target: {fileID: 5212376258669006603, guid: 02dd94f6cfc50cb4196c549b318c8548, type: 3}
       propertyPath: initialRoute
       value: 
-      objectReference: {fileID: 11400000, guid: 5c552e8f5cf01ac4588a83c47c56122b, type: 2}
+      objectReference: {fileID: 11400000, guid: 0fb6e8acd980a58449e643c12b754e49, type: 2}
     - target: {fileID: 5212376258669006603, guid: 02dd94f6cfc50cb4196c549b318c8548, type: 3}
       propertyPath: initialStopIndex
-      value: 2
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 7868717487677506517, guid: 02dd94f6cfc50cb4196c549b318c8548, type: 3}
       propertyPath: m_LocalRotation.w
@@ -21130,6 +21130,7 @@ GameObject:
   - component: {fileID: 990713841}
   - component: {fileID: 990713843}
   - component: {fileID: 990713842}
+  - component: {fileID: 990713844}
   m_Layer: 0
   m_Name: Wakenland
   m_TagString: Untagged
@@ -21189,6 +21190,20 @@ MonoBehaviour:
   - {fileID: 623531834666053330}
   - {fileID: 499633841}
   spawnpoint: {x: -10, y: 1, z: 0}
+--- !u!114 &990713844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990713840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8fc2b97239a4314926edd16da9e054b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cullable
+  target: {fileID: 972086388}
+  range: 30
 --- !u!1 &991757567
 GameObject:
   m_ObjectHideFlags: 0
@@ -47484,7 +47499,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7464483005062417667, guid: 7c2445ae2359e664baa2de94223f59fd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5094.8003
+      value: -15477.022
       objectReference: {fileID: 0}
     - target: {fileID: 7464483005062417667, guid: 7c2445ae2359e664baa2de94223f59fd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -47492,7 +47507,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7464483005062417667, guid: 7c2445ae2359e664baa2de94223f59fd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2306.2
+      value: 4750.363
       objectReference: {fileID: 0}
     - target: {fileID: 7464483005062417667, guid: 7c2445ae2359e664baa2de94223f59fd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -48060,7 +48075,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cullable
   target: {fileID: 1262367964}
-  range: 20
+  range: 30
 --- !u!114 &2451446574490437784
 MonoBehaviour:
   m_ObjectHideFlags: 0
