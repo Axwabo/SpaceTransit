@@ -137,14 +137,13 @@ namespace SpaceTransit.Ships
             if (!TryGetVaulter(out var controller)
                 || !controller.IsInService
                 || controller.Stop is not IDeparture {ExitTowards: var id}
-                || !Station.TryGetLoadedStation(controller.Stop.Station, out var station)
-                || !Station.TryGetLoadedStation(id, out var towards))
+                || !Station.TryGetLoadedStation(id, out var towards)
+                || !Assembly.FrontModule.Thruster.Tube.TryGetComponent(out Dock dock))
             {
                 exit = null;
                 return false;
             }
 
-            var dock = station.Docks[controller.Stop.DockIndex];
             foreach (var front in dock.FrontExits)
             {
                 if (front.ConnectedStation != towards)
