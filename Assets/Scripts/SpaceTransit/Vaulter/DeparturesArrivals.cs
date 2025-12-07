@@ -45,7 +45,7 @@ namespace SpaceTransit.Vaulter
             {
                 var stop = route.IntermediateStops[i];
                 if (stop.Station.name != id.name)
-                    break;
+                    continue;
                 departures.Add(new DepartureEntry(route, i, stop));
                 arrivals.Add(new ArrivalEntry(route, i, stop));
             }
