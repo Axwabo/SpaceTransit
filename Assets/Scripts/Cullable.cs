@@ -22,7 +22,7 @@ public sealed class Cullable : MonoBehaviour
 
     private void Update()
     {
-        var activate = Vector3.Distance(MovementController.Current.LastPosition, _t.position) < 10;
+        var activate = Vector3.Distance(MovementController.Current.LastPosition, _t.position) < 20;
         if (_previouslyActive == activate)
             return;
         _previouslyActive = activate;
