@@ -4,7 +4,7 @@
     public sealed class OnboardAudio : ShipAudioBase
     {
 
-        private void FixedUpdate() => Mute = !IsPlayerMounted;
+        private void Update() => Mute = !IsPlayerMounted;
 
     }
 

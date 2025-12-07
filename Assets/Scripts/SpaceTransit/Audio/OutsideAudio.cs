@@ -6,7 +6,7 @@ namespace SpaceTransit.Audio
     public sealed class OutsideAudio : ShipAudioBase
     {
 
-        private void FixedUpdate()
+        private void Update()
         {
             if (IsPlayerMounted)
             {
@@ -14,7 +14,7 @@ namespace SpaceTransit.Audio
                 return;
             }
 
-            Transform.position = Assembly.ClosestPoint(MovementController.Current.Position);
+            Transform.position = Assembly.ClosestPoint(MovementController.Current.LastPosition);
             Mute = false;
         }
 
