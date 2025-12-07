@@ -62,15 +62,6 @@ namespace SpaceTransit.Stations
         {
             if (_queue.IsYapping)
                 return;
-            foreach (var (route, index, departure) in _departures)
-            {
-                if (departure.Departure.Value < Clock.Now
-                    || announcementCreator.GetAnnouncement(route, index, departure, _announced.GetValueOrDefault(route, -1)) is not { } announcement)
-                    continue;
-                Announce(route, announcement);
-                return;
-            }
-
             foreach (var (route, index, arrival) in _arrivals)
             {
                 if (arrival.Arrival.Value < Clock.Now
@@ -78,6 +69,15 @@ namespace SpaceTransit.Stations
                     continue;
                 Announce(route, announcement);
                 break;
+            }
+
+            foreach (var (route, index, departure) in _departures)
+            {
+                if (departure.Departure.Value < Clock.Now
+                    || announcementCreator.GetAnnouncement(route, index, departure, _announced.GetValueOrDefault(route, -1)) is not { } announcement)
+                    continue;
+                Announce(route, announcement);
+                return;
             }
         }
 
