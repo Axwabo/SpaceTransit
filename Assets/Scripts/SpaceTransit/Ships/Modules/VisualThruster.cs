@@ -17,6 +17,8 @@ namespace SpaceTransit.Ships.Modules
 
         private float _emissionRate;
 
+        private float _extensionTime;
+
         private Vector3 _targetPosition;
 
         private Quaternion _targetRotation;
@@ -76,6 +78,7 @@ namespace SpaceTransit.Ships.Modules
                 case ShipState.Docked:
                     Emit(0);
                     (_targetPosition, _targetRotation) = (Vector3.zero, hoverRotation);
+                    _extensionTime = 0.5f;
                     break;
                 case ShipState.WaitingForDeparture:
                     Emit(_emissionRate * 0.1f);
@@ -101,7 +104,7 @@ namespace SpaceTransit.Ships.Modules
 
         private void Update()
         {
-            if (State is ShipState.Docked or ShipState.WaitingForDeparture)
+            if (State is ShipState.Docked or ShipState.WaitingForDeparture && (_extensionTime -= Clock.Delta) < 0)
                 return;
             if (State == ShipState.Sailing)
                 UpdateTargetsBasedOnSpeed();
