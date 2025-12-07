@@ -24,7 +24,7 @@ namespace SpaceTransit.Menu
             // ReSharper disable once CompareOfFloatsByEqualityOperator
             if (_previous == scale)
                 return;
-            text.text = Time.timeScale.ToString("N");
+            text.text = $"{Time.timeScale:N}x speed";
             _previous = scale;
         }
 
