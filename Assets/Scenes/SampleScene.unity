@@ -287,12 +287,27 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Press the yellow button to mark ready for departure
+  m_text: '<b>LEFT SIDE:</b>
 
-    Press the green
-    button to toggle hover
+    Press the AUTO button to toggle manual mode
 
-    Scroll to modify speed'
+    Press
+    up/down to navigate the screen
+
+    Press OK to select the option (exit towards,
+    entry dock or next service)
+
+    <b>RIGHT SIDE:</b>
+
+    Press the yellow button
+    to mark ready for departure
+
+    Press the green button to toggle hover
+
+    Scroll
+    to modify speed
+
+    The diode turns red if you can''t proceed (COSMOS signal)'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: be9ebe158c92a5c4a9fbb8e2718c466d, type: 2}
   m_sharedMaterial: {fileID: -7037241448537318202, guid: be9ebe158c92a5c4a9fbb8e2718c466d, type: 2}
@@ -319,8 +334,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.1
-  m_fontSizeBase: 0.1
+  m_fontSize: 0.07
+  m_fontSizeBase: 0.07
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -581,7 +596,6 @@ MonoBehaviour:
   <ID>k__BackingField: {fileID: 11400000, guid: cadb8cee2cb568b4aa5ecf8a3bd2aeaf, type: 2}
   docks:
   - {fileID: 1805729264}
-  active: {fileID: 0}
   spawnpoint: {x: 0, y: 0, z: 0}
 --- !u!1 &698446581
 GameObject:
@@ -807,7 +821,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 784833235}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1151,9 +1165,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41ad28bcbd344cc585846b33b3f2c198, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.World
-  routes:
-  - {fileID: 11400000, guid: 45b1b731982b0e14e9f75d2fa2c36f8a, type: 2}
-  - {fileID: 11400000, guid: c363124f9181c3848b8b8e9860c8c9e9, type: 2}
   speedLimitSignPrefab: {fileID: 0}
   stationSignPrefab: {fileID: 0}
 --- !u!4 &1204775526
@@ -1404,7 +1415,6 @@ MonoBehaviour:
   <ID>k__BackingField: {fileID: 11400000, guid: 3ba4d24d53308984a9c0dd1d600a593d, type: 2}
   docks:
   - {fileID: 1578808688}
-  active: {fileID: 0}
   spawnpoint: {x: 0, y: 0, z: 0}
 --- !u!1 &1805729261
 GameObject:
@@ -1680,15 +1690,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7464483005062417667, guid: 7c2445ae2359e664baa2de94223f59fd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15
+      value: 1.5026711
       objectReference: {fileID: 0}
     - target: {fileID: 7464483005062417667, guid: 7c2445ae2359e664baa2de94223f59fd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.35
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7464483005062417667, guid: 7c2445ae2359e664baa2de94223f59fd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10
+      value: -1.370877
       objectReference: {fileID: 0}
     - target: {fileID: 7464483005062417667, guid: 7c2445ae2359e664baa2de94223f59fd, type: 3}
       propertyPath: m_LocalRotation.w
