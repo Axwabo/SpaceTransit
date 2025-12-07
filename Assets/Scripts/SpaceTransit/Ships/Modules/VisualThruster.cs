@@ -9,7 +9,11 @@ namespace SpaceTransit.Ships.Modules
 
         private AudioSource _source;
 
+        private ParticleSystem _particles;
+
         private bool _swap;
+
+        private float _emissionRate;
 
         [SerializeField]
         private AudioClip liftoff;
@@ -21,11 +25,21 @@ namespace SpaceTransit.Ships.Modules
         {
             base.Awake();
             _source = GetComponent<AudioSource>();
+            _particles = GetComponentInChildren<ParticleSystem>();
+            _emissionRate = _particles.emission.rateOverTimeMultiplier;
             _swap = liftoff != land;
+        }
+
+        private void Start()
+        {
+            var emission = _particles.emission;
+            emission.rateOverTimeMultiplier = 0;
         }
 
         public override void OnStateChanged()
         {
+            var emission = _particles.emission;
+            emission.rateOverTimeMultiplier = State is ShipState.Docked or ShipState.WaitingForDeparture ? 0 : _emissionRate;
             if (State is not (ShipState.LiftingOff or ShipState.Landing))
                 return;
             if (_swap)
