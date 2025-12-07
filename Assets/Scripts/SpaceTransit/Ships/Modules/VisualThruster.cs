@@ -106,9 +106,16 @@ namespace SpaceTransit.Ships.Modules
             if (State == ShipState.Sailing)
                 UpdateTargetsBasedOnSpeed();
             Transform.GetLocalPositionAndRotation(out var position, out var rotation);
-            var newRotation = Quaternion.Lerp(rotation, _targetRotation, Clock.Delta * MovementRate);
+            var t = Clock.Delta * MovementRate;
+            var currentEuler = rotation.eulerAngles;
+            var targetEuler = _targetRotation.eulerAngles;
+            var newRotation = Quaternion.Euler(
+                Mathf.LerpAngle(currentEuler.x, targetEuler.x, t),
+                Mathf.LerpAngle(currentEuler.y, targetEuler.y, t),
+                Mathf.LerpAngle(currentEuler.z, targetEuler.z, t)
+            );
             Transform.SetLocalPositionAndRotation(
-                Vector3.Lerp(position, _targetPosition, Clock.Delta * MovementRate),
+                Vector3.Lerp(position, _targetPosition, t),
                 newRotation
             );
             var main = _particles.main;
@@ -117,7 +124,7 @@ namespace SpaceTransit.Ships.Modules
 
         private void UpdateTargetsBasedOnSpeed() => (_targetPosition, _targetRotation) = Assembly.IsStationary()
             ? (hoverPosition, hoverRotation)
-            : Assembly.CurrentSpeed > Assembly.MaxSpeed != Assembly.Reverse
+            : Assembly.TargetSpeed < Assembly.CurrentSpeed != Assembly.Reverse
                 ? (backwardsPosition, backwardsRotation)
                 : (forwardsPosition, forwardsRotation);
 
