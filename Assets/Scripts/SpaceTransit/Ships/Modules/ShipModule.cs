@@ -49,6 +49,8 @@ namespace SpaceTransit.Ships.Modules
 
         public DockList DockList => _components.OfType<DockList>().First();
 
+        public ExitList ExitList => _components.OfType<ExitList>().First();
+
     }
 
 }

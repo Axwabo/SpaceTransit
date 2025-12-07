@@ -38,14 +38,45 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         protected override bool Select(Exit item, PickablePicker picker)
         {
-            if (HasPicked)
+            if (HasPicked || State != ShipState.Docked)
                 return false;
-            var locked = item.Lock(Assembly);
-            picker.Pick(locked);
-            return locked;
+            picker.Selected = true;
+            Controller.MarkReady();
+            return State == ShipState.WaitingForDeparture;
         }
 
         protected override string GetContent(int index, Exit item) => item.ConnectedStation.Name;
+
+        public void Mark(Exit exit)
+        {
+            if (!isActiveAndEnabled)
+                return;
+            var index = _exits.IndexOf(exit);
+            if (index != -1)
+                Pickers[index].Pick(true);
+        }
+
+        public bool TryGetPicked(out Exit exit)
+        {
+            for (var i = 0; i < Pickers.Count; i++)
+            {
+                if (!Pickers[i].Picked)
+                    continue;
+                exit = _exits[i];
+                return true;
+            }
+
+            for (var i = 0; i < Pickers.Count; i++)
+            {
+                if (!Pickers[i].Selected)
+                    continue;
+                exit = _exits[i];
+                return true;
+            }
+
+            exit = null;
+            return false;
+        }
 
     }
 

@@ -10,7 +10,7 @@ namespace SpaceTransit.Ships.Driving.Screens
         [SerializeReference]
         private TPicker prefab;
 
-        protected readonly List<TPicker> Pickers = new();
+        protected List<TPicker> Pickers { get; } = new();
 
         protected abstract IReadOnlyList<TItem> Source { get; }
 

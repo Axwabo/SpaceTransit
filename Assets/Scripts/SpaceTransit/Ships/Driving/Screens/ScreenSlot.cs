@@ -42,14 +42,6 @@ namespace SpaceTransit.Ships.Driving.Screens
         {
             if (_previous == slot)
                 return;
-            _previous = slot;
-            exitList.gameObject.SetActive(slot == Slot.Exits);
-            if (_disabled)
-            {
-                routes.gameObject.SetActive(_previous == Slot.Routes);
-                dockList.gameObject.SetActive(_previous == Slot.Docks);
-            }
-
             Current = slot switch
             {
                 Slot.Docks => dockList,
@@ -57,6 +49,12 @@ namespace SpaceTransit.Ships.Driving.Screens
                 Slot.Exits => exitList,
                 _ => throw new ArgumentOutOfRangeException()
             };
+            _previous = slot;
+            exitList.gameObject.SetActive(slot == Slot.Exits);
+            if (!_disabled)
+                return;
+            routes.gameObject.SetActive(_previous == Slot.Routes);
+            dockList.gameObject.SetActive(_previous == Slot.Docks);
         }
 
         private void Update()

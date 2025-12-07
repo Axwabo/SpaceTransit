@@ -96,8 +96,13 @@ namespace SpaceTransit.Ships
                 return;
             if (State != ShipState.Docked)
                 throw new InvalidOperationException("Cannot depart while not docked");
-            if (!TryGetExit(out var exit) || exit.Lock(Assembly))
+            if (!TryGetExit(out var exit))
                 State = ShipState.WaitingForDeparture;
+            else if (exit.Lock(Assembly))
+            {
+                Assembly.FrontModule.ExitList.Mark(exit);
+                State = ShipState.WaitingForDeparture;
+            }
         }
 
         public void Land()
@@ -134,6 +139,9 @@ namespace SpaceTransit.Ships
 
         private bool TryGetExit(out Exit exit)
         {
+            var list = Assembly.FrontModule.ExitList;
+            if (list.TryGetPicked(out exit))
+                return true;
             if (!TryGetVaulter(out var controller)
                 || !controller.IsInService
                 || controller.Stop is not IDeparture {ExitTowards: var id}
