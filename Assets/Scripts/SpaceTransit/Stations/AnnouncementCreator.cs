@@ -98,6 +98,9 @@ namespace SpaceTransit.Stations
         [SerializeField]
         private AudioClip oh;
 
+        [SerializeField]
+        private AudioClip oClock;
+
         public IEnumerable<AnnouncementClip> GetAnnouncement(RouteDescriptor route, int index, IDeparture departure, int lastAnnounced)
         {
             if ((int) Clock.Now.TotalMinutes == lastAnnounced || index != -1)
@@ -107,7 +110,7 @@ namespace SpaceTransit.Stations
             {
                 3 or 5 => In(remaining, route, departure),
                 1 => Immediate(route, departure),
-                < 15 when lastAnnounced == -1 => At(route, index, departure),
+                <= 15 when lastAnnounced == -1 => At(route, index, departure),
                 _ => null
             };
         }
@@ -214,11 +217,15 @@ namespace SpaceTransit.Stations
             yield return dock;
             yield return numbersTo20[departure.DockIndex];
             yield return at;
-            foreach (var clip in Number(departure.Departure.Value.Hours, true))
+            var zeroMinutes = departure.Departure.Value.Minutes == 0;
+            foreach (var clip in Number(departure.Departure.Value.Hours, !zeroMinutes))
                 yield return clip;
             yield return 0.1f;
-            foreach (var clip in Number(departure.Departure.Value.Minutes, true))
-                yield return clip;
+            if (zeroMinutes)
+                yield return oClock;
+            else
+                foreach (var clip in Number(departure.Departure.Value.Minutes, true))
+                    yield return clip;
             foreach (var clip in Stops(route, index))
                 yield return clip;
         }
