@@ -1,7 +1,7 @@
-﻿using SpaceTransit.Routes;
+﻿using System.Collections.Generic;
+using SpaceTransit.Routes;
 using SpaceTransit.Ships;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SpaceTransit.Cosmos
 {
@@ -13,8 +13,9 @@ namespace SpaceTransit.Cosmos
         public Station station;
 
         [field: SerializeField]
-        [field: FormerlySerializedAs("backwards")]
         public bool Backwards { get; private set; }
+
+        public HashSet<Entry> Entries { get; } = new();
 
         public override bool CanProceed(ShipAssembly assembly)
         {
@@ -22,13 +23,9 @@ namespace SpaceTransit.Cosmos
                 return false;
             if (assembly.Reverse != Backwards)
                 return true;
-            foreach (var dock in station.Docks)
-            {
-                var entry = assembly.Reverse ? dock.FrontEntry : dock.BackEntry;
-                if (entry && entry.IsUsedOnlyBy(assembly))
+            foreach (var entry in Entries)
+                if (entry.IsUsedOnlyBy(assembly))
                     return true;
-            }
-
             return false;
         }
 
