@@ -115,10 +115,10 @@ namespace SpaceTransit.Ships.Driving
         {
             if (Parent.Stop is not IArrival arrival || ensurer.station.Name != arrival.Station.name)
                 return;
-            var list = Assembly.FrontModule.DockList;
+            var list = Assembly.FrontModule.EntryList;
             _entryRequested = list.isActiveAndEnabled
                 ? list.Select(arrival.DockIndex)
-                : ensurer.station.Docks[arrival.DockIndex].LockEntry(Assembly);
+                : ensurer.station.Docks[arrival.DockIndex].LockEntry(Assembly, ensurer);
         }
 
         public override void OnRouteChanged() => _departed = true;

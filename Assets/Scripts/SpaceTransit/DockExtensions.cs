@@ -1,4 +1,5 @@
-﻿using SpaceTransit.Routes;
+﻿using SpaceTransit.Cosmos;
+using SpaceTransit.Routes;
 using SpaceTransit.Ships;
 
 namespace SpaceTransit
@@ -7,10 +8,12 @@ namespace SpaceTransit
     public static class DockExtensions
     {
 
-        public static bool LockEntry(this Dock dock, ShipAssembly assembly)
+        public static bool LockEntry(this Dock dock, ShipAssembly assembly, EntryEnsurer ensurer)
         {
-            var entry = assembly.Reverse ? dock.FrontEntry : dock.BackEntry;
-            return entry && entry.Lock(assembly);
+            foreach (var entry in ensurer.Entries)
+                if (entry.Dock == dock)
+                    return entry.Lock(assembly);
+            return false;
         }
 
     }
