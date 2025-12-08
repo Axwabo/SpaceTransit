@@ -35,7 +35,7 @@ namespace SpaceTransit.Routes
 
         public HashSet<ShipAssembly> UsedBy { get; } = new();
 
-        private void Start()
+        private void Awake()
         {
             foreach (var entry in FrontEntries)
                 entry.Dock = this;
