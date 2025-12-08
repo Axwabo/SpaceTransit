@@ -20,13 +20,14 @@ Currently, only 1 line has been built.
 > If the world doesn't load, or you fall out, press `Tab` to (re)open the menu, click `Exit`
 > to go back to the main menu and try again.
 
-https://github.com/user-attachments/assets/2ece0849-6b37-45b2-a3f9-036c407437ce
+https://github.com/user-attachments/assets/1f1ad950-ea46-415a-9e97-969bf87ca490
+
 
 Ships are automatically controlled by default. The player can choose to manually "drive" a ship.
 
 The COSMOS ensures ship safety.
 If the player chooses to take control, they must respect the COSMOS signals.
-~~Overriding automatic actions performed by the ship can lead to catastrophic effects.~~ not yet implemented the ship ensures speed limits, and forcefully stops if the COSMOS system reports that it cannot proceed. The diode in the middle of the control panel indicates this.
+~~Overriding automatic actions performed by the ship can lead to catastrophic effects.~~ not yet implemented. The ship ensures speed limits, and forcefully stops if the COSMOS system reports that it cannot proceed. The diode in the middle of the control panel indicates this.
 
 Some station docks have multiple exits. In this scenario, one must be picked to proceed.
 
@@ -35,6 +36,10 @@ When entering a station with multiple docks in the same direction, a dock must b
 Entries and exits may hold zero, one or multiple locks while a ship is passing through. Locked segments cannot be used by other ships.
 
 The automatic driver locks entries and exits as soon as it's near enough.
+
+When you're on board, audio sources outside of the current ship will be muffled.
+The closer you are to an open door and the more open it is, the less muffled sounds will be.
+Unfortunately, the low-pass filter [doesn't work on WebGL](https://docs.unity3d.com/Manual/webgl-audio.html)
 
 ~~The game will end upon a ship crashing as the system is designed to prevent such conditions.~~
 not yet implemented
