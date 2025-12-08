@@ -1,4 +1,5 @@
 ﻿using System;
+using SpaceTransit.Cosmos;
 using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
 using SpaceTransit.Vaulter;
@@ -105,19 +106,19 @@ namespace SpaceTransit.Ships.Driving
                 return;
             var tube = Assembly.FrontModule.Thruster.Tube;
             if (!_entryRequested && tube.TryGetEntryEnsurer(Assembly.Reverse, out var ensurer))
-                Enter(ensurer.station);
+                Enter(ensurer);
             if (!_stopping)
                 Assembly.SetSpeed(Assembly.MaxSpeed.Limit(tube.SpeedLimit));
         }
 
-        private void Enter(Station station)
+        private void Enter(EntryEnsurer ensurer)
         {
-            if (Parent.Stop is not IArrival arrival || station.Name != arrival.Station.name)
+            if (Parent.Stop is not IArrival arrival || ensurer.station.Name != arrival.Station.name)
                 return;
             var list = Assembly.FrontModule.DockList;
             _entryRequested = list.isActiveAndEnabled
                 ? list.Select(arrival.DockIndex)
-                : station.Docks[arrival.DockIndex].LockEntry(Assembly);
+                : ensurer.station.Docks[arrival.DockIndex].LockEntry(Assembly);
         }
 
         public override void OnRouteChanged() => _departed = true;

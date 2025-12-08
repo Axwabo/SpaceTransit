@@ -1,7 +1,6 @@
 ﻿using SpaceTransit.Cosmos.Actions;
 using SpaceTransit.Ships;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SpaceTransit.Cosmos
 {
@@ -10,12 +9,11 @@ namespace SpaceTransit.Cosmos
     {
 
         [field: SerializeField]
-        [field: FormerlySerializedAs("locks")]
         protected Lock[] Locks { get; private set; }
 
         protected TubeRemapper[] Remappers { get; private set; }
 
-        private void Awake() => Remappers = GetComponents<TubeRemapper>();
+        protected virtual void Awake() => Remappers = GetComponents<TubeRemapper>();
 
         public virtual bool Lock(ShipAssembly assembly)
         {

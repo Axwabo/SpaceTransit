@@ -17,8 +17,8 @@ namespace SpaceTransit.Cosmos.Actions
         {
             if (Ensurer.Occupants.Count != module.Assembly.Modules.Count)
                 return;
-            var entry = module.Assembly.Reverse ? _dock.FrontEntry : _dock.BackEntry;
-            if (entry)
+            var entries = module.Assembly.Reverse ? _dock.FrontEntries : _dock.BackEntries;
+            foreach (var entry in entries)
                 entry.Release(module.Assembly);
         }
 

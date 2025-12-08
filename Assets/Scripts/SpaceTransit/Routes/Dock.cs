@@ -20,10 +20,10 @@ namespace SpaceTransit.Routes
         public Exit[] BackExits { get; private set; }
 
         [field: SerializeField]
-        public Entry FrontEntry { get; private set; }
+        public Entry[] FrontEntries { get; private set; }
 
         [field: SerializeField]
-        public Entry BackEntry { get; private set; }
+        public Entry[] BackEntries { get; private set; }
 
         [field: SerializeField]
         public bool Left { get; private set; }
@@ -35,10 +35,10 @@ namespace SpaceTransit.Routes
 
         private void Start()
         {
-            if (FrontEntry)
-                FrontEntry.Dock = this;
-            if (BackEntry)
-                BackEntry.Dock = this;
+            foreach (var entry in FrontEntries)
+                entry.Dock = this;
+            foreach (var entry in BackEntries)
+                entry.Dock = this;
         }
 
     }
