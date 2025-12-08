@@ -1,19 +1,13 @@
 ﻿# SpaceTransit
 
-> [!IMPORTANT]
-> I really rushed to get the game to a playable state in a week,
-> but I underestimated how much time it would take.
-> 
-> Updates coming soon™ :3
-
 A tra(i)nsit simulator game made in Unity, set in a fictional space country.
 
 Ships travel in fixed tubes, as if they were on train tracks.
-They arrive at docks (platforms) at designated stations. 
+They arrive at docks (platforms) at designated stations.
 
 The transit system is inspired by real-world railway systems,
 with significant modifications to fit the theme and also to simplify code.
-It's dynamic, making it easy to add stations in the Unity editor.
+It's dynamic, making it fairly easy to add stations in the Unity editor.
 
 Several FLASH and ROSS ships serve numerous stations based on timetables.
 Currently, only 1 line has been built.
@@ -32,7 +26,15 @@ Ships are automatically controlled by default. The player can choose to manually
 
 The COSMOS ensures ship safety.
 If the player chooses to take control, they must respect the COSMOS signals.
-Overriding automatic actions performed by the ship can lead to catastrophic effects.
+~~Overriding automatic actions performed by the ship can lead to catastrophic effects.~~ not yet implemented the ship ensures speed limits, and forcefully stops if the COSMOS system reports that it cannot proceed. The diode in the middle of the control panel indicates this.
+
+Some station docks have multiple exits. In this scenario, one must be picked to proceed.
+
+When entering a station with multiple docks in the same direction, a dock must be picked to enter into. Some docks may not be connected to the entry tube or may be occupied; in this case, the selection turns red.
+
+Entries and exits may hold zero, one or multiple locks while a ship is passing through. Locked segments cannot be used by other ships.
+
+The automatic driver locks entries and exits as soon as it's near enough.
 
 ~~The game will end upon a ship crashing as the system is designed to prevent such conditions.~~
 not yet implemented
@@ -51,18 +53,16 @@ Acronyms in parentheses represent the source of inspiration.
 `Vaulter` route controller system name inspiration: [Vultron](https://www.vultron.hu/)
 
 All station names have been inspired by a station in the real world.
-Can you find them all?
-
-<small>There's a hint somewhere in the repository</small>
+Can you find them all? There's a hint somewhere in the repository.
 
 # Unity
 
-The best game engine... only crashed about 10 times on average every day :SteamHappy:
+The best game engine... only crashed about 10 times on average every day <:SteamHappy:1157333712950800497>
 
 Since the camera's near plane cannot be too small (below 0.01), I had to make the world about 10 m/unit.
 Due to floating-point limitations, objects start to flicker immensely.
 
-To combat this, the world is moved in the opposite way when the player or the ship moves.
+To combat this, the world is moved in the opposite way when the player teleports the ship moves.
 
 ## SplineMesh
 
@@ -84,3 +84,19 @@ No SpaceTransit code was written by AI.
 # Models
 
 I made the models myself, and as someone who's barely blended (Blender) before, it's painful
+
+# TODO
+
+- [ ] ROSS ship remodeling (to double-decker)
+- [ ] More realistic ROSS audio
+- [ ] Map view
+- [ ] Route, station and timetable list in menu
+- [ ] Better controls display
+- [ ] Interactive tutorial (or at least pages)
+- [ ] Ship selection in test driving scene
+- [ ] Many more routes and lines
+- [ ] Support for multiple entries per dock
+- [ ] Control panel improvements
+- [ ] Resuming at any time
+- [ ] Support midnight reset
+- [ ] Automatic ship route rotation
