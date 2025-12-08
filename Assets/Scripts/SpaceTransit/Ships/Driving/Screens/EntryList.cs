@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
-using SpaceTransit.Routes;
+using SpaceTransit.Cosmos;
 
 namespace SpaceTransit.Ships.Driving.Screens
 {
 
-    public sealed class DockList : ListBase<Dock, PickablePicker>
+    public sealed class EntryList : ListBase<Entry, PickablePicker>
     {
 
         private string _previousStationName;
 
-        public Station TowardsStation { get; private set; }
+        private EntryEnsurer _ensurer;
 
         public override void OnStateChanged()
         {
@@ -27,40 +27,34 @@ namespace SpaceTransit.Ships.Driving.Screens
         {
             var tube = Assembly.FrontModule.Thruster.Tube;
             if (tube.TryGetEntryEnsurer(Assembly.Reverse, out var ensurer))
-                UpdateStation(ensurer.station.ID);
+                UpdateStation(ensurer);
             else
                 Clear();
         }
 
-        private void UpdateStation(StationId id)
+        private void UpdateStation(EntryEnsurer ensurer)
         {
-            var stationName = id.name;
+            var stationName = ensurer.station.ID.name;
             if (_previousStationName == stationName)
                 return;
             _previousStationName = stationName;
+            _ensurer = ensurer;
             Clear();
-            if (!Station.TryGetLoadedStation(id, out var station))
-            {
-                TowardsStation = null;
-                return;
-            }
-
-            TowardsStation = station;
             SetUp();
         }
 
-        protected override IReadOnlyList<Dock> Source => TowardsStation.Docks;
+        protected override IReadOnlyList<Entry> Source => _ensurer.Entries;
 
-        protected override bool Select(Dock item, PickablePicker picker)
+        protected override bool Select(Entry item, PickablePicker picker)
         {
             if (HasPicked)
                 return false;
-            var locked = item.LockEntry(Assembly);
+            var locked = item.Lock(Assembly);
             picker.Pick(locked);
             return locked;
         }
 
-        protected override string GetContent(int index, Dock item) => $"{index + 1}";
+        protected override string GetContent(int index, Entry item) => $"{index + 1}";
 
     }
 

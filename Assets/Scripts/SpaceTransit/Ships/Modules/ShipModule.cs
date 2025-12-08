@@ -47,7 +47,7 @@ namespace SpaceTransit.Ships.Modules
                 component.OnStateChanged();
         }
 
-        public DockList DockList => _components.OfType<DockList>().First();
+        public EntryList EntryList => _components.OfType<EntryList>().First();
 
         public ExitList ExitList => _components.OfType<ExitList>().First();
 

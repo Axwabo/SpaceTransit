@@ -15,7 +15,7 @@ namespace SpaceTransit.Cosmos
         [field: SerializeField]
         public bool Backwards { get; private set; }
 
-        public HashSet<Entry> Entries { get; } = new();
+        public List<Entry> Entries { get; } = new();
 
         public override bool CanProceed(ShipAssembly assembly)
         {
