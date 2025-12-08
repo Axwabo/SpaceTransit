@@ -33,6 +33,12 @@ namespace SpaceTransit.Routes
 
         private void OnEnable() => Loaded[Name] = this;
 
+        private void Start()
+        {
+            for (var i = 0; i < docks.Length; i++)
+                docks[i].Index = i;
+        }
+
         private void OnDisable() => Loaded.Remove(Name);
 
         private void OnDrawGizmosSelected()

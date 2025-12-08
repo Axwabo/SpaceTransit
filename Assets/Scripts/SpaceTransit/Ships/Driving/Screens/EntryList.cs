@@ -54,7 +54,15 @@ namespace SpaceTransit.Ships.Driving.Screens
             return locked;
         }
 
-        protected override string GetContent(int index, Entry item) => $"{index + 1}";
+        protected override string GetContent(Entry item) => $"{item.Dock.Index + 1}";
+
+        public bool SelectDock(int dockIndex)
+        {
+            for (var i = 0; i < _ensurer.Entries.Count; i++)
+                if (_ensurer.Entries[i].Dock.Index == dockIndex)
+                    return Select(i);
+            return false;
+        }
 
     }
 

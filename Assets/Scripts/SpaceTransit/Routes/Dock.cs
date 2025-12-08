@@ -31,6 +31,8 @@ namespace SpaceTransit.Routes
         [field: SerializeField]
         public bool Right { get; private set; }
 
+        public int Index { get; set; }
+
         public HashSet<ShipAssembly> UsedBy { get; } = new();
 
         private void Start()
