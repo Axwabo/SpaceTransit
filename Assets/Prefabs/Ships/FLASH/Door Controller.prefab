@@ -266,6 +266,7 @@ GameObject:
   - component: {fileID: 4530858828060569431}
   - component: {fileID: 2043003171070750549}
   - component: {fileID: 159796614518965083}
+  - component: {fileID: 5138291045167152579}
   m_Layer: 0
   m_Name: Door Controller
   m_TagString: Untagged
@@ -312,7 +313,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 0
   MinDistance: 1
-  MaxDistance: 30
+  MaxDistance: 10
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -401,6 +402,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Modules.Doors.DoorController
   isLeftSide: 0
   backwards: 0
+  backwardsZ: 0
   sideways:
     serializedVersion: 2
     m_Curve:
@@ -484,3 +486,16 @@ MonoBehaviour:
   lightRate: 1
   soundRate: 2
   max: 4
+--- !u!114 &5138291045167152579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8320358125520757997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1cd68e138cc481484c9dcb888d3babd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Audio.MountBasedMixerSetter
+  onboardGroup: {fileID: -3068737554344247453, guid: d180209a54469ec478c6696d196e7b79, type: 2}
