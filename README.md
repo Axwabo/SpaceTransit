@@ -62,7 +62,7 @@ Can you find them all? There's a hint somewhere in the repository.
 
 # Unity
 
-The best game engine... only crashed about 10 times on average every day <:SteamHappy:1157333712950800497>
+The best game engine... only crashed about 10 times on average every day :SteamHappy:
 
 Since the camera's near plane cannot be too small (below 0.01), I had to make the world about 10 m/unit.
 Due to floating-point limitations, objects start to flicker immensely.
