@@ -53,7 +53,7 @@ namespace SpaceTransit.Ships.Driving.Screens
             return State == ShipState.WaitingForDeparture;
         }
 
-        protected override string GetContent(int index, Exit item) => item.ConnectedStation.Name;
+        protected override string GetContent(Exit item) => item.ConnectedStation.Name;
 
         public void Mark(Exit exit)
         {

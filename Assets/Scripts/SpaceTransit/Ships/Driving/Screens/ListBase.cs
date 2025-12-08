@@ -14,7 +14,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         protected abstract IReadOnlyList<TItem> Source { get; }
 
-        protected abstract string GetContent(int index, TItem item);
+        protected abstract string GetContent(TItem item);
 
         public int Selected => Pickers.FindIndex(static e => e.Selected);
 
@@ -42,7 +42,7 @@ namespace SpaceTransit.Ships.Driving.Screens
             {
                 var clone = Instantiate(prefab, Transform);
                 clone.Index = i;
-                clone.Text = GetContent(i, Source[i]);
+                clone.Text = GetContent(Source[i]);
                 Pickers.Add(clone);
             }
         }
@@ -62,7 +62,7 @@ namespace SpaceTransit.Ships.Driving.Screens
             Pickers[index].Selected = true;
         }
 
-        public bool Select(int index) => index != -1 && Pickers.Count != 0 && Select(Source[index], Pickers[index]);
+        protected bool Select(int index) => index != -1 && Pickers.Count != 0 && Select(Source[index], Pickers[index]);
 
         protected abstract bool Select(TItem item, TPicker picker);
 

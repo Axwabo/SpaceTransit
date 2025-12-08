@@ -50,7 +50,7 @@ namespace SpaceTransit.Ships.Driving.Screens
             }
         }
 
-        protected override string GetContent(int index, RouteDescriptor item)
+        protected override string GetContent(RouteDescriptor item)
             => item == null ? "Exit Service" : RouteDisplay.Format(item);
 
         protected override bool Select(RouteDescriptor item, PickerBase picker)
