@@ -31,13 +31,17 @@ namespace SpaceTransit.Routes
 
         public IReadOnlyList<Dock> Docks => docks;
 
-        private void OnEnable() => Loaded[Name] = this;
-
-        private void Start()
+        private void Awake()
         {
             for (var i = 0; i < docks.Length; i++)
-                docks[i].Index = i;
+            {
+                var dock = docks[i];
+                dock.Station = this;
+                dock.Index = i;
+            }
         }
+
+        private void OnEnable() => Loaded[Name] = this;
 
         private void OnDisable() => Loaded.Remove(Name);
 

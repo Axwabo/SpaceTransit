@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using SpaceTransit.Cosmos;
-using SpaceTransit.Ships;
+﻿using SpaceTransit.Cosmos;
+using SpaceTransit.Cosmos.Actions;
 using SpaceTransit.Tubes;
 using UnityEngine;
 
 namespace SpaceTransit.Routes
 {
 
+    [RequireComponent(typeof(EntryClearer))]
     public sealed class Dock : MonoBehaviour
     {
 
@@ -31,9 +31,9 @@ namespace SpaceTransit.Routes
         [field: SerializeField]
         public bool Right { get; private set; }
 
-        public int Index { get; set; }
+        public Station Station { get; set; }
 
-        public HashSet<ShipAssembly> UsedBy { get; } = new();
+        public int Index { get; set; }
 
         private void Awake()
         {

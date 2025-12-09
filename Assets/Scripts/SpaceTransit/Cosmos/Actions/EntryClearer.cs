@@ -9,15 +9,15 @@ namespace SpaceTransit.Cosmos.Actions
     public sealed class EntryClearer : SafetyActionBase
     {
 
-        private Dock _dock;
+        public Dock Dock { get; private set; }
 
-        private void Awake() => _dock = GetComponent<Dock>();
+        private void Awake() => Dock = GetComponent<Dock>();
 
         public override void OnEntered(ShipModule module)
         {
             if (Ensurer.Occupants.Count != module.Assembly.Modules.Count)
                 return;
-            var entries = module.Assembly.Reverse ? _dock.FrontEntries : _dock.BackEntries;
+            var entries = module.Assembly.Reverse ? Dock.FrontEntries : Dock.BackEntries;
             foreach (var entry in entries)
                 entry.Release(module.Assembly);
         }
