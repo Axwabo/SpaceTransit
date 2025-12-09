@@ -36,13 +36,13 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private void UpdateList()
         {
-            if (!Assembly.FrontModule.Thruster.Tube.TryGetComponent(out Dock dock))
+            if (Assembly.FrontModule.Thruster.Tube is not Dock dock)
                 return;
             _exits.AddRange(dock.FrontExits);
             _exits.AddRange(dock.BackExits);
         }
 
-        protected override IReadOnlyList<Exit> Source => _exits;
+        protected override List<Exit> Source => _exits;
 
         protected override bool Select(Exit item, PickablePicker picker)
         {

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 namespace SpaceTransit.Routes
@@ -14,7 +14,7 @@ namespace SpaceTransit.Routes
         [SerializeField]
         private int[] lines;
 
-        public IReadOnlyList<int> Lines => lines;
+        public ReadOnlySpan<int> Lines => lines;
 
     }
 

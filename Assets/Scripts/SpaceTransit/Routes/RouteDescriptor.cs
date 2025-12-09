@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using SpaceTransit.Routes.Stops;
 using UnityEngine;
 
@@ -24,7 +24,7 @@ namespace SpaceTransit.Routes
         [SerializeField]
         private IntermediateStop[] intermediateStops;
 
-        public IReadOnlyList<IntermediateStop> IntermediateStops => intermediateStops;
+        public ReadOnlySpan<IntermediateStop> IntermediateStops => intermediateStops;
 
         [field: SerializeField]
         public Destination Destination { get; private set; }

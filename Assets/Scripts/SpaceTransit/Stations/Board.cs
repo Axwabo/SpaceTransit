@@ -19,7 +19,7 @@ namespace SpaceTransit.Stations
 
         private readonly List<TPrefab> _list = new();
 
-        protected abstract IReadOnlyCollection<TEntry> GetSource(DeparturesArrivals departuresArrivals);
+        protected abstract List<TEntry> GetSource(DeparturesArrivals departuresArrivals);
 
         protected abstract TimeOnly GetTime(TEntry entry);
 

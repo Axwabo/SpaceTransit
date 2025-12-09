@@ -43,7 +43,7 @@ namespace SpaceTransit.Ships.Driving.Screens
             SetUp();
         }
 
-        protected override IReadOnlyList<Entry> Source => _ensurer.Entries;
+        protected override List<Entry> Source => _ensurer.Entries;
 
         protected override bool Select(Entry item, PickablePicker picker)
         {

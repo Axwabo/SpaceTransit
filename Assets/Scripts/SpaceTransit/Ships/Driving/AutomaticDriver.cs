@@ -29,7 +29,7 @@ namespace SpaceTransit.Ships.Driving
             {
                 if (!Station.TryGetLoadedStation(Parent.Stop.Station, out var station))
                     return false;
-                var tube = station.Docks[Parent.Stop.DockIndex].Tube;
+                var tube = station.Docks[Parent.Stop.DockIndex];
                 var overscan = DefaultOverscan * World.MetersToWorld * Mathf.Pow(Time.timeScale, OneOverThree);
                 var stopPoint = World.Current.TransformPoint(tube.Sample(Assembly.Reverse ? overscan : tube.Length - overscan).Position);
                 var speed = Assembly.CurrentSpeed.Raw;
