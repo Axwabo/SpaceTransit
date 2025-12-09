@@ -9,10 +9,10 @@ namespace SpaceTransit.Cosmos.Actions
     {
 
         [SerializeField]
-        private TubeBase connectTube;
+        public TubeBase connectTube;
 
         [SerializeField]
-        private TubeBase connectTo;
+        public TubeBase connectTo;
 
         public override void OnEntered(ShipModule module)
         {
