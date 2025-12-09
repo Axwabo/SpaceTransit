@@ -33,6 +33,7 @@ namespace SpaceTransit.Editor
         {
             Undo.RecordObject(dock, "Migrate StraightTube to Dock");
             dock.SetNext(tube.Next);
+            dock.SpeedLimit = tube.SpeedLimit;
             PrefabUtility.RecordPrefabInstancePropertyModifications(dock);
             Undo.RecordObjects(tubes, "Migrate StraightTube to Dock");
             Undo.RecordObjects(remappers, "Migrate StraightTube to Dock");

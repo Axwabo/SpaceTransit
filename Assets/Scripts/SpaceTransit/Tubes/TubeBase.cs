@@ -11,7 +11,7 @@ namespace SpaceTransit.Tubes
         public Transform Transform { get; private set; }
 
         [field: SerializeField]
-        public float SpeedLimit { get; private set; }
+        public float SpeedLimit { get; set; }
 
         [field: SerializeField]
         public TubeBase Next { get; private set; }
