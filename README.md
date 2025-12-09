@@ -100,7 +100,7 @@ I made the models myself, and as someone who's barely blended (Blender) before, 
 - [ ] Interactive tutorial (or at least pages)
 - [ ] Ship selection in test driving scene
 - [ ] Many more routes and lines
-- [ ] Support for multiple entries per dock
+- [X] Support for multiple entries per dock
 - [ ] Control panel improvements
 - [ ] Resuming at any time
 - [ ] Support midnight reset
