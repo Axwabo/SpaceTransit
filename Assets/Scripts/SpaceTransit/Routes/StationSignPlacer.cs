@@ -22,7 +22,7 @@ namespace SpaceTransit.Routes
             var station = GetComponent<Station>();
             if (!origin)
             {
-                origin = station.Docks[backwards ? ^1 : 0].Tube;
+                origin = station.Docks[backwards ? ^1 : 0];
                 if (backwards ? !origin.HasPrevious : !origin.HasNext)
                     return;
                 origin = backwards ? origin.Previous : origin.Next;

@@ -21,7 +21,7 @@ namespace SpaceTransit.Cosmos
 
         public bool IsUsedOnlyBy(ShipAssembly assembly) => Locks.AreOnlyUsedBy(assembly);
 
-        public override bool Lock(ShipAssembly assembly) => !Dock.Tube.Safety.IsOccupied && base.Lock(assembly);
+        public override bool Lock(ShipAssembly assembly) => !Dock.Safety.IsOccupied && base.Lock(assembly);
 
     }
 

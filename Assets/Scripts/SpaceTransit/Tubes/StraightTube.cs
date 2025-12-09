@@ -3,7 +3,7 @@
 namespace SpaceTransit.Tubes
 {
 
-    public sealed class StraightTube : TubeBase
+    public class StraightTube : TubeBase
     {
 
         private float _length;

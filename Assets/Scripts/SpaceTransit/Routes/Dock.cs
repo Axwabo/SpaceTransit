@@ -7,11 +7,8 @@ using UnityEngine;
 namespace SpaceTransit.Routes
 {
 
-    public sealed class Dock : MonoBehaviour
+    public sealed class Dock : StraightTube
     {
-
-        [field: SerializeField]
-        public TubeBase Tube { get; private set; }
 
         [field: SerializeField]
         public Exit[] FrontExits { get; private set; }
@@ -35,8 +32,9 @@ namespace SpaceTransit.Routes
 
         public HashSet<ShipAssembly> UsedBy { get; } = new();
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             foreach (var entry in FrontEntries)
                 entry.Dock = this;
             foreach (var entry in BackEntries)
