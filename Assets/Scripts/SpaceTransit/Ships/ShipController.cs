@@ -146,7 +146,7 @@ namespace SpaceTransit.Ships
                 || !controller.IsInService
                 || controller.Stop is not IDeparture {ExitTowards: var id}
                 || !Station.TryGetLoadedStation(id, out var towards)
-                || !Assembly.FrontModule.Thruster.Tube.TryGetComponent(out Dock dock))
+                || Assembly.FrontModule.Thruster.Tube is not Dock dock)
             {
                 exit = null;
                 return false;

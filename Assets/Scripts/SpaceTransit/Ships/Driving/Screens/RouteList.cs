@@ -10,11 +10,9 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private static readonly HashSet<string> AvailableExits = new();
 
-        private readonly List<RouteDescriptor> _routes = new();
-
         private bool _enabled;
 
-        protected override List<RouteDescriptor> Source => _routes;
+        protected override List<RouteDescriptor> Source { get; } = new();
 
         private void OnEnable()
         {
@@ -24,17 +22,16 @@ namespace SpaceTransit.Ships.Driving.Screens
                 return;
             }
 
-            _routes.Clear();
-            _routes.Add(null);
+            Source.Clear();
+            Source.Add(null);
             Clear();
-            if (!Assembly.FrontModule.Thruster.Tube.TryGetComponent(out Dock dock))
+            if (Assembly.FrontModule.Thruster.Tube is not Dock dock)
                 return;
-            var station = dock.GetComponentInParent<Station>();
-            var stationName = station.name;
-            CacheExits(station);
+            var stationName = dock.Station.name;
+            CacheExits(dock.Station);
             foreach (var route in Cache.Routes)
                 if (route.Origin.Station.name == stationName && AvailableExits.Contains(route.Origin.ExitTowards.name))
-                    _routes.Add(route);
+                    Source.Add(route);
             SetUp();
         }
 
