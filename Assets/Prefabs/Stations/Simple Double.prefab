@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8164365249916651400}
+  - component: {fileID: 914943848813171310}
   - component: {fileID: 2708433068314240443}
   - component: {fileID: 5223100742434315167}
   m_Layer: 0
@@ -33,6 +34,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7987418763307056947}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &914943848813171310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149902421944169489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62eaaf0abe3a4924ab04802daa7fcd96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.StraightTube
+  <SpeedLimit>k__BackingField: 0
+  <Next>k__BackingField: {fileID: 0}
 --- !u!114 &2708433068314240443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45,12 +60,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a88da54457a84086b4bb098142a1d36b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Routes.Dock
-  <SpeedLimit>k__BackingField: 0
-  <Next>k__BackingField: {fileID: 0}
+  <Tube>k__BackingField: {fileID: 914943848813171310}
   <FrontExits>k__BackingField: []
   <BackExits>k__BackingField: []
-  <FrontEntries>k__BackingField: []
-  <BackEntries>k__BackingField: []
+  <FrontEntry>k__BackingField: {fileID: 0}
+  <BackEntry>k__BackingField: {fileID: 0}
   <Left>k__BackingField: 0
   <Right>k__BackingField: 1
 --- !u!114 &5223100742434315167
@@ -107,6 +121,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1323952992336429790}
+  - component: {fileID: 8420451524998793839}
   - component: {fileID: 342873159335543462}
   - component: {fileID: 1924878946583287155}
   m_Layer: 0
@@ -131,6 +146,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7987418763307056947}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8420451524998793839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3431895649032777519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62eaaf0abe3a4924ab04802daa7fcd96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.StraightTube
+  <SpeedLimit>k__BackingField: 0
+  <Next>k__BackingField: {fileID: 0}
 --- !u!114 &342873159335543462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,12 +172,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a88da54457a84086b4bb098142a1d36b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Routes.Dock
-  <SpeedLimit>k__BackingField: 0
-  <Next>k__BackingField: {fileID: 0}
+  <Tube>k__BackingField: {fileID: 8420451524998793839}
   <FrontExits>k__BackingField: []
   <BackExits>k__BackingField: []
-  <FrontEntries>k__BackingField: []
-  <BackEntries>k__BackingField: []
+  <FrontEntry>k__BackingField: {fileID: 0}
+  <BackEntry>k__BackingField: {fileID: 0}
   <Left>k__BackingField: 1
   <Right>k__BackingField: 0
 --- !u!114 &1924878946583287155

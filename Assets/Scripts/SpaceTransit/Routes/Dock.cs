@@ -37,8 +37,6 @@ namespace SpaceTransit.Routes
         protected override void Awake()
         {
             base.Awake();
-            if (!Application.isPlaying)
-                return;
             foreach (var entry in FrontEntries)
                 entry.Dock = this;
             foreach (var entry in BackEntries)
