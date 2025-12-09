@@ -8,8 +8,6 @@ namespace SpaceTransit.Ships.Driving.Screens
     public sealed class ExitList : ListBase<Exit, PickablePicker>
     {
 
-        private readonly List<Exit> _exits = new();
-
         private bool _loaded;
 
         private void OnEnable()
@@ -28,7 +26,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         public override void OnStateChanged()
         {
-            _exits.Clear();
+            Source.Clear();
             Clear();
             if (State == ShipState.Docked)
                 UpdateList();
@@ -38,11 +36,11 @@ namespace SpaceTransit.Ships.Driving.Screens
         {
             if (Assembly.FrontModule.Thruster.Tube is not Dock dock)
                 return;
-            _exits.AddRange(dock.FrontExits);
-            _exits.AddRange(dock.BackExits);
+            Source.AddRange(dock.FrontExits);
+            Source.AddRange(dock.BackExits);
         }
 
-        protected override List<Exit> Source => _exits;
+        protected override List<Exit> Source { get; } = new();
 
         protected override bool Select(Exit item, PickablePicker picker)
         {
@@ -59,7 +57,7 @@ namespace SpaceTransit.Ships.Driving.Screens
         {
             if (!isActiveAndEnabled || Pickers.Count == 0)
                 return;
-            var index = _exits.IndexOf(exit);
+            var index = Source.IndexOf(exit);
             if (index != -1)
                 Pickers[index].Pick(true);
         }
@@ -70,7 +68,7 @@ namespace SpaceTransit.Ships.Driving.Screens
             {
                 if (!Pickers[i].Picked)
                     continue;
-                exit = _exits[i];
+                exit = Source[i];
                 return true;
             }
 
@@ -78,7 +76,7 @@ namespace SpaceTransit.Ships.Driving.Screens
             {
                 if (!Pickers[i].Selected)
                     continue;
-                exit = _exits[i];
+                exit = Source[i];
                 return true;
             }
 

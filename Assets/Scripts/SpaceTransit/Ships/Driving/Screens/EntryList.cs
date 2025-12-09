@@ -58,6 +58,8 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         public bool SelectDock(int dockIndex)
         {
+            if (Pickers.Count == 0 || !isActiveAndEnabled)
+                return false;
             for (var i = 0; i < _ensurer.Entries.Count; i++)
                 if (_ensurer.Entries[i].Dock.Index == dockIndex)
                     return Select(i);
