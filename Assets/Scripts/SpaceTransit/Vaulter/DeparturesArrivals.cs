@@ -9,9 +9,9 @@ namespace SpaceTransit.Vaulter
     public sealed class DeparturesArrivals : MonoBehaviour
     {
 
-        public IReadOnlyList<DepartureEntry> Departures { get; private set; }
+        public List<DepartureEntry> Departures { get; private set; }
 
-        public IReadOnlyList<ArrivalEntry> Arrivals { get; private set; }
+        public List<ArrivalEntry> Arrivals { get; private set; }
 
         private void Awake()
         {
@@ -43,7 +43,7 @@ namespace SpaceTransit.Vaulter
 
         private static void AddIntermediateStops(RouteDescriptor route, StationId id, List<DepartureEntry> departures, List<ArrivalEntry> arrivals)
         {
-            for (var i = 0; i < route.IntermediateStops.Count; i++)
+            for (var i = 0; i < route.IntermediateStops.Length; i++)
             {
                 var stop = route.IntermediateStops[i];
                 if (stop.Station.name != id.name)

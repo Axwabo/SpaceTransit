@@ -28,6 +28,8 @@ namespace SpaceTransit.Routes
         [field: SerializeField]
         public bool Right { get; private set; }
 
+        public Station Station { get; set; }
+
         public int Index { get; set; }
 
         public HashSet<ShipAssembly> UsedBy { get; } = new();

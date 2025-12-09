@@ -183,7 +183,7 @@ namespace SpaceTransit.Stations
 
         private IEnumerable<AnnouncementClip> Stops(RouteDescriptor route, int index)
         {
-            var intermediateStops = route.IntermediateStops.Count;
+            var intermediateStops = route.IntermediateStops.Length;
             if (index == intermediateStops - 1)
                 yield break;
             yield return FullStop;

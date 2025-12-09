@@ -12,7 +12,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         protected List<TPicker> Pickers { get; } = new();
 
-        protected abstract IReadOnlyList<TItem> Source { get; }
+        protected abstract List<TItem> Source { get; }
 
         protected abstract string GetContent(TItem item);
 

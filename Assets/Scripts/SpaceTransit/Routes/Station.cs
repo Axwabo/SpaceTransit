@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -29,14 +30,18 @@ namespace SpaceTransit.Routes
 
         public string Name => ID.name;
 
-        public IReadOnlyList<Dock> Docks => docks;
+        public ReadOnlySpan<Dock> Docks => docks;
 
         private void OnEnable() => Loaded[Name] = this;
 
         private void Start()
         {
             for (var i = 0; i < docks.Length; i++)
-                docks[i].Index = i;
+            {
+                var dock = docks[i];
+                dock.Station = this;
+                dock.Index = i;
+            }
         }
 
         private void OnDisable() => Loaded.Remove(Name);

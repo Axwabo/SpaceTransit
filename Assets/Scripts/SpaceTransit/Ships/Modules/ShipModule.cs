@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using SpaceTransit.Audio;
 using SpaceTransit.Movement;
@@ -21,18 +21,20 @@ namespace SpaceTransit.Ships.Modules
 
         public bool CanDepart => _components.All(static e => e is not IDepartureBlocker {CanDepart: false});
 
-        public IReadOnlyCollection<DoorController> Doors { get; private set; }
+        public ReadOnlySpan<DoorController> Doors => _doors;
 
         public ModuleThruster Thruster { get; private set; }
 
         private ModuleComponentBase[] _components;
+
+        private DoorController[] _doors;
 
         protected override void Awake()
         {
             base.Awake();
             _components = GetComponentsInChildren<ModuleComponentBase>();
             Thruster = _components.OfType<ModuleThruster>().First();
-            Doors = _components.OfType<DoorController>().ToArray();
+            _doors = _components.OfType<DoorController>().ToArray();
         }
 
         protected override void OnInitialized()

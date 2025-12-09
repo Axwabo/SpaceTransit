@@ -78,7 +78,7 @@ namespace SpaceTransit.Vaulter
         public override void OnStateChanged(ShipState previousState)
         {
             if (_stopIndex is not (OutOfService or Destination) && Parent.State == ShipState.Sailing && previousState == ShipState.LiftingOff)
-                UpdateStop(_stopIndex >= Route.IntermediateStops.Count - 1 ? Destination : _stopIndex + 1);
+                UpdateStop(_stopIndex >= Route.IntermediateStops.Length - 1 ? Destination : _stopIndex + 1);
         }
 
         private void NotifyRouteChanged()

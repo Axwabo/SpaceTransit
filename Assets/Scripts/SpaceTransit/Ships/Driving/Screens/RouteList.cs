@@ -14,7 +14,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private bool _enabled;
 
-        protected override IReadOnlyList<RouteDescriptor> Source => _routes;
+        protected override List<RouteDescriptor> Source => _routes;
 
         private void OnEnable()
         {

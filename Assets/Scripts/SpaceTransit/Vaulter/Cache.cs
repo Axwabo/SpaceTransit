@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using SpaceTransit.Routes;
 using UnityEngine;
 
@@ -12,9 +12,9 @@ namespace SpaceTransit.Vaulter
 
         private static StationId[] _stations;
 
-        public static IReadOnlyList<RouteDescriptor> Routes => _routes ??= Resources.LoadAll<RouteDescriptor>("Routes");
+        public static ReadOnlySpan<RouteDescriptor> Routes => _routes ??= Resources.LoadAll<RouteDescriptor>("Routes");
 
-        public static IReadOnlyList<StationId> Stations => _stations ??= Resources.LoadAll<StationId>("Stations");
+        public static ReadOnlySpan<StationId> Stations => _stations ??= Resources.LoadAll<StationId>("Stations");
 
     }
 
