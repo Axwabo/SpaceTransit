@@ -21,6 +21,7 @@ namespace SpaceTransit.Build
             var load = new List<GameObject>();
             var activate = new List<GameObject>();
             var rootGameObjects = scene.GetRootGameObjects();
+            GameObject progress = null;
             foreach (var root in rootGameObjects)
             {
                 root.GetComponentsInChildren(splines);
@@ -31,7 +32,7 @@ namespace SpaceTransit.Build
                     load.Add(go);
                     go.SetActive(false);
                 }
-                
+
                 foreach (var instance in activates)
                 {
                     var go = instance.gameObject;
@@ -39,10 +40,15 @@ namespace SpaceTransit.Build
                     go.SetActive(false);
                     Object.Destroy(instance);
                 }
+
+                if (root.TryGetComponent(out ProgressDisplay _))
+                    progress = root;
             }
 
-            load.AddRange(activate);
-            rootGameObjects[0].AddComponent<GradualTubeLoader>().Load = load.ToArray();
+            var loader = rootGameObjects[0].AddComponent<GradualTubeLoader>();
+            loader.Load = load.ToArray();
+            loader.Activate = activate.ToArray();
+            loader.ProgressContainer = progress;
         }
 
     }

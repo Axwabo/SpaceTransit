@@ -10,8 +10,10 @@ namespace SpaceTransit
     {
 
         private static TimeSpan _startTime = DateTime.Now.TimeOfDay;
+        
+        public static double OffsetSeconds { get; set; }
 
-        public static TimeSpan Now => _startTime.Add(TimeSpan.FromSeconds(Time.timeSinceLevelLoadAsDouble));
+        public static TimeSpan Now => _startTime.Add(TimeSpan.FromSeconds(Time.timeSinceLevelLoadAsDouble + OffsetSeconds));
 
         public static float UnscaledDelta => Mathf.Min(0.3f, Time.unscaledDeltaTime);
 

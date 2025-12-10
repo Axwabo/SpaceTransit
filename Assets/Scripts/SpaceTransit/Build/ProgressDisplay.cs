@@ -17,8 +17,6 @@ namespace SpaceTransit.Build
         {
             text.text = $"Loading... {GradualTubeLoader.Progress:P0}";
             rect.localScale = new Vector3(GradualTubeLoader.Progress, 1);
-            if (GradualTubeLoader.Progress >= 1)
-                Destroy(gameObject);
         }
 
     }
