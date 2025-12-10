@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SplineMesh;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace SpaceTransit.Build
@@ -16,21 +17,15 @@ namespace SpaceTransit.Build
         public void OnProcessScene(Scene scene, BuildReport report)
         {
             var results = new List<Spline>();
-            var load = new List<TubeToLoad>();
+            var load = new List<GameObject>();
             foreach (var root in scene.GetRootGameObjects())
             {
                 root.GetComponentsInChildren(results);
                 foreach (var spline in results)
                 {
-                    if (!spline.TryGetComponent(out SplineMeshTiling tiling))
-                        continue;
-                    load.Add(new TubeToLoad
-                    {
-                        spline = spline,
-                        tiling = tiling
-                    });
-                    spline.enabled = false;
-                    tiling.enabled = false;
+                    var go = spline.gameObject;
+                    load.Add(go);
+                    go.SetActive(false);
                 }
 
                 if (load.Count != 0)
