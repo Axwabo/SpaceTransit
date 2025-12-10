@@ -45,6 +45,8 @@ namespace SpaceTransit.Build
                     progress = root;
             }
 
+            if (activate.Count == 0)
+                return;
             var loader = rootGameObjects[0].AddComponent<GradualTubeLoader>();
             loader.Load = load.ToArray();
             loader.Activate = activate.ToArray();
