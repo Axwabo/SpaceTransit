@@ -26,6 +26,9 @@ namespace SpaceTransit.Movement
         [SerializeField]
         private Transform cameraTransform;
 
+        [SerializeField]
+        private StationId startingStation;
+
         private Transform _t;
 
         private CharacterController _cc;
@@ -59,6 +62,8 @@ namespace SpaceTransit.Movement
             _cc = GetComponent<CharacterController>();
             Current = this;
             Time.timeScale = 1;
+            if (!StartingStation)
+                StartingStation = startingStation;
         }
 
         private void Update()
@@ -121,12 +126,8 @@ namespace SpaceTransit.Movement
         private void Relocate()
         {
             _relocated = true;
-            if (!StartingStation || !Station.TryGetLoadedStation(StartingStation, out var station))
-            {
-                World.Current.position -= Position;
+            if (!StartingStation || !Station.TryGetLoadedStation(StartingStation, out var station)) 
                 return;
-            }
-
             var spawnpoint = station.Spawnpoint;
             _t.position = spawnpoint;
             World.Current.position = -spawnpoint;
