@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#if UNITY_EDITOR
+using System.Collections.Generic;
 using SplineMesh;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
@@ -40,3 +41,4 @@ namespace SpaceTransit.Build
     }
 
 }
+#endif
