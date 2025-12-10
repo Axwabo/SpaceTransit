@@ -34,6 +34,8 @@ namespace SpaceTransit.Movement
 
         private float _verticalVelocity;
 
+        private bool _relocated;
+
         public bool IsMounted { get; private set; }
 
         public Transform Mount
@@ -59,22 +61,14 @@ namespace SpaceTransit.Movement
             Time.timeScale = 1;
         }
 
-        private void Start()
+        private void Update()
         {
-            if (!StartingStation || !Station.TryGetLoadedStation(StartingStation, out var station))
+            if (!_relocated)
             {
-                World.Current.position -= Position;
+                Relocate();
                 return;
             }
 
-            var spawnpoint = station.Spawnpoint;
-            _t.position = spawnpoint;
-            World.Current.position = -spawnpoint;
-            StartingStation = null;
-        }
-
-        private void Update()
-        {
             UpdateLook();
 
             if (_cc.isGrounded)
@@ -122,6 +116,21 @@ namespace SpaceTransit.Movement
             _t.position = to;
             _verticalVelocity = 0;
             World.Current.position -= LastPosition - to;
+        }
+
+        private void Relocate()
+        {
+            _relocated = true;
+            if (!StartingStation || !Station.TryGetLoadedStation(StartingStation, out var station))
+            {
+                World.Current.position -= Position;
+                return;
+            }
+
+            var spawnpoint = station.Spawnpoint;
+            _t.position = spawnpoint;
+            World.Current.position = -spawnpoint;
+            StartingStation = null;
         }
 
     }
