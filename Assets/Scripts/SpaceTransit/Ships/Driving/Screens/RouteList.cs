@@ -10,18 +10,12 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private static readonly HashSet<string> AvailableExits = new();
 
-        private bool _enabled;
-
         protected override List<RouteDescriptor> Source { get; } = new();
 
         private void OnEnable()
         {
-            if (!_enabled)
-            {
-                _enabled = true;
+            if (!didStart) 
                 return;
-            }
-
             Source.Clear();
             Source.Add(null);
             Clear();

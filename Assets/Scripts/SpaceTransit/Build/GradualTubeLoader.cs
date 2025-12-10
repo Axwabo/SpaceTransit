@@ -9,7 +9,7 @@ namespace SpaceTransit.Build
         public static float Progress { get; private set; }
 
         [field: SerializeField]
-        public GameObject[] TubesToLoad { get; set; }
+        public GameObject[] Load { get; set; }
 
         private int _index;
 
@@ -21,10 +21,10 @@ namespace SpaceTransit.Build
         {
             if ((_delay -= Time.deltaTime) > 0)
                 return;
-            TubesToLoad[_index].SetActive(true);
-            if (++_index >= TubesToLoad.Length)
+            Load[_index].SetActive(true);
+            if (++_index >= Load.Length)
                 Destroy(this);
-            Progress = (float) _index / TubesToLoad.Length;
+            Progress = (float) _index / Load.Length;
         }
 
     }
