@@ -27,7 +27,7 @@ namespace SpaceTransit.Build
             if (++_index >= Load.Length)
                 Complete();
             Progress = (float) _index / Load.Length;
-            Clock.OffsetSeconds = Time.timeSinceLevelLoadAsDouble;
+            Clock.OffsetSeconds = -Time.timeSinceLevelLoadAsDouble;
         }
 
         private void Complete()
