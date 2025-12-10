@@ -21,7 +21,6 @@ namespace SpaceTransit.Build
         {
             if ((_delay -= Time.deltaTime) > 0)
                 return;
-            _delay = 0.5f;
             var load = TubesToLoad[_index];
             load.spline.enabled = true;
             load.tiling.enabled = true;
