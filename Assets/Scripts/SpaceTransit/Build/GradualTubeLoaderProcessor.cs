@@ -16,12 +16,13 @@ namespace SpaceTransit.Build
 
         public void OnProcessScene(Scene scene, BuildReport report)
         {
+            var rootGameObjects = scene.GetRootGameObjects();
+            if (!TryFindProgress(rootGameObjects, out var progress))
+                return;
             var splines = new List<Spline>();
             var activates = new List<Activate>();
             var load = new List<GameObject>();
             var activate = new List<GameObject>();
-            var rootGameObjects = scene.GetRootGameObjects();
-            GameObject progress = null;
             foreach (var root in rootGameObjects)
             {
                 root.GetComponentsInChildren(splines);
@@ -40,9 +41,6 @@ namespace SpaceTransit.Build
                     go.SetActive(false);
                     Object.Destroy(instance);
                 }
-
-                if (root.TryGetComponent(out ProgressDisplay _))
-                    progress = root;
             }
 
             if (activate.Count == 0)
@@ -51,6 +49,20 @@ namespace SpaceTransit.Build
             loader.Load = load.ToArray();
             loader.Activate = activate.ToArray();
             loader.ProgressContainer = progress;
+        }
+
+        private static bool TryFindProgress(GameObject[] rootGameObjects, out GameObject progress)
+        {
+            foreach (var root in rootGameObjects)
+            {
+                if (!root.TryGetComponent(out ProgressDisplay _))
+                    continue;
+                progress = root;
+                return true;
+            }
+
+            progress = null;
+            return false;
         }
 
     }
