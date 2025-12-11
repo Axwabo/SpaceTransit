@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SpaceTransit.Movement;
 using TMPro;
 using UnityEngine;
@@ -19,6 +20,7 @@ namespace SpaceTransit.Menu
             var list = new List<string>();
             foreach (var id in Cache.Stations)
                 list.Add(id.name);
+            list.Sort(StringComparer.OrdinalIgnoreCase);
             var index = list.IndexOf(defaultValue);
             var dropdown = GetComponent<TMP_Dropdown>();
             dropdown.AddOptions(list);
