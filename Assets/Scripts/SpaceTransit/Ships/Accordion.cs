@@ -50,7 +50,7 @@ namespace SpaceTransit.Ships
             GetComponent<MeshFilter>().sharedMesh = _mesh;
         }
 
-        private void LateUpdate()
+        private void Update()
         {
             _fromTransform.GetLocalPositionAndRotation(out var fromPos, out var fromRot);
             _toTransform.GetLocalPositionAndRotation(out var toPos, out var toRot);
@@ -66,19 +66,21 @@ namespace SpaceTransit.Ships
             {
                 var vertices = VerticesToWrite.Count;
                 var a = _t.InverseTransformPoint(_fromTransform.TransformPoint(_fromVertices[fromVertices[i]]));
+                var b = _t.InverseTransformPoint(_fromTransform.TransformPoint(_fromVertices[fromVertices[i + 1]]));
                 var c = _t.InverseTransformPoint(_toTransform.TransformPoint(_toVertices[toVertices[i]]));
+                var d = _t.InverseTransformPoint(_toTransform.TransformPoint(_toVertices[toVertices[i + 1]]));
                 VerticesToWrite.Add(a);
+                VerticesToWrite.Add(b);
                 VerticesToWrite.Add(c);
+                VerticesToWrite.Add(d);
                 TrianglesToWrite.Add(vertices);
                 TrianglesToWrite.Add(vertices + 1);
                 TrianglesToWrite.Add(vertices + 2);
-                TrianglesToWrite.Add(vertices + 2);
                 TrianglesToWrite.Add(vertices + 1);
+                TrianglesToWrite.Add(vertices + 2);
                 TrianglesToWrite.Add(vertices + 3);
             }
 
-            VerticesToWrite.Add(_t.InverseTransformPoint(_fromTransform.TransformPoint(_fromVertices[fromVertices[^1]])));
-            VerticesToWrite.Add(_t.InverseTransformPoint(_toTransform.TransformPoint(_toVertices[toVertices[^1]])));
             _mesh.SetVertices(VerticesToWrite);
             _mesh.SetTriangles(TrianglesToWrite, 0);
             _mesh.normals = new Vector3[VerticesToWrite.Count]; // TODO: this is absolutely horrible, gonna implement later :33
