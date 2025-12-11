@@ -74,34 +74,41 @@ namespace SpaceTransit.Ships
             TrianglesToWrite.Clear();
             for (var i = 0; i < fromVertices.Length; i++)
             {
-                AddNormal(i);
+                NormalsToWrite.Add(_fromNormals[fromVertices[i]]);
+                NormalsToWrite.Add(_fromNormals[fromVertices[i]]);
                 var vertices = VerticesToWrite.Count;
                 var a = _t.InverseTransformPoint(_fromTransform.TransformPoint(_fromVertices[fromVertices[i]]));
                 var c = _t.InverseTransformPoint(_toTransform.TransformPoint(_toVertices[toVertices[i]]));
                 VerticesToWrite.Add(a);
                 VerticesToWrite.Add(c);
-                TrianglesToWrite.Add(vertices);
-                TrianglesToWrite.Add(vertices + 1);
-                TrianglesToWrite.Add(vertices + 2);
-                TrianglesToWrite.Add(vertices + 2);
-                TrianglesToWrite.Add(vertices + 1);
-                TrianglesToWrite.Add(vertices + 3);
+                AddTriangle(vertices, vertices + 1, vertices + 2);
+                AddTriangle(vertices + 2, vertices + 1, vertices + 3);
             }
 
             VerticesToWrite.Add(_t.InverseTransformPoint(_fromTransform.TransformPoint(_fromVertices[fromVertices[0]])));
             VerticesToWrite.Add(_t.InverseTransformPoint(_toTransform.TransformPoint(_toVertices[toVertices[0]])));
-            AddNormal(0);
+            NormalsToWrite.Add(_fromNormals[fromVertices[0]]);
+            NormalsToWrite.Add(_fromNormals[fromVertices[0]]);
             _mesh.SetVertices(VerticesToWrite);
             _mesh.SetNormals(NormalsToWrite);
             _mesh.SetTriangles(TrianglesToWrite, 0);
         }
 
-        private void AddNormal(int i)
+        private void AddTriangle(int a, int b, int c)
         {
-            var normal = _fromNormals[fromVertices[i]];
-            var flipped = flipNormals ? -normal : normal;
-            NormalsToWrite.Add(flipped);
-            NormalsToWrite.Add(flipped);
+            if (flipNormals)
+            {
+                TrianglesToWrite.Add(c);
+                TrianglesToWrite.Add(b);
+                TrianglesToWrite.Add(a);
+            }
+
+            else
+            {
+                TrianglesToWrite.Add(a);
+                TrianglesToWrite.Add(b);
+                TrianglesToWrite.Add(c);
+            }
         }
 
         private void OnDrawGizmosSelected()
