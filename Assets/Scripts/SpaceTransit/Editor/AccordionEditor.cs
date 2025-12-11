@@ -12,17 +12,12 @@ namespace SpaceTransit.Editor
         private int _from;
         private int _to;
 
-        private bool _applyFrom;
-        private bool _applyTo;
-
         public override bool RequiresConstantRepaint() => true;
 
         public override void OnInspectorGUI()
         {
             GUILayout.Label($"From Raycast Index: {_from}");
             GUILayout.Label($"To Raycast Index: {_to}");
-            _applyFrom = GUILayout.Toggle(_applyFrom, "Apply to last From");
-            _applyTo = GUILayout.Toggle(_applyTo, "Apply to last To");
             GUILayout.Space(10);
             base.OnInspectorGUI();
         }
@@ -34,10 +29,6 @@ namespace SpaceTransit.Editor
             var ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
             Raycast(ray, accordion.from, ref _from);
             Raycast(ray, accordion.to, ref _to);
-            if (_applyFrom)
-                accordion.fromVertices[^1] = _from;
-            if (_applyTo)
-                accordion.toVertices[^1] = _to;
         }
 
         private static void Raycast(Ray ray, MeshFilter from, ref int index)
@@ -49,8 +40,8 @@ namespace SpaceTransit.Editor
             var triangles = from.sharedMesh.triangles;
             var t = collider.transform;
             var ia = triangles[hit.triangleIndex];
-            var ib = triangles[hit.triangleIndex] + 1;
-            var ic = triangles[hit.triangleIndex] + 2;
+            var ib = triangles[hit.triangleIndex + 1];
+            var ic = triangles[hit.triangleIndex + 2];
             var a = t.TransformPoint(vertices[ia]);
             var b = t.TransformPoint(vertices[ib]);
             var c = t.TransformPoint(vertices[ic]);
