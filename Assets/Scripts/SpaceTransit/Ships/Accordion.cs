@@ -24,6 +24,9 @@ namespace SpaceTransit.Ships
         [SerializeField]
         public int[] toVertices;
 
+        [SerializeField]
+        private bool flipNormals;
+
         private Transform _fromTransform;
 
         private Transform _toTransform;
@@ -37,8 +40,6 @@ namespace SpaceTransit.Ships
         private Vector3[] _toVertices;
 
         private Vector3[] _fromNormals;
-
-        private Vector3[] _toNormals;
 
         private Mesh _mesh;
 
@@ -54,7 +55,6 @@ namespace SpaceTransit.Ships
             _fromVertices = fromMesh.vertices;
             _toVertices = toMesh.vertices;
             _fromNormals = fromMesh.normals;
-            _toNormals = toMesh.normals;
             _mesh = new Mesh();
             GetComponent<MeshFilter>().sharedMesh = _mesh;
         }
@@ -74,8 +74,7 @@ namespace SpaceTransit.Ships
             TrianglesToWrite.Clear();
             for (var i = 0; i < fromVertices.Length; i++)
             {
-                NormalsToWrite.Add(_fromNormals[fromVertices[i]]);
-                NormalsToWrite.Add(_fromNormals[fromVertices[i]]);
+                AddNormal(i);
                 var vertices = VerticesToWrite.Count;
                 var a = _t.InverseTransformPoint(_fromTransform.TransformPoint(_fromVertices[fromVertices[i]]));
                 var c = _t.InverseTransformPoint(_toTransform.TransformPoint(_toVertices[toVertices[i]]));
@@ -91,11 +90,18 @@ namespace SpaceTransit.Ships
 
             VerticesToWrite.Add(_t.InverseTransformPoint(_fromTransform.TransformPoint(_fromVertices[fromVertices[0]])));
             VerticesToWrite.Add(_t.InverseTransformPoint(_toTransform.TransformPoint(_toVertices[toVertices[0]])));
-            NormalsToWrite.Add(_fromNormals[fromVertices[0]]);
-            NormalsToWrite.Add(_fromNormals[fromVertices[0]]);
+            AddNormal(0);
             _mesh.SetVertices(VerticesToWrite);
             _mesh.SetNormals(NormalsToWrite);
             _mesh.SetTriangles(TrianglesToWrite, 0);
+        }
+
+        private void AddNormal(int i)
+        {
+            var normal = _fromNormals[fromVertices[i]];
+            var flipped = flipNormals ? -normal : normal;
+            NormalsToWrite.Add(flipped);
+            NormalsToWrite.Add(flipped);
         }
 
         private void OnDrawGizmosSelected()
