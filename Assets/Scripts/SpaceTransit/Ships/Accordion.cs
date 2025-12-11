@@ -7,10 +7,10 @@ namespace SpaceTransit.Ships
     {
 
         [SerializeField]
-        public MeshFilter from;
+        private MeshFilter from;
 
         [SerializeField]
-        public MeshFilter to;
+        private MeshFilter to;
 
         [SerializeField]
         private int[] fromVertices;
