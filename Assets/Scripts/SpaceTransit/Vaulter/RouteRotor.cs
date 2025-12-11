@@ -1,6 +1,6 @@
-﻿using System;
-using SpaceTransit.Routes;
+﻿using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
+using SpaceTransit.Ships;
 using UnityEngine;
 
 namespace SpaceTransit.Vaulter
@@ -35,7 +35,7 @@ namespace SpaceTransit.Vaulter
 
         private void Update()
         {
-            if (_ship.Stop is not Destination || _ship.Assembly.IsManuallyDriven)
+            if (_ship.Stop is not Destination || _ship.Parent.State != ShipState.Docked || !_ship.Assembly.IsStationary() || _ship.Assembly.IsManuallyDriven)
                 return;
             if (_delay <= 0)
                 _delay = 60;
