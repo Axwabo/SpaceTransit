@@ -72,7 +72,7 @@ namespace SpaceTransit.Ships
             VerticesToWrite.Clear();
             NormalsToWrite.Clear();
             TrianglesToWrite.Clear();
-            for (var i = 0; i < fromVertices.Length - 1; i++)
+            for (var i = 0; i < fromVertices.Length; i++)
             {
                 NormalsToWrite.Add(_fromNormals[fromVertices[i]]);
                 NormalsToWrite.Add(_fromNormals[fromVertices[i]]);
@@ -89,10 +89,10 @@ namespace SpaceTransit.Ships
                 TrianglesToWrite.Add(vertices + 3);
             }
 
-            VerticesToWrite.Add(_t.InverseTransformPoint(_fromTransform.TransformPoint(_fromVertices[fromVertices[^1]])));
-            VerticesToWrite.Add(_t.InverseTransformPoint(_toTransform.TransformPoint(_toVertices[toVertices[^1]])));
-            NormalsToWrite.Add(_fromNormals[fromVertices[^1]]);
-            NormalsToWrite.Add(_fromNormals[fromVertices[^1]]);
+            VerticesToWrite.Add(_t.InverseTransformPoint(_fromTransform.TransformPoint(_fromVertices[fromVertices[0]])));
+            VerticesToWrite.Add(_t.InverseTransformPoint(_toTransform.TransformPoint(_toVertices[toVertices[0]])));
+            NormalsToWrite.Add(_fromNormals[fromVertices[0]]);
+            NormalsToWrite.Add(_fromNormals[fromVertices[0]]);
             _mesh.SetVertices(VerticesToWrite);
             _mesh.SetNormals(NormalsToWrite);
             _mesh.SetTriangles(TrianglesToWrite, 0);
