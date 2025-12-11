@@ -3,6 +3,7 @@ using System.Linq;
 using SpaceTransit.Cosmos;
 using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
+using SpaceTransit.Ships.Driving;
 using SpaceTransit.Ships.Modules;
 using SpaceTransit.Vaulter;
 using UnityEngine;
@@ -35,7 +36,7 @@ namespace SpaceTransit.Ships
         public ShipAssembly Assembly { get; private set; }
 
         public bool CanLand => State == ShipState.Sailing
-                               && Assembly.CurrentSpeed.Raw == 0
+                               && Assembly.IsStationary()
                                && Physics.Raycast(
                                    Assembly.FrontModule.Transform.position,
                                    Vector3.down,

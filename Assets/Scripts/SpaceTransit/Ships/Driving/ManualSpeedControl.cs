@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace SpaceTransit.Ships.Driving
@@ -11,6 +12,8 @@ namespace SpaceTransit.Ships.Driving
         private ShipAssembly _assembly;
 
         private void Awake() => _assembly = GetComponent<ShipAssembly>();
+
+        private void OnEnable() => _assembly.IsManuallyDriven = true;
 
         private void Update()
         {
@@ -25,6 +28,8 @@ namespace SpaceTransit.Ships.Driving
             if (!Mathf.Approximately(0, limit) && _assembly.TargetSpeed > limit)
                 _assembly.SetSpeed(limit);
         }
+
+        private void OnDisable() => _assembly.IsManuallyDriven = false;
 
     }
 

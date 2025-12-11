@@ -19,7 +19,7 @@ namespace SpaceTransit.Vaulter
         private VaulterComponentBase[] _components;
 
         [SerializeField]
-        private RouteDescriptor initialRoute;
+        public RouteDescriptor initialRoute;
 
         [SerializeField]
         public int initialStopIndex = Origin;
