@@ -1,15 +1,10 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace SpaceTransit.Ships
 {
 
-    [RequireComponent(typeof(MeshFilter))]
     public sealed class Accordion : MonoBehaviour
     {
-
-        private static readonly List<Vector3> VerticesToWrite = new();
-        private static readonly List<int> TrianglesToWrite = new();
 
         [SerializeField]
         public MeshFilter from;
@@ -31,23 +26,10 @@ namespace SpaceTransit.Ships
 
         private Pose _toPrevious;
 
-        private Vector3[] _fromVertices;
-
-        private Vector3[] _toVertices;
-
-        private Mesh _mesh;
-
-        private Transform _t;
-
         private void Awake()
         {
-            _t = transform;
             _fromTransform = from.transform;
             _toTransform = to.transform;
-            _fromVertices = from.sharedMesh.vertices;
-            _toVertices = to.sharedMesh.vertices;
-            _mesh = new Mesh();
-            GetComponent<MeshFilter>().sharedMesh = _mesh;
         }
 
         private void Update()
@@ -60,30 +42,7 @@ namespace SpaceTransit.Ships
                 return;
             _fromPrevious = fromPose;
             _toPrevious = toPose;
-            VerticesToWrite.Clear();
-            TrianglesToWrite.Clear();
-            for (var i = 0; i < fromVertices.Length - 1; i++)
-            {
-                var vertices = VerticesToWrite.Count;
-                var a = _t.InverseTransformPoint(_fromTransform.TransformPoint(_fromVertices[fromVertices[i]]));
-                var b = _t.InverseTransformPoint(_fromTransform.TransformPoint(_fromVertices[fromVertices[i + 1]]));
-                var c = _t.InverseTransformPoint(_toTransform.TransformPoint(_toVertices[toVertices[i]]));
-                var d = _t.InverseTransformPoint(_toTransform.TransformPoint(_toVertices[toVertices[i + 1]]));
-                VerticesToWrite.Add(a);
-                VerticesToWrite.Add(b);
-                VerticesToWrite.Add(c);
-                VerticesToWrite.Add(d);
-                TrianglesToWrite.Add(vertices);
-                TrianglesToWrite.Add(vertices + 1);
-                TrianglesToWrite.Add(vertices + 2);
-                TrianglesToWrite.Add(vertices + 1);
-                TrianglesToWrite.Add(vertices + 2);
-                TrianglesToWrite.Add(vertices + 3);
-            }
-
-            _mesh.SetVertices(VerticesToWrite);
-            _mesh.SetTriangles(TrianglesToWrite, 0);
-            _mesh.normals = new Vector3[VerticesToWrite.Count]; // TODO: this is absolutely horrible, gonna implement later :33
+            // TODO: modify mesh
         }
 
         private void OnDrawGizmosSelected()
