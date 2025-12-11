@@ -13,7 +13,6 @@ namespace SpaceTransit.Ships.Driving
 
         private const int MinStaySeconds = 15;
         private const float DefaultOverscan = 15;
-        private const float OneOverThree = 1 / 3f;
 
         private float _remainingWait;
 
@@ -30,7 +29,7 @@ namespace SpaceTransit.Ships.Driving
                 if (!Station.TryGetLoadedStation(Parent.Stop.Station, out var station))
                     return false;
                 var tube = station.Docks[Parent.Stop.DockIndex];
-                var overscan = DefaultOverscan * World.MetersToWorld * Mathf.Pow(Time.timeScale, OneOverThree);
+                var overscan = DefaultOverscan * World.MetersToWorld * Mathf.Sqrt(Time.timeScale);
                 var stopPoint = World.Current.TransformPoint(tube.Sample(Assembly.Reverse ? overscan : tube.Length - overscan).Position);
                 var speed = Assembly.CurrentSpeed.Raw;
                 var deceleration = Assembly.Deceleration;
