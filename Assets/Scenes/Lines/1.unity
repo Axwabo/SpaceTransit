@@ -10177,7 +10177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 245a8679f4054783a7761f3c513a4c7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Clock
-  start: 07:29:00
+  start: 06:59:00
 --- !u!1 &534736203
 GameObject:
   m_ObjectHideFlags: 0
@@ -13949,6 +13949,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.LockClearer
   locks:
   - {fileID: 506842980}
+  - {fileID: 811499163}
   enter: 0
   exit: 1
   forwards: 1
@@ -40335,6 +40336,7 @@ GameObject:
   - component: {fileID: 1879083598}
   - component: {fileID: 1879083599}
   - component: {fileID: 1879083600}
+  - component: {fileID: 1879083601}
   m_Layer: 0
   m_Name: Routes
   m_TagString: Untagged
@@ -40385,6 +40387,22 @@ MonoBehaviour:
   routes:
   - {fileID: 11400000, guid: 4242f90edd8c59b4abecd0e38019d231, type: 2}
   - {fileID: 11400000, guid: 986fdae5fa30b6e42b976206657bc9fa, type: 2}
+--- !u!114 &1879083601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879083597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3e13a6e48594a199e03a4387fa092ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Vaulter.RouteRotor
+  prefab: {fileID: 8222100511023457643, guid: f76745f52aa0a2d41af1f98137ec942e, type: 3}
+  routes:
+  - {fileID: 11400000, guid: a97fac8f590f5a54e9bde6ab535e6e62, type: 2}
+  - {fileID: 11400000, guid: 40a9c5378eda9ab43ada4139d44583b3, type: 2}
 --- !u!1 &1914134855
 GameObject:
   m_ObjectHideFlags: 0
@@ -42891,6 +42909,7 @@ GameObject:
   - component: {fileID: 2044304808}
   - component: {fileID: 2044304810}
   - component: {fileID: 2044304809}
+  - component: {fileID: 2044304811}
   m_Layer: 0
   m_Name: From Gyuard-Factory
   m_TagString: Untagged
@@ -42955,6 +42974,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.TubeRemapper
   connectTube: {fileID: 1159859966}
+  connectTo: {fileID: 1084256658}
+--- !u!114 &2044304811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044304806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0160ff52a8e42e69102a716af77b90a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.TubeRemapper
+  connectTube: {fileID: 342873158951261061}
   connectTo: {fileID: 1084256658}
 --- !u!1 &2052872612
 GameObject:
@@ -44879,7 +44912,7 @@ PrefabInstance:
     - target: {fileID: 5727188072191525428, guid: 7c2445ae2359e664baa2de94223f59fd, type: 3}
       propertyPath: startingStation
       value: 
-      objectReference: {fileID: 11400000, guid: efe2b07e57bf0134e99fedb0e3d30208, type: 2}
+      objectReference: {fileID: 11400000, guid: f9f7075e912412340b15f645943b4f26, type: 2}
     - target: {fileID: 7464483005062417667, guid: 7c2445ae2359e664baa2de94223f59fd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
