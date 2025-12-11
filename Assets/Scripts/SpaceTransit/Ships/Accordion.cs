@@ -9,7 +9,6 @@ namespace SpaceTransit.Ships
     {
 
         private static readonly List<Vector3> VerticesToWrite = new();
-        private static readonly List<Vector3> NormalsToWrite = new();
         private static readonly List<int> TrianglesToWrite = new();
 
         [SerializeField]
@@ -42,8 +41,6 @@ namespace SpaceTransit.Ships
 
         private Vector3[] _toVertices;
 
-        private Vector3[] _fromNormals;
-
         private Mesh _mesh;
 
         private Transform _t;
@@ -57,8 +54,16 @@ namespace SpaceTransit.Ships
             _toTransform = to.transform;
             _fromVertices = fromMesh.vertices;
             _toVertices = toMesh.vertices;
-            _fromNormals = fromMesh.normals;
-            _mesh = new Mesh();
+            var normals = fromMesh.normals;
+            var newNormals = new Vector3[normals.Length + 1];
+            for (var i = 0; i < fromVertices.Length; i++)
+                newNormals[i] = normals[fromVertices[i]];
+            newNormals[^1] = normals[fromVertices[0]];
+            _mesh = new Mesh
+            {
+                name = "Accordion",
+                normals = newNormals
+            };
             GetComponent<MeshFilter>().sharedMesh = _mesh;
         }
 
@@ -73,12 +78,9 @@ namespace SpaceTransit.Ships
             _fromPrevious = fromPose;
             _toPrevious = toPose;
             VerticesToWrite.Clear();
-            NormalsToWrite.Clear();
             TrianglesToWrite.Clear();
             for (var i = 0; i < fromVertices.Length; i++)
             {
-                NormalsToWrite.Add(_fromNormals[fromVertices[i]]);
-                NormalsToWrite.Add(_fromNormals[fromVertices[i]]);
                 var ta = VerticesToWrite.Count;
                 var tb = ta + 1;
                 var tc = ta + 2;
@@ -88,15 +90,16 @@ namespace SpaceTransit.Ships
                 VerticesToWrite.Add(va);
                 VerticesToWrite.Add(vc);
                 AddTriangle(ta, tb, crossConnect ? td : tc);
-                AddTriangle(crossConnect ? td : tc, tb, crossConnect ? tc : td);
+                if (crossConnect)
+                    AddTriangle(td, ta, tc);
+                else
+                    AddTriangle(tc, tb, td);
             }
 
             VerticesToWrite.Add(_t.InverseTransformPoint(_fromTransform.TransformPoint(_fromVertices[fromVertices[0]])));
             VerticesToWrite.Add(_t.InverseTransformPoint(_toTransform.TransformPoint(_toVertices[crossConnect ? ^1 : toVertices[0]])));
-            NormalsToWrite.Add(_fromNormals[fromVertices[0]]);
-            NormalsToWrite.Add(_fromNormals[fromVertices[0]]);
+            _mesh.SetVertexBufferData(); // this is too complicated
             _mesh.SetVertices(VerticesToWrite);
-            _mesh.SetNormals(NormalsToWrite);
             _mesh.SetTriangles(TrianglesToWrite, 0);
         }
 
