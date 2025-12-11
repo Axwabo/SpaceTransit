@@ -9,7 +9,6 @@ namespace SpaceTransit.Ships
     {
 
         private static readonly List<Vector3> VerticesToWrite = new();
-        private static readonly List<Vector3> NormalsToWrite = new();
         private static readonly List<int> TrianglesToWrite = new();
 
         [SerializeField]
@@ -36,25 +35,17 @@ namespace SpaceTransit.Ships
 
         private Vector3[] _toVertices;
 
-        private Vector3[] _fromNormals;
-
-        private Vector3[] _toNormals;
-
         private Mesh _mesh;
 
         private Transform _t;
 
         private void Awake()
         {
-            var fromMesh = from.sharedMesh;
-            var toMesh = to.sharedMesh;
             _t = transform;
             _fromTransform = from.transform;
             _toTransform = to.transform;
-            _fromVertices = fromMesh.vertices;
-            _toVertices = toMesh.vertices;
-            _fromNormals = fromMesh.normals;
-            _toNormals = toMesh.normals;
+            _fromVertices = from.sharedMesh.vertices;
+            _toVertices = to.sharedMesh.vertices;
             _mesh = new Mesh();
             GetComponent<MeshFilter>().sharedMesh = _mesh;
         }
@@ -65,17 +56,14 @@ namespace SpaceTransit.Ships
             _toTransform.GetLocalPositionAndRotation(out var toPos, out var toRot);
             var fromPose = new Pose(fromPos, fromRot);
             var toPose = new Pose(toPos, toRot);
-            if (fromPose == _fromPrevious && toPose == _toPrevious)
+            if (fromPose == toPose)
                 return;
             _fromPrevious = fromPose;
             _toPrevious = toPose;
             VerticesToWrite.Clear();
-            NormalsToWrite.Clear();
             TrianglesToWrite.Clear();
             for (var i = 0; i < fromVertices.Length - 1; i++)
             {
-                NormalsToWrite.Add(_fromNormals[fromVertices[i]]);
-                NormalsToWrite.Add(_fromNormals[fromVertices[i]]);
                 var vertices = VerticesToWrite.Count;
                 var a = _t.InverseTransformPoint(_fromTransform.TransformPoint(_fromVertices[fromVertices[i]]));
                 var c = _t.InverseTransformPoint(_toTransform.TransformPoint(_toVertices[toVertices[i]]));
@@ -91,11 +79,9 @@ namespace SpaceTransit.Ships
 
             VerticesToWrite.Add(_t.InverseTransformPoint(_fromTransform.TransformPoint(_fromVertices[fromVertices[^1]])));
             VerticesToWrite.Add(_t.InverseTransformPoint(_toTransform.TransformPoint(_toVertices[toVertices[^1]])));
-            NormalsToWrite.Add(_fromNormals[fromVertices[^1]]);
-            NormalsToWrite.Add(_fromNormals[fromVertices[^1]]);
             _mesh.SetVertices(VerticesToWrite);
-            _mesh.SetNormals(NormalsToWrite);
             _mesh.SetTriangles(TrianglesToWrite, 0);
+            _mesh.normals = new Vector3[VerticesToWrite.Count]; // TODO: this is absolutely horrible, gonna implement later :33
         }
 
         private void OnDrawGizmosSelected()
