@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace SpaceTransit.Ships
 {
@@ -62,12 +63,14 @@ namespace SpaceTransit.Ships
             _mesh = new Mesh
             {
                 name = "Accordion",
+                vertices = new Vector3[newNormals.Length],
                 normals = newNormals
             };
             GetComponent<MeshFilter>().sharedMesh = _mesh;
+            RenderPipelineManager.beginCameraRendering += OnRendering;
         }
 
-        private void LateUpdate()
+        private void OnRendering(ScriptableRenderContext scriptableRenderContext, Camera camera1)
         {
             _fromTransform.GetLocalPositionAndRotation(out var fromPos, out var fromRot);
             _toTransform.GetLocalPositionAndRotation(out var toPos, out var toRot);
@@ -98,7 +101,6 @@ namespace SpaceTransit.Ships
 
             VerticesToWrite.Add(_t.InverseTransformPoint(_fromTransform.TransformPoint(_fromVertices[fromVertices[0]])));
             VerticesToWrite.Add(_t.InverseTransformPoint(_toTransform.TransformPoint(_toVertices[crossConnect ? ^1 : toVertices[0]])));
-            _mesh.SetVertexBufferData(); // this is too complicated
             _mesh.SetVertices(VerticesToWrite);
             _mesh.SetTriangles(TrianglesToWrite, 0);
         }
@@ -130,6 +132,8 @@ namespace SpaceTransit.Ships
             foreach (var index in indexes)
                 Gizmos.DrawSphere(t.TransformPoint(vertices[index]), 0.01f);
         }
+
+        private void OnDestroy() => RenderPipelineManager.beginCameraRendering -= OnRendering;
 
     }
 
