@@ -1,10 +1,11 @@
-﻿using UnityEditor;
+﻿using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 namespace SpaceTransit.Editor
 {
 
-    public class RenderTextureExporter : EditorWindow
+    public sealed class RenderTextureExporter : EditorWindow
     {
 
         [MenuItem("Window/SpaceTransit/Export Render Texture")]
@@ -20,11 +21,17 @@ namespace SpaceTransit.Editor
         private void OnGUI()
         {
             _texture = EditorGUILayout.ObjectField("Texture", _texture, typeof(RenderTexture), false) as RenderTexture;
-            if (!GUILayout.Button("Save"))
+            if (!_texture || !GUILayout.Button("Save"))
                 return;
-            var path = EditorUtility.SaveFilePanelInProject("Export Texture", "", "", "");
+            var path = EditorUtility.SaveFilePanelInProject("Export Texture", _texture.name, "png", "Export Render Texture");
             if (string.IsNullOrWhiteSpace(path))
                 return;
+            var active = RenderTexture.active;
+            RenderTexture.active = _texture;
+            var texture2D = new Texture2D(_texture.width, _texture.height);
+            texture2D.ReadPixels(new Rect(0, 0, _texture.width, _texture.height), 0, 0);
+            RenderTexture.active = active;
+            File.WriteAllBytes(path, texture2D.EncodeToPNG());
         }
 
     }
