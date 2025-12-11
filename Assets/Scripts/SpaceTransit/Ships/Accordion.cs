@@ -27,6 +27,9 @@ namespace SpaceTransit.Ships
         [SerializeField]
         private bool flipNormals;
 
+        [SerializeField]
+        private bool crossConnect;
+
         private Transform _fromTransform;
 
         private Transform _toTransform;
@@ -76,17 +79,20 @@ namespace SpaceTransit.Ships
             {
                 NormalsToWrite.Add(_fromNormals[fromVertices[i]]);
                 NormalsToWrite.Add(_fromNormals[fromVertices[i]]);
-                var vertices = VerticesToWrite.Count;
-                var a = _t.InverseTransformPoint(_fromTransform.TransformPoint(_fromVertices[fromVertices[i]]));
-                var c = _t.InverseTransformPoint(_toTransform.TransformPoint(_toVertices[toVertices[i]]));
-                VerticesToWrite.Add(a);
-                VerticesToWrite.Add(c);
-                AddTriangle(vertices, vertices + 1, vertices + 2);
-                AddTriangle(vertices + 2, vertices + 1, vertices + 3);
+                var ta = VerticesToWrite.Count;
+                var tb = ta + 1;
+                var tc = ta + 2;
+                var td = ta + 3;
+                var va = _t.InverseTransformPoint(_fromTransform.TransformPoint(_fromVertices[fromVertices[i]]));
+                var vc = _t.InverseTransformPoint(_toTransform.TransformPoint(_toVertices[toVertices[crossConnect ? ^(i + 1) : i]]));
+                VerticesToWrite.Add(va);
+                VerticesToWrite.Add(vc);
+                AddTriangle(ta, tb, crossConnect ? td : tc);
+                AddTriangle(crossConnect ? td : tc, tb, crossConnect ? tc : td);
             }
 
             VerticesToWrite.Add(_t.InverseTransformPoint(_fromTransform.TransformPoint(_fromVertices[fromVertices[0]])));
-            VerticesToWrite.Add(_t.InverseTransformPoint(_toTransform.TransformPoint(_toVertices[toVertices[0]])));
+            VerticesToWrite.Add(_t.InverseTransformPoint(_toTransform.TransformPoint(_toVertices[crossConnect ? ^1 : toVertices[0]])));
             NormalsToWrite.Add(_fromNormals[fromVertices[0]]);
             NormalsToWrite.Add(_fromNormals[fromVertices[0]]);
             _mesh.SetVertices(VerticesToWrite);
@@ -97,18 +103,10 @@ namespace SpaceTransit.Ships
         private void AddTriangle(int a, int b, int c)
         {
             if (flipNormals)
-            {
-                TrianglesToWrite.Add(c);
-                TrianglesToWrite.Add(b);
-                TrianglesToWrite.Add(a);
-            }
-
-            else
-            {
-                TrianglesToWrite.Add(a);
-                TrianglesToWrite.Add(b);
-                TrianglesToWrite.Add(c);
-            }
+                (a, c) = (c, a);
+            TrianglesToWrite.Add(a);
+            TrianglesToWrite.Add(b);
+            TrianglesToWrite.Add(c);
         }
 
         private void OnDrawGizmosSelected()
