@@ -15,6 +15,10 @@ namespace SpaceTransit.Vaulter
         [SerializeField]
         private RouteDescriptor[] routes;
 
+        private RouteDescriptor _initial;
+
+        private int _startingStop;
+
         private int _index;
 
         private VaulterController _ship;
@@ -29,8 +33,34 @@ namespace SpaceTransit.Vaulter
 
         private void Start()
         {
+            for (var i = 0; i < routes.Length; i++)
+            {
+                var route = routes[i];
+                if (route.Origin.Departure > Clock.Now)
+                {
+                    Spawn(route);
+                    return;
+                }
+
+                _index = i;
+                for (var j = 0; j < route.IntermediateStops.Length; j++)
+                {
+                    var stop = route.IntermediateStops[j];
+                    if (stop.Arrival < Clock.Now)
+                        continue;
+                    Spawn(route);
+                    _ship.initialStopIndex = j;
+                    return;
+                }
+            }
+
+            Destroy(this);
+        }
+
+        private void Spawn(RouteDescriptor route)
+        {
             _ship = Instantiate(prefab, World.Current);
-            _ship.initialRoute = routes[0];
+            _ship.initialRoute = route;
         }
 
         private void Update()

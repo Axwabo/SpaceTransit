@@ -102,6 +102,6 @@ I made the models myself, and as someone who's barely blended (Blender) before, 
 - [ ] Many more routes and lines
 - [X] Support for multiple entries per dock
 - [ ] Control panel improvements
-- [ ] Resuming at any time
+- [X] Resuming at any time
 - [ ] Support midnight reset
 - [X] Automatic ship route rotation
