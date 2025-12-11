@@ -13,10 +13,10 @@ namespace SpaceTransit.Ships
         public MeshFilter to;
 
         [SerializeField]
-        private int[] fromVertices;
+        public int[] fromVertices;
 
         [SerializeField]
-        private int[] toVertices;
+        public int[] toVertices;
 
         private Transform _fromTransform;
 
