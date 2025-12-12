@@ -6,6 +6,7 @@ using UnityEngine.Animations;
 namespace SpaceTransit.Menu
 {
 
+    [RequireComponent(typeof(RectTransform))]
     public sealed class MapStation : MonoBehaviour
     {
 
@@ -15,15 +16,22 @@ namespace SpaceTransit.Menu
         [SerializeField]
         private PositionConstraint constraint;
 
+        private Transform _anchor;
+
+        private RectTransform _this;
+
+        private void Awake() => _this = (RectTransform) transform;
+
         public void Apply(Station station, Transform anchor)
         {
             text.text = station.Name;
-            constraint.AddSource(new ConstraintSource
-            {
-                sourceTransform = anchor,
-                weight = 1
-            });
+            _anchor = anchor;
+            UpdatePosition();
         }
+
+        private void Update() => UpdatePosition();
+
+        private void UpdatePosition() => _this.anchoredPosition = _anchor.localPosition;
 
     }
 

@@ -11,7 +11,13 @@ namespace SpaceTransit.Menu
         private MapStation prefab;
 
         [SerializeField]
-        private RectTransform anchor;
+        private RectTransform constraints;
+
+        [SerializeField]
+        private Transform anchor;
+
+        [SerializeField]
+        private float scale = 1;
 
         private bool _placed;
 
@@ -23,9 +29,9 @@ namespace SpaceTransit.Menu
             foreach (var station in Station.LoadedStations)
             {
                 var t = new GameObject(station.Name).transform;
-                var stationPosition = station.transform.localPosition;
-                t.parent = anchor;
-                t.localPosition = new Vector3(stationPosition.x * World.MetersToWorld, stationPosition.z * World.MetersToWorld);
+                var stationPosition = anchor.InverseTransformPoint(station.transform.localPosition);
+                t.parent = constraints;
+                t.localPosition = new Vector3(stationPosition.x * scale, stationPosition.z * scale);
                 Instantiate(prefab, parent).Apply(station, t);
             }
         }
