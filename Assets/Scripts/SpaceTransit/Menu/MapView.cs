@@ -3,7 +3,6 @@ using SpaceTransit.Routes;
 using SpaceTransit.Ships;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 namespace SpaceTransit.Menu
 {
@@ -14,15 +13,11 @@ namespace SpaceTransit.Menu
 
         private static Vector2 Mouse => InputSystem.actions["Point"].ReadValue<Vector2>();
 
-        [FormerlySerializedAs("prefab")]
         [SerializeField]
         private MapStation stationPrefab;
 
         [SerializeField]
         private MapShip shipPrefab;
-
-        [SerializeField]
-        private RectTransform constraints;
 
         [SerializeField]
         private Transform anchor;

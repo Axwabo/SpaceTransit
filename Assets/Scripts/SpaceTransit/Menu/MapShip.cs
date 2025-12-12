@@ -1,6 +1,8 @@
-﻿using SpaceTransit.Ships;
+﻿using SpaceTransit.Routes;
+using SpaceTransit.Ships;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace SpaceTransit.Menu
 {
@@ -10,10 +12,16 @@ namespace SpaceTransit.Menu
     {
 
         [SerializeField]
-        private TextMeshProUGUI text;
+        private TextMeshProUGUI route;
+
+        [SerializeField]
+        private TextMeshProUGUI type;
 
         [SerializeField]
         private RectTransform point;
+
+        [SerializeField]
+        private Image image;
 
         private ShipAssembly _assembly;
 
@@ -30,8 +38,16 @@ namespace SpaceTransit.Menu
             _assembly = assembly;
             _anchor = anchor;
             UpdatePosition();
-            if (assembly.Parent.TryGetVaulter(out var vaulter))
-                text.text = vaulter.Route?.name ?? "---";
+            if (!assembly.Parent.TryGetVaulter(out var vaulter))
+                return;
+            route.text = vaulter.Route?.name ?? "---";
+            (type.text, image.color) = vaulter.Route?.Type switch
+            {
+                ServiceType.Fast => ("F", Color.orangeRed),
+                ServiceType.InterHub => ("IH", Color.darkBlue),
+                ServiceType.Passenger => ("P", Color.deepSkyBlue),
+                _ => ("-", Color.gray)
+            };
         }
 
         private void Update() => UpdatePosition();
