@@ -1,6 +1,9 @@
-﻿using SpaceTransit.Routes;
+﻿using System.Collections.Generic;
+using SpaceTransit.Routes;
+using SpaceTransit.Ships;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 namespace SpaceTransit.Menu
 {
@@ -11,8 +14,12 @@ namespace SpaceTransit.Menu
 
         private static Vector2 Mouse => InputSystem.actions["Point"].ReadValue<Vector2>();
 
+        [FormerlySerializedAs("prefab")]
         [SerializeField]
-        private MapStation prefab;
+        private MapStation stationPrefab;
+
+        [SerializeField]
+        private MapShip shipPrefab;
 
         [SerializeField]
         private RectTransform constraints;
@@ -31,6 +38,8 @@ namespace SpaceTransit.Menu
         private RectTransform _this;
 
         private Vector2 _previousPoint;
+
+        private readonly HashSet<ShipAssembly> _spawnedAssemblies = new();
 
         private void Awake() => _this = (RectTransform) transform;
 
@@ -51,12 +60,15 @@ namespace SpaceTransit.Menu
                 var stationPosition = anchor.InverseTransformPoint(station.transform.localPosition);
                 t.parent = constraints;
                 t.localPosition = new Vector3(stationPosition.x * scale, stationPosition.z * scale);
-                Instantiate(prefab, parent, false).Apply(station, t);
+                Instantiate(stationPrefab, parent, false).Apply(station, t);
             }
         }
 
         private void Update()
         {
+            foreach (var assembly in ShipAssembly.Instances)
+                if (_spawnedAssemblies.Add(assembly))
+                    Instantiate(shipPrefab, constraints, false).Apply(anchor, assembly);
             var point = Mouse;
             if (!InputSystem.actions["Click"].IsPressed())
             {
