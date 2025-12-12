@@ -1,7 +1,6 @@
 ﻿using SpaceTransit.Routes;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Animations;
 
 namespace SpaceTransit.Menu
 {
@@ -13,25 +12,15 @@ namespace SpaceTransit.Menu
         [SerializeField]
         private TextMeshProUGUI text;
 
-        [SerializeField]
-        private PositionConstraint constraint;
-
-        private Transform _anchor;
-
         private RectTransform _this;
 
         private void Awake() => _this = (RectTransform) transform;
 
-        public void Apply(Station station, Transform anchor)
+        public void Apply(Station station, Vector2 position)
         {
             text.text = station.Name;
-            _anchor = anchor;
-            UpdatePosition();
+            _this.anchoredPosition = position;
         }
-
-        private void Update() => UpdatePosition();
-
-        private void UpdatePosition() => _this.anchoredPosition = _anchor.localPosition;
 
     }
 

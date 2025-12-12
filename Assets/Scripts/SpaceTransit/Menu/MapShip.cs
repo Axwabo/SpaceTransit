@@ -21,6 +21,8 @@ namespace SpaceTransit.Menu
 
         private RectTransform _this;
 
+        public float Scale { get; set; } = 1;
+
         private void Awake() => _this = (RectTransform) transform;
 
         public void Apply(Transform anchor, ShipAssembly assembly)
@@ -28,19 +30,19 @@ namespace SpaceTransit.Menu
             _assembly = assembly;
             _anchor = anchor;
             UpdatePosition();
-
             if (assembly.Parent.TryGetVaulter(out var vaulter))
-                text.text = vaulter.Route?.Type.ToString() ?? "";
+                text.text = vaulter.Route?.name ?? "---";
         }
 
         private void Update() => UpdatePosition();
 
         private void UpdatePosition()
         {
-            // TODO: optimize
-            var p = _anchor.InverseTransformPoint(_assembly.FrontModule.Transform.position) * World.MetersToWorld;
-            _this.anchoredPosition = new Vector2(p.x, p.z);
-            _anchor.eulerAngles = new Vector3(0, 0, _assembly.FrontModule.Transform.localEulerAngles.y);
+            _assembly.FrontModule.Transform.GetLocalPositionAndRotation(out var pos, out var rot);
+            var position = _anchor.InverseTransformPoint(pos);
+            var rotation = rot.eulerAngles.y;
+            _this.anchoredPosition = new Vector2(position.x * Scale, position.z * Scale);
+            point.eulerAngles = new Vector3(0, 0, _assembly.Reverse ? rotation : -rotation);
         }
 
     }

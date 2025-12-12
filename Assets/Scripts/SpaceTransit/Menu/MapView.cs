@@ -53,22 +53,24 @@ namespace SpaceTransit.Menu
         {
             if (_placed)
                 return;
-            var parent = _this;
             foreach (var station in Station.LoadedStations)
             {
-                var t = new GameObject(station.Name).transform;
                 var stationPosition = anchor.InverseTransformPoint(station.transform.localPosition);
-                t.parent = constraints;
-                t.localPosition = new Vector3(stationPosition.x * scale, stationPosition.z * scale);
-                Instantiate(stationPrefab, parent, false).Apply(station, t);
+                Instantiate(stationPrefab, _this, false).Apply(station, new Vector3(stationPosition.x * scale, stationPosition.z * scale));
             }
         }
 
         private void Update()
         {
             foreach (var assembly in ShipAssembly.Instances)
-                if (_spawnedAssemblies.Add(assembly))
-                    Instantiate(shipPrefab, constraints, false).Apply(anchor, assembly);
+            {
+                if (!_spawnedAssemblies.Add(assembly))
+                    continue;
+                var ship = Instantiate(shipPrefab, _this, false);
+                ship.Scale = scale;
+                ship.Apply(anchor, assembly);
+            }
+
             var point = Mouse;
             if (!InputSystem.actions["Click"].IsPressed())
             {
