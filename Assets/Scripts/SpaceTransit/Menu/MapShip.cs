@@ -38,7 +38,8 @@ namespace SpaceTransit.Menu
         private void UpdatePosition()
         {
             // TODO: optimize
-            _this.anchoredPosition = _assembly.FrontModule.Transform.localPosition * World.MetersToWorld;
+            var p = _anchor.InverseTransformPoint(_assembly.FrontModule.Transform.position) * World.MetersToWorld;
+            _this.anchoredPosition = new Vector2(p.x, p.z);
             _anchor.eulerAngles = new Vector3(0, 0, _assembly.FrontModule.Transform.localEulerAngles.y);
         }
 
