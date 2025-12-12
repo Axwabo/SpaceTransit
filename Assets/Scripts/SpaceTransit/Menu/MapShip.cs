@@ -57,8 +57,10 @@ namespace SpaceTransit.Menu
             _assembly.FrontModule.Transform.GetLocalPositionAndRotation(out var pos, out var rot);
             var position = _anchor.InverseTransformPoint(pos);
             var rotation = rot.eulerAngles.y;
+            if (_assembly.Reverse)
+                rotation += 180;
             _this.anchoredPosition = new Vector2(position.x * Scale, position.z * Scale);
-            point.eulerAngles = new Vector3(0, 0, _assembly.Reverse ? rotation : -rotation);
+            point.eulerAngles = new Vector3(0, 0, -rotation);
         }
 
     }

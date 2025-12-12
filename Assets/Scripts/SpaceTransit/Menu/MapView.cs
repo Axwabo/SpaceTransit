@@ -28,21 +28,28 @@ namespace SpaceTransit.Menu
         [SerializeField]
         private float sensitivity = 1;
 
+        [SerializeField]
+        private float scrollSensitivity = 0.1f;
+
         private bool _placed;
 
         private RectTransform _this;
 
         private Vector2 _previousPoint;
 
+        private Vector2 _size;
+
+        private float _zoom = 1;
+
         private readonly HashSet<ShipAssembly> _spawnedAssemblies = new();
 
-        private void Awake() => _this = (RectTransform) transform;
-
-        private void OnEnable()
+        private void Awake()
         {
-            _this.anchoredPosition = Vector2.zero;
-            _previousPoint = Mouse;
+            _this = (RectTransform) transform;
+            _size = _this.sizeDelta;
         }
+
+        private void OnEnable() => _previousPoint = Mouse;
 
         private void Start()
         {
@@ -66,16 +73,24 @@ namespace SpaceTransit.Menu
                 ship.Apply(anchor, assembly);
             }
 
+            var scroll = InputSystem.actions["Speed"].ReadValue<float>();
+            if (scroll != 0)
+            {
+                _zoom = Mathf.Clamp(_zoom + scroll * scrollSensitivity, 0.1f, 10);
+                _this.localScale = Vector3.one * _zoom;
+            }
+
             var point = Mouse;
             if (!InputSystem.actions["Click"].IsPressed())
             {
-                _previousPoint = Mouse;
+                _previousPoint = point;
                 return;
             }
 
             if (point == _previousPoint)
                 return;
-            _this.anchoredPosition += (point - _previousPoint) * sensitivity;
+            var delta = _previousPoint - point;
+            _this.pivot += new Vector2(delta.x * sensitivity / _size.x / _zoom, delta.y * sensitivity / _size.y / _zoom);
             _previousPoint = point;
         }
 
