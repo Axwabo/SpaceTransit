@@ -32,7 +32,7 @@ namespace SpaceTransit.Menu
                 var stationPosition = anchor.InverseTransformPoint(station.transform.localPosition);
                 t.parent = constraints;
                 t.localPosition = new Vector3(stationPosition.x * scale, stationPosition.z * scale);
-                Instantiate(prefab, parent).Apply(station, t);
+                Instantiate(prefab, parent, false).Apply(station, t);
             }
         }
 
