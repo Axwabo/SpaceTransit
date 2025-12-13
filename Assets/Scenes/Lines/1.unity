@@ -4630,7 +4630,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.SplineTube
   <SpeedLimit>k__BackingField: 27.777779
-  <Next>k__BackingField: {fileID: 1703645334}
+  <Next>k__BackingField: {fileID: 1747235131}
   spline: {fileID: 229191862}
   length: 0
 --- !u!114 &229191862
@@ -4739,7 +4739,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.EntryEnsurer
   ensurer: {fileID: 229191865}
-  station: {fileID: 1445144226}
+  station: {fileID: 310053355}
   <Backwards>k__BackingField: 0
 --- !u!1 &230897791
 GameObject:
@@ -11590,7 +11590,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.SplineTube
   <SpeedLimit>k__BackingField: 0
-  <Next>k__BackingField: {fileID: 1766277278}
+  <Next>k__BackingField: {fileID: 1445144231}
   spline: {fileID: 534030253}
   length: 0
 --- !u!114 &534030252
@@ -14403,7 +14403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.SplineTube
   <SpeedLimit>k__BackingField: 0
-  <Next>k__BackingField: {fileID: 1766277278}
+  <Next>k__BackingField: {fileID: 1445144229}
   spline: {fileID: 639565634}
   length: 0
 --- !u!114 &639565633
@@ -16697,6 +16697,8 @@ GameObject:
   - component: {fileID: 735695626}
   - component: {fileID: 735695628}
   - component: {fileID: 735695625}
+  - component: {fileID: 735695630}
+  - component: {fileID: 735695629}
   m_Layer: 0
   m_Name: 5
   m_TagString: Untagged
@@ -16717,7 +16719,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.SplineTube
   <SpeedLimit>k__BackingField: 0
-  <Next>k__BackingField: {fileID: 1445144229}
+  <Next>k__BackingField: {fileID: 639565632}
   spline: {fileID: 735695626}
   length: 0
 --- !u!114 &735695626
@@ -16801,6 +16803,33 @@ MonoBehaviour:
   updateInPlayMode: 1
   curveSpace: 0
   mode: 1
+--- !u!114 &735695629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735695624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb0710ee48904aecb700499073be6e21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.NextSegmentSafety
+--- !u!114 &735695630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735695624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc695bdfe8f6488b8e5a58a9ed431c00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.EntryEnsurer
+  ensurer: {fileID: 735695629}
+  station: {fileID: 1445144226}
+  <Backwards>k__BackingField: 0
 --- !u!1 &735817169
 GameObject:
   m_ObjectHideFlags: 0
@@ -32052,6 +32081,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1382362350}
   - component: {fileID: 1382362351}
+  - component: {fileID: 1382362352}
   m_Layer: 0
   m_Name: To Colzalodge
   m_TagString: Untagged
@@ -32088,6 +32118,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
   <Locks>k__BackingField: []
   <ConnectedStation>k__BackingField: {fileID: 310053355}
+--- !u!114 &1382362352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382362349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0160ff52a8e42e69102a716af77b90a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.TubeRemapper
+  connectTube: {fileID: 735695625}
+  connectTo: {fileID: 534030251}
 --- !u!1 &1386593166
 GameObject:
   m_ObjectHideFlags: 0
@@ -34879,6 +34923,17 @@ Transform:
 --- !u!114 &1445144229 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2708433068314240443, guid: d565d6906fc20f346a869be32968e482, type: 3}
+  m_PrefabInstance: {fileID: 1445144224}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a88da54457a84086b4bb098142a1d36b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Routes.Dock
+--- !u!114 &1445144231 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 342873159335543462, guid: d565d6906fc20f346a869be32968e482, type: 3}
   m_PrefabInstance: {fileID: 1445144224}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -37764,6 +37819,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1532664152}
   - component: {fileID: 1532664153}
+  - component: {fileID: 1532664154}
   m_Layer: 0
   m_Name: From Colzalodge
   m_TagString: Untagged
@@ -37799,7 +37855,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Entry
   <Locks>k__BackingField: []
-  ensurer: {fileID: 0}
+  ensurer: {fileID: 735695630}
+--- !u!114 &1532664154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532664151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0160ff52a8e42e69102a716af77b90a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.TubeRemapper
+  connectTube: {fileID: 735695625}
+  connectTo: {fileID: 639565632}
 --- !u!1 &1533393971
 GameObject:
   m_ObjectHideFlags: 0
@@ -46880,6 +46950,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1944545841}
   - component: {fileID: 1944545842}
+  - component: {fileID: 1944545843}
   m_Layer: 0
   m_Name: From Gyuard
   m_TagString: Untagged
@@ -46916,6 +46987,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Entry
   <Locks>k__BackingField: []
   ensurer: {fileID: 1766277282}
+--- !u!114 &1944545843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944545840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0160ff52a8e42e69102a716af77b90a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.TubeRemapper
+  connectTube: {fileID: 2057107844}
+  connectTo: {fileID: 1766277278}
 --- !u!1 &1949612761
 GameObject:
   m_ObjectHideFlags: 0
