@@ -3,7 +3,6 @@ using System.Linq;
 using SpaceTransit.Cosmos;
 using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
-using SpaceTransit.Ships.Driving;
 using SpaceTransit.Ships.Modules;
 using SpaceTransit.Vaulter;
 using UnityEngine;

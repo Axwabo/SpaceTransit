@@ -92,7 +92,8 @@ namespace SpaceTransit.Vaulter
             if (entries.Length != 0)
             {
                 _entry = entries[0];
-                _tube = _entry.Ensurer.Tube.Next(!route.Reverse);
+                var tube = _entry.Ensurer.Tube;
+                _tube = route.Reverse ? tube.Previous : tube;
                 return;
             }
 
@@ -112,9 +113,9 @@ namespace SpaceTransit.Vaulter
             if (_entry && !_entry.IsFree)
                 return;
             Spawn(routes[_index]);
-            _ship.initialStopIndex = _startingStop;
+            _ship.initialStopIndex = _startingStop - 1;
             _ship.GetComponent<ShipAssembly>().startTube = _tube;
-            _state = State.Sailing;
+            _state = State.Ready;
         }
 
         private void Update()
@@ -126,11 +127,14 @@ namespace SpaceTransit.Vaulter
                 case State.Waiting:
                     SpawnAtEntry();
                     break;
+                case State.Ready:
+                    if (_entry)
+                        _entry.Lock(_ship.Assembly);
+                    _ship.Parent.MarkReady();
+                    _state = State.Sailing;
+                    break;
                 case State.Sailing:
-                    if (!CompletedRoute)
-                        break;
-                    _at = Clock.Now + TimeSpan.FromMinutes(1);
-                    _state = State.Rotating;
+                    WaitForNext();
                     break;
                 case State.Rotating:
                     Cycle();
@@ -139,6 +143,14 @@ namespace SpaceTransit.Vaulter
                     enabled = false;
                     break;
             }
+        }
+
+        private void WaitForNext()
+        {
+            if (!CompletedRoute)
+                return;
+            _at = Clock.Now + TimeSpan.FromMinutes(1);
+            _state = State.Rotating;
         }
 
         private void Cycle()
@@ -157,6 +169,7 @@ namespace SpaceTransit.Vaulter
         {
 
             Waiting,
+            Ready,
             Sailing,
             Rotating,
             Completed

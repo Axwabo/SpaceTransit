@@ -70,7 +70,7 @@ namespace SpaceTransit.Menu
                 rotation += 180;
             _this.anchoredPosition = new Vector2(position.x * Scale, position.z * Scale);
             point.eulerAngles = new Vector3(0, 0, -rotation);
-            if (!_assembly.Parent.TryGetVaulter(out var vaulter))
+            if (!_assembly.didStart || !_assembly.Parent.TryGetVaulter(out var vaulter))
                 return;
             var currentRoute = vaulter.Route;
             if (currentRoute != _previousRoute)
