@@ -29,6 +29,8 @@ namespace SpaceTransit.Menu
 
         private RectTransform _this;
 
+        private RouteDescriptor _previousRoute;
+
         public float Scale { get; set; } = 1;
 
         private void Awake() => _this = (RectTransform) transform;
@@ -40,8 +42,15 @@ namespace SpaceTransit.Menu
             UpdatePosition();
             if (!assembly.Parent.TryGetVaulter(out var vaulter))
                 return;
-            route.text = vaulter.Route?.name ?? "---";
-            (type.text, image.color) = vaulter.Route?.Type switch
+            var currentRoute = vaulter.Route;
+            Apply(currentRoute);
+        }
+
+        private void Apply(RouteDescriptor currentRoute)
+        {
+            _previousRoute = currentRoute;
+            route.text = currentRoute?.name ?? "---";
+            (type.text, image.color) = currentRoute?.Type switch
             {
                 ServiceType.Fast => ("F", Color.orangeRed),
                 ServiceType.InterHub => ("IH", Color.darkBlue),
@@ -61,6 +70,11 @@ namespace SpaceTransit.Menu
                 rotation += 180;
             _this.anchoredPosition = new Vector2(position.x * Scale, position.z * Scale);
             point.eulerAngles = new Vector3(0, 0, -rotation);
+            if (!_assembly.Parent.TryGetVaulter(out var vaulter))
+                return;
+            var currentRoute = vaulter.Route;
+            if (currentRoute != _previousRoute)
+                Apply(currentRoute);
         }
 
     }

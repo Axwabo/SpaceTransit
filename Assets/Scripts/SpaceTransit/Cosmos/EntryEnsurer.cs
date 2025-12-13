@@ -6,7 +6,7 @@ using UnityEngine;
 namespace SpaceTransit.Cosmos
 {
 
-    public sealed class EntryEnsurer : DelegatingEnsurer
+    public sealed class EntryEnsurer : NextSegmentSafety
     {
 
         [SerializeField]

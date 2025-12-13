@@ -18,7 +18,7 @@ namespace SpaceTransit.Cosmos
 
         protected TubeBase Tube { get; private set; }
 
-        public virtual bool IsOccupied => Occupants.Count != 0;
+        public bool IsOccupied => Occupants.Count != 0;
 
         private void Awake()
         {
@@ -38,7 +38,7 @@ namespace SpaceTransit.Cosmos
 
         public abstract bool CanProceed(ShipAssembly assembly);
 
-        public virtual void OnEntered(ShipModule module)
+        public void OnEntered(ShipModule module)
         {
             foreach (var action in _actions)
                 action.OnEntering(module);
@@ -47,7 +47,7 @@ namespace SpaceTransit.Cosmos
                 action.OnEntered(module);
         }
 
-        public virtual void OnExited(ShipModule module)
+        public void OnExited(ShipModule module)
         {
             foreach (var action in _actions)
                 action.OnExiting(module);

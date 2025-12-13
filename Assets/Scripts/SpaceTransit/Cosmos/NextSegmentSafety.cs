@@ -3,7 +3,7 @@
 namespace SpaceTransit.Cosmos
 {
 
-    public sealed class NextSegmentSafety : SafetyEnsurer
+    public class NextSegmentSafety : SafetyEnsurer
     {
 
         public override bool CanProceed(ShipAssembly assembly)
