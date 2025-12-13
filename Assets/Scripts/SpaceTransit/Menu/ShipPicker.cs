@@ -31,12 +31,12 @@ namespace SpaceTransit.Menu
                 return;
             if (_current)
                 Destroy(_current.gameObject);
-            _index = Wrap(_index);
+            _index = Wrap(_index + 1);
             _text.text = options[Wrap(_index + 1)].gameObject.name;
             _current = Instantiate(options[_index], World.Current, false);
         }
 
-        private int Wrap(int index) => ++index >= options.Length ? 0 : index;
+        private int Wrap(int index) => index >= options.Length ? 0 : index;
 
     }
 
