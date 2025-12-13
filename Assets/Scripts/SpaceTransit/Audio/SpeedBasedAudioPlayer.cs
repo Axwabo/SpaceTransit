@@ -20,6 +20,9 @@ namespace SpaceTransit.Audio
         [SerializeField]
         private bool restart;
 
+        [SerializeField]
+        private bool restartOnEnable;
+
         private AudioSource _source;
 
         private ShipAssembly _assembly;
@@ -30,6 +33,16 @@ namespace SpaceTransit.Audio
         {
             _source = GetComponent<AudioSource>();
             _assembly = GetComponentInParent<ShipAssembly>();
+        }
+
+        private void OnEnable()
+        {
+            if (!restartOnEnable)
+                return;
+            _source.time = 0;
+            UpdateTargetVolume();
+            if (_targetVolume != 0)
+                _source.Play();
         }
 
         private void Update()
@@ -61,7 +74,8 @@ namespace SpaceTransit.Audio
             {
                 Operator.Accelerating when _assembly.CurrentSpeed < _assembly.TargetSpeed => 1,
                 Operator.Decelerating when _assembly.CurrentSpeed > _assembly.TargetSpeed => 1,
-                Operator.Range when Mathf.Approximately(_assembly.CurrentSpeed.Raw, _assembly.TargetSpeed.Raw) => 1,
+                Operator.RangeAtTarget when Mathf.Approximately(_assembly.CurrentSpeed.Raw, _assembly.TargetSpeed.Raw) => 1,
+                Operator.Range => 1,
                 _ => 0
             };
 
@@ -69,8 +83,9 @@ namespace SpaceTransit.Audio
         {
 
             Accelerating,
-            Range,
-            Decelerating
+            RangeAtTarget,
+            Decelerating,
+            Range
 
         }
 

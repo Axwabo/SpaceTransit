@@ -14,6 +14,8 @@ namespace SpaceTransit.Audio
 
         private AudioMixerGroup _defaultGroup;
 
+        private bool _defaultMute;
+
         private bool _wasMounted;
 
         private bool _hasParent;
@@ -21,10 +23,14 @@ namespace SpaceTransit.Audio
         [SerializeField]
         private AudioMixerGroup onboardGroup;
 
+        [SerializeField]
+        private bool onboardMute;
+
         protected override void Awake()
         {
             _source = GetComponent<AudioSource>();
             _defaultGroup = _source.outputAudioMixerGroup;
+            _defaultMute = _source.mute;
         }
 
         private void LateUpdate()
@@ -34,6 +40,7 @@ namespace SpaceTransit.Audio
                 return;
             _wasMounted = mounted;
             _source.outputAudioMixerGroup = mounted ? onboardGroup : _defaultGroup;
+            _source.mute = mounted ? onboardMute : _defaultMute;
         }
 
         protected override void OnInitialized() => _hasParent = true;
