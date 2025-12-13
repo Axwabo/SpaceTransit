@@ -15,6 +15,9 @@ namespace SpaceTransit.Ships
         private Renderer[] renderers;
 
         [SerializeField]
+        private bool cullModules = true;
+
+        [SerializeField]
         private float afterShowCooldown = 1;
 
         [SerializeField]
@@ -43,14 +46,24 @@ namespace SpaceTransit.Ships
                 ? Mathf.Lerp(range, maxRange, Mathf.InverseLerp(minRangeSpeed, Assembly.MaxSpeed, Assembly.CurrentSpeed.Raw))
                 : range;
             var show = Vector3.Distance(Assembly.FrontModule.Transform.position, MovementController.Current.LastPosition) <= currentRange;
-            _cooldown = show ? afterShowCooldown : 1;
-            if (show == _previouslyShown)
+            _cooldown = 1;
+            if (show == _previouslyShown || show && (_cooldown = afterShowCooldown) > 1)
                 return;
             _previouslyShown = show;
+            UpdateState(show);
+        }
+
+        private void UpdateState(bool show)
+        {
             foreach (var o in gameObjects)
                 o.SetActive(show);
             foreach (var r in renderers)
                 r.enabled = show;
+            if (!cullModules)
+                return;
+            foreach (var module in Assembly.Modules)
+            foreach (var o in module.CullableObjects)
+                o.SetActive(show);
         }
 
     }

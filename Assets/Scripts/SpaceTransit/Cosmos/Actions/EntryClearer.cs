@@ -15,7 +15,7 @@ namespace SpaceTransit.Cosmos.Actions
 
         public override void OnEntered(ShipModule module)
         {
-            if (Ensurer.Occupants.Count != module.Assembly.Modules.Count)
+            if (Ensurer.Occupants.Count != module.Assembly.Modules.Length)
                 return;
             var entries = module.Assembly.Reverse ? _dock.FrontEntries : _dock.BackEntries;
             foreach (var entry in entries)

@@ -19,6 +19,9 @@ namespace SpaceTransit.Ships.Modules
         [field: SerializeField]
         public Mountable Mount { get; private set; }
 
+        [field: SerializeField]
+        public GameObject[] CullableObjects { get; private set; }
+
         public bool CanDepart => _components.All(static e => e is not IDepartureBlocker {CanDepart: false});
 
         public ReadOnlySpan<DoorController> Doors => _doors;

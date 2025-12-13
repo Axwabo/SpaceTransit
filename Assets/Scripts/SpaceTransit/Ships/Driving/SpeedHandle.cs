@@ -1,5 +1,4 @@
-﻿using System;
-using SpaceTransit.Ships.Modules;
+﻿using SpaceTransit.Ships.Modules;
 using UnityEngine;
 
 namespace SpaceTransit.Ships.Driving

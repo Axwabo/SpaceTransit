@@ -372,6 +372,7 @@ MonoBehaviour:
   min: -1
   max: 30
   restart: 0
+  restartOnEnable: 0
 --- !u!114 &5664120959320970614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -385,6 +386,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Audio.MountBasedMixerSetter
   onboardGroup: {fileID: -3068737554344247453, guid: d180209a54469ec478c6696d196e7b79, type: 2}
+  onboardMute: 0
 --- !u!1 &3330704545328336012
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,6 +533,7 @@ MonoBehaviour:
   min: 0
   max: 15
   restart: 0
+  restartOnEnable: 0
 --- !u!1 &3477208902206184141
 GameObject:
   m_ObjectHideFlags: 0
@@ -620,6 +623,7 @@ Transform:
   - {fileID: 995803506208605581}
   - {fileID: 122968441130328982}
   - {fileID: 4777393751149950627}
+  - {fileID: 4665207455966115279}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &839297446893814377
@@ -786,6 +790,58 @@ MonoBehaviour:
     m_RotationOrder: 4
   volumeParameter: Volume
   cutoffParameter: Cutoff
+--- !u!1 &5926897406711619908
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4665207455966115279}
+  - component: {fileID: 3702991680341754728}
+  m_Layer: 0
+  m_Name: Culling
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4665207455966115279
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5926897406711619908}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7868717487677506517}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3702991680341754728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5926897406711619908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 345e2aca279642e8a5218b433d7298ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.ShipCullable
+  gameObjects:
+  - {fileID: 3477208902206184141}
+  renderers: []
+  afterShowCooldown: 1
+  range: 50
+  dynamicRange: 0
+  minRangeSpeed: 0
+  maxRange: 100
 --- !u!1 &6127539050790823095
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,6 +988,7 @@ MonoBehaviour:
   min: 15
   max: 35
   restart: 0
+  restartOnEnable: 0
 --- !u!1 &6477280183547772890
 GameObject:
   m_ObjectHideFlags: 0
@@ -1078,6 +1135,7 @@ MonoBehaviour:
   min: 35
   max: 50
   restart: 0
+  restartOnEnable: 0
 --- !u!1 &7580502935147118749
 GameObject:
   m_ObjectHideFlags: 0
@@ -1224,6 +1282,7 @@ MonoBehaviour:
   min: -1
   max: 180
   restart: 0
+  restartOnEnable: 0
 --- !u!1 &7747355031329079953
 GameObject:
   m_ObjectHideFlags: 0
@@ -1389,6 +1448,7 @@ MonoBehaviour:
   min: 0
   max: 29
   restart: 1
+  restartOnEnable: 0
 --- !u!114 &2706701730499677659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1402,6 +1462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Audio.MountBasedMixerSetter
   onboardGroup: {fileID: -3068737554344247453, guid: d180209a54469ec478c6696d196e7b79, type: 2}
+  onboardMute: 0
 --- !u!1 &8166084356067681349
 GameObject:
   m_ObjectHideFlags: 0
@@ -1548,6 +1609,7 @@ MonoBehaviour:
   min: -1
   max: 180
   restart: 0
+  restartOnEnable: 0
 --- !u!1001 &828161267091915894
 PrefabInstance:
   m_ObjectHideFlags: 0

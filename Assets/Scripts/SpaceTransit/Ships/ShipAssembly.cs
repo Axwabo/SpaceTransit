@@ -16,7 +16,7 @@ namespace SpaceTransit.Ships
 
         public static IReadOnlyCollection<ShipAssembly> Instances => Assemblies;
 
-        public IReadOnlyList<ShipModule> Modules { get; private set; }
+        public ShipModule[] Modules { get; private set; }
 
         public TubeBase startTube;
 
@@ -55,13 +55,13 @@ namespace SpaceTransit.Ships
         public ShipModule FrontModule => CurrentSpeed.IsReverse ? Modules[^1] : Modules[0];
 
         public ShipModule BackModule => CurrentSpeed.IsReverse ? Modules[0] : Modules[^1];
-        
+
         public bool IsManuallyDriven { get; set; }
 
         protected override void Awake()
         {
             Modules = this.GetComponentsInImmediateChildren<ShipModule>().ToArray();
-            if (Modules.Count == 0)
+            if (Modules.Length == 0)
                 throw new MissingComponentException("Ships must have at least 1 module");
             Assemblies.Add(this);
         }
