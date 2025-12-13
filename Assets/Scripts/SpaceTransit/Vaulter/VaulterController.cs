@@ -36,8 +36,10 @@ namespace SpaceTransit.Vaulter
         {
             foreach (var component in _components)
                 component.Initialize(this);
+            if (!initialRoute)
+                return;
             Stop origin = initialStopIndex == Origin ? initialRoute.Origin : initialRoute.IntermediateStops[initialStopIndex];
-            if (!initialRoute || !Station.TryGetLoadedStation(origin.Station, out var station))
+            if (!Station.TryGetLoadedStation(origin.Station, out var station))
                 return;
             if (!Assembly.startTube)
                 Assembly.startTube = station.Docks[origin.DockIndex];

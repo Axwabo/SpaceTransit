@@ -66,7 +66,17 @@ namespace SpaceTransit.Vaulter
                 }
             }
 
-            Destroy(this);
+            var destination = routes[^1].Destination;
+            if (!Station.TryGetLoadedStation(destination.Station, out var station))
+            {
+                Destroy(this);
+                return;
+            }
+
+            _ship = Instantiate(prefab, World.Current);
+            _ship.GetComponent<ShipAssembly>().startTube = station.Docks[destination.DockIndex];
+            _state = State.Completed;
+            enabled = false;
         }
 
         private static bool ShouldSpawn(IntermediateStop stop)
@@ -139,6 +149,7 @@ namespace SpaceTransit.Vaulter
                     Cycle();
                     break;
                 case State.Completed:
+                    _ship.ExitService();
                     enabled = false;
                     break;
             }
