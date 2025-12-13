@@ -7,6 +7,7 @@ namespace SpaceTransit.Editor
 {
 
     [CustomEditor(typeof(RouteDescriptor))]
+    [CanEditMultipleObjects]
     public sealed class RouteDescriptorEditor : UnityEditor.Editor
     {
 
@@ -24,7 +25,12 @@ namespace SpaceTransit.Editor
         private void Offset()
         {
             var offset = TimeSpan.FromMinutes(_offset);
-            var route = (RouteDescriptor) target;
+            foreach (var o in targets)
+                Offset((RouteDescriptor) o, offset);
+        }
+
+        private static void Offset(RouteDescriptor route, TimeSpan offset)
+        {
             route.Origin.Departure = route.Origin.Departure.Value + offset;
             route.Destination.Arrival = route.Destination.Arrival.Value + offset;
             foreach (var stop in route.IntermediateStops)
@@ -32,6 +38,8 @@ namespace SpaceTransit.Editor
                 stop.Arrival = stop.Arrival.Value + offset;
                 stop.Departure = stop.Departure.Value + offset;
             }
+
+            EditorUtility.SetDirty(route);
         }
 
     }
