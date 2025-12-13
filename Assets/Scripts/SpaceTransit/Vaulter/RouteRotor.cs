@@ -13,7 +13,7 @@ namespace SpaceTransit.Vaulter
         private VaulterController prefab;
 
         [SerializeField]
-        private RouteDescriptor[] routes;
+        public RouteDescriptor[] routes;
 
         private RouteDescriptor _initial;
 
