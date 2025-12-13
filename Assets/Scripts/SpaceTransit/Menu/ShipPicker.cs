@@ -25,6 +25,8 @@ namespace SpaceTransit.Menu
             Click();
         }
 
+        private void Start() => _current.transform.SetParent(World.Current, false);
+
         protected override void Click()
         {
             if (MovementController.Current && MovementController.Current.IsMounted)
