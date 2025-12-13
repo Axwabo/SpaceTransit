@@ -5,17 +5,15 @@ namespace SpaceTransit.Menu
 {
 
     [RequireComponent(typeof(Button))]
-    public sealed class AutoHideGui : MonoBehaviour
+    public sealed class AutoHideGui : AutoRegisterButton
     {
 
         [SerializeField]
         private GameObject target;
 
-        private void Awake() => GetComponent<Button>().onClick.AddListener(Show);
+        protected override void Click() => target.SetActive(!target.activeSelf);
 
         private void OnDisable() => target.SetActive(false);
-
-        private void Show() => target.SetActive(!target.activeSelf);
 
     }
 

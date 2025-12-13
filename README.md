@@ -98,7 +98,7 @@ I made the models myself, and as someone who's barely blended (Blender) before, 
 - [ ] Route, station and timetable list in menu
 - [ ] Better controls display
 - [ ] Interactive tutorial (or at least pages)
-- [ ] Ship selection in test driving scene
+- [X] Ship selection in test driving scene
 - [ ] Many more routes and lines
 - [X] Support for multiple entries per dock
 - [ ] Control panel improvements

@@ -8,7 +8,7 @@ namespace SpaceTransit.Menu
     public abstract class AutoRegisterButton : MonoBehaviour
     {
 
-        private void Awake() => GetComponent<Button>().onClick.AddListener(Click);
+        protected virtual void Awake() => GetComponent<Button>().onClick.AddListener(Click);
 
         protected abstract void Click();
 
