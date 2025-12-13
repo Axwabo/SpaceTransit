@@ -128,7 +128,7 @@ namespace SpaceTransit.Movement
             _relocated = true;
             if (!StartingStation || !Station.TryGetLoadedStation(StartingStation, out var station))
                 return;
-            var spawnpoint = station.Spawnpoint + Vector3.up * 0.1f;
+            var spawnpoint = station.Spawnpoint + Vector3.up * 0.2f;
             _t.position = spawnpoint;
             World.Current.position = -spawnpoint;
             StartingStation = null;
