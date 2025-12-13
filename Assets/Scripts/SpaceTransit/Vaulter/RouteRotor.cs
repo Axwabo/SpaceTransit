@@ -89,16 +89,15 @@ namespace SpaceTransit.Vaulter
                 throw new MissingComponentException($"Entry station {stop.Station.name} is not loaded");
             var dock = station.Docks[stop.DockIndex];
             var entries = route.Reverse ? dock.FrontEntries : dock.BackEntries;
-            if (entries.Length != 0)
+            if (entries.Length == 0)
             {
-                _entry = entries[0];
-                var tube = _entry.Ensurer.Tube;
-                _tube = route.Reverse ? tube.Previous : tube;
+                _tube = dock.Next(!route.Reverse).Next(!route.Reverse);
                 return;
             }
 
-            Destroy(this);
-            // TODO: use TubeRemappers and find tube
+            _entry = entries[0];
+            var tube = _entry.Ensurer.Tube;
+            _tube = route.Reverse ? tube.Next : tube;
         }
 
         private void Spawn(RouteDescriptor route)

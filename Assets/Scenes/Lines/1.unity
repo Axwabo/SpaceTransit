@@ -11075,7 +11075,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 245a8679f4054783a7761f3c513a4c7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Clock
-  start: 08:10:30
+  start: 08:11:30
 --- !u!1 &534030249
 GameObject:
   m_ObjectHideFlags: 0
@@ -25501,8 +25501,7 @@ GameObject:
   - component: {fileID: 1132157100}
   - component: {fileID: 1132157099}
   - component: {fileID: 1132157098}
-  - component: {fileID: 1132157097}
-  - component: {fileID: 1132157096}
+  - component: {fileID: 1132157101}
   m_Layer: 0
   m_Name: 1
   m_TagString: Untagged
@@ -25525,35 +25524,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 705221247}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1132157096
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1132157094}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42172e678ab24d2d8fb4fb6e0da3da42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.SpecificSegmentsSafety
-  tubes:
-  - {fileID: 939616891}
-  - {fileID: 1198696672}
---- !u!114 &1132157097
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1132157094}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0160ff52a8e42e69102a716af77b90a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.TubeRemapper
-  connectTube: {fileID: 1769025570}
-  connectTo: {fileID: 1132157098}
 --- !u!114 &1132157098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25636,6 +25606,20 @@ MonoBehaviour:
   CurveChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1132157101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132157094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc695bdfe8f6488b8e5a58a9ed431c00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.EntryEnsurer
+  station: {fileID: 1769025573}
+  <Backwards>k__BackingField: 1
 --- !u!1 &1147033414
 GameObject:
   m_ObjectHideFlags: 0
@@ -42748,6 +42732,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7987418763307056947, guid: d565d6906fc20f346a869be32968e482, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1288931016}
+    - targetCorrespondingSourceObject: {fileID: 1323952992336429790, guid: d565d6906fc20f346a869be32968e482, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2044427640}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1149902421944169489, guid: d565d6906fc20f346a869be32968e482, type: 3}
       insertIndex: -1
@@ -42775,6 +42762,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a88da54457a84086b4bb098142a1d36b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Routes.Dock
+--- !u!4 &1769025571 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1323952992336429790, guid: d565d6906fc20f346a869be32968e482, type: 3}
+  m_PrefabInstance: {fileID: 1769025568}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1769025572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48753,6 +48745,67 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.TubeRemapper
   connectTube: {fileID: 342873158951261061}
   connectTo: {fileID: 1084256658}
+--- !u!1 &2044427639
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2044427640}
+  - component: {fileID: 2044427641}
+  - component: {fileID: 2044427642}
+  m_Layer: 0
+  m_Name: Entry
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2044427640
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044427639}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1769025571}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2044427641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044427639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06b6e80414e34af586eb2985c30c263a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Entry
+  <Locks>k__BackingField: []
+  <Ensurer>k__BackingField: {fileID: 1132157101}
+--- !u!114 &2044427642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044427639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0160ff52a8e42e69102a716af77b90a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.TubeRemapper
+  connectTube: {fileID: 1769025570}
+  connectTo: {fileID: 1132157098}
 --- !u!1 &2052872612
 GameObject:
   m_ObjectHideFlags: 0
@@ -50800,7 +50853,7 @@ PrefabInstance:
     - target: {fileID: 5727188072191525428, guid: 7c2445ae2359e664baa2de94223f59fd, type: 3}
       propertyPath: startingStation
       value: 
-      objectReference: {fileID: 11400000, guid: cb4833e0cea621d41952451d3a6d8319, type: 2}
+      objectReference: {fileID: 11400000, guid: 3ef61650394ad5e4e9918756e0d1575b, type: 2}
     - target: {fileID: 7464483005062417667, guid: 7c2445ae2359e664baa2de94223f59fd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
