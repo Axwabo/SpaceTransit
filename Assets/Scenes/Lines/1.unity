@@ -47191,9 +47191,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1879083598}
   - component: {fileID: 1879083599}
-  - component: {fileID: 1879083602}
   - component: {fileID: 1879083603}
-  - component: {fileID: 1879083605}
   m_Layer: 0
   m_Name: Routes
   m_TagString: Untagged
@@ -47216,6 +47214,7 @@ Transform:
   m_Children:
   - {fileID: 1165365840}
   - {fileID: 480487208}
+  - {fileID: 2147062726}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1879083599
@@ -47230,21 +47229,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 456ae4c4f2fe421faffc0d58ad87abd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Build.Activate
---- !u!114 &1879083602
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1879083597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3e13a6e48594a199e03a4387fa092ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Vaulter.RouteRotor
-  prefab: {fileID: 1703590996754009323, guid: 3dc60bdd0b9f84d44a2aa3fcc8079903, type: 3}
-  routes:
-  - {fileID: 11400000, guid: fa77b1a82da7e6544b9608fc5782e438, type: 2}
 --- !u!114 &1879083603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47260,21 +47244,6 @@ MonoBehaviour:
   prefab: {fileID: 1703590996754009323, guid: 3dc60bdd0b9f84d44a2aa3fcc8079903, type: 3}
   routes:
   - {fileID: 11400000, guid: 5c552e8f5cf01ac4588a83c47c56122b, type: 2}
---- !u!114 &1879083605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1879083597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3e13a6e48594a199e03a4387fa092ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Vaulter.RouteRotor
-  prefab: {fileID: 1703590996754009323, guid: 3dc60bdd0b9f84d44a2aa3fcc8079903, type: 3}
-  routes:
-  - {fileID: 11400000, guid: bdcfc7163e041444aa6b5118db02948b, type: 2}
 --- !u!1 &1902254257
 GameObject:
   m_ObjectHideFlags: 0
@@ -52393,7 +52362,7 @@ PrefabInstance:
     - target: {fileID: 5727188072191525428, guid: 7c2445ae2359e664baa2de94223f59fd, type: 3}
       propertyPath: startingStation
       value: 
-      objectReference: {fileID: 11400000, guid: efe2b07e57bf0134e99fedb0e3d30208, type: 2}
+      objectReference: {fileID: 11400000, guid: f9f7075e912412340b15f645943b4f26, type: 2}
     - target: {fileID: 7464483005062417667, guid: 7c2445ae2359e664baa2de94223f59fd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -52539,6 +52508,73 @@ Transform:
   - {fileID: 16947044}
   m_Father: {fileID: 1743996301}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2147062725
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2147062726}
+  - component: {fileID: 2147062728}
+  - component: {fileID: 2147062727}
+  m_Layer: 0
+  m_Name: Saturplace - Peshtadub
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2147062726
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2147062725}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1879083598}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2147062727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2147062725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3e13a6e48594a199e03a4387fa092ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Vaulter.RouteRotor
+  prefab: {fileID: 1703590996754009323, guid: 3dc60bdd0b9f84d44a2aa3fcc8079903, type: 3}
+  routes:
+  - {fileID: 11400000, guid: bdcfc7163e041444aa6b5118db02948b, type: 2}
+  - {fileID: 11400000, guid: d8e908235a241ac49a9df69ba2db8c98, type: 2}
+  - {fileID: 11400000, guid: 3e89c819a70dfbc4e90a80fc33e5eca0, type: 2}
+--- !u!114 &2147062728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2147062725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3e13a6e48594a199e03a4387fa092ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Vaulter.RouteRotor
+  prefab: {fileID: 1703590996754009323, guid: 3dc60bdd0b9f84d44a2aa3fcc8079903, type: 3}
+  routes:
+  - {fileID: 11400000, guid: 0988d72b33fba1040920f27de7d65a55, type: 2}
+  - {fileID: 11400000, guid: e2d0c360e2087c6499893524c5b20306, type: 2}
+  - {fileID: 11400000, guid: 4eab91e22bbd92e45866d1adb70627c0, type: 2}
 --- !u!222 &184076536068501798
 CanvasRenderer:
   m_ObjectHideFlags: 0
