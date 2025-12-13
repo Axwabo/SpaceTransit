@@ -3,6 +3,7 @@ using SpaceTransit.Cosmos;
 using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
 using SpaceTransit.Ships;
+using SpaceTransit.Tubes;
 using UnityEngine;
 
 namespace SpaceTransit.Vaulter
@@ -22,6 +23,8 @@ namespace SpaceTransit.Vaulter
         private int _startingStop;
 
         private Entry _entry;
+
+        private TubeBase _tube;
 
         private int _index;
 
@@ -56,7 +59,7 @@ namespace SpaceTransit.Vaulter
                 for (var j = 0; j < route.IntermediateStops.Length; j++)
                 {
                     var stop = route.IntermediateStops[j];
-                    if (stop.Departure < Clock.Now)
+                    if (!ShouldSpawn(stop))
                         continue;
                     SpawnAt(route, stop, j);
                     return;
@@ -65,6 +68,10 @@ namespace SpaceTransit.Vaulter
 
             Destroy(this);
         }
+
+        private static bool ShouldSpawn(IntermediateStop stop)
+            => stop.Arrival.Value - TimeSpan.FromMinutes(1) >= Clock.Now
+               && stop.Departure.Value >= Clock.Now + TimeSpan.FromMinutes(stop.MinStayMinutes + 1);
 
         private void SpawnAt(RouteDescriptor route, IntermediateStop stop, int index)
         {
@@ -81,10 +88,16 @@ namespace SpaceTransit.Vaulter
             if (!Station.TryGetLoadedStation(stop.Station, out var station))
                 throw new MissingComponentException($"Entry station {stop.Station.name} is not loaded");
             var dock = station.Docks[stop.DockIndex];
-            foreach (var entry in route.Reverse ? dock.FrontEntries : dock.BackEntries)
+            var entries = route.Reverse ? dock.FrontEntries : dock.BackEntries;
+            if (entries.Length != 0)
             {
-                // TODO
+                _entry = entries[0];
+                _tube = _entry.Ensurer.Tube.Next(!route.Reverse);
+                return;
             }
+
+            Destroy(this);
+            // TODO: use TubeRemappers and find tube
         }
 
         private void Spawn(RouteDescriptor route)
@@ -96,11 +109,17 @@ namespace SpaceTransit.Vaulter
 
         private void SpawnAtEntry()
         {
+            if (_entry && !_entry.IsFree)
+                return;
+            Spawn(routes[_index]);
+            _ship.initialStopIndex = _startingStop;
+            _ship.GetComponent<ShipAssembly>().startTube = _tube;
+            _state = State.Sailing;
         }
 
         private void Update()
         {
-            if (Clock.Now > _at)
+            if (Clock.Now < _at)
                 return;
             switch (_state)
             {

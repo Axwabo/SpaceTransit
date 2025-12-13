@@ -16,7 +16,7 @@ namespace SpaceTransit.Cosmos
 
         public HashSet<ShipModule> Occupants { get; } = new();
 
-        protected TubeBase Tube { get; private set; }
+        public TubeBase Tube { get; private set; }
 
         public bool IsOccupied => Occupants.Count != 0;
 

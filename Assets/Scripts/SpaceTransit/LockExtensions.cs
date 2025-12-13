@@ -35,6 +35,14 @@ namespace SpaceTransit
             return true;
         }
 
+        public static bool AreFree(this Lock[] locks)
+        {
+            foreach (var @lock in locks)
+                if (!@lock.IsFree)
+                    return false;
+            return true;
+        }
+
     }
 
 }

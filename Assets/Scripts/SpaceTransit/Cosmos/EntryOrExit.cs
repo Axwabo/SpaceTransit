@@ -15,6 +15,8 @@ namespace SpaceTransit.Cosmos
 
         protected virtual void Awake() => Remappers = GetComponents<TubeRemapper>();
 
+        public virtual bool IsFree => Locks.AreFree();
+
         public virtual bool Lock(ShipAssembly assembly)
         {
             if (!Locks.CanClaim(assembly))
