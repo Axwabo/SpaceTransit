@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
+using SpaceTransit.Ships;
 using UnityEngine;
 
 namespace SpaceTransit.Stations
@@ -101,6 +102,14 @@ namespace SpaceTransit.Stations
         [SerializeField]
         private AudioClip oClock;
 
+        private static bool AnyShipWithOrigin(IDeparture departure)
+        {
+            foreach (var assembly in ShipAssembly.Instances)
+                if (assembly.Parent.TryGetVaulter(out var vaulter) && vaulter.Stop == departure)
+                    return true;
+            return false;
+        }
+
         public IEnumerable<AnnouncementClip> GetAnnouncement(RouteDescriptor route, int index, IDeparture departure, int lastAnnounced)
         {
             if ((int) Clock.Now.TotalMinutes == lastAnnounced || index != -1)
@@ -110,7 +119,7 @@ namespace SpaceTransit.Stations
             {
                 3 or 5 => In(remaining, route, departure),
                 1 => Immediate(route, departure),
-                <= 15 when lastAnnounced == -1 => At(route, index, departure),
+                <= 15 when lastAnnounced == -1 && AnyShipWithOrigin(departure) => At(route, index, departure),
                 _ => null
             };
         }
