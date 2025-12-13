@@ -15,6 +15,9 @@ namespace SpaceTransit.Ships
         private Renderer[] renderers;
 
         [SerializeField]
+        private float afterShowCooldown = 1;
+
+        [SerializeField]
         private float range = 50;
 
         [SerializeField]
@@ -36,11 +39,11 @@ namespace SpaceTransit.Ships
         {
             if ((_cooldown -= Clock.Delta) > 1)
                 return;
-            _cooldown++;
             var currentRange = dynamicRange
-                ? Mathf.Lerp(range, maxRange, (Assembly.CurrentSpeed.Raw - minRangeSpeed) / Assembly.MaxSpeed)
+                ? Mathf.Lerp(range, maxRange, Mathf.InverseLerp(minRangeSpeed, Assembly.MaxSpeed, Assembly.CurrentSpeed.Raw))
                 : range;
             var show = Vector3.Distance(Assembly.FrontModule.Transform.position, MovementController.Current.LastPosition) <= currentRange;
+            _cooldown = show ? afterShowCooldown : 1;
             if (show == _previouslyShown)
                 return;
             _previouslyShown = show;
