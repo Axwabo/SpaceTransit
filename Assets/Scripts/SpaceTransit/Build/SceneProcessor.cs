@@ -24,7 +24,7 @@ namespace SpaceTransit.Build
             var activates = new List<Activate>();
             var load = new List<GameObject>();
             var activate = new List<GameObject>();
-            var hoistTransforms = new List<MeshCollider>();
+            var hoistTransforms = new List<Collider>();
             foreach (var root in rootGameObjects)
                 ProcessRoot(root, splines, activates, load, activate, hoist, hoistTransforms);
             if (activate.Count == 0)
@@ -35,7 +35,7 @@ namespace SpaceTransit.Build
             loader.ProgressContainer = progress;
         }
 
-        private static void ProcessRoot(GameObject root, List<Spline> splines, List<Activate> activates, List<GameObject> load, List<GameObject> activate, List<HoistColliders> hoist, List<MeshCollider> hoistTransforms)
+        private static void ProcessRoot(GameObject root, List<Spline> splines, List<Activate> activates, List<GameObject> load, List<GameObject> activate, List<HoistColliders> hoist, List<Collider> hoistTransforms)
         {
             root.GetComponentsInChildren(splines);
             root.GetComponentsInChildren(activates);
