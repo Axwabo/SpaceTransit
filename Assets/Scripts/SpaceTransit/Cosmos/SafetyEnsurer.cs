@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SpaceTransit.Cosmos.Actions;
 using SpaceTransit.Ships;
 using SpaceTransit.Ships.Modules;
@@ -19,6 +20,8 @@ namespace SpaceTransit.Cosmos
         public TubeBase Tube { get; private set; }
 
         public bool IsOccupied => Occupants.Count != 0;
+
+        public ReadOnlySpan<SafetyActionBase> Actions => _actions;
 
         private void Awake()
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using SpaceTransit.Cosmos;
+using SpaceTransit.Cosmos.Actions;
 using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
 using SpaceTransit.Ships;
@@ -88,17 +89,27 @@ namespace SpaceTransit.Vaulter
             if (!Station.TryGetLoadedStation(stop.Station, out var station))
                 throw new MissingComponentException($"Entry station {stop.Station.name} is not loaded");
             var dock = station.Docks[stop.DockIndex];
-            var entries = route.Reverse ? dock.FrontEntries : dock.BackEntries;
+            var reverse = route.Reverse;
+            var entries = reverse ? dock.FrontEntries : dock.BackEntries;
             if (entries.Length != 0)
             {
                 _entry = entries[0];
                 var tube = _entry.Ensurer.Tube;
-                _tube = route.Reverse ? tube.Previous : tube;
+                _tube = reverse ? tube.Previous : tube;
                 return;
             }
 
-            Destroy(this);
-            // TODO: use TubeRemappers and find tube
+            TubeBase current = dock;
+            var next = dock.Next(!reverse);
+            foreach (var action in next.Safety.Actions)
+            {
+                if (action is not TubeRemapper remapper)
+                    continue;
+                if (reverse && remapper.connectTube == current)
+                    next = remapper.connectTo;
+                else if (!reverse && remapper.connectTo == current)
+                    next = remapper.connectTube;
+            }
         }
 
         private void Spawn(RouteDescriptor route)
