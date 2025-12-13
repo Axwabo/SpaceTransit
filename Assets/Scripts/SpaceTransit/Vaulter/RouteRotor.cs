@@ -171,7 +171,7 @@ namespace SpaceTransit.Vaulter
                 return;
             }
 
-            _state = State.Completed;
+            _state = State.Sailing;
             _ship.BeginRoute(routes[_index]);
         }
 
