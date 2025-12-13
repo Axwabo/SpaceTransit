@@ -36,7 +36,7 @@ namespace SpaceTransit.Menu
             private void Click()
             {
                 if (!MovementController.Current.Mount)
-                    MovementController.Current.Teleport(Station.Spawnpoint);
+                    MovementController.Current.Teleport(Station.Spawnpoint + Vector3.up * 0.1f);
             }
 
         }
