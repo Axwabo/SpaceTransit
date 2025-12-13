@@ -50,8 +50,7 @@ namespace SpaceTransit.Ships.Modules.Doors
 
         private bool IsCorrectSide => !Controller.TryGetVaulter(out var controller)
                                       || controller.IsInService
-                                      && Station.TryGetLoadedStation(controller.Stop.Station, out var station)
-                                      && station.Docks[controller.Stop.DockIndex] is {Left: var openLeft, Right: var openRight}
+                                      && Parent.Thruster.Tube is Dock {Left: var openLeft, Right: var openRight}
                                       && (isLeftSide ? openLeft : openRight);
 
         public bool AlarmActive => _state == DoorState.Closing || _state == DoorState.Open && _time < 2f;
