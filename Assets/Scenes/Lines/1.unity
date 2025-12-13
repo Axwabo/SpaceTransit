@@ -11075,7 +11075,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 245a8679f4054783a7761f3c513a4c7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Clock
-  start: 20:24:00
+  start: 06:19:00
 --- !u!1 &534030249
 GameObject:
   m_ObjectHideFlags: 0
@@ -30409,6 +30409,54 @@ MonoBehaviour:
   CurveChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1338409394
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1338409395}
+  - component: {fileID: 1338409396}
+  m_Layer: 0
+  m_Name: Mountypile - Peshtadub
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1338409395
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1338409394}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1879083598}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1338409396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1338409394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3e13a6e48594a199e03a4387fa092ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Vaulter.RouteRotor
+  prefab: {fileID: 1703590996754009323, guid: 3dc60bdd0b9f84d44a2aa3fcc8079903, type: 3}
+  routes:
+  - {fileID: 11400000, guid: 5c552e8f5cf01ac4588a83c47c56122b, type: 2}
+  - {fileID: 11400000, guid: fa77b1a82da7e6544b9608fc5782e438, type: 2}
 --- !u!1 &1342612435
 GameObject:
   m_ObjectHideFlags: 0
@@ -39105,6 +39153,8 @@ GameObject:
   - component: {fileID: 1612221817}
   - component: {fileID: 1612221816}
   - component: {fileID: 1612221815}
+  - component: {fileID: 1612221818}
+  - component: {fileID: 1612221819}
   m_Layer: 0
   m_Name: 1
   m_TagString: Untagged
@@ -39209,6 +39259,36 @@ MonoBehaviour:
   CurveChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1612221818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1612221813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c51f90abf83e4ac7a02989cfc140ab73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.ExitClearer
+  exit: {fileID: 847848896}
+  forwards: 0
+  backwards: 1
+--- !u!114 &1612221819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1612221813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c51f90abf83e4ac7a02989cfc140ab73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.ExitClearer
+  exit: {fileID: 269349412}
+  forwards: 0
+  backwards: 1
 --- !u!1 &1615319381
 GameObject:
   m_ObjectHideFlags: 0
@@ -45635,7 +45715,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1879083598}
   - component: {fileID: 1879083599}
-  - component: {fileID: 1879083603}
   m_Layer: 0
   m_Name: Routes
   m_TagString: Untagged
@@ -45656,6 +45735,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1338409395}
   - {fileID: 1165365840}
   - {fileID: 480487208}
   - {fileID: 2147062726}
@@ -45673,21 +45753,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 456ae4c4f2fe421faffc0d58ad87abd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Build.Activate
---- !u!114 &1879083603
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1879083597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3e13a6e48594a199e03a4387fa092ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Vaulter.RouteRotor
-  prefab: {fileID: 1703590996754009323, guid: 3dc60bdd0b9f84d44a2aa3fcc8079903, type: 3}
-  routes:
-  - {fileID: 11400000, guid: 5c552e8f5cf01ac4588a83c47c56122b, type: 2}
 --- !u!1 &1902254257
 GameObject:
   m_ObjectHideFlags: 0
