@@ -63,7 +63,6 @@ namespace SpaceTransit.Ships
             Modules = this.GetComponentsInImmediateChildren<ShipModule>().ToArray();
             if (Modules.Length == 0)
                 throw new MissingComponentException("Ships must have at least 1 module");
-            Assemblies.Add(this);
         }
 
         private void Update()
@@ -85,6 +84,8 @@ namespace SpaceTransit.Ships
         }
 
         private void OnDestroy() => Assemblies.Remove(this);
+
+        protected override void OnInitialized() => Assemblies.Add(this);
 
         public void SetSpeed(float raw) => TargetSpeed = new ShipSpeed(raw, Reverse);
 
