@@ -3,6 +3,7 @@ using SpaceTransit.Movement;
 using SpaceTransit.Routes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace SpaceTransit.Menu
@@ -14,18 +15,29 @@ namespace SpaceTransit.Menu
         [SerializeField]
         private GameObject prefab;
 
+        [SerializeField]
+        private TextMeshProUGUI error;
+
         private void Start()
         {
             var t = transform;
             foreach (var station in Station.LoadedStations.OrderBy(e => e.Name))
-                Instantiate(prefab, t).AddComponent<Teleport>().Station = station;
+            {
+                var teleport = Instantiate(prefab, t).AddComponent<Teleport>();
+                teleport.Station = station;
+                teleport.Error = error;
+            }
         }
+
+        private void OnDisable() => error.text = "";
 
         // TODO: refactor
         private sealed class Teleport : MonoBehaviour
         {
 
             public Station Station { get; set; }
+
+            public TextMeshProUGUI Error { get; set; }
 
             private void Start()
             {
@@ -35,8 +47,20 @@ namespace SpaceTransit.Menu
 
             private void Click()
             {
-                if (!MovementController.Current.Mount)
-                    MovementController.Current.Teleport(Station.Spawnpoint);
+                if (MovementController.Current.Mount)
+                {
+                    Error.text = "You must disembark before teleporting.";
+                    return;
+                }
+
+                if (InputSystem.actions["Move"].ReadValue<Vector2>() != Vector2.zero)
+                {
+                    Error.text = "You mustn't be moving when teleporting.";
+                    return;
+                }
+
+                Error.text = "";
+                MovementController.Current.Teleport(Station.Spawnpoint);
             }
 
         }
