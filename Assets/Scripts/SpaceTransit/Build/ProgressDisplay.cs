@@ -15,7 +15,7 @@ namespace SpaceTransit.Build
 
         private void Update()
         {
-            text.text = $"Loading... {GradualTubeLoader.Progress:P0}";
+            text.text = GradualTubeLoader.Progress.ToString("P0");
             rect.localScale = new Vector3(GradualTubeLoader.Progress, 1);
         }
 
