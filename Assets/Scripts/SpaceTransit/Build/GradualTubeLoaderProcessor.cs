@@ -39,7 +39,7 @@ namespace SpaceTransit.Build
                     var go = instance.gameObject;
                     activate.Add(go);
                     go.SetActive(false);
-                    Object.Destroy(instance);
+                    Object.DestroyImmediate(instance);
                 }
             }
 
