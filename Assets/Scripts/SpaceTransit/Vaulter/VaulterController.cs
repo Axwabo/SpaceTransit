@@ -39,7 +39,8 @@ namespace SpaceTransit.Vaulter
             Stop origin = initialStopIndex == Origin ? initialRoute.Origin : initialRoute.IntermediateStops[initialStopIndex];
             if (!initialRoute || !Station.TryGetLoadedStation(origin.Station, out var station))
                 return;
-            Assembly.startTube = station.Docks[origin.DockIndex];
+            if (!Assembly.startTube)
+                Assembly.startTube = station.Docks[origin.DockIndex];
             BeginRoute(initialRoute, initialStopIndex);
         }
 
