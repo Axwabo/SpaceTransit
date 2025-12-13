@@ -105,3 +105,8 @@ I made the models myself, and as someone who's barely blended (Blender) before, 
 - [X] Resuming at any time
 - [ ] Support midnight reset
 - [X] Automatic ship route rotation
+
+# Notes/Issues
+
+- Sometimes, the ship might overrun the dock; in this case you need to restart, e.g.
+  - Starting at Mountypile, 09:59:00 causes 46 to overrun Cárpenter
