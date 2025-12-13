@@ -46,8 +46,8 @@ namespace SpaceTransit.Ships
                 ? Mathf.Lerp(range, maxRange, Mathf.InverseLerp(minRangeSpeed, Assembly.MaxSpeed, Assembly.CurrentSpeed.Raw))
                 : range;
             var show = Vector3.Distance(Assembly.FrontModule.Transform.position, MovementController.Current.LastPosition) <= currentRange;
-            _cooldown = 1;
-            if (show == _previouslyShown || show && (_cooldown = afterShowCooldown) > 1)
+            _cooldown = show ? afterShowCooldown : 1;
+            if (show == _previouslyShown)
                 return;
             _previouslyShown = show;
             UpdateState(show);
