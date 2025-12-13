@@ -67,7 +67,7 @@ The best game engine... only crashed about 10 times on average every day :SteamH
 Since the camera's near plane cannot be too small (below 0.01), I had to make the world about 10 m/unit.
 Due to floating-point limitations, objects start to flicker immensely.
 
-To combat this, the world is moved in the opposite way when the player teleports the ship moves.
+To combat this, the world is moved in the opposite way when the player teleports or as the ship is sailing.
 
 ## SplineMesh
 
@@ -94,7 +94,7 @@ I made the models myself, and as someone who's barely blended (Blender) before, 
 
 - [ ] ROSS ship remodeling (to double-decker)
 - [ ] More realistic ROSS audio
-- [ ] Map view
+- [X] Map view
 - [ ] Route, station and timetable list in menu
 - [ ] Better controls display
 - [ ] Interactive tutorial (or at least pages)
