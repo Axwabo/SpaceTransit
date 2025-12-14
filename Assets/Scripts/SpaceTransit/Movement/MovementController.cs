@@ -114,6 +114,7 @@ namespace SpaceTransit.Movement
         {
             Cursor.lockState = CursorLockMode.None;
             Time.timeScale = 1;
+            AudioListener.pause = false;
         }
 
         public void Teleport(Vector3 to)
