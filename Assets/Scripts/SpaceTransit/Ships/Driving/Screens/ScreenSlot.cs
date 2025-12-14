@@ -33,7 +33,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         protected override void OnInitialized() => dockList.gameObject.SetActive(false);
 
-        public override void OnStateChanged() => Show(Assembly.FrontModule.Thruster.Tube is Dock && Controller.State == ShipState.Docked);
+        public override void OnStateChanged() => Show(Assembly.FrontModule.Thruster.Tube is Dock && Controller.State is ShipState.Docked or ShipState.WaitingForDeparture);
 
         public void Select(int index)
         {

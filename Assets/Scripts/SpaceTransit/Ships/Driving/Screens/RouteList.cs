@@ -15,7 +15,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private void OnEnable()
         {
-            if (!didStart)
+            if (!Parent)
                 return;
             Source.Clear();
             Source.Add(null);
@@ -23,10 +23,16 @@ namespace SpaceTransit.Ships.Driving.Screens
             if (Assembly.FrontModule.Thruster.Tube is not Dock dock)
                 return;
             CacheExits(dock.Station);
-            foreach (var route in Cache.Routes.AsSpan())
+            Append(Cache.Routes, dock);
+            Append(World.ExtraRoutes, dock);
+            SetUp();
+        }
+
+        private void Append(ReadOnlySpan<RouteDescriptor> routes, Dock dock)
+        {
+            foreach (var route in routes)
                 if (route.Origin.Station == dock.Station.ID && AvailableExits.Contains(route.Origin.ExitTowards.name))
                     Source.Add(route);
-            SetUp();
         }
 
         private static void CacheExits(Station station)

@@ -1,4 +1,5 @@
 ﻿using SpaceTransit.Cosmos;
+using SpaceTransit.Routes;
 using UnityEngine;
 
 namespace SpaceTransit
@@ -16,17 +17,23 @@ namespace SpaceTransit
         [SerializeField]
         private Transform stationSignPrefab;
 
+        [SerializeField]
+        private RouteDescriptor[] extraRoutes;
+
         public static SpeedLimitSign SpeedLimitSignPrefab { get; private set; }
 
         public static Transform StationSignPrefab { get; private set; }
 
         public static Transform Current { get; private set; }
 
+        public static RouteDescriptor[] ExtraRoutes { get; private set; }
+
         private void Awake()
         {
             Current = transform;
             SpeedLimitSignPrefab = speedLimitSignPrefab;
             StationSignPrefab = stationSignPrefab;
+            ExtraRoutes = extraRoutes;
         }
 
     }
