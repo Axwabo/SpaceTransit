@@ -95,7 +95,7 @@ I made the models myself, and as someone who's barely blended (Blender) before, 
 - [ ] ROSS ship remodeling (to double-decker)
 - [ ] More realistic ROSS audio
 - [X] Map view
-- [ ] Route, station and timetable list in menu
+- [X] Route and timetable list in menu
 - [ ] Better controls display
 - [ ] Interactive tutorial (or at least pages)
 - [X] Ship selection in test driving scene
@@ -108,5 +108,13 @@ I made the models myself, and as someone who's barely blended (Blender) before, 
 
 # Notes/Issues
 
+- Lower-end devices will most likely face issues with lag, therefore overruns
 - Sometimes, the ship might overrun the dock; in this case you need to restart, e.g.
   - Starting at Mountypile, 09:59:00 causes 46 to overrun Cárpenter
+
+Future plans:
+
+- Dynamic line loading
+- Ship houses
+- Even more routes & lines
+- Spline-based, auto-generated map
