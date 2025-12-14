@@ -1,6 +1,6 @@
 ﻿using SpaceTransit.Interactions;
-using SpaceTransit.Ships.Driving.Screens;
 using SpaceTransit.Ships.Modules;
+using SpaceTransit.Vaulter;
 using UnityEngine;
 
 namespace SpaceTransit.Ships.Driving
@@ -10,13 +10,9 @@ namespace SpaceTransit.Ships.Driving
     {
 
         [SerializeField]
-        private ScreenSlot slot;
+        private VaulterScreen slot;
 
-        public void OnInteracted()
-        {
-            if (slot.Current)
-                slot.Current.Confirm();
-        }
+        public void OnInteracted() => slot.Confirm();
 
     }
 

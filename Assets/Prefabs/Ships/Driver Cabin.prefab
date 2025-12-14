@@ -194,8 +194,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0b45e5c31cd771e4ba1ffee42cb5e2e4, type: 2}
-  m_sharedMaterial: {fileID: 2014801054569673766, guid: 0b45e5c31cd771e4ba1ffee42cb5e2e4, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ba02ae295718e1f4a8536ecabcfaab71, type: 2}
+  m_sharedMaterial: {fileID: -2441647381408614859, guid: ba02ae295718e1f4a8536ecabcfaab71, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -390,7 +390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84b504fcade5471ab12d83cd967a0c4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Driving.UpButton
-  slot: {fileID: 7385480967030419969}
+  slot: {fileID: 0}
   down: 0
 --- !u!1 &613034758521973070
 GameObject:
@@ -519,7 +519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb44dc301f34e7990b3b19216ba0773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Driving.RequestEntryButton
-  slot: {fileID: 7385480967030419969}
+  slot: {fileID: 0}
 --- !u!1 &778370825822263058
 GameObject:
   m_ObjectHideFlags: 0
@@ -884,17 +884,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1717955137545862987}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6624548987377205414}
+  m_Father: {fileID: 7215272342598070246}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.039999872}
+  m_SizeDelta: {x: 0, y: 0.08000001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4149113980591853693
 MonoBehaviour:
@@ -1034,6 +1034,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7215272342598070246}
+  - component: {fileID: 4547184859633216159}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -1052,7 +1053,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5390202029548140605}
+  - {fileID: 4253056466247688110}
   m_Father: {fileID: 6624548987377205414}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1060,6 +1063,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -0.04}
   m_SizeDelta: {x: 0, y: -0.08}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4547184859633216159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058324142927505420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Mask
+  m_ShowMaskGraphic: 1
 --- !u!1 &2107799689473896291
 GameObject:
   m_ObjectHideFlags: 0
@@ -2417,8 +2433,7 @@ GameObject:
   - component: {fileID: 6624548987377205414}
   - component: {fileID: 6059295697932678403}
   - component: {fileID: 8987561143868770575}
-  - component: {fileID: 7385480967030419969}
-  - component: {fileID: 783500505798575278}
+  - component: {fileID: 3754203825265742963}
   m_Layer: 5
   m_Name: Vaulter
   m_TagString: Untagged
@@ -2434,13 +2449,12 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5346531847258985712}
   m_LocalRotation: {x: 0.54201436, y: -0.010691222, z: 0.0153774675, w: 0.84016055}
-  m_LocalPosition: {x: 0, y: 0, z: 11.439}
+  m_LocalPosition: {x: 0, y: 0, z: 11.4409}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 36354146541743996}
   - {fileID: 7773095695802496690}
-  - {fileID: 5390202029548140605}
   - {fileID: 7148863396962984003}
   - {fileID: 8779426387629160217}
   - {fileID: 5705065142428853885}
@@ -2449,7 +2463,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 65.656, y: -0.18, z: 1.981}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.512, y: 1.46}
+  m_AnchoredPosition: {x: -0.512, y: 1.4558}
   m_SizeDelta: {x: 0.5, y: 0.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6059295697932678403
@@ -2498,7 +2512,7 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 1
---- !u!114 &7385480967030419969
+--- !u!114 &3754203825265742963
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2507,25 +2521,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5346531847258985712}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 871e6d63258d42778bd7ed6c8495bf4f, type: 3}
+  m_Script: {fileID: 11500000, guid: c625dd83bec940348b74d195f2041118, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Driving.Screens.ScreenSlot
-  dockList: {fileID: 5207901615330131890}
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Vaulter.VaulterScreen
+  title: {fileID: 3025524455551632826}
   routes: {fileID: 651928772989206642}
-  exitList: {fileID: 9215600470732767738}
---- !u!114 &783500505798575278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5346531847258985712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b75ef421da474f6e9793e2ccfb7f1042, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Driving.Screens.RouteChangeScreenOpener
-  slot: {fileID: 7385480967030419969}
+  stops: {fileID: 6751614959292130019}
 --- !u!1 &5437118457804615589
 GameObject:
   m_ObjectHideFlags: 0
@@ -2626,7 +2627,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8779426387629160217}
   - component: {fileID: 3726503380749187223}
-  - component: {fileID: 8687442776490992730}
+  - component: {fileID: 8461729825716515649}
   m_Layer: 5
   m_Name: Header
   m_TagString: Untagged
@@ -2642,16 +2643,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5618260590110555859}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: 0.00000022351742}
+  m_LocalScale: {x: 0.00035, y: 0.00035, z: 0.00035}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6624548987377205414}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000000059604645, y: 0}
-  m_SizeDelta: {x: 0, y: 0.05}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: -0.000000011175871, y: -0.005}
+  m_SizeDelta: {x: 494, y: 115}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &3726503380749187223
 CanvasRenderer:
@@ -2661,7 +2662,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5618260590110555859}
   m_CullTransparentMesh: 1
---- !u!114 &8687442776490992730
+--- !u!114 &8461729825716515649
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2670,9 +2671,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5618260590110555859}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
@@ -2681,77 +2682,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Vaulter
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: ba02ae295718e1f4a8536ecabcfaab71, type: 2}
-  m_sharedMaterial: {fileID: -2441647381408614859, guid: ba02ae295718e1f4a8536ecabcfaab71, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontSize: 0.04
-  m_fontSizeBase: 0.04
-  m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
-  m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_linkedTextComponent: {fileID: 0}
-  parentLinkedComponent: {fileID: 0}
-  m_enableKerning: 0
-  m_ActiveFontFeatures: 6e72656b
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_EmojiFallbackSupport: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_IsTextObjectScaleStatic: 0
-  m_VertexBufferAutoSizeReduction: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+  m_Sprite: {fileID: 21300000, guid: 52ad9ac24951dbf4e9a691c6149403d0, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &6303530674152046828
 GameObject:
   m_ObjectHideFlags: 0
@@ -3118,6 +3058,82 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96f449ecb64949f29f8f7be1830ee12f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Driving.AutoButton
+--- !u!1 &6751614959292130019
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4253056466247688110}
+  - component: {fileID: 3695886674550672082}
+  - component: {fileID: 7223348185607025607}
+  m_Layer: 5
+  m_Name: Stops
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &4253056466247688110
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6751614959292130019}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.00000012665987}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7215272342598070246}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0.00000013411045}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3695886674550672082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6751614959292130019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.VerticalLayoutGroup
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 1
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
+--- !u!114 &7223348185607025607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6751614959292130019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e96f45724094eb3848bc4882fd6d9eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Vaulter.StopList
+  prefab: {fileID: 3796877607342693194, guid: e673467861e2ee6479576ea53c4207d6, type: 3}
 --- !u!1 &7044506320862898983
 GameObject:
   m_ObjectHideFlags: 0
@@ -3321,7 +3337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84b504fcade5471ab12d83cd967a0c4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Driving.UpButton
-  slot: {fileID: 7385480967030419969}
+  slot: {fileID: 0}
   down: 1
 --- !u!1 &7879033835233131602
 GameObject:

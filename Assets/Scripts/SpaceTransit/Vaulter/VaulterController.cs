@@ -1,4 +1,5 @@
-﻿using SpaceTransit.Routes;
+﻿using System;
+using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
 using SpaceTransit.Ships;
 using SpaceTransit.Ships.Modules;
@@ -30,7 +31,11 @@ namespace SpaceTransit.Vaulter
 
         public bool IsInService => _stopIndex != OutOfService;
 
-        protected override void Awake() => _components = GetComponentsInChildren<VaulterComponentBase>();
+        public ReadOnlySpan<IntermediateStop> NextIntermediateStops => Stop is Destination
+            ? ReadOnlySpan<IntermediateStop>.Empty
+            : Route.IntermediateStops[(_stopIndex + 1)..];
+
+        protected override void Awake() => _components = GetComponentsInChildren<VaulterComponentBase>(true);
 
         protected override void OnInitialized()
         {
