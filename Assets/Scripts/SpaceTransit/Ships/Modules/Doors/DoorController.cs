@@ -102,7 +102,7 @@ namespace SpaceTransit.Ships.Modules.Doors
             if ((_time += Clock.Delta) <= _duration)
                 return;
             _state = DoorState.Open;
-            _time = 5;
+            _time = 8;
         }
 
         private void Close()
