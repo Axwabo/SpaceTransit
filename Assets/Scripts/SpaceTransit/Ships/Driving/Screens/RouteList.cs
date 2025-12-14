@@ -31,7 +31,7 @@ namespace SpaceTransit.Ships.Driving.Screens
         private void Append(ReadOnlySpan<RouteDescriptor> routes, Dock dock)
         {
             foreach (var route in routes)
-                if (route.Origin.Station == dock.Station.ID && AvailableExits.Contains(route.Origin.ExitTowards.name))
+                if (route.Origin.Station == dock.Station.ID && (AvailableExits.Count == 0 || AvailableExits.Contains(route.Origin.ExitTowards.name)))
                     Source.Add(route);
         }
 
