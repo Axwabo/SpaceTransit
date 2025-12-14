@@ -26,7 +26,7 @@ namespace SpaceTransit.Menu
             foreach (var row in _children)
                 Destroy(row.gameObject);
             _children.Clear();
-            type.text = $"{descriptor.Type.ToStringFast()} {descriptor.name}";
+            type.text = $"{descriptor.name} {descriptor.Type.ToStringFast()}";
             summary.text = descriptor.Summary();
             Instantiate(descriptor.Origin);
             foreach (var stop in descriptor.IntermediateStops)
