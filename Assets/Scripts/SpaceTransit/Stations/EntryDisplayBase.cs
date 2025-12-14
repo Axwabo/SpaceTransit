@@ -1,5 +1,6 @@
 ﻿using System;
 using SpaceTransit.Routes;
+using SpaceTransit.Routes.Stops;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -27,15 +28,9 @@ namespace SpaceTransit.Stations
 
         protected void Apply(ServiceType serviceType, string stationName, TimeSpan timeValue, int dockIndex)
         {
-            type.text = serviceType switch
-            {
-                ServiceType.Passenger => nameof(ServiceType.Passenger),
-                ServiceType.Fast => nameof(ServiceType.Fast),
-                ServiceType.InterHub => nameof(ServiceType.InterHub),
-                _ => "???"
-            };
+            type.text = serviceType.ToStringFast();
             station.text = stationName;
-            time.text = timeValue.ToString("hh':'mm");
+            time.text = timeValue.ToString(Stop.TimeFormat);
             dock.text = (dockIndex + 1).ToString();
         }
 

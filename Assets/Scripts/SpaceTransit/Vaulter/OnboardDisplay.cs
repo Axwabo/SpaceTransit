@@ -1,4 +1,5 @@
-﻿using SpaceTransit.Ships;
+﻿using SpaceTransit.Routes.Stops;
+using SpaceTransit.Ships;
 using TMPro;
 using UnityEngine;
 
@@ -30,7 +31,7 @@ namespace SpaceTransit.Vaulter
             {
                 InformationType.Route => $"» {Parent.Route.Destination.Station.name}",
                 InformationType.NextStop => $"{Prefix}{Parent.Stop.Station.name}",
-                InformationType.Time => Clock.Now.ToString("hh':'mm"),
+                InformationType.Time => Clock.Now.ToString(Stop.TimeFormat),
                 _ => ""
             };
         }

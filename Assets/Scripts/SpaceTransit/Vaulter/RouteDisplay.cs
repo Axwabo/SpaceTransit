@@ -10,7 +10,7 @@ namespace SpaceTransit.Vaulter
     {
 
         public static string Format(RouteDescriptor route)
-            => $"{route.name} {route.Origin.Station.name} {route.Origin.Departure.Value:hh':'mm} - {route.Destination.Station.name} {route.Destination.Arrival.Value:hh':'mm}";
+            => $"{route.name} {route.Summary()}";
 
         private TextMeshProUGUI _text;
 
