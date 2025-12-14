@@ -90,9 +90,11 @@ No SpaceTransit code was written by AI.
 
 I made the models myself, and as someone who's barely blended (Blender) before, it's painful
 
+Creating the new ROSS ship model took nearly 9 hours
+
 # TODO
 
-- [ ] ROSS ship remodeling (to double-decker)
+- [X] ROSS ship remodeling (to double-decker)
 - [ ] More realistic ROSS audio
 - [X] Map view
 - [X] Route and timetable list in menu
@@ -118,3 +120,4 @@ Future plans:
 - Ship houses
 - Even more routes & lines
 - Spline-based, auto-generated map
+- Touchscreen support
