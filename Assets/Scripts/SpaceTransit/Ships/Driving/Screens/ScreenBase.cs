@@ -10,6 +10,8 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         public abstract void Confirm();
 
+        public abstract bool Select(int index);
+
     }
 
 }

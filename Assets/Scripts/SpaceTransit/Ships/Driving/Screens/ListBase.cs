@@ -62,7 +62,7 @@ namespace SpaceTransit.Ships.Driving.Screens
             Pickers[index].Selected = true;
         }
 
-        protected bool Select(int index) => index != -1 && Pickers.Count != 0 && Select(Source[index], Pickers[index]);
+        public override bool Select(int index) => index != -1 && Pickers.Count != 0 && index < Pickers.Count && Select(Source[index], Pickers[index]);
 
         protected abstract bool Select(TItem item, TPicker picker);
 

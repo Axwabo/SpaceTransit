@@ -64,6 +64,12 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         public bool TryGetPicked(out Exit exit)
         {
+            if (!isActiveAndEnabled)
+            {
+                exit = null;
+                return false;
+            }
+
             for (var i = 0; i < Pickers.Count; i++)
             {
                 if (!Pickers[i].Picked)
