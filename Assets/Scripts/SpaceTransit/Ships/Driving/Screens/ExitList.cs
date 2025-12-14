@@ -12,7 +12,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private void OnEnable()
         {
-            if (didStart)
+            if (Parent)
                 OnStateChanged();
         }
 
@@ -38,6 +38,7 @@ namespace SpaceTransit.Ships.Driving.Screens
                 return;
             Source.AddRange(dock.FrontExits);
             Source.AddRange(dock.BackExits);
+            SetUp();
         }
 
         protected override List<Exit> Source { get; } = new();
