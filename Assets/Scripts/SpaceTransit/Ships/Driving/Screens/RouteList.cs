@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SpaceTransit.Routes;
 using SpaceTransit.Vaulter;
 
@@ -14,17 +15,16 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private void OnEnable()
         {
-            if (!didStart) 
+            if (!didStart)
                 return;
             Source.Clear();
             Source.Add(null);
             Clear();
             if (Assembly.FrontModule.Thruster.Tube is not Dock dock)
                 return;
-            var stationName = dock.Station.name;
             CacheExits(dock.Station);
-            foreach (var route in Cache.Routes)
-                if (route.Origin.Station.name == stationName && AvailableExits.Contains(route.Origin.ExitTowards.name))
+            foreach (var route in Cache.Routes.AsSpan())
+                if (route.Origin.Station == dock.Station.ID && AvailableExits.Contains(route.Origin.ExitTowards.name))
                     Source.Add(route);
             SetUp();
         }

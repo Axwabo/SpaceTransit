@@ -1,4 +1,5 @@
-﻿using SpaceTransit.Routes;
+﻿using System.Linq;
+using SpaceTransit.Routes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,7 +20,7 @@ namespace SpaceTransit.Menu
         private void Start()
         {
             var t = transform;
-            foreach (var route in Cache.Routes)
+            foreach (var route in Cache.Routes.OrderBy(static e => int.Parse(e.name)))
             {
                 var picker = Instantiate(prefab, t).AddComponent<RoutePicker>();
                 picker.Route = route;
@@ -38,7 +39,7 @@ namespace SpaceTransit.Menu
             private void Start()
             {
                 GetComponent<Button>().onClick.AddListener(Click);
-                GetComponentInChildren<TextMeshProUGUI>().text = Route.name + $" {Route.Origin.Station.name} - {Route.Destination.Station.name}";
+                GetComponentInChildren<TextMeshProUGUI>().text = $"{Route.name} {Route.Origin.Station.name} - {Route.Destination.Station.name}";
             }
 
             private void Click() => Timetable.Apply(Route);
