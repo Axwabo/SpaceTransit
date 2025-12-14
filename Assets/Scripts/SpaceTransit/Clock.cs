@@ -10,7 +10,7 @@ namespace SpaceTransit
     {
 
         private static TimeSpan _startTime = DateTime.Now.TimeOfDay;
-        
+
         public static double OffsetSeconds { get; set; }
 
         public static TimeSpan Now => _startTime.Add(TimeSpan.FromSeconds(Time.timeSinceLevelLoadAsDouble + OffsetSeconds));
@@ -20,6 +20,12 @@ namespace SpaceTransit
         public static float Delta => UnscaledDelta * Time.timeScale;
 
         public static float FixedDelta => Mathf.Min(0.3f, Time.fixedUnscaledDeltaTime) * Time.timeScale;
+
+        public static TimeSpan StartTime
+        {
+            get => _startTime;
+            set => _startTime = value;
+        }
 
         private TextMeshProUGUI _text;
 
