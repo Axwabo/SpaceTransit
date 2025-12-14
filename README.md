@@ -95,10 +95,10 @@ Creating the new ROSS ship model took nearly 9 hours
 - [ ] More realistic ROSS audio
 - [X] Map view
 - [X] Route and timetable list in menu
-- [ ] Better controls display
-- [ ] Interactive tutorial (or at least pages)
+- [X] Better controls display
+- [X] Interactive tutorial (or at least pages)
 - [X] Ship selection in test driving scene
-- [ ] Many more routes and lines
+- [ ] Many more routes and lines (half-done?)
 - [X] Support for multiple entries per dock
 - [X] Control panel improvements
 - [X] Resuming at any time
