@@ -12,8 +12,6 @@ It's dynamic, making it fairly easy to add stations in the Unity editor.
 Several FLASH and ROSS ships serve numerous stations based on timetables.
 Currently, only 1 line has been built.
 
-~~When a ship has no routes to take, it will go to a ship house.~~ (not yet implemented)
-
 # Gameplay
 
 > [!IMPORTANT]
@@ -103,13 +101,14 @@ Creating the new ROSS ship model took nearly 9 hours
 - [X] Ship selection in test driving scene
 - [ ] Many more routes and lines
 - [X] Support for multiple entries per dock
-- [ ] Control panel improvements
+- [X] Control panel improvements
 - [X] Resuming at any time
 - [ ] Support midnight reset
 - [X] Automatic ship route rotation
 
 # Notes/Issues
 
+- Exit list might not show
 - Lower-end devices will most likely face issues with lag, therefore overruns
 - Sometimes, the ship might overrun the dock; in this case you need to restart, e.g.
   - Starting at Mountypile, 09:59:00 causes 46 to overrun Cárpenter
