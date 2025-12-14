@@ -17,8 +17,6 @@ namespace SpaceTransit.Cosmos
 
         public List<Entry> Entries { get; } = new();
 
-        private void Start() => Entries.Sort(static (a, b) => a.Dock.Index - b.Dock.Index);
-
         public override bool CanProceed(ShipAssembly assembly)
         {
             if (!base.CanProceed(assembly))

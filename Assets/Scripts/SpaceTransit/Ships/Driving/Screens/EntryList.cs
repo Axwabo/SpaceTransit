@@ -39,6 +39,7 @@ namespace SpaceTransit.Ships.Driving.Screens
                 return;
             _previousStationName = stationName;
             _ensurer = ensurer;
+            _ensurer.Entries.Sort(static (a, b) => a.Dock.Index - b.Dock.Index);
             Clear();
             SetUp();
         }
