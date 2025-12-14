@@ -39,8 +39,7 @@ When you're on board, audio sources outside of the current ship will be muffled.
 The closer you are to an open door and the more open it is, the less muffled sounds will be.
 Unfortunately, the low-pass filter [doesn't work on WebGL](https://docs.unity3d.com/Manual/webgl-audio.html)
 
-~~The game will end upon a ship crashing as the system is designed to prevent such conditions.~~
-not yet implemented
+The game will end upon a ship crashing as the system is designed to prevent such conditions.
 
 # Acronyms
 
@@ -120,3 +119,4 @@ Future plans:
 - Even more routes & lines
 - Spline-based, auto-generated map
 - Touchscreen support
+- Ship summoning
