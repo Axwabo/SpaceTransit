@@ -12,7 +12,11 @@ namespace SpaceTransit.Menu
         [SerializeField]
         private GameObject ui;
 
-        private void Awake() => IsOpen = true;
+        private void Awake()
+        {
+            IsOpen = false;
+            Toggle();
+        }
 
         private void Update()
         {
