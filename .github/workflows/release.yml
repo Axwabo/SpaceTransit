@@ -28,7 +28,6 @@ jobs:
         with:
           targetPlatform: StandaloneWindows64
           customImage: axwabo/unity-blender-windows
-          runAsHostUser: true
 
       - name: Create Linux Docker image with Blender
         run: docker build --build-arg GAME_CI_UNITY_EDITOR_IMAGE=unityci/editor:ubuntu-6000.2.10f1-base-3.2.1 . -t axwabo/unity-blender-linux
@@ -42,14 +41,13 @@ jobs:
         with:
           targetPlatform: StandaloneLinux64
           customImage: axwabo/unity-blender-linux
-          runAsHostUser: true
-          
+
       - working-directory: build/StandaloneWindows64/StandaloneWindows64
         run: zip -r ${{ github.workspace }}/SpaceTransit-win-x64.zip .
-          
+
       - working-directory: build/StandaloneLinux64/StandaloneLinux64
         run: zip -r ${{ github.workspace }}/SpaceTransit-linux-x64.zip .
-        
+
       - uses: softprops/action-gh-release@v2
         with:
           files: SpaceTransit-win-x64.zip,SpaceTransit-linux-x64.zip
