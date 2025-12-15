@@ -43,5 +43,4 @@ runs:
       shell: bash
       run: |
         rename ${{ inputs.platform }} ${{ inputs.name }} ${{ inputs.platform }}*
-        mv ${{ inputs.platform }}_Data ${{ inputs.name }}_Data
         rm -r *DoNotShip
