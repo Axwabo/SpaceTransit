@@ -6,6 +6,9 @@ inputs:
   image:
     description: The docker image to use
     required: true
+  name:
+    description: The name of the project
+    required: true
   platform:
     description: The platform to build for
     required: true
@@ -32,4 +35,11 @@ runs:
     - name: Remove Burst Debug
       working-directory: build/${{ inputs.platform }}
       run: rm -rf *BurstDebugInformation_DoNotShip
-
+      
+    - name: Rename Binary
+      working-directory: build/${{ inputs.platform }}
+      run: rename ${{ inputs.platform }} ${{ inputs.name }} ${{ inputs.platform }}*
+      
+    - name: Rename Data
+      working-directory: build/${{ inputs.platform }}
+      run: mv ${{ inputs.platform }}_Data ${{ inputs.name }}_Data
