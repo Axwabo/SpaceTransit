@@ -35,11 +35,14 @@ runs:
     - name: Remove Burst Debug
       working-directory: build/${{ inputs.platform }}
       run: rm -rf *BurstDebugInformation_DoNotShip
+      shell: bash
       
     - name: Rename Binary
       working-directory: build/${{ inputs.platform }}
       run: rename ${{ inputs.platform }} ${{ inputs.name }} ${{ inputs.platform }}*
+      shell: bash
       
     - name: Rename Data
       working-directory: build/${{ inputs.platform }}
       run: mv ${{ inputs.platform }}_Data ${{ inputs.name }}_Data
+      shell: bash
