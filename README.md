@@ -94,7 +94,7 @@ You can "continue" playing at any time between 5:00:00 AM and 9:59:59 PM.
 
 The ships are spawned according to the current time and the timetables:
 
-1. If departing later than now, spawn at origin
+1. If departing from origin later than now, spawn at origin
 2. If arrived at a station and departing in more than a minute (or minimum stay), spawn at intermediate stop
 3. If arriving at a station in 1 minute, only spawn 1 minute before arrival time 2 tubes before the station
 4. If (scheduled) left last stop and arriving at destination, or completed route cycle, spawn at destination
