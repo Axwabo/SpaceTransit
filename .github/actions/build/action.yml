@@ -30,13 +30,8 @@ runs:
         UNITY_PASSWORD: ${{ inputs.UNITY_PASSWORD }}
       with:
         targetPlatform: ${{ inputs.platform }}
-        customImage: ${{ inputs.image }}
-        
-    - name: Remove Burst Debug
-      working-directory: build/${{ inputs.platform }}
-      run: rm -rf *BurstDebugInformation_DoNotShip
-      shell: bash
-      
+        customImage: ${{ inputs.image }}      
+
     - name: Rename Binary
       working-directory: build/${{ inputs.platform }}
       run: rename ${{ inputs.platform }} ${{ inputs.name }} ${{ inputs.platform }}*
