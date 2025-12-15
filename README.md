@@ -18,7 +18,7 @@ Currently, only 1 line has been built.
 > If the world doesn't load, or you fall out, press `Tab` to (re)open the menu, click `Exit`
 > to go back to the main menu and try again.
 
-https://github.com/user-attachments/assets/1f1ad950-ea46-415a-9e97-969bf87ca490
+https://github.com/user-attachments/assets/7f9684a1-b117-4cc3-a586-91d0505a9167
 
 Ships are automatically controlled by default. The player can choose to manually "drive" a ship.
 
