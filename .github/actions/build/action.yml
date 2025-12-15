@@ -32,12 +32,16 @@ runs:
         targetPlatform: ${{ inputs.platform }}
         customImage: ${{ inputs.image }}      
 
-    - name: Rename Binary
-      working-directory: build/${{ inputs.platform }}
-      run: rename ${{ inputs.platform }} ${{ inputs.name }} ${{ inputs.platform }}*
+    - name: Copy
       shell: bash
-      
-    - name: Rename Data
-      working-directory: build/${{ inputs.platform }}
-      run: mv ${{ inputs.platform }}_Data ${{ inputs.name }}_Data
+      run: |
+        mkdir -p bundle/${{ inputs.platform }}
+        cp -r build/${{ inputs.platform }} bundle/${{ inputs.platform }}
+
+    - name: Clean Up
+      working-directory: bundle/${{ inputs.platform }}
       shell: bash
+      run: |
+        rename ${{ inputs.platform }} ${{ inputs.name }} ${{ inputs.platform }}*
+        mv ${{ inputs.platform }}_Data ${{ inputs.name }}_Data
+        rm -r *DoNotShip

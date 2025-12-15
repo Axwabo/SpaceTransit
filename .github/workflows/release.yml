@@ -45,11 +45,11 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
 
-      - working-directory: build/StandaloneWindows64
-        run: zip -r ${{ github.workspace }}/SpaceTransit-win-x64.zip . -x *DoNotShip\*\*
+      - working-directory: bundle/StandaloneWindows64
+        run: zip -r ${{ github.workspace }}/SpaceTransit-win-x64.zip
 
-      - working-directory: build/StandaloneLinux64
-        run: zip -r ${{ github.workspace }}/SpaceTransit-linux-x64.zip . -x *DoNotShip\*\*
+      - working-directory: bundle/StandaloneLinux64
+        run: zip -r ${{ github.workspace }}/SpaceTransit-linux-x64.zip
 
       - uses: softprops/action-gh-release@v2
         with:
