@@ -16,8 +16,8 @@ jobs:
 
       - uses: actions/checkout@v6
         
-      - name: Create Docker image with Blender
-        run: docker build --build-arg GAME_CI_UNITY_EDITOR_IMAGE=unityci/editor:ubuntu-6000.2.10f1-webgl-3.2.0 . -t axwabo/unity-blender
+      - name: Create Windows Docker image with Blender
+        run: docker build --build-arg GAME_CI_UNITY_EDITOR_IMAGE=unityci/editor:ubuntu-6000.2.10f1-windows-mono-3.2.1 . -t axwabo/unity-blender-windows
 
       - name: Build for Windows
         uses: game-ci/unity-builder@v4.7.0
@@ -27,8 +27,11 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: StandaloneWindows64
-          customImage: axwabo/unity-blender
+          customImage: axwabo/unity-blender-windows
           runAsHostUser: true
+
+      - name: Create Linux Docker image with Blender
+        run: docker build --build-arg GAME_CI_UNITY_EDITOR_IMAGE=unityci/editor:ubuntu-6000.2.10f1-base-3.2.1 . -t axwabo/unity-blender-linux
 
       - name: Build for Linux
         uses: game-ci/unity-builder@v4.7.0
@@ -38,7 +41,7 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: StandaloneLinux64
-          customImage: axwabo/unity-blender
+          customImage: axwabo/unity-blender-linux
           runAsHostUser: true
           
       - working-directory: build/StandaloneWindows64/StandaloneWindows64
