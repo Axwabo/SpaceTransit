@@ -20,32 +20,24 @@ jobs:
         run: docker build --build-arg GAME_CI_UNITY_EDITOR_IMAGE=unityci/editor:ubuntu-6000.2.10f1-windows-mono-3.2.1 . -t axwabo/unity-blender-windows
 
       - name: Build for Windows
-        uses: game-ci/unity-builder@v4.7.0
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        uses: ./.github/actions/build
         with:
-          targetPlatform: StandaloneWindows64
-          customImage: axwabo/unity-blender-windows
+          platform: StandaloneWindows64
+          image: axwabo/unity-blender-windows
 
       - name: Create Linux Docker image with Blender
         run: docker build --build-arg GAME_CI_UNITY_EDITOR_IMAGE=unityci/editor:ubuntu-6000.2.10f1-base-3.2.1 . -t axwabo/unity-blender-linux
 
       - name: Build for Linux
-        uses: game-ci/unity-builder@v4.7.0
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        uses: ./.github/actions/build
         with:
-          targetPlatform: StandaloneLinux64
-          customImage: axwabo/unity-blender-linux
+          platform: StandaloneLinux64
+          image: axwabo/unity-blender-linux
 
-      - working-directory: build/StandaloneWindows64/StandaloneWindows64
+      - working-directory: build/StandaloneWindows64
         run: zip -r ${{ github.workspace }}/SpaceTransit-win-x64.zip .
 
-      - working-directory: build/StandaloneLinux64/StandaloneLinux64
+      - working-directory: build/StandaloneLinux64
         run: zip -r ${{ github.workspace }}/SpaceTransit-linux-x64.zip .
 
       - uses: softprops/action-gh-release@v2
