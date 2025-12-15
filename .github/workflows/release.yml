@@ -24,6 +24,9 @@ jobs:
         with:
           platform: StandaloneWindows64
           image: axwabo/unity-blender-windows
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
 
       - name: Create Linux Docker image with Blender
         run: docker build --build-arg GAME_CI_UNITY_EDITOR_IMAGE=unityci/editor:ubuntu-6000.2.10f1-base-3.2.1 . -t axwabo/unity-blender-linux
@@ -33,6 +36,9 @@ jobs:
         with:
           platform: StandaloneLinux64
           image: axwabo/unity-blender-linux
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
 
       - working-directory: build/StandaloneWindows64
         run: zip -r ${{ github.workspace }}/SpaceTransit-win-x64.zip .
