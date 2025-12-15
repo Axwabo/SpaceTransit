@@ -36,7 +36,7 @@ runs:
       shell: bash
       run: |
         mkdir -p bundle/${{ inputs.platform }}
-        cp -r build/${{ inputs.platform }} bundle/${{ inputs.platform }}
+        cp -r build/${{ inputs.platform }} bundle
 
     - name: Clean Up
       working-directory: bundle/${{ inputs.platform }}
