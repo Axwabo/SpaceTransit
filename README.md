@@ -20,7 +20,6 @@ Currently, only 1 line has been built.
 
 https://github.com/user-attachments/assets/1f1ad950-ea46-415a-9e97-969bf87ca490
 
-
 Ships are automatically controlled by default. The player can choose to manually "drive" a ship.
 
 The COSMOS ensures ship safety.
@@ -89,6 +88,22 @@ I made the models myself, and as someone who's barely blended (Blender) before, 
 
 Creating the new ROSS ship model took nearly 9 hours
 
+# Resuming
+
+You can "continue" playing at any time between 5:00:00 AM and 9:59:59 PM.
+
+The ships are spawned according to the current time and the timetables:
+
+1. If departing later than now, spawn at origin
+2. If arrived at a station and departing in more than a minute (or minimum stay), spawn at intermediate stop
+3. If arriving at a station in 1 minute, only spawn 1 minute before arrival time 2 tubes before the station
+4. If (scheduled) left last stop and arriving at destination, or completed route cycle, spawn at destination
+5. Otherwise, wait and keep checking step 2
+
+For now, step 3 spawns the ship at the first possible entry (if any).
+This leads to Saturplace -> Peshtadub routes arriving from the Mountypile branch at Gyuard.
+The route system wasn't designed with this in mind initially, it'll require a slight rework.
+
 # TODO
 
 - [X] ROSS ship remodeling (to double-decker)
@@ -110,7 +125,7 @@ Creating the new ROSS ship model took nearly 9 hours
 - Exit list might not show
 - Lower-end devices will most likely face issues with lag, therefore overruns
 - Sometimes, the ship might overrun the dock; in this case you need to restart, e.g.
-  - Starting at Mountypile, 09:59:00 causes 46 to overrun Cárpenter
+    - Starting at Mountypile, 09:59:00 causes 46 to overrun Cárpenter
 
 Future plans:
 
