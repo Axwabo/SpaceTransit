@@ -63,7 +63,7 @@ The best game engine... only crashed about 10 times on average every day :SteamH
 Since the camera's near plane cannot be too small (below 0.01), I had to make the world about 10 m/unit.
 Due to floating-point limitations, objects start to flicker immensely.
 
-To combat this, the world is moved in the opposite way when the player teleports or as the ship is sailing.
+To combat this, the world is moved in the opposite direction when the player teleports or as the ship is sailing.
 
 ## SplineMesh
 
@@ -98,7 +98,7 @@ The ships are spawned according to the current time and the timetables:
 2. If arrived at a station and departing in more than minimum stay + 1 minute, spawn at intermediate stop
 3. If arriving at a station in 1 minute, only spawn 1 minute before arrival time 2 tubes before the station
 4. If (scheduled) left last stop and arriving at destination, or completed route cycle, spawn at destination
-5. Otherwise, wait and keep checking step 2
+5. Otherwise, wait and keep checking step 3
 
 For now, step 3 spawns the ship at the first possible entry (if any).
 This leads to Saturplace -> Peshtadub routes arriving from the Mountypile branch at Gyuard.
