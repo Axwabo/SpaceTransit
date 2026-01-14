@@ -58,8 +58,10 @@ namespace SpaceTransit.Menu.Main
 
             if (_leftInUse && _rightInUse)
                 return;
-            source.Play();
             _fromLeft = !_leftInUse && (_rightInUse || Random.value < 0.5f);
+            if (_fromLeft ? _leftInUse : _rightInUse)
+                return;
+            source.Play();
             _t.position = _start = _fromLeft ? StartLeft : StartRight;
             _end = _fromLeft ? EndLeft : EndRight;
             _start.z += _z;
