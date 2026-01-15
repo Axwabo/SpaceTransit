@@ -12,8 +12,10 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private void OnEnable()
         {
-            if (Parent)
-                OnStateChanged();
+            if (!Parent)
+                return;
+            _loaded = true;
+            OnStateChanged();
         }
 
         private void Update()
