@@ -22,10 +22,22 @@ namespace SpaceTransit.Routes.Stops
         [field: SerializeField]
         public int MinStayMinutes { get; private set; }
 
-        public IntermediateStop RelativeTo(TimeSpan time) => new()
+        public IntermediateStop Absolute(TimeSpan departure) => new()
         {
-            Arrival = Arrival.Value + time,
-            Departure = Departure.Value + time,
+            Station = Station,
+            DockIndex = DockIndex,
+            Arrival = Arrival.Value + departure,
+            Departure = Departure.Value + departure,
+            ExitTowards = ExitTowards,
+            MinStayMinutes = MinStayMinutes
+        };
+
+        public IntermediateStop Relative(TimeSpan departure) => new()
+        {
+            Station = Station,
+            DockIndex = DockIndex,
+            Arrival = departure - Arrival.Value,
+            Departure = departure - Departure.Value,
             ExitTowards = ExitTowards,
             MinStayMinutes = MinStayMinutes
         };

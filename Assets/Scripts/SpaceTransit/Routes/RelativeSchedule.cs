@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using SpaceTransit.Routes.Stops;
 using UnityEngine;
 
@@ -11,8 +9,6 @@ namespace SpaceTransit.Routes
     {
 
         public IntermediateStop[] intermediateStops;
-
-        public IntermediateStop[] Map(TimeSpan departure) => intermediateStops.Select(e => e.RelativeTo(departure)).ToArray();
 
     }
 

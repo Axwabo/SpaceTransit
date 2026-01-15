@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using SpaceTransit.Routes.Stops;
 using UnityEditor;
 using UnityEngine;
@@ -37,7 +38,7 @@ namespace SpaceTransit.Routes
         public Destination Destination { get; private set; }
 
         private void Awake() => _intermediateStops = schedule
-            ? schedule.Map(Origin.Departure.Value)
+            ? schedule.intermediateStops.Select(e => e.Absolute(Origin.Departure.Value)).ToArray()
             : intermediateStops;
 
         [ContextMenu("Create Schedule")]
@@ -47,7 +48,7 @@ namespace SpaceTransit.Routes
             if (string.IsNullOrEmpty(path))
                 return;
             var relativeSchedule = CreateInstance<RelativeSchedule>();
-            relativeSchedule.intermediateStops = intermediateStops;
+            relativeSchedule.intermediateStops = intermediateStops.Select(e => e.Relative(Origin.Departure.Value)).ToArray();
             schedule = relativeSchedule;
             EditorUtility.SetDirty(this);
             AssetDatabase.CreateAsset(relativeSchedule, Path.Combine("Assets", Path.GetRelativePath(Application.dataPath, path)));
