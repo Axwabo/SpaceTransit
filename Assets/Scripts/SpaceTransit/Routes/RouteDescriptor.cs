@@ -37,7 +37,7 @@ namespace SpaceTransit.Routes
         [field: SerializeField]
         public Destination Destination { get; private set; }
 
-        private void Awake() => _intermediateStops = schedule
+        private void Awake() => _intermediateStops = intermediateStops.Length == 0
             ? schedule.intermediateStops.Select(e => e.Absolute(Origin.Departure.Value)).ToArray()
             : intermediateStops;
 
