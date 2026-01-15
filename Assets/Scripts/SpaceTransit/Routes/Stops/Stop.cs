@@ -11,10 +11,10 @@ namespace SpaceTransit.Routes.Stops
         public const string TimeFormat = "hh':'mm";
 
         [field: SerializeField]
-        public int DockIndex { get; private set; }
+        public int DockIndex { get; protected set; }
 
         [field: SerializeField]
-        public StationId Station { get; private set; }
+        public StationId Station { get; protected set; }
 
     }
 
