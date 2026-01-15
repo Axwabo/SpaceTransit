@@ -49,7 +49,7 @@ namespace SpaceTransit.Ships.Driving.Screens
             text.text = exits ? "Exit Towards" : "Enter Dock";
             _exitsShown = exits;
             dockList.gameObject.SetActive(!exits);
-            exitList.gameObject.SetActive(!exits);
+            exitList.gameObject.SetActive(exits);
         }
 
     }
