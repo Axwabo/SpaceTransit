@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using SpaceTransit.Routes.Stops;
 using UnityEditor;
 using UnityEngine;
@@ -42,12 +43,12 @@ namespace SpaceTransit.Routes
         [ContextMenu("Create Schedule")]
         private void CreateSchedule()
         {
-            var path = EditorUtility.SaveFilePanel("Save Relative Schedule", null, name, ".asset");
+            var path = EditorUtility.SaveFilePanel("Save Relative Schedule", null, name, "asset");
             if (string.IsNullOrEmpty(path))
                 return;
             var relativeSchedule = CreateInstance<RelativeSchedule>();
             relativeSchedule.intermediateStops = intermediateStops;
-            AssetDatabase.CreateAsset(relativeSchedule, path);
+            AssetDatabase.CreateAsset(relativeSchedule, Path.Combine("Assets", Path.GetRelativePath(Application.dataPath, path)));
         }
 
     }
