@@ -26,8 +26,7 @@ namespace SpaceTransit.Ships.Modules.Displays
             _everDisplayed = true;
             var tube = Assembly.FrontModule.Thruster.Tube;
             var limit = tube.SpeedLimit;
-            // ReSharper disable once CompareOfFloatsByEqualityOperator
-            if (limit != _previous)
+            if (!Mathf.Approximately(limit, _previous))
             {
                 main.text = Limit(limit);
                 _previous = limit;
