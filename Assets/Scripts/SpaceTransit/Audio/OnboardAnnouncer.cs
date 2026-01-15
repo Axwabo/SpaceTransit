@@ -1,4 +1,5 @@
-﻿using SpaceTransit.Ships;
+﻿using SpaceTransit.Routes;
+using SpaceTransit.Ships;
 using SpaceTransit.Vaulter;
 using UnityEngine;
 
@@ -27,6 +28,12 @@ namespace SpaceTransit.Audio
         [SerializeField]
         private AudioClip goodbye;
 
+        [SerializeField]
+        private AudioClip doorsLeft;
+
+        [SerializeField]
+        private AudioClip doorsRight;
+
         private QueuePlayer _player;
 
         private bool _wasSailing;
@@ -36,6 +43,8 @@ namespace SpaceTransit.Audio
         private bool _welcomePlayed;
 
         private bool _currentStopPlayed;
+
+        private DoorsState _doorsState;
 
         protected override void Awake() => _player = GetComponent<QueuePlayer>();
 
@@ -84,15 +93,51 @@ namespace SpaceTransit.Audio
             _player.Enqueue(Parent.Stop.Station.Announcement);
             if (IsTerminus)
                 _player.Enqueue(goodbye);
+            PlayDoors();
             _player.Delay(3);
             _currentStopPlayed = true;
         }
 
         private void PlaySignal() => _player.Enqueue(signal, 3);
 
-        public override void OnRouteChanged() => _welcomePlayed = false;
+        private void PlayDoors()
+        {
+            if (!Station.TryGetLoadedStation(Parent.Stop.Station, out var station))
+                return;
+            var dock = station.Docks[Parent.Stop.DockIndex];
+            var state = (dock.Left != Assembly.Reverse, dock.Right != Assembly.Reverse) switch
+            {
+                (true, true) => DoorsState.Both,
+                (false, true) => DoorsState.Right,
+                (true, false) => DoorsState.Left,
+                (false, false) => DoorsState.None
+            };
+            if (state == _doorsState)
+                return;
+            _doorsState = state;
+            if (state is DoorsState.None or DoorsState.Both)
+                return;
+            _player.Delay(1);
+            _player.Enqueue(state == DoorsState.Left ? doorsLeft : doorsRight);
+        }
+
+        public override void OnRouteChanged()
+        {
+            _welcomePlayed = false;
+            _doorsState = DoorsState.None;
+        }
 
         public override void OnStopChanged() => _currentStopPlayed = false;
+
+        private enum DoorsState
+        {
+
+            None,
+            Left,
+            Right,
+            Both
+
+        }
 
     }
 
