@@ -138,6 +138,8 @@ namespace SpaceTransit.Vaulter
             _ship.initialStopIndex = _startingStop - 1;
             _ship.GetComponent<ShipAssembly>().startTube = _tube;
             _state = State.Ready;
+            foreach (var remapper in _entry.Remappers)
+                remapper.Remap();
         }
 
         private void Update()
