@@ -102,10 +102,10 @@ namespace SpaceTransit.Stations
         [SerializeField]
         private AudioClip oClock;
 
-        private static bool AnyShipWithOrigin(IDeparture departure)
+        private static bool AnyShipWithStop(IStop stop)
         {
             foreach (var assembly in ShipAssembly.Instances)
-                if (assembly.Parent.TryGetVaulter(out var vaulter) && vaulter.Stop == departure)
+                if (assembly.Parent.TryGetVaulter(out var vaulter) && vaulter.Stop == stop)
                     return true;
             return false;
         }
@@ -119,7 +119,7 @@ namespace SpaceTransit.Stations
             {
                 3 or 5 => In(remaining, route, departure),
                 1 => Immediate(route, departure),
-                <= 15 when lastAnnounced == -1 && AnyShipWithOrigin(departure) => At(route, index, departure),
+                <= 15 when lastAnnounced == -1 && AnyShipWithStop(departure) => At(route, index, departure),
                 _ => null
             };
         }
@@ -127,9 +127,11 @@ namespace SpaceTransit.Stations
         public IEnumerable<AnnouncementClip> GetAnnouncement(RouteDescriptor route, int index, IArrival arrival, int lastAnnounced)
             => (int) Clock.Now.TotalMinutes == lastAnnounced || arrival.MinutesToArrival() is not (1 or 2)
                 ? null
-                : index == -1
-                    ? Arriving(route, arrival)
-                    : ArrivingAndDeparts(route, index, arrival);
+                : index != -1
+                    ? ArrivingAndDeparts(route, index, arrival)
+                    : AnyShipWithStop(arrival)
+                        ? Arriving(route, arrival)
+                        : null;
 
         private IEnumerable<AnnouncementClip> Arriving(RouteDescriptor route, IArrival arrival)
         {
