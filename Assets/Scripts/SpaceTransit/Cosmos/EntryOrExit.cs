@@ -1,4 +1,5 @@
 ﻿using SpaceTransit.Cosmos.Actions;
+using SpaceTransit.Routes;
 using SpaceTransit.Ships;
 using UnityEngine;
 
@@ -9,9 +10,12 @@ namespace SpaceTransit.Cosmos
     {
 
         [field: SerializeField]
+        public Station ConnectedStation { get; private set; }
+
+        [field: SerializeField]
         protected Lock[] Locks { get; private set; }
 
-        protected TubeRemapper[] Remappers { get; private set; }
+        public TubeRemapper[] Remappers { get; private set; }
 
         protected virtual void Awake() => Remappers = GetComponents<TubeRemapper>();
 

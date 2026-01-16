@@ -10,6 +10,9 @@ namespace SpaceTransit.Routes.Stops
     {
 
         [field: SerializeField]
+        public StationId ArriveFrom { get; private set; }
+
+        [field: SerializeField]
         public TimeOnly Arrival { get; set; }
 
         [field: SerializeField]
@@ -26,6 +29,7 @@ namespace SpaceTransit.Routes.Stops
         {
             Station = Station,
             DockIndex = DockIndex,
+            ArriveFrom = ArriveFrom,
             Arrival = Arrival.Value + departure,
             Departure = Departure.Value + departure,
             ExitTowards = ExitTowards,

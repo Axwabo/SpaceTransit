@@ -106,8 +106,29 @@ namespace SpaceTransit.Vaulter
             }
 
             _entry = entries[0];
+            foreach (var entry in entries)
+            {
+                if (entry.ConnectedStation.ID != stop.ArriveFrom)
+                    continue;
+                _entry = entry;
+                break;
+            }
+
+            _tube = FindPreviousTube(route.Reverse);
+        }
+
+        private TubeBase FindPreviousTube(bool reverse)
+        {
             var tube = _entry.Ensurer.Tube;
-            _tube = route.Reverse ? tube.Next : tube;
+            foreach (var remapper in _entry.Remappers)
+            {
+                if (reverse && remapper.connectTube == tube)
+                    return remapper.connectTo;
+                if (!reverse && remapper.connectTo == tube)
+                    return remapper.connectTube;
+            }
+
+            return reverse ? tube.Next : tube;
         }
 
         private void Spawn(RouteDescriptor route)
