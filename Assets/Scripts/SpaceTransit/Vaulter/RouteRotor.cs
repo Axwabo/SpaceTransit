@@ -46,16 +46,15 @@ namespace SpaceTransit.Vaulter
 
         private void Start()
         {
-            for (var i = 0; i < routes.Length; i++)
+            for (_index = 0; _index < routes.Length; _index++)
             {
-                var route = routes[i];
+                var route = routes[_index];
                 if (route.Origin.Departure > Clock.Now)
                 {
                     Spawn(route);
                     return;
                 }
 
-                _index = i;
                 for (var j = 0; j < route.IntermediateStops.Length; j++)
                 {
                     var stop = route.IntermediateStops[j];
