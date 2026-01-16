@@ -120,14 +120,6 @@ namespace SpaceTransit.Vaulter
         private TubeBase FindPreviousTube(bool reverse)
         {
             var tube = _entry.Ensurer.Tube;
-            foreach (var remapper in _entry.Remappers)
-            {
-                if (reverse && remapper.connectTube == tube)
-                    return remapper.connectTo;
-                if (!reverse && remapper.connectTo == tube)
-                    return remapper.connectTube;
-            }
-
             return reverse ? tube.Next : tube;
         }
 
