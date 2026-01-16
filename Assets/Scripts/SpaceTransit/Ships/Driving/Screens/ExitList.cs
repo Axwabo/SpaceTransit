@@ -49,9 +49,8 @@ namespace SpaceTransit.Ships.Driving.Screens
         {
             if (HasPicked || State != ShipState.Docked)
                 return false;
-            picker.Selected = true;
-            Controller.MarkReady();
-            return State == ShipState.WaitingForDeparture;
+            picker.Pick(item.Lock(Assembly));
+            return true;
         }
 
         protected override string GetContent(Exit item) => item.ConnectedStation.Name;
