@@ -44,6 +44,8 @@ namespace SpaceTransit.Routes
             : intermediateStops;
 
 #if UNITY_EDITOR
+        private void OnValidate() => Awake();
+
         [ContextMenu("Create Schedule")]
         private void CreateSchedule()
         {
