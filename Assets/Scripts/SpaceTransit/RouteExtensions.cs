@@ -20,7 +20,7 @@ namespace SpaceTransit
         };
 
         public static string Summary(this RouteDescriptor route)
-            => $"{route.Origin.Station.name} {route.Origin.Departure.Value:hh':'mm} - {route.Destination.Station.name} {route.Destination.Arrival.Value:hh':'mm}";
+            => $"{route.Origin.Station.name} {route.Origin.Departure} - {route.Destination.Station.name} {route.Destination.Arrival}";
 
     }
 
