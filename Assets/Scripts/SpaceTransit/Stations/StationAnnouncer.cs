@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Katie.Unity;
+using SpaceTransit.Menu;
 using SpaceTransit.Routes;
 using SpaceTransit.Vaulter;
 using UnityEngine;
@@ -32,6 +33,8 @@ namespace SpaceTransit.Stations
 
         private List<ArrivalEntry> _arrivals;
 
+        private string _name;
+
         private void Awake()
         {
             _queue = GetComponent<QueuePlayer>();
@@ -50,6 +53,7 @@ namespace SpaceTransit.Stations
                 .ThenByDescending(static e => e.Route.Type)
                 .ToList();
             _queue.Delay(0.5f);
+            _name = $"K.A.T.I.E. <color=#888>({_cache.StationId.name})</color>";
         }
 
         private void Update()
@@ -81,8 +85,10 @@ namespace SpaceTransit.Stations
         {
             _announced[route] = (int) Clock.Now.TotalMinutes;
             var inter = route.Type == ServiceType.InterHub;
-            _queue.EnqueueAnnouncement(announcement, pack, inter ? interHubSignal : genericSignal);
+            var signal = inter ? interHubSignal : genericSignal;
+            var duration = _queue.EnqueueAnnouncement(announcement, pack, signal);
             _queue.Delay(3);
+            KatieSubtitleList.Add(_name, announcement, signal.Duration, duration.TotalSeconds);
         }
 
     }
