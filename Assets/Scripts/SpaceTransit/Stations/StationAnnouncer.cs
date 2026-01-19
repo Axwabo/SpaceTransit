@@ -14,19 +14,13 @@ namespace SpaceTransit.Stations
 
         [Header("Signals")]
         [SerializeField]
-        private AudioClip genericSignal;
+        private Signal genericSignal;
 
         [SerializeField]
-        private float genericDuration;
+        private Signal interHubSignal;
 
         [SerializeField]
-        private AudioClip interHubSignal;
-
-        [SerializeField]
-        private float interHubDuration;
-
-        [SerializeField]
-        private AnnouncementCreator announcementCreator;
+        private PhrasePack pack;
 
         private QueuePlayer _queue;
 
@@ -65,7 +59,7 @@ namespace SpaceTransit.Stations
             foreach (var (route, index, arrival) in _arrivals)
             {
                 if (arrival.Arrival.Value < Clock.Now
-                    || announcementCreator.GetAnnouncement(route, index, arrival, _announced.GetValueOrDefault(route, -1)) is not { } announcement)
+                    || AnnouncementCreator.GetAnnouncement(route, index, arrival, _announced.GetValueOrDefault(route, -1)) is not { } announcement)
                     continue;
                 Announce(route, announcement);
                 break;
@@ -74,7 +68,7 @@ namespace SpaceTransit.Stations
             foreach (var (route, index, departure) in _departures)
             {
                 if (departure.Departure.Value < Clock.Now
-                    || announcementCreator.GetAnnouncement(route, index, departure, _announced.GetValueOrDefault(route, -1)) is not { } announcement)
+                    || AnnouncementCreator.GetAnnouncement(route, index, departure, _announced.GetValueOrDefault(route, -1)) is not { } announcement)
                     continue;
                 Announce(route, announcement);
                 return;
@@ -83,13 +77,11 @@ namespace SpaceTransit.Stations
 
         private void OnDisable() => _queue.Clear();
 
-        private void Announce(RouteDescriptor route, IEnumerable<AnnouncementClip> announcement)
+        private void Announce(RouteDescriptor route, string announcement)
         {
             _announced[route] = (int) Clock.Now.TotalMinutes;
             var inter = route.Type == ServiceType.InterHub;
-            _queue.Enqueue(inter ? interHubSignal : genericSignal, inter ? interHubDuration : genericDuration);
-            foreach (var clip in announcement)
-                _queue.Enqueue(clip.Clip, clip.Length);
+            _queue.EnqueueAnnouncement(announcement, pack, inter ? interHubSignal : genericSignal);
             _queue.Delay(3);
         }
 

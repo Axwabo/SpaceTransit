@@ -1,106 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Text;
 using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
 using SpaceTransit.Ships;
-using UnityEngine;
 
 namespace SpaceTransit.Stations
 {
 
-    [CreateAssetMenu(fileName = "Station", menuName = "SpaceTransit/Announcement Creator", order = 0)]
-    public sealed class AnnouncementCreator : ScriptableObject
+    public static class AnnouncementCreator
     {
-
-        private static readonly AnnouncementClip FullStop = 0.5f;
-
-        [Header("Conjunctions")]
-        [SerializeField]
-        private AudioClip at;
-
-        [SerializeField]
-        private AudioClip the;
-
-        [SerializeField]
-        private AudioClip to;
-
-        [SerializeField]
-        private AudioClip from;
-
-        [SerializeField]
-        private AudioClip @in;
-
-        [SerializeField]
-        private AudioClip and;
-
-        [Header("Ships")]
-        [SerializeField]
-        private AudioClip passenger;
-
-        [SerializeField]
-        private AudioClip fast;
-
-        [SerializeField]
-        private AudioClip interHub;
-
-        [SerializeField]
-        private AudioClip ship;
-
-        [Header("Common Phrases")]
-        [SerializeField]
-        private AudioClip departsFor;
-
-        [SerializeField]
-        private AudioClip arrivingFrom;
-
-        [SerializeField]
-        private AudioClip dock;
-
-        [SerializeField]
-        private AudioClip shipStop;
-
-        [SerializeField]
-        private AudioClip everyStation;
-
-        [SerializeField]
-        private AudioClip onlyAt;
-
-        [SerializeField]
-        private AudioClip departing;
-
-        [SerializeField]
-        private AudioClip pleaseBoard;
-
-        [SerializeField]
-        private AudioClip minutes;
-
-        [SerializeField]
-        private AudioClip immediately;
-
-        [SerializeField]
-        private AudioClip stopBoarding;
-
-        [Header("Numbers")]
-        [SerializeField]
-        private AudioClip[] numbersTo20;
-
-        [SerializeField]
-        private AudioClip twenty;
-
-        [SerializeField]
-        private AudioClip thirty;
-
-        [SerializeField]
-        private AudioClip forty;
-
-        [SerializeField]
-        private AudioClip fifty;
-
-        [SerializeField]
-        private AudioClip oh;
-
-        [SerializeField]
-        private AudioClip oClock;
 
         private static bool AnyShipWithStop(IStop stop)
         {
@@ -110,7 +17,7 @@ namespace SpaceTransit.Stations
             return false;
         }
 
-        public IEnumerable<AnnouncementClip> GetAnnouncement(RouteDescriptor route, int index, IDeparture departure, int lastAnnounced)
+        public static string GetAnnouncement(RouteDescriptor route, int index, IDeparture departure, int lastAnnounced)
         {
             if ((int) Clock.Now.TotalMinutes == lastAnnounced || index != -1)
                 return null;
@@ -124,7 +31,7 @@ namespace SpaceTransit.Stations
             };
         }
 
-        public IEnumerable<AnnouncementClip> GetAnnouncement(RouteDescriptor route, int index, IArrival arrival, int lastAnnounced)
+        public static string GetAnnouncement(RouteDescriptor route, int index, IArrival arrival, int lastAnnounced)
             => (int) Clock.Now.TotalMinutes == lastAnnounced || arrival.MinutesToArrival() is not (1 or 2)
                 ? null
                 : index != -1
@@ -133,140 +40,68 @@ namespace SpaceTransit.Stations
                         ? Arriving(route, arrival)
                         : null;
 
-        private IEnumerable<AnnouncementClip> Arriving(RouteDescriptor route, IArrival arrival)
+        private static string Arriving(RouteDescriptor route, IArrival arrival)
+            => $"{route.Type} ship is arriving from {route.Origin.Station.name} at dock {arrival.DockIndex + 1}.";
+
+        private static string In(int deltaMinutes, RouteDescriptor route, IDeparture departure)
+            => $"The {route.Type} ship to {route.Destination.Station.name} is departing from dock {departure.DockIndex + 1} in {deltaMinutes - 1} minutes. Please board the ship.";
+
+        private static string Immediate(RouteDescriptor route, IDeparture departure)
+            => $"The {route.Type} ship to {route.Destination.Station.name} is departing from dock {departure.DockIndex + 1} immediately. Please stop boarding.";
+
+        private static string ArrivingAndDeparts(RouteDescriptor route, int index, IArrival arrival)
         {
-            yield return Type(route);
-            yield return ship;
-            yield return arrivingFrom;
-            yield return route.Origin.Station.Announcement;
-            yield return at;
-            yield return dock;
-            yield return numbersTo20[arrival.DockIndex];
+            var sb = new StringBuilder()
+                .Append(route.Type)
+                .Append(" ship is arriving from ")
+                .Append(route.Origin.Station.name)
+                .Append(" at dock ")
+                .Append(arrival.DockIndex + 1)
+                .Append(" and departs for ")
+                .Append(route.Destination.Station.name)
+                .Append('.');
+            AppendIntermediateStops(route, index, sb);
+            return sb.ToString();
         }
 
-        private IEnumerable<AnnouncementClip> In(int deltaMinutes, RouteDescriptor route, IDeparture departure) => new[]
-        {
-            the,
-            Type(route),
-            ship,
-            to,
-            route.Destination.Station.Announcement,
-            departing,
-            dock,
-            numbersTo20[departure.DockIndex],
-            @in,
-            numbersTo20[deltaMinutes - 1],
-            minutes,
-            FullStop,
-            pleaseBoard
-        };
-
-        private IEnumerable<AnnouncementClip> Immediate(RouteDescriptor route, IDeparture departure) => new[]
-        {
-            the,
-            Type(route),
-            ship,
-            to,
-            route.Destination.Station.Announcement,
-            departing,
-            dock,
-            numbersTo20[departure.DockIndex],
-            immediately,
-            FullStop,
-            stopBoarding
-        };
-
-        private IEnumerable<AnnouncementClip> ArrivingAndDeparts(RouteDescriptor route, int index, IArrival arrival)
-        {
-            yield return Type(route);
-            yield return ship;
-            yield return arrivingFrom;
-            yield return route.Origin.Station.Announcement;
-            yield return at;
-            yield return dock;
-            yield return numbersTo20[arrival.DockIndex];
-            yield return and;
-            yield return departsFor;
-            yield return route.Destination.Station.Announcement;
-            foreach (var clip in Stops(route, index))
-                yield return clip;
-        }
-
-        private IEnumerable<AnnouncementClip> Stops(RouteDescriptor route, int index)
+        private static void AppendIntermediateStops(RouteDescriptor route, int index, StringBuilder sb)
         {
             var intermediateStops = route.IntermediateStops.Length;
             if (index == intermediateStops - 1)
-                yield break;
-            yield return FullStop;
-            yield return shipStop;
+                return;
+            sb.Append(" The ship stops ");
             if (route.EveryStation)
             {
-                yield return everyStation;
-                yield break;
+                sb.Append("at every station.");
+                return;
             }
 
-            yield return onlyAt;
+            sb.Append("only at ");
             for (var i = index + 1; i < intermediateStops; i++)
             {
                 if (i != index + 1 && i == intermediateStops - 1)
-                    yield return and;
+                    sb.Append(" and ");
                 else if (i != index + 1)
-                    yield return 0.3f;
-                yield return route.IntermediateStops[i].Station.Announcement;
-            }
-        }
-
-        private IEnumerable<AnnouncementClip> At(RouteDescriptor route, int index, IDeparture departure)
-        {
-            yield return Type(route);
-            yield return ship;
-            yield return departsFor;
-            yield return route.Destination.Station.Announcement;
-            yield return from;
-            yield return dock;
-            yield return numbersTo20[departure.DockIndex];
-            yield return at;
-            var zeroMinutes = departure.Departure.Value.Minutes == 0;
-            foreach (var clip in Number(departure.Departure.Value.Hours, !zeroMinutes))
-                yield return clip;
-            yield return 0.1f;
-            if (zeroMinutes)
-                yield return oClock;
-            else
-                foreach (var clip in Number(departure.Departure.Value.Minutes, true))
-                    yield return clip;
-            foreach (var clip in Stops(route, index))
-                yield return clip;
-        }
-
-        private AudioClip Type(RouteDescriptor route) => route.Type switch
-        {
-            ServiceType.Passenger => passenger,
-            ServiceType.Fast => fast,
-            ServiceType.InterHub => interHub,
-            _ => throw new ArgumentOutOfRangeException()
-        };
-
-        private IEnumerable<AudioClip> Number(int n, bool padZero = false)
-        {
-            if (n is >= 1 and <= 20)
-            {
-                if (padZero && n < 10)
-                    yield return oh;
-                yield return numbersTo20[n - 1];
-                yield break;
+                    sb.Append(", ");
+                sb.Append(route.IntermediateStops[i].Station.name);
             }
 
-            yield return n switch
-            {
-                < 30 => twenty,
-                < 40 => thirty,
-                < 50 => forty,
-                < 60 => fifty,
-                _ => throw new ArgumentOutOfRangeException(nameof(n), "Cannot parse numbers < 0 or >= 60")
-            };
-            if (n % 10 != 0)
-                yield return numbersTo20[n % 10 - 1];
+            sb.Append('.');
+        }
+
+        private static string At(RouteDescriptor route, int index, IDeparture departure)
+        {
+            var sb = new StringBuilder()
+                .Append(route.Type)
+                .Append(" ship departs for ")
+                .Append(route.Destination.Station.name)
+                .Append(" from dock ")
+                .Append(departure.DockIndex + 1)
+                .Append(" at ")
+                .Append(departure.Departure)
+                .Append('.');
+            AppendIntermediateStops(route, index, sb);
+            return sb.ToString();
         }
 
     }
