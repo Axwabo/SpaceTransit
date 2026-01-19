@@ -19,7 +19,7 @@ namespace SpaceTransit.Menu
         public void SetUp(string announcer, string text, double delay, double duration)
         {
             _activateAt = AudioSettings.dspTime + delay;
-            _removeAt = _activateAt + duration;
+            _removeAt = _activateAt + duration + 0.5;
             main.text = $"<b>{announcer}:</b> {text}";
         }
 
