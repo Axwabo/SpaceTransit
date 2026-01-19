@@ -6,7 +6,7 @@ using UnityEngine;
 namespace SpaceTransit.Audio
 {
 
-    [RequireComponent(typeof(QueuePlayer))]
+    [RequireComponent(typeof(Katie.Unity.QueuePlayer))]
     public sealed class OnboardAnnouncer : VaulterComponentBase
     {
 
@@ -34,7 +34,7 @@ namespace SpaceTransit.Audio
         [SerializeField]
         private AudioClip doorsRight;
 
-        private QueuePlayer _player;
+        private Katie.Unity.QueuePlayer _player;
 
         private bool _wasSailing;
 
@@ -46,7 +46,7 @@ namespace SpaceTransit.Audio
 
         private DoorsState _doorsState;
 
-        protected override void Awake() => _player = GetComponent<QueuePlayer>();
+        protected override void Awake() => _player = GetComponent<Katie.Unity.QueuePlayer>();
 
         private void Update()
         {

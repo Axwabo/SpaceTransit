@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace SpaceTransit.Audio
 {
 
     [RequireComponent(typeof(AudioSource))]
+    [Obsolete("Use Katie.Unity.QueuePlayer instead.", true)]
     public sealed class QueuePlayer : MonoBehaviour
     {
 
