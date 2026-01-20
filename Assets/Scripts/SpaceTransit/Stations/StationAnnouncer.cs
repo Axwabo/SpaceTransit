@@ -86,6 +86,7 @@ namespace SpaceTransit.Stations
             var inter = route.Type == ServiceType.InterHub;
             var signal = inter ? interHubSignal : genericSignal;
             _queue.EnqueueWithSubtitles(_name, announcement, pack, signal);
+            _queue.Delay(3);
         }
 
     }
