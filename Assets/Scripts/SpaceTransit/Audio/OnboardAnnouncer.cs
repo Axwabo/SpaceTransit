@@ -36,7 +36,7 @@ namespace SpaceTransit.Audio
 
         private void Update()
         {
-            if (Parent.Parent.State != ShipState.Sailing || !Parent.IsInService)
+            if (Controller.State != ShipState.Sailing || !Parent.IsInService)
             {
                 _wasSailing = false;
                 return;
@@ -48,6 +48,8 @@ namespace SpaceTransit.Audio
                 _wasSailing = true;
             }
 
+            if (!Assembly.IsPlayerMounted)
+                return;
             if (_delay > 0 && (_delay -= Clock.Delta) <= 0)
                 PlayNextStop();
             if (_welcomePlayed && !_currentStopPlayed && IsNearStation)
@@ -59,12 +61,12 @@ namespace SpaceTransit.Audio
             PlaySignal();
             if (!_welcomePlayed)
             {
-                _player.EnqueueWithSubtitles(announcer, $"Welcome aboard the ship to {Parent.Route.Destination.Station.name}. Please keep in mind that smoking is prohibited on the ship. We wish you a pleasant journey.", pack);
+                _player.EnqueueWithSubtitles(announcer, $"Welcome aboard the ship to {Parent.Route.Destination.Station.name}. Please keep in mind that smoking is prohibited on the ship. We wish you a pleasant journey.", pack, Assembly.IsPlayerMounted);
                 _player.Delay(2);
                 _welcomePlayed = true;
             }
 
-            _player.EnqueueWithSubtitles(announcer, IsTerminus ? $"Next stop {Parent.Stop.Station.name}, where this ship terminates." : $"Next stop {Parent.Stop.Station.name}", pack);
+            _player.EnqueueWithSubtitles(announcer, IsTerminus ? $"Next stop {Parent.Stop.Station.name}, where this ship terminates." : $"Next stop {Parent.Stop.Station.name}", pack, Assembly.IsPlayerMounted);
             _player.Delay(3);
         }
 
@@ -72,7 +74,7 @@ namespace SpaceTransit.Audio
         {
             PlaySignal();
             if (IsTerminus)
-                _player.EnqueueWithSubtitles(announcer, $"{Parent.Stop.Station.name}. This ship terminates here. Thank you for choosing SpaceTransit. Goodbye.", pack);
+                _player.EnqueueWithSubtitles(announcer, $"{Parent.Stop.Station.name}. This ship terminates here. Thank you for choosing SpaceTransit. Goodbye.", pack, Assembly.IsPlayerMounted);
             else
                 _player.Enqueue(Parent.Stop.Station.Announcement);
             PlayDoors();
@@ -100,7 +102,7 @@ namespace SpaceTransit.Audio
             if (state is DoorsState.None or DoorsState.Both)
                 return;
             _player.Delay(1);
-            _player.EnqueueWithSubtitles(announcer, state == DoorsState.Left ? "Doors open on the left." : "Doors open on the right.", pack);
+            _player.EnqueueWithSubtitles(announcer, state == DoorsState.Left ? "Doors open on the left." : "Doors open on the right.", pack, Assembly.IsPlayerMounted);
         }
 
         public override void OnRouteChanged()
