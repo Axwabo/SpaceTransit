@@ -64,7 +64,7 @@ namespace SpaceTransit.Audio
                 _welcomePlayed = true;
             }
 
-            _player.EnqueueWithSubtitles(announcer, IsTerminus ? $"Next stop: {Parent.Stop.Station.name}, where this ship terminates." : $"Next stop: {Parent.Stop.Station.name}", pack);
+            _player.EnqueueWithSubtitles(announcer, IsTerminus ? $"Next stop {Parent.Stop.Station.name}, where this ship terminates." : $"Next stop {Parent.Stop.Station.name}", pack);
             _player.Delay(3);
         }
 
