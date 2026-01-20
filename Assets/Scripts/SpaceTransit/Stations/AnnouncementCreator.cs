@@ -98,8 +98,7 @@ namespace SpaceTransit.Stations
                 .Append(" from dock ")
                 .Append(departure.DockIndex + 1)
                 .Append(" at ")
-                .Append(departure.Departure)
-                .Append('.');
+                .Append(departure.Departure);
             AppendIntermediateStops(route, index, sb);
             return sb.ToString();
         }
