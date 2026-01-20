@@ -12,28 +12,13 @@ namespace SpaceTransit.Audio
     {
 
         [SerializeField]
-        private AudioClip signal;
+        private Signal signal;
 
         [SerializeField]
-        private AudioClip welcomeStart;
+        private PhrasePack pack;
 
         [SerializeField]
-        private AudioClip welcomeEnd;
-
-        [SerializeField]
-        private AudioClip nextStop;
-
-        [SerializeField]
-        private AudioClip nextTerminus;
-
-        [SerializeField]
-        private AudioClip goodbye;
-
-        [SerializeField]
-        private AudioClip doorsLeft;
-
-        [SerializeField]
-        private AudioClip doorsRight;
+        private string announcer;
 
         private QueuePlayer _player;
 
@@ -74,32 +59,28 @@ namespace SpaceTransit.Audio
             PlaySignal();
             if (!_welcomePlayed)
             {
-                _player.Enqueue(welcomeStart);
-                _player.Enqueue(Parent.Route.Destination.Station.Announcement);
-                _player.Enqueue(welcomeEnd);
+                _player.EnqueueWithSubtitles(announcer, $"Welcome aboard the ship to {Parent.Route.Destination.Station.name}. Please keep in mind that smoking is prohibited on the ship. We wish you a pleasant journey.", pack);
                 _player.Delay(2);
                 _welcomePlayed = true;
             }
 
-            _player.Enqueue(nextStop);
-            _player.Enqueue(Parent.Stop.Station.Announcement);
-            if (IsTerminus)
-                _player.Enqueue(nextTerminus);
+            _player.EnqueueWithSubtitles(announcer, IsTerminus ? $"Next stop {Parent.Stop.Station.name}, where this ship terminates." : $"Next stop {Parent.Stop.Station.name}", pack);
             _player.Delay(3);
         }
 
         private void PlayCurrentStop()
         {
             PlaySignal();
-            _player.Enqueue(Parent.Stop.Station.Announcement);
             if (IsTerminus)
-                _player.Enqueue(goodbye);
+                _player.EnqueueWithSubtitles(announcer, $"{Parent.Stop.Station.name}. This ship terminates here. Thank you for choosing SpaceTransit. Goodbye!", pack);
+            else
+                _player.Enqueue(Parent.Stop.Station.Announcement);
             PlayDoors();
             _player.Delay(3);
             _currentStopPlayed = true;
         }
 
-        private void PlaySignal() => _player.Enqueue(signal, 3);
+        private void PlaySignal() => _player.Enqueue(signal.Clip, signal.Duration);
 
         private void PlayDoors()
         {
@@ -119,7 +100,7 @@ namespace SpaceTransit.Audio
             if (state is DoorsState.None or DoorsState.Both)
                 return;
             _player.Delay(1);
-            _player.Enqueue(state == DoorsState.Left ? doorsLeft : doorsRight);
+            _player.EnqueueWithSubtitles(announcer, state == DoorsState.Left ? "Doors open on the left." : "Doors open on the right.", pack);
         }
 
         public override void OnRouteChanged()

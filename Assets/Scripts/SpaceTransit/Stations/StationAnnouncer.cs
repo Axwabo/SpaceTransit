@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Katie.Unity;
-using SpaceTransit.Menu;
 using SpaceTransit.Routes;
 using SpaceTransit.Vaulter;
 using UnityEngine;
@@ -86,9 +85,7 @@ namespace SpaceTransit.Stations
             _announced[route] = (int) Clock.Now.TotalMinutes;
             var inter = route.Type == ServiceType.InterHub;
             var signal = inter ? interHubSignal : genericSignal;
-            var duration = _queue.EnqueueAnnouncement(announcement, pack, signal);
-            _queue.Delay(3);
-            KatieSubtitleList.Add(_name, announcement, signal.Duration, duration.TotalSeconds);
+            _queue.EnqueueWithSubtitles(_name, announcement, pack, signal);
         }
 
     }
