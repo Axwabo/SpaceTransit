@@ -41,7 +41,7 @@ namespace SpaceTransit.Stations
                         : null;
 
         private static string Arriving(RouteDescriptor route, IArrival arrival)
-            => $"{route.Type} ship is arriving from {route.Origin.Station.name} at dock {arrival.DockIndex + 1}.";
+            => $"{route.Type} ship is arriving from {route.Origin.Station.name} at dock {arrival.DockIndex + 1}";
 
         private static string In(int deltaMinutes, RouteDescriptor route, IDeparture departure)
             => $"The {route.Type} ship to {route.Destination.Station.name} is departing from dock {departure.DockIndex + 1} in {deltaMinutes} minutes. Please board the ship.";
