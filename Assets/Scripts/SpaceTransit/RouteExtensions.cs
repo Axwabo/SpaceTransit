@@ -1,5 +1,6 @@
 ﻿using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
+using UnityEngine;
 
 namespace SpaceTransit
 {
@@ -21,6 +22,14 @@ namespace SpaceTransit
 
         public static string Summary(this RouteDescriptor route)
             => $"{route.Origin.Station.name} {route.Origin.Departure} - {route.Destination.Station.name} {route.Destination.Arrival}";
+
+        public static (string, Color) GetAbbreviation(this RouteDescriptor route) => route?.Type switch
+        {
+            ServiceType.Fast => ("F", Color.orangeRed),
+            ServiceType.InterHub => ("IH", Color.darkBlue),
+            ServiceType.Passenger => ("P", Color.deepSkyBlue),
+            _ => ("-", Color.gray)
+        };
 
     }
 
