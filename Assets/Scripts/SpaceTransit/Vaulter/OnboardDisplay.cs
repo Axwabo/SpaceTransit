@@ -29,6 +29,8 @@ namespace SpaceTransit.Vaulter
             _text.text = _type switch
             {
                 InformationType.Route => $"» {Parent.Route.Destination.Station.name}",
+                InformationType.NextStop when IsTerminus && Controller.State is ShipState.Landing or ShipState.Docked => "Goodbye!",
+                InformationType.NextStop when IsTerminus => "Next Stop Terminus",
                 InformationType.NextStop => $"{Prefix}{Parent.Stop.Station.name}",
                 InformationType.Time => Clock.Now.ToString(TimeOnly.Format),
                 _ => ""
