@@ -30,7 +30,7 @@ namespace SpaceTransit.Tubes
             if (Application.isPlaying)
                 Safety = TryGetComponent(out SafetyEnsurer ensurer)
                     ? ensurer
-                    : gameObject.AddComponent<NextSegmentSafety>();
+                    : AddDefaultSafety(gameObject);
             OnValidate();
         }
 
@@ -68,6 +68,8 @@ namespace SpaceTransit.Tubes
         public abstract (Vector3 Position, Quaternion Rotation) Sample(float distance);
 
         public abstract float GetDistance(Vector3 point);
+
+        protected virtual SafetyEnsurer AddDefaultSafety(GameObject o) => o.AddComponent<NextSegmentSafety>();
 
         public void SetNext(TubeBase tube)
         {

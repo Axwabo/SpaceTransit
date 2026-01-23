@@ -23,8 +23,6 @@ namespace SpaceTransit.Cosmos
             Ensurer.Entries.Add(this);
         }
 
-        public bool IsUsedOnlyBy(ShipAssembly assembly) => Locks.AreOnlyUsedBy(assembly);
-
         public override bool Lock(ShipAssembly assembly) => !Dock.Safety.IsOccupied && base.Lock(assembly);
 
     }

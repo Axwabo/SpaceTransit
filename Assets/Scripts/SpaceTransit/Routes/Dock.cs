@@ -45,6 +45,8 @@ namespace SpaceTransit.Routes
                 entry.Dock = this;
         }
 
+        protected override SafetyEnsurer AddDefaultSafety(GameObject o) => o.AddComponent<DockSafety>();
+
     }
 
 }

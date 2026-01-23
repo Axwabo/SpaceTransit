@@ -33,6 +33,8 @@ namespace SpaceTransit.Cosmos
 
         public void Release(ShipAssembly assembly) => Locks.Release(assembly);
 
+        public bool IsUsedOnlyBy(ShipAssembly assembly) => Locks.AreOnlyUsedBy(assembly);
+
     }
 
 }
