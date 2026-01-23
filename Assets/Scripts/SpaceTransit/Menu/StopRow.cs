@@ -23,10 +23,10 @@ namespace SpaceTransit.Menu
         public void Apply(Stop stop)
         {
             arrival.text = stop is IArrival {Arrival: {Value: var arrivalTime}}
-                ? arrivalTime.ToString(TimeOnly.Format)
+                ? arrivalTime.ToString(Stop.TimeFormat)
                 : "";
             departure.text = stop is IDeparture {Departure: {Value: var departureTime}}
-                ? departureTime.ToString(TimeOnly.Format)
+                ? departureTime.ToString(Stop.TimeFormat)
                 : "";
             station.text = stop.Station.name;
             dock.text = (stop.DockIndex + 1).ToString();

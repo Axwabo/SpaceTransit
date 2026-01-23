@@ -20,9 +20,9 @@ namespace SpaceTransit.Vaulter
         {
             Builder.Clear().AppendLine(Parent.Stop.Station.name);
             if (Parent.Stop is IArrival {Arrival: var arrival})
-                Builder.AppendLine($"Arrive at {arrival}");
+                Builder.AppendLine($"Arrive at {arrival.Value:hh':'mm}");
             if (Parent.Stop is IDeparture {Departure: var time})
-                Builder.AppendLine($"Depart at {time}");
+                Builder.AppendLine($"Depart at {time.Value:hh':'mm}");
             _text.text = Builder.Append("Dock: ").Append(Parent.Stop.DockIndex + 1).ToString();
         }
 

@@ -8,6 +8,8 @@ namespace SpaceTransit.Routes.Stops
     public abstract class Stop : IStop
     {
 
+        public const string TimeFormat = "hh':'mm";
+
         [field: SerializeField]
         public int DockIndex { get; protected set; }
 

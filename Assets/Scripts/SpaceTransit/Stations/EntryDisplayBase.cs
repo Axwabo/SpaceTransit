@@ -1,5 +1,6 @@
 ﻿using System;
 using SpaceTransit.Routes;
+using SpaceTransit.Routes.Stops;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -29,7 +30,7 @@ namespace SpaceTransit.Stations
         {
             type.text = serviceType.ToStringFast();
             station.text = stationName;
-            time.text = timeValue.ToString(TimeOnly.Format);
+            time.text = timeValue.ToString(Stop.TimeFormat);
             dock.text = (dockIndex + 1).ToString();
         }
 

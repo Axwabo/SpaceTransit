@@ -16,8 +16,6 @@ namespace SpaceTransit.Vaulter
 
         protected bool IsInService => Parent.IsInService;
 
-        protected bool IsOrigin => Parent.Stop is Origin;
-
         protected bool IsTerminus => Parent.Stop is Destination;
 
         protected bool IsNearStation => Station.TryGetLoadedStation(Parent.Stop.Station, out var station)

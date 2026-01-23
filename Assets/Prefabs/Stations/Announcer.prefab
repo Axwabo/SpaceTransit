@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7990137690494662867}
   - component: {fileID: 4090866045988901270}
-  - component: {fileID: 1028635265373179818}
+  - component: {fileID: 7901069855833453099}
   - component: {fileID: 272483473769546504}
   - component: {fileID: 2738411384417580475}
   m_Layer: 0
@@ -132,7 +132,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1028635265373179818
+--- !u!114 &7901069855833453099
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,9 +141,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5103777101694187841}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -840405651, guid: 2adb946d7a50dcee6a16edd904b9172c, type: 3}
+  m_Script: {fileID: 11500000, guid: 3531672802514364a1539b6a911c0487, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Katie.Unity.dll::Katie.Unity.QueuePlayer
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Audio.QueuePlayer
 --- !u!114 &272483473769546504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,9 +156,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c43d907fa232464dabc5a8136218e9ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Stations.StationAnnouncer
-  genericSignal: {fileID: 11400000, guid: ace94bdeda1f216a8a0ee7af39a602b0, type: 2}
-  interHubSignal: {fileID: 11400000, guid: 5fbd2f76600464d62b2f60a60eeee159, type: 2}
-  pack: {fileID: 11400000, guid: 9cc4999f7466acb769ce7d7dcdc01737, type: 2}
+  genericSignal: {fileID: 8300000, guid: e9d700743074024429a2021799e6ff9c, type: 3}
+  genericDuration: 2.5
+  interHubSignal: {fileID: 8300000, guid: d4cc37ca41f329a49ac03fddfbc53799, type: 3}
+  interHubDuration: 3
+  announcementCreator: {fileID: 11400000, guid: e70cf7c2f3bc31740882a3bce3cb6ab4, type: 2}
 --- !u!114 &2738411384417580475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,4 +174,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Audio.MountBasedMixerSetter
   onboardGroup: {fileID: -1803064317319261584, guid: d180209a54469ec478c6696d196e7b79, type: 2}
-  onboardMute: 0

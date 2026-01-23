@@ -50,7 +50,13 @@ namespace SpaceTransit.Menu
         {
             _previousRoute = currentRoute;
             route.text = currentRoute?.name ?? "---";
-            (type.text, image.color) = currentRoute.GetAbbreviation();
+            (type.text, image.color) = currentRoute?.Type switch
+            {
+                ServiceType.Fast => ("F", Color.orangeRed),
+                ServiceType.InterHub => ("IH", Color.darkBlue),
+                ServiceType.Passenger => ("P", Color.deepSkyBlue),
+                _ => ("-", Color.gray)
+            };
         }
 
         private void Update() => UpdatePosition();
