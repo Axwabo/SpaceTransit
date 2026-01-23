@@ -108,7 +108,7 @@ namespace SpaceTransit.Audio
 
         public override void OnRouteChanged()
         {
-            _welcomePlayed = Parent.Stop is Origin;
+            _welcomePlayed = Parent.Stop is not Origin;
             _doorsState = DoorsState.None;
         }
 
