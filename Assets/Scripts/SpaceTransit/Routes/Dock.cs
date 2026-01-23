@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using SpaceTransit.Cosmos;
-using SpaceTransit.Cosmos.Actions;
 using SpaceTransit.Ships;
-using SpaceTransit.Ships.Modules;
 using SpaceTransit.Tubes;
 using UnityEngine;
 
@@ -47,23 +45,7 @@ namespace SpaceTransit.Routes
                 entry.Dock = this;
         }
 
-        protected override SafetyEnsurer AddDefaultSafety(GameObject o)
-        {
-            o.AddComponent<ExitLightHandler>().Dock = this;
-            return o.AddComponent<DockSafety>();
-        }
-
-        private sealed class ExitLightHandler : SafetyActionBase
-        {
-
-            public Dock Dock { get; set; }
-
-            public override void OnExited(ShipModule module)
-            {
-                base.OnExited(module);
-            }
-
-        }
+        protected override SafetyEnsurer AddDefaultSafety(GameObject o) => o.AddComponent<DockSafety>();
 
     }
 
