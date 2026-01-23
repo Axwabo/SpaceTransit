@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace SpaceTransit.Menu
@@ -13,6 +14,8 @@ namespace SpaceTransit.Menu
 
         private Transform _t;
 
+        private readonly List<KatieSubtitle> _instances = new();
+
         private void Awake()
         {
             _t = transform;
@@ -20,7 +23,26 @@ namespace SpaceTransit.Menu
         }
 
         public static void Add(string announcer, string text, double delay, double duration)
-            => Instantiate(_current.prefab, _current._t).SetUp(announcer, text, delay, duration);
+        {
+            var instance = Instantiate(_current.prefab, _current._t);
+            instance.SetUp(announcer, text, delay, duration);
+            _current._instances.Add(instance);
+        }
+
+        public static void Unregister(KatieSubtitle subtitle) => _current._instances.Remove(subtitle);
+
+        public static float CalculateY(KatieSubtitle subtitle)
+        {
+            var y = 0f;
+            foreach (var instance in _current._instances)
+            {
+                if (instance == subtitle)
+                    break;
+                y += subtitle.PreferredHeight + 5;
+            }
+
+            return y;
+        }
 
     }
 
