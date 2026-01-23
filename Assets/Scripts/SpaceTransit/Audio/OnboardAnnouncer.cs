@@ -1,5 +1,6 @@
 ﻿using Katie.Unity;
 using SpaceTransit.Routes;
+using SpaceTransit.Routes.Stops;
 using SpaceTransit.Ships;
 using SpaceTransit.Vaulter;
 using UnityEngine;
@@ -107,7 +108,7 @@ namespace SpaceTransit.Audio
 
         public override void OnRouteChanged()
         {
-            _welcomePlayed = false;
+            _welcomePlayed = Parent.Stop is Origin;
             _doorsState = DoorsState.None;
         }
 
