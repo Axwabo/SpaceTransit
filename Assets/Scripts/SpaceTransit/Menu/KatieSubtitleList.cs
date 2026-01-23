@@ -23,11 +23,9 @@ namespace SpaceTransit.Menu
         }
 
         public static void Add(string announcer, string text, double delay, double duration)
-        {
-            var instance = Instantiate(_current.prefab, _current._t);
-            instance.SetUp(announcer, text, delay, duration);
-            _current._instances.Add(instance);
-        }
+            => Instantiate(_current.prefab, _current._t).SetUp(announcer, text, delay, duration);
+
+        public static void Register(KatieSubtitle subtitle) => _current._instances.Add(subtitle);
 
         public static void Unregister(KatieSubtitle subtitle) => _current._instances.Remove(subtitle);
 
