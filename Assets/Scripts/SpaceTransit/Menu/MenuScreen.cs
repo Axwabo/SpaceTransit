@@ -9,11 +9,14 @@ namespace SpaceTransit.Menu
 
         public static bool IsOpen { get; private set; }
 
+        private static GameObject _current;
+
         [SerializeField]
         private GameObject ui;
 
         private void Start()
         {
+            _current = gameObject;
             IsOpen = false;
             Toggle();
         }
@@ -31,6 +34,8 @@ namespace SpaceTransit.Menu
             ui.SetActive(IsOpen = !ui.activeSelf);
             Cursor.lockState = IsOpen ? CursorLockMode.None : CursorLockMode.Locked;
         }
+
+        public static void Disable() => _current.SetActive(false);
 
     }
 

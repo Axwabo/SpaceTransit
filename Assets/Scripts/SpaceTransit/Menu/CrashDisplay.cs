@@ -28,6 +28,7 @@ namespace SpaceTransit.Menu
             var closest = Station.LoadedStations.Select(e => (Vector3.Distance(e.transform.position, position), e)).OrderBy(e => e.Item1).First();
             Current.gameObject.SetActive(true);
             Current.station.text = closest.e.Name;
+            MenuScreen.Disable();
         }
 
     }
