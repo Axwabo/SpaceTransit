@@ -44,7 +44,7 @@ namespace SpaceTransit.Audio
                     continue;
                 var distance = Vector3.Distance(position, door.Transform.position) - minDoorDistance;
                 volumeScore += (1 - Mathf.Clamp01(distance / maxDoorDistance)) * (1 - Mathf.Pow(1 - door.Openness, 2));
-                cutoffScore += door.Openness;
+                cutoffScore += door.Openness * (distance < 0 ? 1 : Mathf.Clamp01(maxDoorDistance / distance));
             }
 
             mixer.SetFloat(volumeParameter, volume.Evaluate(volumeScore));
