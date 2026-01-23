@@ -10,6 +10,9 @@ namespace SpaceTransit.Menu
         [SerializeField]
         private TextMeshProUGUI main;
 
+        [SerializeField]
+        private MonoBehaviour background;
+
         private double _activateAt;
 
         private double _removeAt;
@@ -28,7 +31,7 @@ namespace SpaceTransit.Menu
         private void Start()
         {
             _preferredSize = main.preferredHeight;
-            main.gameObject.SetActive(false);
+            main.enabled = background.enabled = false;
         }
 
         private void Update()
@@ -39,8 +42,10 @@ namespace SpaceTransit.Menu
             else if (_activated || time < _activateAt)
                 return;
             _activated = true;
-            main.gameObject.SetActive(true);
-            ((RectTransform) transform).SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _preferredSize);
+            main.enabled = background.enabled = true;
+            var t = (RectTransform) transform;
+            t.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _preferredSize);
+            t.SetAsLastSibling();
         }
 
     }
