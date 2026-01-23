@@ -5252,6 +5252,9 @@ GameObject:
   - component: {fileID: 265503716}
   - component: {fileID: 265503715}
   - component: {fileID: 265503714}
+  - component: {fileID: 265503719}
+  - component: {fileID: 265503718}
+  - component: {fileID: 265503717}
   m_Layer: 0
   m_Name: 1
   m_TagString: Untagged
@@ -5356,6 +5359,51 @@ MonoBehaviour:
   CurveChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &265503717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265503712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c51f90abf83e4ac7a02989cfc140ab73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.ExitClearer
+  exit: {fileID: 640440753}
+  forwards: 1
+  backwards: 0
+--- !u!114 &265503718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265503712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c51f90abf83e4ac7a02989cfc140ab73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.ExitClearer
+  exit: {fileID: 1705734993}
+  forwards: 1
+  backwards: 0
+--- !u!114 &265503719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265503712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c51f90abf83e4ac7a02989cfc140ab73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.ExitClearer
+  exit: {fileID: 365828933}
+  forwards: 1
+  backwards: 0
 --- !u!1001 &268557424
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8123,6 +8171,7 @@ GameObject:
   - component: {fileID: 365828933}
   - component: {fileID: 365828932}
   - component: {fileID: 365828931}
+  - component: {fileID: 365828934}
   m_Layer: 0
   m_Name: Exit
   m_TagString: Untagged
@@ -8186,7 +8235,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
   <ConnectedStation>k__BackingField: {fileID: 1110892171}
-  <Locks>k__BackingField: []
+  <Locks>k__BackingField:
+  - {fileID: 365828934}
+  - {fileID: 1705734994}
+  - {fileID: 1866757796}
+  - {fileID: 640440754}
+  - {fileID: 554397610}
+--- !u!114 &365828934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 365828929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166d277a1b5444daae45515d0c1a0690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Lock
 --- !u!1 &366756204
 GameObject:
   m_ObjectHideFlags: 0
@@ -12906,6 +12972,7 @@ GameObject:
   - component: {fileID: 554397609}
   - component: {fileID: 554397608}
   - component: {fileID: 554397607}
+  - component: {fileID: 554397610}
   m_Layer: 0
   m_Name: Entry
   m_TagString: Untagged
@@ -12969,8 +13036,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Entry
   <ConnectedStation>k__BackingField: {fileID: 1110892171}
-  <Locks>k__BackingField: []
+  <Locks>k__BackingField:
+  - {fileID: 554397610}
+  - {fileID: 365828934}
+  - {fileID: 1866757796}
+  - {fileID: 1705734994}
   <Ensurer>k__BackingField: {fileID: 1486461313}
+--- !u!114 &554397610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554397605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166d277a1b5444daae45515d0c1a0690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Lock
 --- !u!1001 &554660467
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15223,6 +15306,7 @@ GameObject:
   - component: {fileID: 640440753}
   - component: {fileID: 640440752}
   - component: {fileID: 640440751}
+  - component: {fileID: 640440754}
   m_Layer: 0
   m_Name: Exit
   m_TagString: Untagged
@@ -15286,7 +15370,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
   <ConnectedStation>k__BackingField: {fileID: 1110892171}
-  <Locks>k__BackingField: []
+  <Locks>k__BackingField:
+  - {fileID: 365828934}
+  - {fileID: 1974847291}
+  - {fileID: 640440754}
+--- !u!114 &640440754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 640440749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166d277a1b5444daae45515d0c1a0690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Lock
 --- !u!1 &642813369
 GameObject:
   m_ObjectHideFlags: 0
@@ -43775,6 +43874,7 @@ GameObject:
   - component: {fileID: 1705734993}
   - component: {fileID: 1705734992}
   - component: {fileID: 1705734991}
+  - component: {fileID: 1705734994}
   m_Layer: 0
   m_Name: Exit
   m_TagString: Untagged
@@ -43838,7 +43938,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
   <ConnectedStation>k__BackingField: {fileID: 1110892171}
-  <Locks>k__BackingField: []
+  <Locks>k__BackingField:
+  - {fileID: 1705734994}
+  - {fileID: 365828934}
+  - {fileID: 640440754}
+  - {fileID: 554397610}
+--- !u!114 &1705734994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1705734989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166d277a1b5444daae45515d0c1a0690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Lock
 --- !u!1 &1707541934
 GameObject:
   m_ObjectHideFlags: 0
@@ -48140,6 +48256,7 @@ GameObject:
   - component: {fileID: 1866757795}
   - component: {fileID: 1866757794}
   - component: {fileID: 1866757793}
+  - component: {fileID: 1866757796}
   m_Layer: 0
   m_Name: Entry
   m_TagString: Untagged
@@ -48203,8 +48320,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Entry
   <ConnectedStation>k__BackingField: {fileID: 1110892171}
-  <Locks>k__BackingField: []
+  <Locks>k__BackingField:
+  - {fileID: 1866757796}
   <Ensurer>k__BackingField: {fileID: 1486461313}
+--- !u!114 &1866757796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1866757791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166d277a1b5444daae45515d0c1a0690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Lock
 --- !u!1 &1867346322
 GameObject:
   m_ObjectHideFlags: 0
@@ -50553,6 +50683,7 @@ GameObject:
   - component: {fileID: 1974847290}
   - component: {fileID: 1974847289}
   - component: {fileID: 1974847288}
+  - component: {fileID: 1974847291}
   m_Layer: 0
   m_Name: Entry
   m_TagString: Untagged
@@ -50616,8 +50747,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Entry
   <ConnectedStation>k__BackingField: {fileID: 1110892171}
-  <Locks>k__BackingField: []
+  <Locks>k__BackingField:
+  - {fileID: 1974847291}
   <Ensurer>k__BackingField: {fileID: 1486461313}
+--- !u!114 &1974847291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974847286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166d277a1b5444daae45515d0c1a0690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Lock
 --- !u!1 &1979484211
 GameObject:
   m_ObjectHideFlags: 0
@@ -54479,7 +54623,7 @@ PrefabInstance:
     - target: {fileID: 5727188072191525428, guid: 7c2445ae2359e664baa2de94223f59fd, type: 3}
       propertyPath: startingStation
       value: 
-      objectReference: {fileID: 11400000, guid: f9f7075e912412340b15f645943b4f26, type: 2}
+      objectReference: {fileID: 11400000, guid: 188465e637fa15c4c8d8931113953e80, type: 2}
     - target: {fileID: 7464483005062417667, guid: 7c2445ae2359e664baa2de94223f59fd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -54,9 +54,7 @@ namespace SpaceTransit.Cosmos
                 if (!dock.Safety.IsOccupied)
                     return false;
                 var assembly = dock.Safety.Occupants.FirstFast().Assembly;
-                if (!assembly.Parent.CanProceed)
-                    return false;
-                if (assembly.Modules.Length != dock.Safety.Occupants.Count || _backwards != assembly.Reverse)
+                if (!assembly.Parent.CanProceed || assembly.Modules.Length != dock.Safety.Occupants.Count || _backwards != assembly.Reverse)
                     return false;
                 var exits = _backwards ? dock.BackExits : dock.FrontExits;
                 foreach (var exit in exits)
