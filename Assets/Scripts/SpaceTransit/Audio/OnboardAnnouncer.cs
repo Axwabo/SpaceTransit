@@ -75,7 +75,7 @@ namespace SpaceTransit.Audio
         {
             PlaySignal();
             if (IsTerminus)
-                _player.EnqueueWithSubtitles(announcer, $"{Parent.Stop.Station.name}. This ship terminates here. Thank you for choosing SpaceTransit. Goodbye.", pack, Assembly.IsPlayerMounted);
+                _player.EnqueueWithSubtitles(announcer, $"{Parent.Stop.Station.name}. This ship terminates here. Thank you for choosing SpaceTransit. Goodbye!", pack, Assembly.IsPlayerMounted);
             else
                 _player.Enqueue(Parent.Stop.Station.Announcement);
             PlayDoors();
