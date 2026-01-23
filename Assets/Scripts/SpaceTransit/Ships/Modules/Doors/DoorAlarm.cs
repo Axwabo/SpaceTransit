@@ -33,9 +33,6 @@ namespace SpaceTransit.Ships.Modules.Doors
         [SerializeField]
         private int max;
 
-        [SerializeField]
-        private bool smartVolume;
-
         private Material _inactive;
 
         private float _remaining;
@@ -57,7 +54,7 @@ namespace SpaceTransit.Ships.Modules.Doors
             if (_count % lightRate == 0)
                 meshRenderer.sharedMaterial = meshRenderer.sharedMaterial == _inactive ? active : _inactive;
             if (_count % soundRate == 0)
-                source.PlayOneShot(beep, smartVolume && controller.Controller.State != ShipState.WaitingForDeparture ? 0.5f : 1);
+                source.PlayOneShot(beep, controller.Smart && controller.Controller.State != ShipState.WaitingForDeparture ? 0.5f : 1);
             _remaining += interval;
             _count++;
         }

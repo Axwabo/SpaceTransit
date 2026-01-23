@@ -7,6 +7,8 @@ namespace SpaceTransit.Ships.Modules.Doors
     public sealed class DoorController : ModuleComponentBase, IDepartureBlocker
     {
 
+        private const float PreAlarmThreshold = 2f;
+
         [SerializeField]
         private bool isLeftSide;
 
@@ -34,6 +36,9 @@ namespace SpaceTransit.Ships.Modules.Doors
         [SerializeField]
         private AudioClip close;
 
+        [field: SerializeField]
+        public bool Smart { get; private set; }
+
         private float _time;
 
         private float _duration;
@@ -51,7 +56,7 @@ namespace SpaceTransit.Ships.Modules.Doors
         public bool IsCorrectSide => Parent.Thruster.Tube is Dock {Left: var openLeft, Right: var openRight}
                                      && (isLeftSide ? openLeft : openRight);
 
-        public bool AlarmActive => _state == DoorState.Closing || _state == DoorState.Open && _time < 2f;
+        public bool AlarmActive => _state == DoorState.Closing || _state == DoorState.Open && _time < PreAlarmThreshold;
 
         public float Openness { get; private set; }
 
@@ -124,6 +129,12 @@ namespace SpaceTransit.Ships.Modules.Doors
             left.localPosition = _leftOffset + new Vector3(x, 0, -z);
             right.localPosition = _rightOffset + new Vector3(x, 0, z);
             Openness = Mathf.Abs(z) / _maxSideways;
+        }
+
+        public override void OnStateChanged()
+        {
+            if (_state == DoorState.Open && Controller.State == ShipState.WaitingForDeparture && AlarmActive)
+                _time = PreAlarmThreshold + 1;
         }
 
         private enum DoorState
