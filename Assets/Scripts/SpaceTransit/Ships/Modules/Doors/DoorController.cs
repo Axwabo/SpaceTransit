@@ -48,8 +48,8 @@ namespace SpaceTransit.Ships.Modules.Doors
 
         public bool CanDepart => _state == DoorState.Closed;
 
-        private bool IsCorrectSide => Parent.Thruster.Tube is Dock {Left: var openLeft, Right: var openRight}
-                                      && (isLeftSide ? openLeft : openRight);
+        public bool IsCorrectSide => Parent.Thruster.Tube is Dock {Left: var openLeft, Right: var openRight}
+                                     && (isLeftSide ? openLeft : openRight);
 
         public bool AlarmActive => _state == DoorState.Closing || _state == DoorState.Open && _time < 2f;
 
