@@ -5,6 +5,8 @@ using UnityEngine;
 public sealed class TimeOnly
 {
 
+    public const string Format = "hh':'mm";
+
     [SerializeField]
     private int hours;
 
@@ -30,5 +32,7 @@ public sealed class TimeOnly
     public static bool operator <(TimeOnly timeOnly, TimeSpan span) => timeOnly.Value < span;
 
     public static bool operator <=(TimeOnly timeOnly, TimeSpan span) => timeOnly.Value <= span;
+
+    public override string ToString() => Value.ToString(Format);
 
 }

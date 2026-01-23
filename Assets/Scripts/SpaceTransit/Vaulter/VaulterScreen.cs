@@ -17,9 +17,11 @@ namespace SpaceTransit.Vaulter
         private RouteList routes;
 
         [SerializeField]
-        private GameObject stops;
+        private StopList stops;
 
         private GameObject _routes;
+
+        private GameObject _stops;
 
         private bool _routesVisible = true;
 
@@ -27,6 +29,7 @@ namespace SpaceTransit.Vaulter
         {
             base.Awake();
             _routes = routes.gameObject;
+            _stops = stops.gameObject;
         }
 
         private void Update()
@@ -45,7 +48,7 @@ namespace SpaceTransit.Vaulter
 
             _routesVisible = false;
             _routes.SetActive(false);
-            stops.SetActive(true);
+            _stops.SetActive(true);
             title.text = $"{Parent.Route.name} {Parent.Route.Summary()}";
         }
 
@@ -53,7 +56,7 @@ namespace SpaceTransit.Vaulter
         {
             _routesVisible = true;
             _routes.SetActive(true);
-            stops.SetActive(false);
+            _stops.SetActive(false);
             title.text = "Pick a Route";
         }
 
@@ -61,12 +64,16 @@ namespace SpaceTransit.Vaulter
         {
             if (_routesVisible)
                 routes.Navigate(forwards);
+            else
+                stops.Navigate(forwards);
         }
 
         public void Confirm()
         {
             if (_routesVisible)
                 routes.Confirm();
+            else
+                stops.ResetPosition();
         }
 
     }
