@@ -16,7 +16,7 @@ namespace SpaceTransit.Menu
 
         private bool _activated;
 
-        public float PreferredHeight { get; private set; }
+        private float _preferredSize;
 
         public void SetUp(string announcer, string text, double delay, double duration)
         {
@@ -27,7 +27,7 @@ namespace SpaceTransit.Menu
 
         private void Start()
         {
-            PreferredHeight = main.preferredHeight;
+            _preferredSize = main.preferredHeight;
             main.gameObject.SetActive(false);
         }
 
@@ -40,11 +40,8 @@ namespace SpaceTransit.Menu
                 return;
             _activated = true;
             main.gameObject.SetActive(true);
-            KatieSubtitleList.Register(this);
-            ((RectTransform) transform).anchoredPosition = new Vector2(0, -KatieSubtitleList.CalculateY(this));
+            ((RectTransform) transform).SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _preferredSize);
         }
-
-        private void OnDestroy() => KatieSubtitleList.Unregister(this);
 
     }
 
