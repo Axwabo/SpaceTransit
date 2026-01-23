@@ -13,26 +13,28 @@ namespace SpaceTransit.Vaulter
 
         public List<ArrivalEntry> Arrivals { get; private set; }
 
+        public StationId StationId { get; private set; }
+
         private void Awake()
         {
+            StationId = GetComponent<Station>().ID;
             var departures = new List<DepartureEntry>();
             var arrivals = new List<ArrivalEntry>();
-            var id = GetComponent<Station>().ID;
             foreach (var route in Cache.Routes)
             {
-                if (route.Origin.Station.name == id.name)
+                if (route.Origin.Station.name == StationId.name)
                 {
                     departures.Add(new DepartureEntry(route, -1, route.Origin));
                     continue;
                 }
 
-                if (route.Destination.Station.name == id.name)
+                if (route.Destination.Station.name == StationId.name)
                 {
                     arrivals.Add(new ArrivalEntry(route, -1, route.Destination));
                     continue;
                 }
 
-                AddIntermediateStops(route, id, departures, arrivals);
+                AddIntermediateStops(route, StationId, departures, arrivals);
             }
 
             departures.Sort(static (a, b) => a.Departure.Departure.Value.CompareTo(b.Departure.Departure.Value));
