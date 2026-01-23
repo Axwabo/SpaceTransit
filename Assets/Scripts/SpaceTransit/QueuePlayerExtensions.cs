@@ -19,8 +19,9 @@ namespace SpaceTransit
 
             var currentEnd = queue.EndDspTime;
             var duration = queue.EnqueueAnnouncement(announcement, pack, signal);
-            var delay = Math.Max(0, currentEnd - AudioSettings.dspTime) + (signal ? signal.Duration : 0);
-            KatieSubtitleList.Add(name, announcement, delay, duration.TotalSeconds);
+            var signalDuration = signal ? signal.Duration : 0;
+            var delay = queue.IsYapping ? Math.Max(0, currentEnd - AudioSettings.dspTime) : 0;
+            KatieSubtitleList.Add(name, announcement, delay + signalDuration, duration.TotalSeconds);
         }
 
         public static void EnqueueWithSubtitles(this QueuePlayer queue, string name, string announcement, PhrasePack pack, bool showSubtitle)
