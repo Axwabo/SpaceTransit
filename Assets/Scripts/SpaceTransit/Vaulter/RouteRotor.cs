@@ -36,6 +36,8 @@ namespace SpaceTransit.Vaulter
 
         private TimeSpan _at;
 
+        private int _day;
+
         private bool CompletedRoute => _ship.Stop is Destination && _ship.Parent.State == ShipState.Docked && _ship.Assembly.IsStationary() && !_ship.Assembly.IsManuallyDriven;
 
         private void Awake()
@@ -46,6 +48,7 @@ namespace SpaceTransit.Vaulter
 
         private void Start()
         {
+            _day = Clock.Date.Day;
             for (_index = 0; _index < routes.Length; _index++)
             {
                 var route = routes[_index];
@@ -75,7 +78,6 @@ namespace SpaceTransit.Vaulter
             _ship = Instantiate(prefab, World.Current);
             _ship.GetComponent<ShipAssembly>().startTube = station.Docks[destination.DockIndex];
             _state = State.Completed;
-            enabled = false;
         }
 
         private static bool ShouldSpawn(IntermediateStop stop)
@@ -170,7 +172,7 @@ namespace SpaceTransit.Vaulter
                     _at = routes[0].Origin.Departure.Value - TimeSpan.FromHours(1);
                     break;
                 case State.WaitingForNextDay:
-                    if (_ship.Assembly.IsManuallyDriven)
+                    if (_ship.Assembly.IsManuallyDriven || _day == Clock.Date.Day)
                         break;
                     _ship.BeginRoute(routes[0]);
                     _state = State.Sailing;

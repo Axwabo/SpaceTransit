@@ -9,9 +9,13 @@ namespace SpaceTransit
     public sealed class Clock : MonoBehaviour
     {
 
+        private static readonly DateTime Today = DateTime.Today;
+
         public static double OffsetSeconds { get; set; }
 
-        public static TimeSpan Now => DateTime.Today.Add(StartTime).Add(TimeSpan.FromSeconds(Time.timeSinceLevelLoadAsDouble + OffsetSeconds)).TimeOfDay;
+        public static DateTime Date => Today.Add(StartTime).AddSeconds(Time.timeSinceLevelLoadAsDouble + OffsetSeconds);
+
+        public static TimeSpan Now => Date.TimeOfDay;
 
         public static float UnscaledDelta => Mathf.Min(0.3f, Time.unscaledDeltaTime);
 
