@@ -15,6 +15,8 @@ namespace SpaceTransit.Cosmos
         {
             if (!assembly.IsStationary())
                 return base.CanProceed(assembly);
+            if (assembly.Reverse ? !Tube.HasPrevious : !Tube.HasNext)
+                return false;
             var exits = assembly.Reverse ? Dock.BackExits : Dock.FrontExits;
             if (exits.Length == 0)
                 return base.CanProceed(assembly);
