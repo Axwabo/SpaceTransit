@@ -134,7 +134,7 @@ namespace SpaceTransit.Vaulter
             if (_entry && !_entry.IsFree)
                 return;
             Spawn(routes[_index]);
-            _ship.initialStopIndex = _startingStop - 1;
+            _ship.initialStopIndex = _startingStop;
             _ship.GetComponent<ShipAssembly>().startTube = _tube;
             _state = State.Ready;
             if (!_entry)
