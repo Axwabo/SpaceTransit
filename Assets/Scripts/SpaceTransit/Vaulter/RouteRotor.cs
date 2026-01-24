@@ -166,7 +166,14 @@ namespace SpaceTransit.Vaulter
                     break;
                 case State.Completed:
                     _ship.ExitService();
-                    enabled = false;
+                    _state = State.WaitingForNextDay;
+                    _at = routes[0].Origin.Departure.Value - TimeSpan.FromHours(1);
+                    break;
+                case State.WaitingForNextDay:
+                    if (_ship.Assembly.IsManuallyDriven)
+                        break;
+                    _ship.BeginRoute(routes[0]);
+                    _state = State.Sailing;
                     break;
             }
         }
@@ -198,7 +205,8 @@ namespace SpaceTransit.Vaulter
             Ready,
             Sailing,
             Rotating,
-            Completed
+            Completed,
+            WaitingForNextDay
 
         }
 

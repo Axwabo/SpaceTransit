@@ -16,6 +16,12 @@ namespace SpaceTransit.Editor
             var rotor = (RouteRotor) target;
             var lastTime = TimeSpan.Zero;
             StationId lastStop = null;
+            if (!IsMidnightResetInvalid(rotor))
+            {
+                base.OnInspectorGUI();
+                return;
+            }
+
             foreach (var descriptor in rotor.routes)
             {
                 if (!descriptor)
@@ -27,6 +33,23 @@ namespace SpaceTransit.Editor
             }
 
             base.OnInspectorGUI();
+        }
+
+        private static bool IsMidnightResetInvalid(RouteRotor rotor)
+        {
+            if (rotor.routes.Length == 0)
+                return true;
+            var origin = rotor.routes[0].Origin;
+            var destination = rotor.routes[^1].Destination;
+            if (origin.Station != destination.Station)
+            {
+                EditorGUILayout.HelpBox($"Midnight reset is not possible!\n{rotor.routes[0].name} origin != {rotor.routes[^1].name} destination", MessageType.Error);
+                return false;
+            }
+
+            if (origin.DockIndex != destination.DockIndex)
+                EditorGUILayout.HelpBox($"Midnight reset dock mismatch!\n{rotor.routes[0].name} dock != {rotor.routes[^1].name} dock", MessageType.Warning);
+            return true;
         }
 
         private static bool IsInvalid(RouteDescriptor descriptor, TimeSpan lastTime, StationId lastStop)

@@ -9,11 +9,9 @@ namespace SpaceTransit
     public sealed class Clock : MonoBehaviour
     {
 
-        private static TimeSpan _startTime = DateTime.Now.TimeOfDay;
-
         public static double OffsetSeconds { get; set; }
 
-        public static TimeSpan Now => _startTime.Add(TimeSpan.FromSeconds(Time.timeSinceLevelLoadAsDouble + OffsetSeconds));
+        public static TimeSpan Now => DateTime.Today.Add(StartTime).Add(TimeSpan.FromSeconds(Time.timeSinceLevelLoadAsDouble + OffsetSeconds)).TimeOfDay;
 
         public static float UnscaledDelta => Mathf.Min(0.3f, Time.unscaledDeltaTime);
 
@@ -21,11 +19,7 @@ namespace SpaceTransit
 
         public static float FixedDelta => Mathf.Min(0.3f, Time.fixedUnscaledDeltaTime) * Time.timeScale;
 
-        public static TimeSpan StartTime
-        {
-            get => _startTime;
-            set => _startTime = value;
-        }
+        public static TimeSpan StartTime { get; set; } = DateTime.Now.TimeOfDay;
 
         private TextMeshProUGUI _text;
 
@@ -39,7 +33,7 @@ namespace SpaceTransit
             if (!TryGetComponent(out _text))
                 Destroy(this);
             if (TimeSpan.TryParse(start, CultureInfo.InvariantCulture, out var startTime))
-                _startTime = startTime;
+                StartTime = startTime;
         }
 
         private void Update()
