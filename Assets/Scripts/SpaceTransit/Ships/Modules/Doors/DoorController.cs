@@ -133,7 +133,7 @@ namespace SpaceTransit.Ships.Modules.Doors
 
         public override void OnStateChanged()
         {
-            if (_state == DoorState.Open && Controller.State == ShipState.WaitingForDeparture && AlarmActive)
+            if (Smart && _state == DoorState.Open && Controller.State == ShipState.WaitingForDeparture && AlarmActive)
                 _time = PreAlarmThreshold + 1;
         }
 
