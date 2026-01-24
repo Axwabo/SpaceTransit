@@ -122,7 +122,6 @@ The route system wasn't designed with this in mind initially, it'll require a sl
 
 # Notes/Issues
 
-- Exit list might not show
 - Lower-end devices will most likely face issues with lag, therefore overruns
 - Sometimes, the ship might overrun the dock; in this case you need to restart, e.g.
     - Starting at Mountypile, 09:59:00 causes 46 to overrun Cárpenter
