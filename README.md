@@ -117,7 +117,7 @@ The route system wasn't designed with this in mind initially, it'll require a sl
 - [X] Support for multiple entries per dock
 - [X] Control panel improvements
 - [X] Resuming at any time
-- [ ] Support midnight reset
+- [X] Support midnight reset
 - [X] Automatic ship route rotation
 
 # Notes/Issues
