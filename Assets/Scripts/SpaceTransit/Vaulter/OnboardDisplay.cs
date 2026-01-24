@@ -49,7 +49,7 @@ namespace SpaceTransit.Vaulter
             }
 
             var (text, color) = Parent.Route.GetAbbreviation();
-            _route = $"<color={color.ToHex()}>{text}</color> » {Parent.Route.Destination.Station.name}";
+            _route = $"<mark=#cccccc09><size=0>.</size><space=0.2em><color={color.ToHex()}>{text}</color><space=0.2em><size=0>.</size></mark> » {Parent.Route.Destination.Station.name}";
         }
 
         private enum InformationType
