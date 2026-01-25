@@ -8,11 +8,14 @@ namespace SpaceTransit.Cosmos
     {
 
         [SerializeField]
-        private SafetyEnsurer[] others;
+        private SafetyEnsurer[] forwards;
+
+        [SerializeField]
+        private SafetyEnsurer[] backwards;
 
         public override bool CanProceed(ShipAssembly assembly)
         {
-            foreach (var ensurer in others)
+            foreach (var ensurer in assembly.Reverse ? backwards : forwards)
                 if (!ensurer.CanProceed(assembly))
                     return false;
             return true;

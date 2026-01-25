@@ -3052,6 +3052,9 @@ GameObject:
   - component: {fileID: 131233257}
   - component: {fileID: 131233256}
   - component: {fileID: 131233259}
+  - component: {fileID: 131233262}
+  - component: {fileID: 131233261}
+  - component: {fileID: 131233260}
   m_Layer: 0
   m_Name: 2 to S
   m_TagString: Untagged
@@ -3171,6 +3174,48 @@ MonoBehaviour:
   exit: {fileID: 1552293570}
   forwards: 0
   backwards: 1
+--- !u!114 &131233260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131233254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42172e678ab24d2d8fb4fb6e0da3da42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.SpecificSegmentsSafety
+  tubes:
+  - {fileID: 131233256}
+--- !u!114 &131233261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131233254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb0710ee48904aecb700499073be6e21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.NextSegmentSafety
+--- !u!114 &131233262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131233254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b233588643e84fa0bc13a2ce95f4f168, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.AggregateSafety
+  forwards:
+  - {fileID: 131233261}
+  backwards:
+  - {fileID: 131233261}
 --- !u!1 &131315769
 GameObject:
   m_ObjectHideFlags: 0
