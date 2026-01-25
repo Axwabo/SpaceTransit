@@ -71,8 +71,14 @@ namespace SpaceTransit.Ships.Modules.Doors
 
         public void RequestOpen()
         {
-            if (State != ShipState.Docked || _state is DoorState.Opening or DoorState.Open || !IsCorrectSide)
+            if (State != ShipState.Docked || _state is DoorState.Opening || !IsCorrectSide)
                 return;
+            if (_state == DoorState.Open)
+            {
+                _time = Mathf.Max(_time, PreAlarmThreshold + 3);
+                return;
+            }
+
             _state = DoorState.Opening;
             source.clip = open;
             source.Play();
