@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using SpaceTransit.Cosmos;
+using SpaceTransit.Routes;
 
 namespace SpaceTransit.Ships.Driving.Screens
 {
@@ -7,7 +8,7 @@ namespace SpaceTransit.Ships.Driving.Screens
     public sealed class EntryList : ListBase<Entry, PickablePicker>
     {
 
-        private string _previousStationName;
+        private StationId _previousStation;
 
         private EntryEnsurer _ensurer;
 
@@ -15,6 +16,8 @@ namespace SpaceTransit.Ships.Driving.Screens
         {
             if (State != ShipState.Sailing)
                 Clear();
+            if (State == ShipState.Docked)
+                _previousStation = null;
         }
 
         private void OnEnable()
@@ -34,10 +37,10 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private void UpdateStation(EntryEnsurer ensurer)
         {
-            var stationName = ensurer.station.ID.name;
-            if (_previousStationName == stationName)
+            var station = ensurer.station.ID;
+            if (_previousStation == station)
                 return;
-            _previousStationName = stationName;
+            _previousStation = station;
             _ensurer = ensurer;
             _ensurer.Entries.Sort(static (a, b) => a.Dock.Index - b.Dock.Index);
             Clear();
