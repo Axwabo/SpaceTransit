@@ -24,7 +24,7 @@ namespace SpaceTransit.Cosmos.Actions
 
         public override void OnEntered(ShipModule module)
         {
-            if (exit && Ensurer.Occupants.Count == module.Assembly.Modules.Length && Direction(module))
+            if (enter && Ensurer.Occupants.Count == module.Assembly.Modules.Length && Direction(module))
                 locks.Release(module.Assembly);
         }
 
