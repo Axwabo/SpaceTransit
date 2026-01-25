@@ -9,10 +9,15 @@ namespace SpaceTransit.Cosmos
     public sealed class DockSafety : NextSegmentSafety
     {
 
+        [SerializeField]
+        private Lock[] locks;
+
         private Dock Dock => (Dock) Tube;
 
         public override bool CanProceed(ShipAssembly assembly)
         {
+            if (locks != null && !locks.CanClaim(assembly))
+                return false;
             if (!assembly.IsStationary())
                 return base.CanProceed(assembly);
             if (assembly.Reverse ? !Tube.HasPrevious : !Tube.HasNext)
