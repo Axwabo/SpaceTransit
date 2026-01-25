@@ -5705,6 +5705,50 @@ MonoBehaviour:
   exit: {fileID: 365828933}
   forwards: 1
   backwards: 0
+--- !u!1 &267227461
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 267227463}
+  - component: {fileID: 267227462}
+  m_Layer: 0
+  m_Name: Lock
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &267227462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 267227461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166d277a1b5444daae45515d0c1a0690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Lock
+--- !u!4 &267227463
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 267227461}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1053807052}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &268557424
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9336,6 +9380,7 @@ GameObject:
   - component: {fileID: 393225745}
   - component: {fileID: 393225747}
   - component: {fileID: 393225744}
+  - component: {fileID: 393225748}
   m_Layer: 0
   m_Name: 2
   m_TagString: Untagged
@@ -9440,6 +9485,19 @@ MonoBehaviour:
   updateInPlayMode: 1
   curveSpace: 0
   mode: 1
+--- !u!114 &393225748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 393225743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e9e199b65c24ae48f193b1c5f318c48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.LockBasedSafety
+  lock: {fileID: 267227462}
 --- !u!1 &394756697
 GameObject:
   m_ObjectHideFlags: 0
@@ -12804,6 +12862,8 @@ GameObject:
   - component: {fileID: 534030253}
   - component: {fileID: 534030252}
   - component: {fileID: 534030251}
+  - component: {fileID: 534030255}
+  - component: {fileID: 534030254}
   m_Layer: 0
   m_Name: 1 to Colzalodge
   m_TagString: Untagged
@@ -12908,6 +12968,32 @@ MonoBehaviour:
   CurveChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &534030254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534030249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20d8ac9c54064ad2be4ce6ebe77ffe46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.LockTaker
+  lock: {fileID: 267227462}
+--- !u!114 &534030255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534030249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e9e199b65c24ae48f193b1c5f318c48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.LockBasedSafety
+  lock: {fileID: 267227462}
 --- !u!1 &534736203
 GameObject:
   m_ObjectHideFlags: 0
@@ -18243,6 +18329,7 @@ GameObject:
   - component: {fileID: 735695628}
   - component: {fileID: 735695625}
   - component: {fileID: 735695630}
+  - component: {fileID: 735695631}
   m_Layer: 0
   m_Name: 5
   m_TagString: Untagged
@@ -18361,6 +18448,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.EntryEnsurer
   station: {fileID: 1445144226}
   <Backwards>k__BackingField: 0
+--- !u!114 &735695631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735695624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e9e199b65c24ae48f193b1c5f318c48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.LockBasedSafety
+  lock: {fileID: 267227462}
 --- !u!1 &735817169
 GameObject:
   m_ObjectHideFlags: 0
@@ -22487,6 +22587,7 @@ GameObject:
   - component: {fileID: 939145603}
   - component: {fileID: 939145605}
   - component: {fileID: 939145602}
+  - component: {fileID: 939145606}
   m_Layer: 0
   m_Name: 3
   m_TagString: Untagged
@@ -22591,6 +22692,19 @@ MonoBehaviour:
   updateInPlayMode: 1
   curveSpace: 0
   mode: 1
+--- !u!114 &939145606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 939145601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e9e199b65c24ae48f193b1c5f318c48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.LockBasedSafety
+  lock: {fileID: 267227462}
 --- !u!1 &939616889
 GameObject:
   m_ObjectHideFlags: 0
@@ -25907,6 +26021,7 @@ Transform:
   - {fileID: 939145604}
   - {fileID: 1147033417}
   - {fileID: 735695627}
+  - {fileID: 267227463}
   m_Father: {fileID: 1509033091}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1055466504
@@ -28125,6 +28240,7 @@ GameObject:
   - component: {fileID: 1147033416}
   - component: {fileID: 1147033418}
   - component: {fileID: 1147033415}
+  - component: {fileID: 1147033419}
   m_Layer: 0
   m_Name: 4
   m_TagString: Untagged
@@ -28229,6 +28345,19 @@ MonoBehaviour:
   updateInPlayMode: 1
   curveSpace: 0
   mode: 1
+--- !u!114 &1147033419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147033414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e9e199b65c24ae48f193b1c5f318c48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.LockBasedSafety
+  lock: {fileID: 267227462}
 --- !u!1 &1150149994
 GameObject:
   m_ObjectHideFlags: 0
@@ -48540,7 +48669,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d616c78e98b406b9d69df89514a61f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.DockSafety
-  locks: []
+  locks:
+  - {fileID: 267227462}
 --- !u!114 &1834585965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50418,6 +50548,7 @@ GameObject:
   - component: {fileID: 1918170750}
   - component: {fileID: 1918170747}
   - component: {fileID: 1918170751}
+  - component: {fileID: 1918170752}
   m_Layer: 0
   m_Name: 1
   m_TagString: Untagged
@@ -50536,6 +50667,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.EntryEnsurer
   station: {fileID: 310053355}
   <Backwards>k__BackingField: 1
+--- !u!114 &1918170752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1918170746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e9e199b65c24ae48f193b1c5f318c48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.LockBasedSafety
+  lock: {fileID: 267227462}
 --- !u!1 &1928740074
 GameObject:
   m_ObjectHideFlags: 0

@@ -133,12 +133,14 @@ namespace SpaceTransit.Vaulter
 
         private void SpawnAtEntry()
         {
-            if (_entry && !_entry.IsFree)
+            if (_entry && !_entry.IsFree || _tube.Safety is LockBasedSafety {IsFree: false})
                 return;
             Spawn(routes[_index]);
             _ship.initialStopIndex = _startingStop;
             _ship.GetComponent<ShipAssembly>().startTube = _tube;
             _state = State.Ready;
+            if (_tube.Safety is LockBasedSafety lockBasedSafety)
+                lockBasedSafety.Claim(_ship.Assembly);
             if (!_entry)
                 return;
             foreach (var remapper in _entry.Remappers)
