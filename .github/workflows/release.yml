@@ -29,31 +29,9 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
 
-      - name: Reset Branch
-        run: git checkout .
-        
-      - name: Wait
-        run: sleep 30 # manually run git clean -xdf
-
-      - name: Create Linux Docker image with Blender
-        run: docker build --build-arg GAME_CI_UNITY_EDITOR_IMAGE=unityci/editor:ubuntu-6000.2.10f1-base-3.2.1 . -t axwabo/unity-blender-linux
-
-      - name: Build for Linux
-        uses: ./.github/actions/build
-        with:
-          platform: StandaloneLinux64
-          image: axwabo/unity-blender-linux
-          name: SpaceTransit
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-
       - working-directory: bundle/StandaloneWindows64
         run: zip -r ${{ github.workspace }}/SpaceTransit-win-x64.zip .
 
-      - working-directory: bundle/StandaloneLinux64
-        run: zip -r ${{ github.workspace }}/SpaceTransit-linux-x64.zip .
-
       - uses: softprops/action-gh-release@v2
         with:
-          files: SpaceTransit-win-x64.zip,SpaceTransit-linux-x64.zip
+          files: SpaceTransit-win-x64.zip
