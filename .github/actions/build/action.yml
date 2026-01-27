@@ -23,10 +23,6 @@ runs:
   using: composite
   steps:
 
-    - name: Set HOME
-      run: export HOME=/home/github
-      shell: bash
-
     - uses: game-ci/unity-builder@v4.7.0
       env:
         UNITY_LICENSE: ${{ inputs.UNITY_LICENSE }}
