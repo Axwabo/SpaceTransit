@@ -30,7 +30,8 @@ runs:
         UNITY_PASSWORD: ${{ inputs.UNITY_PASSWORD }}
       with:
         targetPlatform: ${{ inputs.platform }}
-        customImage: ${{ inputs.image }}      
+        customImage: ${{ inputs.image }}
+        runAsHostUser: true
 
     - name: Copy
       shell: bash
