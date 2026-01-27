@@ -14,3 +14,4 @@ RUN apt-get update && \
     rm blender-$BLENDER_FULL_VERSION-linux-x64.tar.xz
 
 ENV PATH="$PATH:/blender-$BLENDER_FULL_VERSION-linux-x64"
+ENV HOME="/home/github"
