@@ -25,14 +25,12 @@ runs:
 
     - uses: game-ci/unity-builder@v4.7.0
       env:
-        HOME: /home/github
         UNITY_LICENSE: ${{ inputs.UNITY_LICENSE }}
         UNITY_EMAIL: ${{ inputs.UNITY_EMAIL }}
         UNITY_PASSWORD: ${{ inputs.UNITY_PASSWORD }}
       with:
         targetPlatform: ${{ inputs.platform }}
         customImage: ${{ inputs.image }}
-        runAsHostUser: true
 
     - name: Copy
       shell: bash
