@@ -35,6 +35,7 @@ runs:
       with:
         targetPlatform: ${{ inputs.platform }}
         customImage: ${{ inputs.image }}
+        runAsHostUser: true
 
     - name: Copy
       shell: bash
