@@ -13119,7 +13119,6 @@ GameObject:
   m_Component:
   - component: {fileID: 533906738}
   - component: {fileID: 533906739}
-  - component: {fileID: 533906740}
   m_Layer: 0
   m_Name: World
   m_TagString: Untagged
@@ -13160,19 +13159,6 @@ MonoBehaviour:
   speedLimitSignPrefab: {fileID: 4865539001538094997, guid: 1b219a4df7fa12a48849495a1389784a, type: 3}
   stationSignPrefab: {fileID: 8456968034853950967, guid: e71e74ef257513e408c9378be7f7860f, type: 3}
   extraRoutes: []
---- !u!114 &533906740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 533906737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 245a8679f4054783a7761f3c513a4c7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Clock
-  start: 09:48:00
 --- !u!1 &534030249
 GameObject:
   m_ObjectHideFlags: 0
@@ -15158,7 +15144,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: baefde1b5cbc398d7848a88e935d1a3a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2138056344}
   m_SourcePrefab: {fileID: 100100000, guid: baefde1b5cbc398d7848a88e935d1a3a, type: 3}
 --- !u!4 &596863722 stripped
 Transform:
@@ -57626,6 +57615,32 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a9824aa516053415284c691e51ccde2d, type: 3}
   m_PrefabInstance: {fileID: 2134843242}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2138056341 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: baefde1b5cbc398d7848a88e935d1a3a, type: 3}
+  m_PrefabInstance: {fileID: 596863721}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &2138056344
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2138056341}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 48, y: 2, z: 19.999996}
+  m_Center: {x: 0, y: -1, z: 10}
 --- !u!1 &2143976674
 GameObject:
   m_ObjectHideFlags: 0
