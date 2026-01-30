@@ -12,11 +12,13 @@ It's dynamic, making it fairly easy to add stations in the Unity editor.
 Several FLASH and ROSS ships serve numerous stations based on timetables.
 Currently, only 1 line has been built.
 
+The ships' ambience are designed to be both realistic and pleasing to listen to.
+
 # Gameplay
 
-> [!IMPORTANT]
-> If the world doesn't load, or you fall out, press `Tab` to (re)open the menu, click `Exit`
-> to go back to the main menu and try again.
+> [!NOTE]
+> Due to arithmetic issues on WebGL and Linux, the game is only released for windows.
+> If you're using Linux, run the game with Wine.
 
 https://github.com/user-attachments/assets/7f9684a1-b117-4cc3-a586-91d0505a9167
 
@@ -132,6 +134,7 @@ having to specify the audio clips in the correct order per announcement.
 - Lower-end devices will most likely face issues with lag, therefore overruns
 - Sometimes, the ship might overrun the dock; in this case you need to restart, e.g.
     - Starting at Mountypile, 09:59:00 causes 46 to overrun Cárpenter
+- Subtitles trigger before the signal (K.A.T.I.E. issue)
 
 Future plans:
 
