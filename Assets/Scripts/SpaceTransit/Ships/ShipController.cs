@@ -44,8 +44,7 @@ namespace SpaceTransit.Ships
                                );
 
         public bool CanLiftOff => State == ShipState.WaitingForDeparture
-                                  && Assembly.Modules.All(e => e.CanDepart)
-                                  && Assembly.FrontModule.Thruster.Tube.Safety.CanProceed(Assembly);
+                                  && Assembly.Modules.All(e => e.CanDepart);
 
         public bool CanProceed { get; private set; }
 
