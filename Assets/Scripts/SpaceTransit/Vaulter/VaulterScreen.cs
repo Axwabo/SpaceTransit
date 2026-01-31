@@ -1,4 +1,5 @@
-﻿using SpaceTransit.Routes.Stops;
+﻿using SpaceTransit.Routes;
+using SpaceTransit.Routes.Stops;
 using SpaceTransit.Ships;
 using SpaceTransit.Ships.Driving.Screens;
 using TMPro;
@@ -34,7 +35,11 @@ namespace SpaceTransit.Vaulter
 
         private void Update()
         {
-            if (!_routesVisible && Parent.Stop is Destination && Controller.State == ShipState.Docked)
+            if (!_routesVisible
+                && Parent.Stop is Destination
+                && Controller.State == ShipState.Docked
+                && Assembly.FrontModule.Thruster.Tube is Dock dock
+                && dock.Station.ID == Parent.Stop.Station)
                 ShowRoutes();
         }
 
