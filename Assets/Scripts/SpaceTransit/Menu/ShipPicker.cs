@@ -23,9 +23,8 @@ namespace SpaceTransit.Menu
             base.Awake();
             _text = GetComponentInChildren<TextMeshProUGUI>();
             Click();
+            _current.gameObject.AddComponent<ParentFixer>();
         }
-
-        private void Start() => _current.transform.SetParent(World.Current, false);
 
         protected override void Click()
         {
@@ -39,6 +38,17 @@ namespace SpaceTransit.Menu
         }
 
         private int Wrap(int index) => index >= options.Length ? 0 : index;
+
+        private sealed class ParentFixer : MonoBehaviour
+        {
+
+            public void Start()
+            {
+                transform.SetParent(World.Current, false);
+                Destroy(this);
+            }
+
+        }
 
     }
 
