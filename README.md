@@ -22,9 +22,9 @@ The ships' ambience are designed to be both realistic and pleasing to listen to.
 
 > [!NOTE]
 > Due to arithmetic issues on WebGL and Linux, the game is only released for windows.
-> If you're using Linux, run the game with Wine.
+> If you're using Linux, try running the game through Wine.
 
-https://github.com/user-attachments/assets/7f9684a1-b117-4cc3-a586-91d0505a9167
+[Demo video](https://drive.google.com/file/d/1Virw7fymaTBwmYMiQ48qmPxuOAxKdhMJ/view?usp=sharing)
 
 Ships are automatically controlled by default. The player can choose to manually "drive" a ship.
 
