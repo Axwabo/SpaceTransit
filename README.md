@@ -16,6 +16,10 @@ The ships' ambience are designed to be both realistic and pleasing to listen to.
 
 # Gameplay
 
+> [!IMPORTANT]
+> If you fall out of the world, press `Tab` to open the menu, click `Exit`
+> to go back to the main menu and try again.
+
 > [!NOTE]
 > Due to arithmetic issues on WebGL and Linux, the game is only released for windows.
 > If you're using Linux, run the game with Wine.
