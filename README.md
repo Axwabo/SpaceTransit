@@ -96,7 +96,7 @@ Creating the new ROSS ship model took nearly 9 hours
 
 # Resuming
 
-You can "continue" playing at any time between 5:00:00 AM and 9:59:59 PM.
+You can "continue" playing at any time.
 
 The ships are spawned according to the current time and the timetables:
 
