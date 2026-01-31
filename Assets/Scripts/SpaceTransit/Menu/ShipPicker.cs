@@ -22,9 +22,10 @@ namespace SpaceTransit.Menu
         {
             base.Awake();
             _text = GetComponentInChildren<TextMeshProUGUI>();
+            Click();
         }
 
-        private void Start() => Click();
+        private void Start() => _current.transform.SetParent(World.Current, false);
 
         protected override void Click()
         {
