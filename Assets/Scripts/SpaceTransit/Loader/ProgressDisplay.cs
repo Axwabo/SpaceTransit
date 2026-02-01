@@ -18,12 +18,15 @@ namespace SpaceTransit.Loader
         private GameObject menu;
 
         [SerializeField]
-        private Camera cam;
+        private GameObject cam;
+
+        private bool _any;
 
         private void Update()
         {
-            if (GradualTubeLoader.Instances.Count == 0)
+            if (!_any && GradualTubeLoader.Instances.Count == 0)
                 return;
+            _any = true;
             var total = 0;
             var loaded = 0;
             foreach (var loader in GradualTubeLoader.Instances)
@@ -32,8 +35,6 @@ namespace SpaceTransit.Loader
                 loaded += loader.Index;
             }
 
-            if (total == 0)
-                return;
             var progress = total / (float) loaded;
             text.text = progress.ToString("P0");
             rect.localScale = new Vector3(progress, 1);
