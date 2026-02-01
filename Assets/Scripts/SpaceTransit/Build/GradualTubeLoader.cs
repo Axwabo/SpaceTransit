@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using SpaceTransit.Loader;
 using UnityEngine;
 
 namespace SpaceTransit.Build
@@ -7,23 +7,28 @@ namespace SpaceTransit.Build
     public sealed class GradualTubeLoader : MonoBehaviour
     {
 
-        public static HashSet<GradualTubeLoader> Instances { get; } = new();
-
         [field: SerializeField]
         public GameObject[] Load { get; set; }
 
         [field: SerializeField]
         public GameObject[] Activate { get; set; }
 
-        public int Index { get; private set; }
+        private int _index;
 
-        private void Awake() => Instances.Add(this);
+        private LoadingProgress _progress;
+
+        private void Start()
+        {
+            _progress = new LoadingProgress(Load.Length);
+            ProgressDisplay.Reports.Add(_progress);
+        }
 
         private void FixedUpdate()
         {
-            Load[Index].SetActive(true);
-            if (++Index >= Load.Length)
+            Load[_index].SetActive(true);
+            if (++_index >= Load.Length)
                 Complete();
+            _progress.Current = _index;
             Clock.OffsetSeconds = -Time.timeSinceLevelLoadAsDouble;
         }
 
@@ -33,8 +38,6 @@ namespace SpaceTransit.Build
             foreach (var o in Activate)
                 o.SetActive(true);
         }
-
-        private void OnDestroy() => Instances.Remove(this);
 
     }
 

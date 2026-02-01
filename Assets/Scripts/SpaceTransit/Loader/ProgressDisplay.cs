@@ -1,4 +1,4 @@
-﻿using SpaceTransit.Build;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -7,6 +7,8 @@ namespace SpaceTransit.Loader
 
     public sealed class ProgressDisplay : MonoBehaviour
     {
+
+        public static List<LoadingProgress> Reports { get; } = new();
 
         [SerializeField]
         private TextMeshProUGUI text;
@@ -17,19 +19,16 @@ namespace SpaceTransit.Loader
         [SerializeField]
         private GameObject menu;
 
-        private bool _any;
-
         private void Update()
         {
-            if (!_any && GradualTubeLoader.Instances.Count == 0)
+            if (Reports.Count == 0)
                 return;
-            _any = true;
             var total = 0;
             var loaded = 0;
-            foreach (var loader in GradualTubeLoader.Instances)
+            foreach (var loader in Reports)
             {
-                total += loader.Load.Length;
-                loaded += loader.Index;
+                total += loader.Total;
+                loaded += loader.Current;
             }
 
             if (total == 0)
@@ -41,6 +40,7 @@ namespace SpaceTransit.Loader
 
             if (progress < 1)
                 return;
+            Reports.Clear();
             Destroy(gameObject);
             menu.SetActive(true);
         }
