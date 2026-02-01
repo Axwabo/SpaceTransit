@@ -109,7 +109,7 @@ namespace SpaceTransit.Vaulter
             _entry = entries[0];
             foreach (var entry in entries)
             {
-                if (entry.ConnectedId != stop.ArriveFrom)
+                if (entry.Connected != stop.ArriveFrom)
                     continue;
                 _entry = entry;
                 break;

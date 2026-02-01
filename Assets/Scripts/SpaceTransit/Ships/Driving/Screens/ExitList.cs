@@ -53,7 +53,7 @@ namespace SpaceTransit.Ships.Driving.Screens
             return true;
         }
 
-        protected override string GetContent(Exit item) => item.ConnectedId.name;
+        protected override string GetContent(Exit item) => item.Connected.name;
 
         public void Mark(Exit exit)
         {

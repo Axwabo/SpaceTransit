@@ -152,7 +152,7 @@ namespace SpaceTransit.Ships
 
             foreach (var front in dock.FrontExits)
             {
-                if (front.ConnectedId != towards)
+                if (front.Connected != towards)
                     continue;
                 exit = front;
                 return true;
@@ -160,7 +160,7 @@ namespace SpaceTransit.Ships
 
             foreach (var back in dock.BackExits)
             {
-                if (back.ConnectedId != towards)
+                if (back.Connected != towards)
                     continue;
                 exit = back;
                 return true;
