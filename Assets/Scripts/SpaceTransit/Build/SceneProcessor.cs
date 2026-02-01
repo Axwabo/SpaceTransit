@@ -17,8 +17,6 @@ namespace SpaceTransit.Build
         public void OnProcessScene(Scene scene, BuildReport report)
         {
             var rootGameObjects = scene.GetRootGameObjects();
-            if (!TryFindProgress(rootGameObjects, out var progress))
-                return;
             var splines = new List<Spline>();
             var hoist = new List<HoistColliders>();
             var activates = new List<Activate>();
@@ -32,7 +30,6 @@ namespace SpaceTransit.Build
             var loader = rootGameObjects[0].AddComponent<GradualTubeLoader>();
             loader.Load = load.ToArray();
             loader.Activate = activate.ToArray();
-            loader.ProgressContainer = progress;
         }
 
         private static void ProcessRoot(GameObject root, List<Spline> splines, List<Activate> activates, List<GameObject> load, List<GameObject> activate, List<HoistColliders> hoist, List<Collider> hoistTransforms)
@@ -62,20 +59,6 @@ namespace SpaceTransit.Build
                 go.SetActive(false);
                 Object.DestroyImmediate(instance);
             }
-        }
-
-        private static bool TryFindProgress(GameObject[] rootGameObjects, out GameObject progress)
-        {
-            foreach (var root in rootGameObjects)
-            {
-                if (!root.TryGetComponent(out ProgressDisplay _))
-                    continue;
-                progress = root;
-                return true;
-            }
-
-            progress = null;
-            return false;
         }
 
     }
