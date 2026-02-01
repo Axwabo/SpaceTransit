@@ -10,7 +10,7 @@ namespace SpaceTransit.Cosmos
     {
 
         [field: SerializeField]
-        public Station ConnectedStation { get; private set; }
+        public StationId ConnectedId { get; private set; }
 
         [field: SerializeField]
         protected Lock[] Locks { get; private set; }

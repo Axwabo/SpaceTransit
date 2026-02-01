@@ -41,9 +41,9 @@ namespace SpaceTransit.Ships.Driving.Screens
             foreach (var dock in station.Docks)
             {
                 foreach (var exit in dock.FrontExits)
-                    AvailableExits.Add(exit.ConnectedStation.Name);
+                    AvailableExits.Add(exit.ConnectedId.name);
                 foreach (var exit in dock.BackExits)
-                    AvailableExits.Add(exit.ConnectedStation.Name);
+                    AvailableExits.Add(exit.ConnectedId.name);
             }
         }
 
