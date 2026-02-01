@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SpaceTransit.Movement;
 using TMPro;
 using UnityEngine;
 
@@ -18,6 +19,11 @@ namespace SpaceTransit.Loader
 
         [SerializeField]
         private GameObject menu;
+
+        [SerializeField]
+        private GameObject cam;
+
+        private void Awake() => MovementController.Enabled += DisableCamera;
 
         private void Update()
         {
@@ -43,6 +49,14 @@ namespace SpaceTransit.Loader
             Reports.Clear();
             Destroy(gameObject);
             menu.SetActive(true);
+        }
+
+        private void OnDestroy() => MovementController.Enabled -= DisableCamera;
+
+        private void DisableCamera()
+        {
+            if (Reports.Count != 0)
+                cam.SetActive(false);
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using SpaceTransit.Menu;
+﻿using System;
+using SpaceTransit.Menu;
 using SpaceTransit.Routes;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,6 +14,8 @@ namespace SpaceTransit.Movement
         public static MovementController Current { get; private set; }
 
         public static StationId StartingStation { get; set; }
+
+        public static event Action Enabled;
 
         [SerializeField]
         private float speed;
@@ -65,6 +68,8 @@ namespace SpaceTransit.Movement
             if (!StartingStation)
                 StartingStation = startingStation;
         }
+
+        private void OnEnable() => Enabled?.Invoke();
 
         private void Update()
         {
