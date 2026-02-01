@@ -1,7 +1,8 @@
-﻿using TMPro;
+﻿using SpaceTransit.Build;
+using TMPro;
 using UnityEngine;
 
-namespace SpaceTransit.Build
+namespace SpaceTransit.Loader
 {
 
     public sealed class ProgressDisplay : MonoBehaviour
@@ -15,6 +16,8 @@ namespace SpaceTransit.Build
 
         private void Update()
         {
+            if (GradualTubeLoader.Instances.Count == 0)
+                return;
             var total = 0;
             var loaded = 0;
             foreach (var loader in GradualTubeLoader.Instances)
@@ -26,6 +29,9 @@ namespace SpaceTransit.Build
             var progress = total / (float) loaded;
             text.text = progress.ToString("P0");
             rect.localScale = new Vector3(progress, 1);
+
+            if (progress >= 1)
+                Destroy(gameObject);
         }
 
     }
