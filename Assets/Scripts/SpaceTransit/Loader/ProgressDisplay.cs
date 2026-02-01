@@ -17,9 +17,6 @@ namespace SpaceTransit.Loader
         [SerializeField]
         private GameObject menu;
 
-        [SerializeField]
-        private GameObject cam;
-
         private bool _any;
 
         private void Update()
@@ -42,7 +39,6 @@ namespace SpaceTransit.Loader
             if (progress < 1)
                 return;
             Destroy(gameObject);
-            Destroy(cam);
             menu.SetActive(true);
         }
 
