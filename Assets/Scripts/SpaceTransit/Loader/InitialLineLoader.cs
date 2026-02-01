@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using SpaceTransit.Movement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,18 +10,17 @@ namespace SpaceTransit.Loader
 
         private void Start()
         {
-            var buildIndices = new Dictionary<int, int>();
-            var sceneCount = SceneManager.sceneCountInBuildSettings;
-            for (var i = 0; i < sceneCount; i++)
-            {
-                var scene = SceneManager.GetSceneByBuildIndex(i);
-                if (int.TryParse(scene.name, out var line))
-                    buildIndices[line] = scene.buildIndex;
-            }
-
             foreach (var line in MovementController.StartingStation.Lines)
-                if (buildIndices.TryGetValue(line, out var index))
-                    SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive);
+            {
+                var operation = SceneManager.LoadSceneAsync(line.ToString(), LoadSceneMode.Additive);
+                if (operation != null)
+                    operation.completed += OperationOnCompleted;
+            }
+        }
+
+        private void OperationOnCompleted(AsyncOperation obj)
+        {
+            Debug.Log("completed");
         }
 
     }

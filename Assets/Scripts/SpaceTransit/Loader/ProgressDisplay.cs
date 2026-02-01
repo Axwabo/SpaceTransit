@@ -14,6 +14,12 @@ namespace SpaceTransit.Loader
         [SerializeField]
         private RectTransform rect;
 
+        [SerializeField]
+        private GameObject menu;
+
+        [SerializeField]
+        private Camera cam;
+
         private void Update()
         {
             if (GradualTubeLoader.Instances.Count == 0)
@@ -26,12 +32,17 @@ namespace SpaceTransit.Loader
                 loaded += loader.Index;
             }
 
+            if (total == 0)
+                return;
             var progress = total / (float) loaded;
             text.text = progress.ToString("P0");
             rect.localScale = new Vector3(progress, 1);
 
-            if (progress >= 1)
-                Destroy(gameObject);
+            if (progress < 1)
+                return;
+            Destroy(gameObject);
+            Destroy(cam);
+            menu.SetActive(true);
         }
 
     }
