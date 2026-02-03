@@ -32,8 +32,8 @@ namespace SpaceTransit.Cosmos.Actions
         private void OnValidate()
         {
             var go = gameObject;
-            tubeReference = CrossSceneObject.GetOrCreate(connectTube, go);
-            toReference = CrossSceneObject.GetOrCreate(connectTo, go);
+            tubeReference = CrossSceneObject.GetOrCreate(connectTube, go, tubeReference);
+            toReference = CrossSceneObject.GetOrCreate(connectTo, go, toReference);
         }
 
         private void OnDestroy() => CrossSceneObject.ScenesChanged -= RefreshTubes;

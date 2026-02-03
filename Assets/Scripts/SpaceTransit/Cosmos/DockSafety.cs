@@ -25,7 +25,7 @@ namespace SpaceTransit.Cosmos
             CrossSceneObject.SubscribeToSceneChanges(RefreshLocks, lockReferences);
         }
 
-        private void OnValidate() => lockReferences = CrossSceneObject.GetOrCreateAll(locks, gameObject);
+        private void OnValidate() => lockReferences = CrossSceneObject.GetOrCreateAll(locks, gameObject, lockReferences);
 
         private void OnDestroy() => CrossSceneObject.ScenesChanged -= RefreshLocks;
 

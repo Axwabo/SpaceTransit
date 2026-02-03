@@ -59,12 +59,14 @@ namespace SpaceTransit.Loader
 
         private void OnDestroy() => Loaded.Remove(id ?? "");
 
-        public static string GetOrCreate(Component component, GameObject sceneReference)
-            => component ? GetOrCreate(component.gameObject, sceneReference.gameObject) : null;
+        public static string GetOrCreate(Component component, GameObject sceneReference, string originalReference)
+            => component ? GetOrCreate(component.gameObject, sceneReference.gameObject, originalReference) : originalReference;
 
-        public static string GetOrCreate(GameObject gameObject, GameObject sceneReference)
+        public static string GetOrCreate(GameObject gameObject, GameObject sceneReference, string originalReference)
         {
-            if (!gameObject || gameObject.scene == sceneReference.scene)
+            if (!gameObject)
+                return originalReference;
+            if (gameObject.scene == sceneReference.scene)
                 return null;
             if (!gameObject.TryGetComponent(out CrossSceneObject reference))
                 reference = gameObject.AddComponent<CrossSceneObject>();
@@ -78,13 +80,19 @@ namespace SpaceTransit.Loader
             return id;
         }
 
-        public static string[] GetOrCreateAll<T>(T[] objects, GameObject sceneReference) where T : Component
+        public static string[] GetOrCreateAll<T>(T[] objects, GameObject sceneReference, string[] originalReferences) where T : Component
         {
             if (objects is not {Length: not 0})
                 return Array.Empty<string>();
             var ids = new string[objects.Length];
             for (var i = 0; i < objects.Length; i++)
-                ids[i] = GetOrCreate(objects[i], sceneReference);
+            {
+                var originalReference = originalReferences != null && originalReferences.Length > i
+                    ? originalReferences[i]
+                    : null;
+                ids[i] = GetOrCreate(objects[i], sceneReference, originalReference);
+            }
+
             return ids;
         }
 

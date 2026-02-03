@@ -9,7 +9,6 @@ namespace SpaceTransit.Cosmos
     {
 
         [SerializeField]
-        [HideInInspector]
         private string lockReference;
 
         [SerializeField]
@@ -23,7 +22,7 @@ namespace SpaceTransit.Cosmos
             CrossSceneObject.ScenesChanged += RefreshLock;
         }
 
-        private void OnValidate() => lockReference = CrossSceneObject.GetOrCreate(@lock, gameObject) ?? lockReference;
+        private void OnValidate() => lockReference = CrossSceneObject.GetOrCreate(@lock, gameObject, lockReference);
 
         private void OnDestroy() => CrossSceneObject.ScenesChanged -= RefreshLock;
 
