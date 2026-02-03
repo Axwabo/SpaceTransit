@@ -9,6 +9,7 @@ namespace SpaceTransit.Cosmos
     {
 
         [SerializeField]
+        [HideInInspector]
         private string lockReference;
 
         [SerializeField]

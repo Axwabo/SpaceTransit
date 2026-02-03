@@ -8,6 +8,10 @@ namespace SpaceTransit.Cosmos.Actions
     {
 
         [SerializeField]
+        [HideInInspector]
+        private string[] lockReferences;
+
+        [SerializeField]
         private Lock[] locks;
 
         [SerializeField]
