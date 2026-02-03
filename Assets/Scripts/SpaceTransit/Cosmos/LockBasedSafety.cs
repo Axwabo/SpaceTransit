@@ -1,3 +1,4 @@
+using SpaceTransit.Loader.References;
 using SpaceTransit.Ships;
 using UnityEngine;
 
@@ -8,9 +9,17 @@ namespace SpaceTransit.Cosmos
     {
 
         [SerializeField]
+        [HideInInspector]
+        private string lockReference;
+
+        [SerializeField]
         private Lock @lock;
 
         public bool IsFree => @lock.IsFree;
+
+        private void Start() => @lock = CrossSceneObject.GetComponent(lockReference, @lock);
+
+        private void OnValidate() => lockReference = CrossSceneObject.GetOrCreate(@lock, this) ?? lockReference;
 
         public void Claim(ShipAssembly assembly) => @lock.Claim(assembly);
 

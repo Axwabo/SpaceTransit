@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
-using UnityEngine;
+#endif
 
 namespace SpaceTransit.Loader.References
 {
@@ -16,16 +18,22 @@ namespace SpaceTransit.Loader.References
 
         public static Dictionary<string, GameObject> Loaded { get; } = new();
 
-        public static string GetOrCreate(Component component) => GetOrCreate(component.gameObject);
+        public static string GetOrCreate(Component component, Component sceneReference)
+            => component ? GetOrCreate(component.gameObject, sceneReference) : null;
 
-        public static string GetOrCreate(GameObject gameObject)
+        public static string GetOrCreate(GameObject gameObject, Component sceneReference)
         {
+            if (!gameObject || gameObject.scene == sceneReference.gameObject.scene)
+                return null;
             if (!gameObject.TryGetComponent(out CrossSceneObject reference))
                 reference = gameObject.AddComponent<CrossSceneObject>();
             if (!string.IsNullOrEmpty(reference.id))
                 return reference.id;
             var id = reference.id = GUID.Generate().ToString();
-            Loaded[id] = reference.gameObject;
+            Loaded[id] = gameObject;
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(gameObject);
+#endif
             return id;
         }
 
@@ -37,8 +45,8 @@ namespace SpaceTransit.Loader.References
             return false;
         }
 
-        public static T GetComponent<T>(string id) => !Loaded.TryGetValue(id, out var go)
-            ? throw new MissingReferenceException($"Cross-scene reference with id {id} not found")
+        public static T GetComponent<T>(string id, T fallback = default) => string.IsNullOrEmpty(id) || !Loaded.TryGetValue(id, out var go)
+            ? fallback
             : go.TryGetComponent(out T component)
                 ? component
                 : throw new MissingComponentException($"Component of type {typeof(T).FullName} was not found on reference {id}");
