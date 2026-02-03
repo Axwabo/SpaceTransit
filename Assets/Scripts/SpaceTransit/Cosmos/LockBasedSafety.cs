@@ -1,3 +1,4 @@
+using SpaceTransit.Cosmos.Actions;
 using SpaceTransit.Loader;
 using SpaceTransit.Ships;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 namespace SpaceTransit.Cosmos
 {
 
+    [RequireComponent(typeof(LockTaker))]
     public sealed class LockBasedSafety : NextSegmentSafety
     {
 

@@ -30,6 +30,8 @@ namespace SpaceTransit
 
         private void Awake()
         {
+            if (Current)
+                return;
             Current = transform;
             SpeedLimitSignPrefab = speedLimitSignPrefab;
             StationSignPrefab = stationSignPrefab;
