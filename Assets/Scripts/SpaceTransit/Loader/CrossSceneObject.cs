@@ -18,6 +18,8 @@ namespace SpaceTransit.Loader
         private static void Allow() => EditorSceneManager.preventCrossSceneReferences = false;
 #endif
 
+        private static readonly Dictionary<string, GameObject> Loaded = new();
+
         public static event Action ScenesChanged;
 
         [RuntimeInitializeOnLoadMethod]
@@ -27,7 +29,23 @@ namespace SpaceTransit.Loader
             SceneManager.sceneUnloaded += _ => ScenesChanged?.Invoke();
         }
 
-        private static readonly Dictionary<string, GameObject> Loaded = new();
+        public static void SubscribeToSceneChanges(Action action, string reference)
+        {
+            if (!string.IsNullOrEmpty(reference))
+                ScenesChanged += action;
+        }
+
+        public static void SubscribeToSceneChanges(Action action, string reference1, string reference2)
+        {
+            if (!string.IsNullOrEmpty(reference1) || !string.IsNullOrEmpty(reference2))
+                ScenesChanged += action;
+        }
+
+        public static void SubscribeToSceneChanges(Action action, string[] references)
+        {
+            if (references is {Length: not 0})
+                ScenesChanged += action;
+        }
 
         [SerializeField]
         [HideInInspector]
