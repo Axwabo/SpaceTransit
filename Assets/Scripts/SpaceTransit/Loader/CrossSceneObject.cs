@@ -23,11 +23,7 @@ namespace SpaceTransit.Loader
         public static event Action ScenesChanged;
 
         [RuntimeInitializeOnLoadMethod]
-        private static void SubscribeToSceneChanges()
-        {
-            SceneManager.sceneLoaded += (_, _) => ScenesChanged?.Invoke();
-            SceneManager.sceneUnloaded += _ => ScenesChanged?.Invoke();
-        }
+        private static void SubscribeToSceneChanges() => SceneManager.sceneLoaded += (_, _) => ScenesChanged?.Invoke();
 
         public static void SubscribeToSceneChanges(Action action, string reference)
         {

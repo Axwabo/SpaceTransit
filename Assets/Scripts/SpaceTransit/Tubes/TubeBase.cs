@@ -1,4 +1,5 @@
 ﻿using SpaceTransit.Cosmos;
+using SpaceTransit.Loader;
 using UnityEngine;
 
 namespace SpaceTransit.Tubes
@@ -7,6 +8,9 @@ namespace SpaceTransit.Tubes
     [ExecuteInEditMode]
     public abstract class TubeBase : MonoBehaviour
     {
+
+        [SerializeField]
+        private string nextReference;
 
         public Transform Transform { get; private set; }
 
@@ -31,7 +35,9 @@ namespace SpaceTransit.Tubes
                 Safety = TryGetComponent(out SafetyEnsurer ensurer)
                     ? ensurer
                     : AddDefaultSafety(gameObject);
+            Next = CrossSceneObject.GetComponent(nextReference, Next);
             OnValidate();
+            CrossSceneObject.SubscribeToSceneChanges(RefreshNext, nextReference);
         }
 
         private void Start()
@@ -42,6 +48,13 @@ namespace SpaceTransit.Tubes
                 PlaceSign(Next, 0, Quaternion.identity);
             if (HasPrevious)
                 PlaceSign(Previous, Previous.Length, Quaternion.Euler(0, 180, 0));
+        }
+
+        private void RefreshNext()
+        {
+            var next = CrossSceneObject.GetComponent(nextReference, Next);
+            if (next != Next)
+                SetNext(next);
         }
 
         private void PlaceSign(TubeBase tube, float distance, Quaternion rotationOffset)
@@ -56,6 +69,7 @@ namespace SpaceTransit.Tubes
 
         private void OnValidate()
         {
+            nextReference = CrossSceneObject.GetOrCreate(Next, gameObject, nextReference);
             if (!Next)
                 return;
             Next.Previous = this;
