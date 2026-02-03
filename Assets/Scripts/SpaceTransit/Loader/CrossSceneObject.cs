@@ -1,11 +1,13 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
 #endif
 
-namespace SpaceTransit.Loader.References
+namespace SpaceTransit.Loader
 {
 
     public sealed class CrossSceneObject : MonoBehaviour
@@ -16,14 +18,35 @@ namespace SpaceTransit.Loader.References
         private static void Allow() => EditorSceneManager.preventCrossSceneReferences = false;
 #endif
 
-        public static Dictionary<string, GameObject> Loaded { get; } = new();
+        public static event Action ScenesChanged;
 
-        public static string GetOrCreate(Component component, Component sceneReference)
-            => component ? GetOrCreate(component.gameObject, sceneReference) : null;
-
-        public static string GetOrCreate(GameObject gameObject, Component sceneReference)
+        [RuntimeInitializeOnLoadMethod]
+        private static void SubscribeToSceneChanges()
         {
-            if (!gameObject || gameObject.scene == sceneReference.gameObject.scene)
+            SceneManager.sceneLoaded += (_, _) => ScenesChanged?.Invoke();
+            SceneManager.sceneUnloaded += _ => ScenesChanged?.Invoke();
+        }
+
+        private static readonly Dictionary<string, GameObject> Loaded = new();
+
+        [SerializeField]
+        [HideInInspector]
+        private string id;
+
+        private void Awake()
+        {
+            if (!string.IsNullOrEmpty(id))
+                Loaded[id] = gameObject;
+        }
+
+        private void OnDestroy() => Loaded.Remove(id ?? "");
+
+        public static string GetOrCreate(Component component, GameObject sceneReference)
+            => component ? GetOrCreate(component.gameObject, sceneReference.gameObject) : null;
+
+        public static string GetOrCreate(GameObject gameObject, GameObject sceneReference)
+        {
+            if (!gameObject || gameObject.scene == sceneReference.scene)
                 return null;
             if (!gameObject.TryGetComponent(out CrossSceneObject reference))
                 reference = gameObject.AddComponent<CrossSceneObject>();
@@ -37,9 +60,19 @@ namespace SpaceTransit.Loader.References
             return id;
         }
 
+        public static string[] GetOrCreateAll<T>(T[] objects, GameObject sceneReference) where T : Component
+        {
+            if (objects is not {Length: not 0})
+                return Array.Empty<string>();
+            var ids = new string[objects.Length];
+            for (var i = 0; i < objects.Length; i++)
+                ids[i] = GetOrCreate(objects[i], sceneReference);
+            return ids;
+        }
+
         public static bool TryGetComponent<T>(string id, out T component)
         {
-            if (Loaded.TryGetValue(id, out var go) && go.TryGetComponent(out component))
+            if (!string.IsNullOrEmpty(id) && Loaded.TryGetValue(id, out var go) && go.TryGetComponent(out component))
                 return true;
             component = default;
             return false;
@@ -51,17 +84,18 @@ namespace SpaceTransit.Loader.References
                 ? component
                 : throw new MissingComponentException($"Component of type {typeof(T).FullName} was not found on reference {id}");
 
-        [SerializeField]
-        [HideInInspector]
-        private string id;
-
-        private void Awake()
+        public static T[] GetAllComponents<T>(string[] ids, T[] current)
         {
-            if (!string.IsNullOrEmpty(id))
-                Loaded[id] = gameObject;
+            if (ids is not {Length: not 0})
+                return Array.Empty<T>();
+            var array = new T[ids.Length];
+            for (var i = 0; i < ids.Length; i++)
+                if (TryGetComponent(ids[i], out T component))
+                    array[i] = component;
+                else if (current != null && i < current.Length)
+                    array[i] = current[i];
+            return array;
         }
-
-        private void OnDestroy() => Loaded.Remove(id ?? "");
 
     }
 
