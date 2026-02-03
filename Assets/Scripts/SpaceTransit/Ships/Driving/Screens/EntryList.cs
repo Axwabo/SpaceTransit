@@ -37,7 +37,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private void UpdateStation(EntryEnsurer ensurer)
         {
-            var station = ensurer.station.ID;
+            var station = ensurer.station;
             if (_previousStation == station)
                 return;
             _previousStation = station;

@@ -112,7 +112,7 @@ namespace SpaceTransit.Ships.Driving
 
         private void Enter(EntryEnsurer ensurer)
         {
-            if (Parent.Stop is not IArrival arrival || ensurer.station.Name != arrival.Station.name)
+            if (Parent.Stop is not IArrival arrival || ensurer.station != arrival.Station)
                 return;
             var list = Assembly.FrontModule.EntryList;
             if (list.isActiveAndEnabled)
