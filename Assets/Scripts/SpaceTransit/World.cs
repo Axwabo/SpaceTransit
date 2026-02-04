@@ -1,6 +1,8 @@
-﻿using SpaceTransit.Cosmos;
+﻿using System.Collections.Generic;
+using SpaceTransit.Cosmos;
 using SpaceTransit.Routes;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace SpaceTransit
 {
@@ -20,6 +22,8 @@ namespace SpaceTransit
         [SerializeField]
         private RouteDescriptor[] extraRoutes;
 
+        public static Dictionary<int, Transform> Worlds { get; } = new();
+
         public static SpeedLimitSign SpeedLimitSignPrefab { get; private set; }
 
         public static Transform StationSignPrefab { get; private set; }
@@ -28,8 +32,12 @@ namespace SpaceTransit
 
         public static RouteDescriptor[] ExtraRoutes { get; private set; }
 
+        private int _line;
+
         private void Awake()
         {
+            if (int.TryParse(gameObject.scene.name, out var line))
+                Worlds[_line = line] = transform;
             if (Current)
                 return;
             Current = transform;
@@ -46,7 +54,20 @@ namespace SpaceTransit
             if (Current != t)
                 t.SetParent(Current, false);
         }
-        // TODO: loading/unloading mechanism
+
+        private void OnDestroy() => Worlds.Remove(_line);
+
+        public static void Load(int line)
+        {
+            if (!Worlds.ContainsKey(line))
+                SceneManager.LoadSceneAsync(line.ToString(), LoadSceneMode.Additive);
+        }
+
+        public static void Unload(int line)
+        {
+            if (Worlds.ContainsKey(line))
+                SceneManager.UnloadSceneAsync(line.ToString());
+        }
 
     }
 

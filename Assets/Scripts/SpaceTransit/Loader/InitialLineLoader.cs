@@ -1,6 +1,5 @@
 using SpaceTransit.Movement;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace SpaceTransit.Loader
 {
@@ -11,7 +10,7 @@ namespace SpaceTransit.Loader
         private void Start()
         {
             foreach (var line in MovementController.StartingStation.Lines)
-                SceneManager.LoadSceneAsync(line.ToString(), LoadSceneMode.Additive);
+                World.Load(line);
         }
 
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SpaceTransit.Loader;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -31,6 +32,12 @@ namespace SpaceTransit.Routes
         public string Name => ID.name;
 
         public ReadOnlySpan<Dock> Docks => docks;
+
+        private void Awake()
+        {
+            if (ID.Lines.Length > 1)
+                gameObject.AddComponent<Hub>();
+        }
 
         private void OnEnable() => Loaded[Name] = this;
 
