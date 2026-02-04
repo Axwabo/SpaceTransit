@@ -51,6 +51,8 @@ namespace SpaceTransit.Tubes
                 PlaceSign(Previous, Previous.Length, Quaternion.Euler(0, 180, 0));
         }
 
+        private void OnDestroy() => CrossSceneObject.ScenesChanged -= RefreshNext;
+
         private void RefreshNext()
         {
             var next = CrossSceneObject.GetComponent(nextReference, Next);
