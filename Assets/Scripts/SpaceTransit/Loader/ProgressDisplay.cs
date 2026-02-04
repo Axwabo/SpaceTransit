@@ -25,7 +25,11 @@ namespace SpaceTransit.Loader
         [SerializeField]
         private GameObject player;
 
-        private void Awake() => player.SetActive(false);
+        private void Awake()
+        {
+            menu.SetActive(false);
+            player.SetActive(false);
+        }
 
         private void Update()
         {
