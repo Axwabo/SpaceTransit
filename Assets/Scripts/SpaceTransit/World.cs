@@ -38,6 +38,16 @@ namespace SpaceTransit
             ExtraRoutes = extraRoutes;
         }
 
+        private void Start()
+        {
+            if (!Current)
+                return;
+            var t = transform;
+            if (Current != t)
+                t.SetParent(Current, false);
+        }
+        // TODO: loading/unloading mechanism
+
     }
 
 }
