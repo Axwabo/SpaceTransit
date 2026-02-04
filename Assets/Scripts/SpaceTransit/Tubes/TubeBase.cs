@@ -37,7 +37,8 @@ namespace SpaceTransit.Tubes
                     : AddDefaultSafety(gameObject);
             Next = CrossSceneObject.GetComponent(nextReference, Next);
             OnValidate();
-            CrossSceneObject.SubscribeToSceneChanges(RefreshNext, nextReference);
+            if (Application.isPlaying)
+                CrossSceneObject.SubscribeToSceneChanges(RefreshNext, nextReference);
         }
 
         private void Start()
