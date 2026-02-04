@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using SpaceTransit.Movement;
 using TMPro;
 using UnityEngine;
 
@@ -23,7 +22,10 @@ namespace SpaceTransit.Loader
         [SerializeField]
         private GameObject cam;
 
-        private void Awake() => MovementController.Enabled += DisableCamera;
+        [SerializeField]
+        private GameObject player;
+
+        private void Awake() => player.SetActive(false);
 
         private void Update()
         {
@@ -46,17 +48,19 @@ namespace SpaceTransit.Loader
 
             if (progress < 1)
                 return;
+            Begin();
             Reports.Clear();
             Destroy(gameObject);
             menu.SetActive(true);
         }
 
-        private void OnDestroy() => MovementController.Enabled -= DisableCamera;
-
-        private void DisableCamera()
+        private void Begin()
         {
-            if (Reports.Count != 0)
-                cam.SetActive(false);
+            if (Reports.Count == 0)
+                return;
+            cam.SetActive(false);
+            player.transform.parent = World.Current;
+            player.SetActive(true);
         }
 
     }
