@@ -67,6 +67,7 @@ namespace SpaceTransit
         {
             if (line == 0 || !Worlds.TryGetValue(line, out var world))
                 return;
+            world.parent = null;
             SceneManager.MoveGameObjectToScene(world.gameObject, SceneManager.GetSceneByName(line.ToString()));
             SceneManager.UnloadSceneAsync(line.ToString());
         }
