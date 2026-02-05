@@ -57,9 +57,11 @@ namespace SpaceTransit
 
         private void OnDestroy() => Worlds.Remove(_line);
 
+        public static bool IsLoaded(int line) => Worlds.ContainsKey(line);
+
         public static void Load(int line)
         {
-            if (line != 0 && !Worlds.ContainsKey(line))
+            if (line != 0 && !IsLoaded(line))
                 SceneManager.LoadSceneAsync(line.ToString(), LoadSceneMode.Additive);
         }
 

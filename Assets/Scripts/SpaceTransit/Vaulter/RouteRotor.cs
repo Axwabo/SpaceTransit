@@ -52,7 +52,7 @@ namespace SpaceTransit.Vaulter
             for (_index = 0; _index < routes.Length; _index++)
             {
                 var route = routes[_index];
-                if (route.Origin.Departure > Clock.Now)
+                if (route.Origin.Departure > Clock.Now && route.Origin.Station.IsLoaded())
                 {
                     Spawn(route);
                     return;
@@ -81,7 +81,8 @@ namespace SpaceTransit.Vaulter
         }
 
         private static bool ShouldSpawn(IntermediateStop stop)
-            => stop.Arrival.Value - TimeSpan.FromMinutes(1) >= Clock.Now
+            => stop.Station.IsLoaded()
+               && stop.Arrival.Value - TimeSpan.FromMinutes(1) >= Clock.Now
                && stop.Departure.Value >= Clock.Now + TimeSpan.FromMinutes(stop.MinStayMinutes + 1);
 
         private void SpawnAt(RouteDescriptor route, IntermediateStop stop, int index)
@@ -185,10 +186,20 @@ namespace SpaceTransit.Vaulter
 
         private void WaitForNext()
         {
-            if (!CompletedRoute)
+            if (Unload() || !CompletedRoute)
                 return;
             _at = Clock.Now + TimeSpan.FromMinutes(1);
             _state = State.Rotating;
+        }
+
+        private bool Unload()
+        {
+            if (_ship.IsInService && _ship.Stop.Station.IsLoaded()
+                || _ship.Assembly.FrontModule.Thruster.Tube is Dock dock && dock.Station.ID.IsLoaded())
+                return false;
+            Destroy(_ship.gameObject);
+            Destroy(this);
+            return true;
         }
 
         private void Cycle()
