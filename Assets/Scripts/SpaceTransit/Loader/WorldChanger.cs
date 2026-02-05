@@ -7,32 +7,23 @@ namespace SpaceTransit.Loader
     {
 
         [SerializeField]
-        private int line;
+        private int unloadForwards;
 
         [SerializeField]
-        private bool unload;
+        private int unloadBackwards;
 
         [SerializeField]
-        private bool exit;
+        private int loadForwards;
+
+        [SerializeField]
+        private int loadBackwards;
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!exit)
-                Toggle();
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            if (exit)
-                Toggle();
-        }
-
-        private void Toggle()
-        {
-            if (unload)
-                World.Unload(line);
-            else
-                World.Load(line);
+            var t = transform;
+            var isBack = Vector3.Dot(t.InverseTransformPoint(other.transform.position).normalized, t.forward) < 0;
+            World.Unload(isBack ? unloadForwards : unloadBackwards);
+            World.Load(isBack ? loadForwards : loadBackwards);
         }
 
     }

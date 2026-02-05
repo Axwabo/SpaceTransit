@@ -59,14 +59,16 @@ namespace SpaceTransit
 
         public static void Load(int line)
         {
-            if (!Worlds.ContainsKey(line))
+            if (line != 0 && !Worlds.ContainsKey(line))
                 SceneManager.LoadSceneAsync(line.ToString(), LoadSceneMode.Additive);
         }
 
         public static void Unload(int line)
         {
-            if (Worlds.ContainsKey(line))
-                SceneManager.UnloadSceneAsync(line.ToString());
+            if (line == 0 || !Worlds.TryGetValue(line, out var world))
+                return;
+            SceneManager.MoveGameObjectToScene(world.gameObject, SceneManager.GetSceneByName(line.ToString()));
+            SceneManager.UnloadSceneAsync(line.ToString());
         }
 
     }
