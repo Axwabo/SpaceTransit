@@ -1,5 +1,6 @@
 ﻿using System;
 using SpaceTransit.Cosmos;
+using SpaceTransit.Loader;
 using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
 using SpaceTransit.Ships;
@@ -194,7 +195,8 @@ namespace SpaceTransit.Vaulter
 
         private bool Unload()
         {
-            if (_ship.IsInService && _ship.Stop.Station.IsLoaded()
+            if (LoadingProgress.Current != null
+                || _ship.IsInService && _ship.Stop.Station.IsLoaded()
                 || _ship.Assembly.FrontModule.Thruster.Tube is Dock dock && dock.Station.ID.IsLoaded())
                 return false;
             Destroy(_ship.gameObject);

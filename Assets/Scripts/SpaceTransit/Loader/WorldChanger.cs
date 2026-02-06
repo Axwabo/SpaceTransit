@@ -1,3 +1,4 @@
+using SpaceTransit.Build;
 using UnityEngine;
 
 namespace SpaceTransit.Loader
@@ -23,7 +24,35 @@ namespace SpaceTransit.Loader
             var t = transform;
             var isBack = Vector3.Dot(t.InverseTransformPoint(other.transform.position).normalized, t.forward) < 0;
             World.Unload(isBack ? unloadForwards : unloadBackwards);
-            _ = World.Load(isBack ? loadForwards : loadBackwards);
+            _ = Load(isBack ? loadForwards : loadBackwards);
+        }
+
+        public static async Awaitable Load(int line)
+        {
+            if (World.IsLoaded(line))
+                return;
+            LoadingProgress.Current = LoadingProgress.Zero;
+            await World.LoadScene(line);
+            while (SceneInfo.List.Count == 0)
+                await Awaitable.NextFrameAsync();
+            var timeScale = Time.timeScale;
+            var info = SceneInfo.List.FirstFast();
+            var progress = new LoadingProgress(info.Load.Length);
+            LoadingProgress.Current = progress;
+            Time.timeScale = 1;
+            foreach (var o in info.Load)
+            {
+                o.SetActive(true);
+                progress.Completed++;
+                await Awaitable.NextFrameAsync();
+            }
+
+            foreach (var o in info.Activate)
+                o.SetActive(true);
+
+            Time.timeScale = timeScale;
+            SceneInfo.List.Remove(info);
+            Destroy(info);
         }
 
     }

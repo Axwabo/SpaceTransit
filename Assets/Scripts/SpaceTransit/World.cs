@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using SpaceTransit.Build;
 using SpaceTransit.Cosmos;
-using SpaceTransit.Loader;
 using SpaceTransit.Routes;
 using SpaceTransit.Ships;
 using UnityEngine;
@@ -69,29 +67,6 @@ namespace SpaceTransit
             var operation = SceneManager.LoadSceneAsync(line.ToString(), LoadSceneMode.Additive);
             if (operation != null)
                 await Awaitable.FromAsyncOperation(operation);
-        }
-
-        public static async Awaitable Load(int line)
-        {
-            if (IsLoaded(line))
-                return;
-            await LoadScene(line);
-            while (SceneInfo.List.Count == 0)
-                await Awaitable.NextFrameAsync();
-            var info = SceneInfo.List.FirstFast();
-            var progress = new LoadingProgress(info.Load.Length);
-            LoadingProgress.Current = progress;
-            foreach (var o in info.Load)
-            {
-                o.SetActive(true);
-                progress.Completed++;
-                await Awaitable.FixedUpdateAsync();
-            }
-
-            foreach (var o in info.Activate)
-                o.SetActive(true);
-            SceneInfo.List.Remove(info);
-            Destroy(info);
         }
 
         public static void Unload(int line)
