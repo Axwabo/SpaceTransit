@@ -20,6 +20,8 @@ namespace SpaceTransit.Loader
             var progress = (float) LoadingProgress.Current.Completed / LoadingProgress.Current.Total;
             text.text = progress.ToString("P0");
             rect.localScale = new Vector3(progress, 1);
+            if (progress >= 1)
+                LoadingProgress.Current = null;
         }
 
     }

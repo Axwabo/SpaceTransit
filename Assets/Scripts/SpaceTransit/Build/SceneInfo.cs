@@ -17,8 +17,6 @@ namespace SpaceTransit.Build
 
         private void Awake() => List.Add(this);
 
-        private void OnDestroy() => List.Remove(this);
-
     }
 
 }

@@ -23,7 +23,7 @@ namespace SpaceTransit.Loader
             var t = transform;
             var isBack = Vector3.Dot(t.InverseTransformPoint(other.transform.position).normalized, t.forward) < 0;
             World.Unload(isBack ? unloadForwards : unloadBackwards);
-            World.Load(isBack ? loadForwards : loadBackwards);
+            _ = World.Load(isBack ? loadForwards : loadBackwards);
         }
 
     }

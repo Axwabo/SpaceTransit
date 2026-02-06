@@ -45,7 +45,7 @@ namespace SpaceTransit.Loader
             if (!isNear)
                 return;
             foreach (var line in _id.Lines)
-                World.Load(line);
+                _ = World.Load(line);
         }
 
     }
