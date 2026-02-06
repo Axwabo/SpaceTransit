@@ -27,7 +27,7 @@ namespace SpaceTransit.Build
                 ProcessRoot(root, splines, activates, load, activate, hoist, hoistTransforms);
             if (activate.Count == 0)
                 return;
-            var loader = rootGameObjects[0].AddComponent<GradualTubeLoader>();
+            var loader = rootGameObjects[0].AddComponent<SceneInfo>();
             loader.Load = load.ToArray();
             loader.Activate = activate.ToArray();
         }
