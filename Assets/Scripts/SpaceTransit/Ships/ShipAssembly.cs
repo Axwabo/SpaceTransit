@@ -60,6 +60,7 @@ namespace SpaceTransit.Ships
 
         protected override void Awake()
         {
+            base.Awake();
             Modules = this.GetComponentsInImmediateChildren<ShipModule>().ToArray();
             if (Modules.Length == 0)
                 throw new MissingComponentException("Ships must have at least 1 module");

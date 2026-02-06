@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using SpaceTransit.Cosmos;
 using SpaceTransit.Routes;
+using SpaceTransit.Ships;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -70,9 +71,31 @@ namespace SpaceTransit
             if (line == 0 || !Worlds.TryGetValue(line, out var world))
                 return;
             world.parent = null;
-            SceneManager.MoveGameObjectToScene(world.gameObject, SceneManager.GetSceneByName(line.ToString()));
+            if (Current == world)
+                ChangeCurrentWorld(line);
+            MoveWorld(line, world);
             SceneManager.UnloadSceneAsync(line.ToString());
         }
+
+        private static void ChangeCurrentWorld(int unloading)
+        {
+            foreach (var (line, t) in Worlds)
+            {
+                if (line == unloading)
+                    continue;
+                t.parent = null;
+                MoveWorld(line, t);
+                Current = t;
+                foreach (var assembly in ShipAssembly.Instances)
+                    if (assembly.Parent.TryGetVaulter(out var controller)
+                        && controller.IsInService
+                        && !controller.Stop.Station.Lines.Contains(unloading, EqualityComparer<int>.Default))
+                        assembly.Transform.parent = t;
+                break;
+            }
+        }
+
+        private static void MoveWorld(int line, Transform world) => SceneManager.MoveGameObjectToScene(world.gameObject, SceneManager.GetSceneByName(line.ToString()));
 
     }
 
