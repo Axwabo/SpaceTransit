@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SpaceTransit.Loader;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -42,6 +43,9 @@ namespace SpaceTransit.Routes
                 dock.Station = this;
                 dock.Index = i;
             }
+
+            if (ID.Lines.Length > 1)
+                gameObject.AddComponent<Hub>();
         }
 
         private void OnDisable() => Loaded.Remove(Name);
