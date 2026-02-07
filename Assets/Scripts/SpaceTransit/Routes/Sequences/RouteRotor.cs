@@ -1,14 +1,14 @@
 using System;
 using SpaceTransit.Cosmos;
 using SpaceTransit.Loader;
-using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
 using SpaceTransit.Ships;
 using SpaceTransit.Tubes;
+using SpaceTransit.Vaulter;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace SpaceTransit.Vaulter
+namespace SpaceTransit.Routes.Sequences
 {
 
     public sealed class RouteRotor

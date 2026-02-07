@@ -1,7 +1,7 @@
 ﻿using SpaceTransit.Vaulter;
 using UnityEngine;
 
-namespace SpaceTransit.Routes
+namespace SpaceTransit.Routes.Sequences
 {
 
     [CreateAssetMenu(fileName = "Service Sequence", menuName = "SpaceTransit/Service Sequence")]

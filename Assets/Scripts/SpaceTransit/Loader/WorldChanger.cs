@@ -1,5 +1,5 @@
 using SpaceTransit.Build;
-using SpaceTransit.Vaulter;
+using SpaceTransit.Routes.Sequences;
 using UnityEngine;
 
 namespace SpaceTransit.Loader

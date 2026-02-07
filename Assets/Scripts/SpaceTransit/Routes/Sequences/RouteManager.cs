@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using SpaceTransit.Routes;
 using UnityEngine;
 
-namespace SpaceTransit.Vaulter
+namespace SpaceTransit.Routes.Sequences
 {
 
     public sealed class RouteManager : MonoBehaviour

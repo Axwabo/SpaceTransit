@@ -1,5 +1,6 @@
 ﻿using System;
 using SpaceTransit.Routes;
+using SpaceTransit.Routes.Sequences;
 using UnityEditor;
 
 namespace SpaceTransit.Editor
