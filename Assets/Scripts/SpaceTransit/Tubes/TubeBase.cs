@@ -10,6 +10,7 @@ namespace SpaceTransit.Tubes
     {
 
         [SerializeField]
+        [HideInInspector]
         private string nextReference;
 
         public Transform Transform { get; private set; }

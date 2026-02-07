@@ -17,7 +17,7 @@ namespace SpaceTransit.Cosmos
 
         public TubeRemapper[] Remappers { get; private set; }
 
-        protected virtual void Awake() => Remappers = GetComponents<TubeRemapper>();
+        private void Awake() => Remappers = GetComponents<TubeRemapper>();
 
         public virtual bool IsFree => Locks.AreFree();
 

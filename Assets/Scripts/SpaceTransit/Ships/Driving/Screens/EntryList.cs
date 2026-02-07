@@ -38,7 +38,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private void UpdateStation(EntryEnsurer ensurer)
         {
-            if (LoadingProgress.Current != null)
+            if (LoadingProgress.Current != null || ensurer.Entries.Count == 0)
                 return;
             var station = ensurer.station;
             if (_previousStation == station)
