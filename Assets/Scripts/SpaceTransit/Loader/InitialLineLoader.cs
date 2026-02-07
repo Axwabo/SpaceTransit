@@ -27,7 +27,8 @@ namespace SpaceTransit.Loader
         private async Awaitable Start()
         {
             for (var i = 0; i < MovementController.StartingStation.Lines.Length; i++)
-                await World.LoadScene(MovementController.StartingStation.Lines[i]);
+                if (World.LoadScene(MovementController.StartingStation.Lines[i]) is { } operation)
+                    await operation;
             var total = 0;
             foreach (var info in SceneInfo.List)
                 total += info.Load.Length;

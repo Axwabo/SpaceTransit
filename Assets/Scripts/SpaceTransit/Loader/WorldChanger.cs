@@ -30,10 +30,10 @@ namespace SpaceTransit.Loader
 
         public static async Awaitable Load(int line)
         {
-            if (World.IsLoaded(line))
+            if (World.LoadScene(line) is not { } operation)
                 return;
             LoadingProgress.Current = LoadingProgress.Zero;
-            await World.LoadScene(line);
+            await operation;
             while (SceneInfo.List.Count == 0)
                 await Awaitable.NextFrameAsync();
             var timeScale = Time.timeScale;

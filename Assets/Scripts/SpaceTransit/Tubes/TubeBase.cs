@@ -35,16 +35,15 @@ namespace SpaceTransit.Tubes
                 Safety = TryGetComponent(out SafetyEnsurer ensurer)
                     ? ensurer
                     : AddDefaultSafety(gameObject);
-            Next = CrossSceneObject.GetComponent(nextReference, Next);
             OnValidate();
-            if (Application.isPlaying)
-                CrossSceneObject.SubscribeToSceneChanges(RefreshNext, nextReference);
         }
 
         private void Start()
         {
             if (!Application.isPlaying)
                 return;
+            Next = CrossSceneObject.GetComponent(nextReference, Next);
+            CrossSceneObject.SubscribeToSceneChanges(RefreshNext, nextReference);
             if (HasNext)
                 PlaceSign(Next, 0, Quaternion.identity);
             if (HasPrevious)

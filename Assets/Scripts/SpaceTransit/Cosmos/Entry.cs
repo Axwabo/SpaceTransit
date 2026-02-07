@@ -20,16 +20,20 @@ namespace SpaceTransit.Cosmos
 
         public override bool IsFree => !Dock.Safety.IsOccupied && base.IsFree;
 
-        protected override void Awake()
+        private void Start()
         {
-            base.Awake();
             RefreshEnsurer();
             CrossSceneObject.SubscribeToSceneChanges(RefreshEnsurer, ensurerReference);
         }
 
         private void OnValidate() => ensurerReference = CrossSceneObject.GetOrCreate(Ensurer, gameObject, ensurerReference);
 
-        private void OnDestroy() => CrossSceneObject.ScenesChanged -= RefreshEnsurer;
+        private void OnDestroy()
+        {
+            if (Ensurer)
+                Ensurer.Entries.Remove(this);
+            CrossSceneObject.ScenesChanged -= RefreshEnsurer;
+        }
 
         private void RefreshEnsurer()
         {

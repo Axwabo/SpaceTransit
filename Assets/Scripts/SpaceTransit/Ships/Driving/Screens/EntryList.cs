@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using SpaceTransit.Cosmos;
+using SpaceTransit.Loader;
 using SpaceTransit.Routes;
 
 namespace SpaceTransit.Ships.Driving.Screens
@@ -37,6 +38,8 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private void UpdateStation(EntryEnsurer ensurer)
         {
+            if (LoadingProgress.Current != null)
+                return;
             var station = ensurer.station;
             if (_previousStation == station)
                 return;

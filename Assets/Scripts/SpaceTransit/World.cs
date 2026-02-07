@@ -60,14 +60,10 @@ namespace SpaceTransit
 
         public static bool IsLoaded(int line) => Worlds.ContainsKey(line);
 
-        public static async Awaitable LoadScene(int line)
-        {
-            if (line == 0 || IsLoaded(line))
-                return;
-            var operation = SceneManager.LoadSceneAsync(line.ToString(), LoadSceneMode.Additive);
-            if (operation != null)
-                await Awaitable.FromAsyncOperation(operation);
-        }
+        public static AsyncOperation LoadScene(int line)
+            => line == 0 || IsLoaded(line)
+                ? null
+                : SceneManager.LoadSceneAsync(line.ToString(), LoadSceneMode.Additive);
 
         public static void Unload(int line)
         {
