@@ -103,6 +103,7 @@ The ships are spawned according to the current time and the timetables:
 1. If departing from origin later than now, spawn at origin
 2. If arrived at a station and departing in more than minimum stay + 1 minute, spawn at intermediate stop
 3. If arriving at a station in 1 minute, only spawn 1 minute before arrival time 2 tubes before the station
+   - If the entry is unloaded, spawn at the station 
 4. If (scheduled) left last stop and arriving at destination, or completed route cycle, spawn at destination
 5. Otherwise, wait and keep checking step 3
 
@@ -142,7 +143,7 @@ having to specify the audio clips in the correct order per announcement.
 
 Future plans:
 
-- Dynamic line loading
+- ~~Dynamic line loading~~ DONE
 - Ship houses
 - Even more routes & lines
 - Spline-based, auto-generated map
