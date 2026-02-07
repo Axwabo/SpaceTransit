@@ -36,6 +36,7 @@ namespace SpaceTransit.Loader
             {
                 if (World.LoadScene(line) is not { } operation)
                     continue;
+                Time.timeScale = 1;
                 any = true;
                 await operation;
             }
