@@ -1,4 +1,5 @@
 using SpaceTransit.Build;
+using SpaceTransit.Vaulter;
 using UnityEngine;
 
 namespace SpaceTransit.Loader
@@ -53,6 +54,7 @@ namespace SpaceTransit.Loader
             Time.timeScale = timeScale;
             SceneInfo.List.Remove(info);
             Destroy(info);
+            RouteManager.Current.RefreshLines();
         }
 
     }

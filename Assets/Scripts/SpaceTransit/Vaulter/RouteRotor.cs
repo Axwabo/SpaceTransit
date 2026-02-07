@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using SpaceTransit.Cosmos;
 using SpaceTransit.Loader;
 using SpaceTransit.Routes;
@@ -7,17 +6,19 @@ using SpaceTransit.Routes.Stops;
 using SpaceTransit.Ships;
 using SpaceTransit.Tubes;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace SpaceTransit.Vaulter
 {
 
-    public sealed class RouteRotor : MonoBehaviour
+    public sealed class RouteRotor
     {
 
-        private static readonly Dictionary<ServiceSequence, RouteRotor> Instances = new();
+        public ServiceSequence Sequence { get; }
 
-        [SerializeField]
-        private ServiceSequence sequence;
+        public RouteRotor(ServiceSequence sequence) => Sequence = sequence;
+
+        public bool Destroyed { get; private set; }
 
         private RouteDescriptor _initial;
 
@@ -41,18 +42,12 @@ namespace SpaceTransit.Vaulter
 
         private bool CompletedRoute => _ship.Stop is Destination && _ship.Parent.State == ShipState.Docked && _ship.Assembly.IsStationary() && !_ship.Assembly.IsManuallyDriven;
 
-        private void Awake()
-        {
-            if (sequence.routes.Length == 0 || !Instances.TryAdd(sequence, this))
-                Destroy(this);
-        }
-
-        private void Start()
+        public void Initialize()
         {
             _day = Clock.Date.Day;
-            for (_index = 0; _index < sequence.routes.Length; _index++)
+            for (_index = 0; _index < Sequence.routes.Length; _index++)
             {
-                var route = sequence.routes[_index];
+                var route = Sequence.routes[_index];
                 if (route.Origin.Departure > Clock.Now && route.Origin.Station.IsLoaded())
                 {
                     Spawn(route);
@@ -69,14 +64,14 @@ namespace SpaceTransit.Vaulter
                 }
             }
 
-            var destination = sequence.routes[^1].Destination;
+            var destination = Sequence.routes[^1].Destination;
             if (!Station.TryGetLoadedStation(destination.Station, out var station))
             {
-                Destroy(this);
+                Destroyed = true;
                 return;
             }
 
-            _ship = Instantiate(sequence.prefab, World.Current);
+            _ship = Object.Instantiate(Sequence.prefab, World.Current);
             _ship.GetComponent<ShipAssembly>().startTube = station.Docks[destination.DockIndex];
             _state = State.Completed;
         }
@@ -128,7 +123,7 @@ namespace SpaceTransit.Vaulter
 
         private void Spawn(RouteDescriptor route)
         {
-            _ship = Instantiate(sequence.prefab, World.Current);
+            _ship = Object.Instantiate(Sequence.prefab, World.Current);
             _ship.initialRoute = route;
             _state = State.Sailing;
         }
@@ -137,7 +132,7 @@ namespace SpaceTransit.Vaulter
         {
             if (_entry && !_entry.IsFree || _tube.Safety is LockBasedSafety {IsFree: false})
                 return;
-            Spawn(sequence.routes[_index]);
+            Spawn(Sequence.routes[_index]);
             var assembly = _ship.GetComponent<ShipAssembly>();
             assembly.startTube = _tube;
             _ship.initialStopIndex = _startingStop;
@@ -150,7 +145,7 @@ namespace SpaceTransit.Vaulter
                 remapper.Remap();
         }
 
-        private void Update()
+        public void Update()
         {
             if (Clock.Now < _at)
                 return;
@@ -174,18 +169,16 @@ namespace SpaceTransit.Vaulter
                 case State.Completed:
                     _ship.ExitService();
                     _state = State.WaitingForNextDay;
-                    _at = sequence.routes[0].Origin.Departure.Value - TimeSpan.FromHours(1);
+                    _at = Sequence.routes[0].Origin.Departure.Value - TimeSpan.FromHours(1);
                     break;
                 case State.WaitingForNextDay:
                     if (_ship.Assembly.IsManuallyDriven || _day == Clock.Date.Day)
                         break;
-                    _ship.BeginRoute(sequence.routes[0]);
+                    _ship.BeginRoute(Sequence.routes[0]);
                     _state = State.Sailing;
                     break;
             }
         }
-
-        private void OnDestroy() => Instances.Remove(sequence);
 
         private void WaitForNext()
         {
@@ -201,21 +194,21 @@ namespace SpaceTransit.Vaulter
                 || _ship.IsInService && _ship.Stop.Station.IsLoaded()
                 || _ship.Assembly.FrontModule.Thruster.Tube is Dock dock && dock.Station.ID.IsLoaded())
                 return false;
-            Destroy(_ship.gameObject);
-            Destroy(this);
+            Destroyed = true;
+            Object.Destroy(_ship.gameObject);
             return true;
         }
 
         private void Cycle()
         {
-            if (++_index >= sequence.routes.Length)
+            if (++_index >= Sequence.routes.Length)
             {
                 _state = State.Completed;
                 return;
             }
 
             _state = State.Sailing;
-            _ship.BeginRoute(sequence.routes[_index]);
+            _ship.BeginRoute(Sequence.routes[_index]);
         }
 
         private enum State

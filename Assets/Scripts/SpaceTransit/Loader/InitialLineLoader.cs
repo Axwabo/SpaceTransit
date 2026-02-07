@@ -1,5 +1,6 @@
 using SpaceTransit.Build;
 using SpaceTransit.Movement;
+using SpaceTransit.Vaulter;
 using UnityEngine;
 
 namespace SpaceTransit.Loader
@@ -54,6 +55,7 @@ namespace SpaceTransit.Loader
             menu.SetActive(true);
             player.SetActive(true);
             player.transform.parent = World.Current;
+            RouteManager.Current.RefreshLines();
         }
 
     }
