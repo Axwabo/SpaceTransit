@@ -1,4 +1,3 @@
-using SpaceTransit.Build;
 using SpaceTransit.Movement;
 using SpaceTransit.Routes.Sequences;
 using UnityEngine;
@@ -29,28 +28,11 @@ namespace SpaceTransit.Loader
             for (var i = 0; i < MovementController.StartingStation.Lines.Length; i++)
                 if (World.LoadScene(MovementController.StartingStation.Lines[i]) is { } operation)
                     await operation;
-            var total = 0;
-            foreach (var info in SceneInfo.List)
-                total += info.Load.Length;
-            var progress = new LoadingProgress(total);
-            LoadingProgress.Current = progress;
-            foreach (var info in SceneInfo.List)
-            foreach (var o in info.Load)
-            {
-                o.SetActive(true);
-                progress.Completed++;
-                Clock.OffsetSeconds = -Time.timeSinceLevelLoadAsDouble;
-                await Awaitable.FixedUpdateAsync();
-            }
 
-            foreach (var info in SceneInfo.List)
-            {
-                foreach (var o in info.Activate)
-                    o.SetActive(true);
-                Destroy(info);
-            }
+            await WorldChanger.InitNewScenes();
+            Clock.OffsetSeconds = -Time.timeSinceLevelLoadAsDouble;
 
-            SceneInfo.List.Clear();
+            WorldChanger.ActivateNewScenes();
 
             Destroy(loader);
             menu.SetActive(true);

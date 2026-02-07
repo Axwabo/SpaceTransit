@@ -42,10 +42,8 @@ namespace SpaceTransit.Loader
             if (isNear == _wasNear)
                 return;
             _wasNear = isNear;
-            if (!isNear)
-                return;
-            foreach (var line in _id.Lines)
-                _ = WorldChanger.Load(line);
+            if (isNear)
+                _ = WorldChanger.Load(_id.Lines.ToArray());
         }
 
     }

@@ -28,33 +28,59 @@ namespace SpaceTransit.Loader
             _ = Load(isBack ? loadForwards : loadBackwards);
         }
 
-        public static async Awaitable Load(int line)
+        public static async Awaitable Load(params int[] lines)
         {
-            if (World.LoadScene(line) is not { } operation)
-                return;
             LoadingProgress.Current = LoadingProgress.Zero;
-            await operation;
+            var any = false;
+            foreach (var line in lines)
+            {
+                if (World.LoadScene(line) is not { } operation)
+                    continue;
+                any = true;
+                await operation;
+            }
+
+            if (!any)
+            {
+                LoadingProgress.Current = null;
+                return;
+            }
+
             while (SceneInfo.List.Count == 0)
                 await Awaitable.NextFrameAsync();
-            var timeScale = Time.timeScale;
-            var info = SceneInfo.List.FirstFast();
-            var progress = new LoadingProgress(info.Load.Length);
+
+            await InitNewScenes();
+
+            ActivateNewScenes();
+            RouteManager.Current.RefreshLines();
+        }
+
+        public static async Awaitable InitNewScenes()
+        {
+            var total = 0;
+            foreach (var info in SceneInfo.List)
+                total += info.Load.Length;
+            var progress = new LoadingProgress(total);
             LoadingProgress.Current = progress;
-            Time.timeScale = 1;
+            foreach (var info in SceneInfo.List)
             foreach (var o in info.Load)
             {
                 o.SetActive(true);
                 progress.Completed++;
-                await Awaitable.NextFrameAsync();
+                await Awaitable.FixedUpdateAsync();
+            }
+        }
+
+        public static void ActivateNewScenes()
+        {
+            foreach (var info in SceneInfo.List)
+            {
+                foreach (var o in info.Activate)
+                    o.SetActive(true);
+                Destroy(info);
             }
 
-            foreach (var o in info.Activate)
-                o.SetActive(true);
-
-            Time.timeScale = timeScale;
-            SceneInfo.List.Remove(info);
-            Destroy(info);
-            RouteManager.Current.RefreshLines();
+            SceneInfo.List.Clear();
         }
 
     }
