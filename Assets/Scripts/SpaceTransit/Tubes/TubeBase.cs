@@ -66,7 +66,9 @@ namespace SpaceTransit.Tubes
                 return;
             var (position, rotation) = tube.Sample(distance);
             var forwardsSign = Instantiate(World.SpeedLimitSignPrefab, World.Current, false);
-            forwardsSign.transform.SetLocalPositionAndRotation(position, rotation * rotationOffset);
+            var t = forwardsSign.transform;
+            t.SetLocalPositionAndRotation(position, rotation * rotationOffset);
+            t.parent = Transform;
             forwardsSign.Forwards.text = tube.SpeedLimit is 0 ? "--" : (tube.SpeedLimit * 3.6f).ToString("N0");
         }
 
