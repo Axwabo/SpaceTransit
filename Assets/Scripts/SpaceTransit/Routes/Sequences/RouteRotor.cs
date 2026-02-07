@@ -92,7 +92,6 @@ namespace SpaceTransit.Routes.Sequences
             }
 
             _startingStop = index;
-            _at = arrival;
             if (!Station.TryGetLoadedStation(stop.Station, out var station))
                 throw new MissingComponentException($"Entry station {stop.Station.name} is not loaded");
             var dock = station.Docks[stop.DockIndex];
@@ -100,6 +99,7 @@ namespace SpaceTransit.Routes.Sequences
             if (entries.Length == 0)
             {
                 _tube = dock.Next(!route.Reverse).Next(!route.Reverse);
+                _at = arrival;
                 return;
             }
 
@@ -113,12 +113,23 @@ namespace SpaceTransit.Routes.Sequences
             }
 
             _tube = FindPreviousTube(route.Reverse);
+            if (_tube)
+            {
+                _at = arrival;
+                return;
+            }
+
+            _entry = null;
+            Spawn(route);
+            _ship.initialStopIndex = index;
         }
 
         private TubeBase FindPreviousTube(bool reverse)
         {
+            if (!_entry || !_entry.Ensurer)
+                return null;
             var tube = _entry.Ensurer.Tube;
-            return reverse ? tube.Next : tube;
+            return !tube ? null : reverse ? tube.Next : tube;
         }
 
         private void Spawn(RouteDescriptor route)
@@ -190,8 +201,15 @@ namespace SpaceTransit.Routes.Sequences
 
         private bool Unload()
         {
-            if (LoadingProgress.Current != null
-                || _ship.Assembly.IsPlayerMounted
+            if (LoadingProgress.Current != null)
+                return false;
+            if (!_ship)
+            {
+                Destroyed = true;
+                return true;
+            }
+
+            if (_ship.Assembly.IsPlayerMounted
                 || _ship.IsInService && _ship.Stop.Station.IsLoaded()
                 || _ship.Assembly.FrontModule.Thruster.Tube is Dock dock && dock.Station.ID.IsLoaded())
                 return false;
