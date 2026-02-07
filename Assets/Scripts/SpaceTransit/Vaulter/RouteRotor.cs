@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using SpaceTransit.Cosmos;
 using SpaceTransit.Loader;
 using SpaceTransit.Routes;
@@ -12,6 +13,8 @@ namespace SpaceTransit.Vaulter
 
     public sealed class RouteRotor : MonoBehaviour
     {
+
+        private static readonly Dictionary<ServiceSequence, RouteRotor> Instances = new();
 
         [SerializeField]
         private ServiceSequence sequence;
@@ -40,7 +43,7 @@ namespace SpaceTransit.Vaulter
 
         private void Awake()
         {
-            if (sequence.routes.Length == 0)
+            if (sequence.routes.Length == 0 || !Instances.TryAdd(sequence, this))
                 Destroy(this);
         }
 
@@ -181,6 +184,8 @@ namespace SpaceTransit.Vaulter
                     break;
             }
         }
+
+        private void OnDestroy() => Instances.Remove(sequence);
 
         private void WaitForNext()
         {
