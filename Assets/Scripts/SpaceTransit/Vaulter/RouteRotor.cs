@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using SpaceTransit.Cosmos;
 using SpaceTransit.Loader;
 using SpaceTransit.Routes;
@@ -14,10 +14,7 @@ namespace SpaceTransit.Vaulter
     {
 
         [SerializeField]
-        private VaulterController prefab;
-
-        [SerializeField]
-        public RouteDescriptor[] routes;
+        private ServiceSequence sequence;
 
         private RouteDescriptor _initial;
 
@@ -43,16 +40,16 @@ namespace SpaceTransit.Vaulter
 
         private void Awake()
         {
-            if (routes.Length == 0)
+            if (sequence.routes.Length == 0)
                 Destroy(this);
         }
 
         private void Start()
         {
             _day = Clock.Date.Day;
-            for (_index = 0; _index < routes.Length; _index++)
+            for (_index = 0; _index < sequence.routes.Length; _index++)
             {
-                var route = routes[_index];
+                var route = sequence.routes[_index];
                 if (route.Origin.Departure > Clock.Now && route.Origin.Station.IsLoaded())
                 {
                     Spawn(route);
@@ -69,14 +66,14 @@ namespace SpaceTransit.Vaulter
                 }
             }
 
-            var destination = routes[^1].Destination;
+            var destination = sequence.routes[^1].Destination;
             if (!Station.TryGetLoadedStation(destination.Station, out var station))
             {
                 Destroy(this);
                 return;
             }
 
-            _ship = Instantiate(prefab, World.Current);
+            _ship = Instantiate(sequence.prefab, World.Current);
             _ship.GetComponent<ShipAssembly>().startTube = station.Docks[destination.DockIndex];
             _state = State.Completed;
         }
@@ -128,7 +125,7 @@ namespace SpaceTransit.Vaulter
 
         private void Spawn(RouteDescriptor route)
         {
-            _ship = Instantiate(prefab, World.Current);
+            _ship = Instantiate(sequence.prefab, World.Current);
             _ship.initialRoute = route;
             _state = State.Sailing;
         }
@@ -137,7 +134,7 @@ namespace SpaceTransit.Vaulter
         {
             if (_entry && !_entry.IsFree || _tube.Safety is LockBasedSafety {IsFree: false})
                 return;
-            Spawn(routes[_index]);
+            Spawn(sequence.routes[_index]);
             var assembly = _ship.GetComponent<ShipAssembly>();
             assembly.startTube = _tube;
             _ship.initialStopIndex = _startingStop;
@@ -174,12 +171,12 @@ namespace SpaceTransit.Vaulter
                 case State.Completed:
                     _ship.ExitService();
                     _state = State.WaitingForNextDay;
-                    _at = routes[0].Origin.Departure.Value - TimeSpan.FromHours(1);
+                    _at = sequence.routes[0].Origin.Departure.Value - TimeSpan.FromHours(1);
                     break;
                 case State.WaitingForNextDay:
                     if (_ship.Assembly.IsManuallyDriven || _day == Clock.Date.Day)
                         break;
-                    _ship.BeginRoute(routes[0]);
+                    _ship.BeginRoute(sequence.routes[0]);
                     _state = State.Sailing;
                     break;
             }
@@ -206,14 +203,14 @@ namespace SpaceTransit.Vaulter
 
         private void Cycle()
         {
-            if (++_index >= routes.Length)
+            if (++_index >= sequence.routes.Length)
             {
                 _state = State.Completed;
                 return;
             }
 
             _state = State.Sailing;
-            _ship.BeginRoute(routes[_index]);
+            _ship.BeginRoute(sequence.routes[_index]);
         }
 
         private enum State
