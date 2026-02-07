@@ -22,7 +22,7 @@ namespace SpaceTransit.Loader
 
         private void Update()
         {
-            if (LoadingProgress.Current == null)
+            if (LoadingProgress.Current == null || Time.timeSinceLevelLoadAsDouble < Clock.OffsetSeconds + 0.5)
             {
                 if (_shouldActivate)
                     activate.SetActive(false);

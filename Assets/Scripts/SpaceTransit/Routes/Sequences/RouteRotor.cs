@@ -191,6 +191,7 @@ namespace SpaceTransit.Routes.Sequences
         private bool Unload()
         {
             if (LoadingProgress.Current != null
+                || _ship.Assembly.IsPlayerMounted
                 || _ship.IsInService && _ship.Stop.Station.IsLoaded()
                 || _ship.Assembly.FrontModule.Thruster.Tube is Dock dock && dock.Station.ID.IsLoaded())
                 return false;
