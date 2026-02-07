@@ -42,6 +42,7 @@ namespace SpaceTransit.Routes.Sequences
 
         private bool CompletedRoute => _ship.Stop is Destination && _ship.Parent.State == ShipState.Docked && _ship.Assembly.IsStationary() && !_ship.Assembly.IsManuallyDriven;
 
+        // TODO: improve
         public void Initialize()
         {
             _day = Clock.Date.Day;
