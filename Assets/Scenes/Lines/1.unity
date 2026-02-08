@@ -17250,6 +17250,7 @@ MonoBehaviour:
   <Connected>k__BackingField: {fileID: 11400000, guid: 2a8e73ebfba265e428e404749ddf1365, type: 2}
   <Locks>k__BackingField:
   - {fileID: 1372252622}
+  - {fileID: 1488661434}
   ensurerReference: 
   <Ensurer>k__BackingField: {fileID: 1235061253}
 --- !u!1 &754138936
@@ -20389,7 +20390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
   <Connected>k__BackingField: {fileID: 11400000, guid: f9f7075e912412340b15f645943b4f26, type: 2}
   <Locks>k__BackingField:
-  - {fileID: 1372252622}
+  - {fileID: 1488661434}
   - {fileID: 388186221}
 --- !u!1 &925904259
 GameObject:
@@ -31463,7 +31464,7 @@ GameObject:
   - component: {fileID: 1372252621}
   - component: {fileID: 1372252622}
   m_Layer: 0
-  m_Name: F-S
+  m_Name: F over 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31478,7 +31479,7 @@ Transform:
   m_GameObject: {fileID: 1372252620}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -21, y: 0, z: 123.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -35011,6 +35012,50 @@ MonoBehaviour:
   updateInPlayMode: 1
   curveSpace: 0
   mode: 1
+--- !u!1 &1488661432
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1488661433}
+  - component: {fileID: 1488661434}
+  m_Layer: 0
+  m_Name: F over 3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1488661433
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488661432}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 144.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2077352340}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1488661434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488661432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166d277a1b5444daae45515d0c1a0690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Lock
 --- !u!4 &1490016653 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5897167960580689564, guid: 6981a595a4e71b2f6b9852c63788b505, type: 3}
@@ -45852,7 +45897,7 @@ MonoBehaviour:
   lockReferences:
   - 
   locks:
-  - {fileID: 388186221}
+  - {fileID: 1488661434}
   enter: 0
   exit: 1
   forwards: 1
@@ -49239,6 +49284,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1372252621}
+  - {fileID: 1488661433}
   - {fileID: 1956180825}
   - {fileID: 286366378}
   - {fileID: 388186220}
