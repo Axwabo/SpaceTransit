@@ -125,6 +125,7 @@ namespace SpaceTransit.Movement
             _t.position = to;
             _verticalVelocity = 0;
             World.Current.position -= LastPosition - to;
+            LastPosition = Position;
             Teleported?.Invoke();
         }
 
