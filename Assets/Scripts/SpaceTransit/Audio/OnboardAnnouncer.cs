@@ -33,6 +33,8 @@ namespace SpaceTransit.Audio
 
         private DoorsState _doorsState;
 
+        private bool _wasStationary;
+
         protected override void Awake() => _player = GetComponent<QueuePlayer>();
 
         private void Update()
@@ -43,7 +45,7 @@ namespace SpaceTransit.Audio
                 return;
             }
 
-            if (!_wasSailing && !Parent.Assembly.IsStationary())
+            if (!_wasSailing && !Assembly.IsStationary())
             {
                 _delay = 10;
                 _wasSailing = true;
@@ -55,6 +57,11 @@ namespace SpaceTransit.Audio
                 PlayNextStop();
             if (_welcomePlayed && !_currentStopPlayed && IsNearStation)
                 PlayCurrentStop();
+            if (Assembly.IsManuallyDriven || Controller.CanProceed || Assembly.IsStationary() == _wasStationary)
+                return;
+            _wasStationary = Assembly.IsStationary();
+            if (_wasStationary)
+                _player.EnqueueWithSubtitles(announcer, "The ship has stopped due to traffic reasons. We apologize for the inconvenience. Thank you.", pack);
         }
 
         private void PlayNextStop()
