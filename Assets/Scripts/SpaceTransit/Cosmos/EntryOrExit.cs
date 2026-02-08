@@ -10,14 +10,14 @@ namespace SpaceTransit.Cosmos
     {
 
         [field: SerializeField]
-        public Station ConnectedStation { get; private set; }
+        public StationId Connected { get; private set; }
 
         [field: SerializeField]
         protected Lock[] Locks { get; private set; }
 
         public TubeRemapper[] Remappers { get; private set; }
 
-        protected virtual void Awake() => Remappers = GetComponents<TubeRemapper>();
+        private void Awake() => Remappers = GetComponents<TubeRemapper>();
 
         public virtual bool IsFree => Locks.AreFree();
 

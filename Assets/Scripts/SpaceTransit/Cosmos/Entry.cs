@@ -1,7 +1,7 @@
-﻿using SpaceTransit.Routes;
+﻿using SpaceTransit.Loader;
+using SpaceTransit.Routes;
 using SpaceTransit.Ships;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace SpaceTransit.Cosmos
 {
@@ -9,7 +9,10 @@ namespace SpaceTransit.Cosmos
     public sealed class Entry : EntryOrExit
     {
 
-        [field: FormerlySerializedAs("ensurer")]
+        [SerializeField]
+        [HideInInspector]
+        private string ensurerReference;
+
         [field: SerializeField]
         public EntryEnsurer Ensurer { get; private set; }
 
@@ -17,10 +20,26 @@ namespace SpaceTransit.Cosmos
 
         public override bool IsFree => !Dock.Safety.IsOccupied && base.IsFree;
 
-        protected override void Awake()
+        private void Start()
         {
-            base.Awake();
-            Ensurer.Entries.Add(this);
+            RefreshEnsurer();
+            CrossSceneObject.SubscribeToSceneChanges(RefreshEnsurer, ensurerReference);
+        }
+
+        private void OnValidate() => ensurerReference = CrossSceneObject.GetOrCreate(Ensurer, gameObject, ensurerReference);
+
+        private void OnDestroy()
+        {
+            if (Ensurer)
+                Ensurer.Entries.Remove(this);
+            CrossSceneObject.ScenesChanged -= RefreshEnsurer;
+        }
+
+        private void RefreshEnsurer()
+        {
+            Ensurer = CrossSceneObject.GetComponent(ensurerReference, Ensurer);
+            if (Ensurer)
+                Ensurer.Entries.Add(this);
         }
 
         public override bool Lock(ShipAssembly assembly) => !Dock.Safety.IsOccupied && base.Lock(assembly);

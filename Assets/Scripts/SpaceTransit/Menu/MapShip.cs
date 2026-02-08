@@ -1,4 +1,5 @@
-﻿using SpaceTransit.Routes;
+﻿using System.Threading;
+using SpaceTransit.Routes;
 using SpaceTransit.Ships;
 using TMPro;
 using UnityEngine;
@@ -31,6 +32,8 @@ namespace SpaceTransit.Menu
 
         private RouteDescriptor _previousRoute;
 
+        private CancellationToken _cancellationToken;
+
         public float Scale { get; set; } = 1;
 
         private void Awake() => _this = (RectTransform) transform;
@@ -39,6 +42,7 @@ namespace SpaceTransit.Menu
         {
             _assembly = assembly;
             _anchor = anchor;
+            _cancellationToken = assembly.destroyCancellationToken;
             UpdatePosition();
             if (!assembly.Parent.TryGetVaulter(out var vaulter))
                 return;
@@ -53,7 +57,13 @@ namespace SpaceTransit.Menu
             (type.text, image.color) = currentRoute.GetAbbreviation();
         }
 
-        private void Update() => UpdatePosition();
+        private void Update()
+        {
+            if (_cancellationToken.IsCancellationRequested)
+                Destroy(gameObject);
+            else
+                UpdatePosition();
+        }
 
         private void UpdatePosition()
         {

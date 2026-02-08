@@ -1,10 +1,12 @@
 ﻿using System.Linq;
+using SpaceTransit.Loader;
 using SpaceTransit.Movement;
 using SpaceTransit.Routes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using Cache = SpaceTransit.Vaulter.Cache;
 
 namespace SpaceTransit.Menu
 {
@@ -21,10 +23,10 @@ namespace SpaceTransit.Menu
         private void Start()
         {
             var t = transform;
-            foreach (var station in Station.LoadedStations.OrderBy(e => e.Name))
+            foreach (var station in Cache.Stations.OrderBy(e => e.name))
             {
                 var teleport = Instantiate(prefab, t).AddComponent<Teleport>();
-                teleport.Station = station;
+                teleport.Id = station;
                 teleport.Error = error;
             }
         }
@@ -35,14 +37,14 @@ namespace SpaceTransit.Menu
         private sealed class Teleport : MonoBehaviour
         {
 
-            public Station Station { get; set; }
+            public StationId Id { get; set; }
 
             public TextMeshProUGUI Error { get; set; }
 
             private void Start()
             {
                 GetComponent<Button>().onClick.AddListener(Click);
-                GetComponentInChildren<TextMeshProUGUI>().text = Station.Name;
+                GetComponentInChildren<TextMeshProUGUI>().text = Id.name;
             }
 
             private void Click()
@@ -59,8 +61,16 @@ namespace SpaceTransit.Menu
                     return;
                 }
 
+                if (!Station.TryGetLoadedStation(Id, out var station))
+                {
+                    _ = WorldChanger.Load(Id.Lines.ToArray());
+                    Error.text = "Now loading, please try again later.";
+                    return;
+                }
+
                 Error.text = "";
-                MovementController.Current.Teleport(Station.Spawnpoint);
+                World.Unload(World.Worlds.Keys.Except(station.ID.Lines.ToArray()).ToArray());
+                MovementController.Current.Teleport(station.Spawnpoint);
             }
 
         }

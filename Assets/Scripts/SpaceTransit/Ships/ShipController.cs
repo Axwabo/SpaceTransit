@@ -143,8 +143,7 @@ namespace SpaceTransit.Ships
                 return true;
             if (!TryGetVaulter(out var controller)
                 || !controller.IsInService
-                || controller.Stop is not IDeparture {ExitTowards: var id}
-                || !Station.TryGetLoadedStation(id, out var towards)
+                || controller.Stop is not IDeparture {ExitTowards: var towards}
                 || Assembly.FrontModule.Thruster.Tube is not Dock dock)
             {
                 exit = null;
@@ -153,7 +152,7 @@ namespace SpaceTransit.Ships
 
             foreach (var front in dock.FrontExits)
             {
-                if (front.ConnectedStation != towards)
+                if (front.Connected != towards)
                     continue;
                 exit = front;
                 return true;
@@ -161,7 +160,7 @@ namespace SpaceTransit.Ships
 
             foreach (var back in dock.BackExits)
             {
-                if (back.ConnectedStation != towards)
+                if (back.Connected != towards)
                     continue;
                 exit = back;
                 return true;

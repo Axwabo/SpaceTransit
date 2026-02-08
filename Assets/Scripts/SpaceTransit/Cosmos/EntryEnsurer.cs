@@ -10,7 +10,7 @@ namespace SpaceTransit.Cosmos
     {
 
         [SerializeField]
-        public Station station;
+        public StationId station;
 
         [field: SerializeField]
         public bool Backwards { get; private set; }

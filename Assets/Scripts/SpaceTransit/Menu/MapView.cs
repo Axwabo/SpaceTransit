@@ -3,6 +3,7 @@ using SpaceTransit.Routes;
 using SpaceTransit.Ships;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 namespace SpaceTransit.Menu
 {
@@ -43,20 +44,26 @@ namespace SpaceTransit.Menu
 
         private readonly HashSet<ShipAssembly> _spawnedAssemblies = new();
 
+        private readonly HashSet<StationId> _placedStations = new();
+
         private void Awake()
         {
             _this = (RectTransform) transform;
             _size = _this.sizeDelta;
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
         private void OnEnable() => _previousPoint = Mouse;
 
-        private void Start()
+        private void Start() => Place();
+
+        private void Place()
         {
-            if (_placed)
-                return;
+            _placed = true;
             foreach (var station in Station.LoadedStations)
             {
+                if (!_placedStations.Add(station.ID))
+                    continue;
                 var stationPosition = anchor.InverseTransformPoint(station.transform.localPosition);
                 Instantiate(stationPrefab, _this, false).Apply(station, new Vector3(stationPosition.x * scale, stationPosition.z * scale));
             }
@@ -64,6 +71,8 @@ namespace SpaceTransit.Menu
 
         private void Update()
         {
+            if (!_placed)
+                Place();
             foreach (var assembly in ShipAssembly.Instances)
             {
                 if (!_spawnedAssemblies.Add(assembly))
@@ -93,6 +102,10 @@ namespace SpaceTransit.Menu
             _this.pivot += new Vector2(delta.x * sensitivity / _size.x / _zoom, delta.y * sensitivity / _size.y / _zoom);
             _previousPoint = point;
         }
+
+        private void OnDestroy() => SceneManager.sceneLoaded -= OnSceneLoaded;
+
+        private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1) => _placed = false;
 
     }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SpaceTransit.Loader;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -11,7 +12,7 @@ namespace SpaceTransit.Routes
 
         private static readonly Dictionary<string, Station> Loaded = new();
 
-        public static IReadOnlyCollection<Station> LoadedStations => Loaded.Values;
+        public static Dictionary<string, Station>.ValueCollection LoadedStations => Loaded.Values;
 
         public static bool TryGetLoadedStation(StationId id, out Station station)
             => Loaded.TryGetValue(id.name, out station);
@@ -42,6 +43,9 @@ namespace SpaceTransit.Routes
                 dock.Station = this;
                 dock.Index = i;
             }
+
+            if (ID.Lines.Length > 1)
+                gameObject.AddComponent<Hub>();
         }
 
         private void OnDisable() => Loaded.Remove(Name);

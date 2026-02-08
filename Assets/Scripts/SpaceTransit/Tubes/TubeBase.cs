@@ -1,4 +1,5 @@
 ﻿using SpaceTransit.Cosmos;
+using SpaceTransit.Loader;
 using UnityEngine;
 
 namespace SpaceTransit.Tubes
@@ -7,6 +8,10 @@ namespace SpaceTransit.Tubes
     [ExecuteInEditMode]
     public abstract class TubeBase : MonoBehaviour
     {
+
+        [SerializeField]
+        [HideInInspector]
+        private string nextReference;
 
         public Transform Transform { get; private set; }
 
@@ -38,10 +43,21 @@ namespace SpaceTransit.Tubes
         {
             if (!Application.isPlaying)
                 return;
+            Next = CrossSceneObject.GetComponent(nextReference, Next);
+            CrossSceneObject.SubscribeToSceneChanges(RefreshNext, nextReference);
             if (HasNext)
                 PlaceSign(Next, 0, Quaternion.identity);
             if (HasPrevious)
                 PlaceSign(Previous, Previous.Length, Quaternion.Euler(0, 180, 0));
+        }
+
+        private void OnDestroy() => CrossSceneObject.ScenesChanged -= RefreshNext;
+
+        private void RefreshNext()
+        {
+            var next = CrossSceneObject.GetComponent(nextReference, Next);
+            if (next != Next)
+                SetNext(next);
         }
 
         private void PlaceSign(TubeBase tube, float distance, Quaternion rotationOffset)
@@ -50,12 +66,15 @@ namespace SpaceTransit.Tubes
                 return;
             var (position, rotation) = tube.Sample(distance);
             var forwardsSign = Instantiate(World.SpeedLimitSignPrefab, World.Current, false);
-            forwardsSign.transform.SetLocalPositionAndRotation(position, rotation * rotationOffset);
+            var t = forwardsSign.transform;
+            t.SetLocalPositionAndRotation(position, rotation * rotationOffset);
+            t.parent = Transform;
             forwardsSign.Forwards.text = tube.SpeedLimit is 0 ? "--" : (tube.SpeedLimit * 3.6f).ToString("N0");
         }
 
         private void OnValidate()
         {
+            nextReference = CrossSceneObject.GetOrCreate(Next, gameObject, nextReference);
             if (!Next)
                 return;
             Next.Previous = this;

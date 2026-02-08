@@ -14,7 +14,7 @@ namespace SpaceTransit
             if (current.Safety is EntryEnsurer {Backwards: var thisBackwards} thisEntry && thisBackwards == reverse)
             {
                 ensurer = thisEntry;
-                return true;
+                return ensurer;
             }
 
             if ((reverse ? current.HasPrevious : current.HasNext)
@@ -22,7 +22,7 @@ namespace SpaceTransit
                 && nextBackwards == reverse)
             {
                 ensurer = nextEntry;
-                return true;
+                return ensurer;
             }
 
             ensurer = null;

@@ -1,4 +1,5 @@
-﻿using SpaceTransit.Ships.Modules;
+﻿using SpaceTransit.Loader;
+using SpaceTransit.Ships.Modules;
 using UnityEngine;
 
 namespace SpaceTransit.Cosmos.Actions
@@ -6,6 +7,10 @@ namespace SpaceTransit.Cosmos.Actions
 
     public sealed class LockClearer : SafetyActionBase
     {
+
+        [SerializeField]
+        [HideInInspector]
+        private string[] lockReferences;
 
         [SerializeField]
         private Lock[] locks;
@@ -21,6 +26,16 @@ namespace SpaceTransit.Cosmos.Actions
 
         [SerializeField]
         private bool backwards;
+
+        private void Start()
+        {
+            RefreshLocks();
+            CrossSceneObject.SubscribeToSceneChanges(RefreshLocks, lockReferences);
+        }
+
+        private void OnValidate() => lockReferences = CrossSceneObject.GetOrCreateAll(locks, gameObject, lockReferences);
+
+        private void RefreshLocks() => locks = CrossSceneObject.GetAllComponents(lockReferences, locks);
 
         public override void OnEntered(ShipModule module)
         {

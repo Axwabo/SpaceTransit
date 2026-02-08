@@ -1,19 +1,20 @@
 ﻿using System;
 using SpaceTransit.Routes;
-using SpaceTransit.Vaulter;
+using SpaceTransit.Routes.Sequences;
 using UnityEditor;
 
 namespace SpaceTransit.Editor
 {
 
-    [CustomEditor(typeof(RouteRotor))]
+    [CustomEditor(typeof(ServiceSequence))]
     [CanEditMultipleObjects]
-    public sealed class RouteRotorEditor : UnityEditor.Editor
+    public sealed class ServiceSequenceEditor : UnityEditor.Editor
     {
 
         public override void OnInspectorGUI()
         {
-            var rotor = (RouteRotor) target;
+            var rotor = (ServiceSequence) target;
+            rotor.routes ??= Array.Empty<RouteDescriptor>();
             var lastTime = TimeSpan.Zero;
             StationId lastStop = null;
             var lastDock = rotor.routes.Length == 0 ? 0 : rotor.routes[0].Origin.DockIndex;
@@ -37,7 +38,7 @@ namespace SpaceTransit.Editor
             base.OnInspectorGUI();
         }
 
-        private static bool IsMidnightResetInvalid(RouteRotor rotor)
+        private static bool IsMidnightResetInvalid(ServiceSequence rotor)
         {
             if (rotor.routes.Length == 0)
                 return true;
