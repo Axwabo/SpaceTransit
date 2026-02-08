@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using SpaceTransit.Audio;
 using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
 using SpaceTransit.Ships;
@@ -34,6 +36,8 @@ namespace SpaceTransit.Vaulter
         public ReadOnlySpan<IntermediateStop> NextIntermediateStops => Stop is Destination
             ? ReadOnlySpan<IntermediateStop>.Empty
             : Route.IntermediateStops[(_stopIndex + 1)..];
+
+        public string Announcer => _components.OfType<OnboardAnnouncer>().First().announcer;
 
         protected override void Awake() => _components = GetComponentsInChildren<VaulterComponentBase>(true);
 

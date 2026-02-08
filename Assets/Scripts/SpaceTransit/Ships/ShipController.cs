@@ -43,10 +43,15 @@ namespace SpaceTransit.Ships
                                    LayerMask.GetMask("Dock")
                                );
 
-        public bool CanLiftOff => State == ShipState.WaitingForDeparture
-                                  && Assembly.Modules.All(e => e.CanDepart);
+        public bool CanLiftOff => State == ShipState.WaitingForDeparture && ModulesReadyForDeparture;
 
         public bool CanProceed { get; private set; }
+
+        public bool ModulesReadyForDeparture => Assembly.Modules.All(static e => e.CanDepart);
+
+        public float TimeToDeparture { get; set; }
+
+        public bool WillBeDeparting => TimeToDeparture is > 0 and < 5 && (!TryGetExit(out var exit) || exit.IsFree || exit.IsUsedOnlyBy(Assembly));
 
         private void Start()
         {
@@ -96,13 +101,17 @@ namespace SpaceTransit.Ships
             if (State != ShipState.Docked)
                 throw new InvalidOperationException("Cannot depart while not docked");
             if (!TryGetExit(out var exit))
+            {
                 State = ShipState.WaitingForDeparture;
+                TimeToDeparture = 0;
+            }
             else if (!exit.Connected.IsLoaded())
                 Destroy(gameObject);
             else if (exit.Lock(Assembly))
             {
                 Assembly.FrontModule.ExitList.Mark(exit);
                 State = ShipState.WaitingForDeparture;
+                TimeToDeparture = 0;
             }
         }
 

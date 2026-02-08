@@ -19,7 +19,7 @@ namespace SpaceTransit.Audio
         private PhrasePack pack;
 
         [SerializeField]
-        private string announcer;
+        public string announcer;
 
         private QueuePlayer _player;
 

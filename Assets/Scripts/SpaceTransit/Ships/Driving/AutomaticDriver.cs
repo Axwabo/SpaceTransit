@@ -67,12 +67,17 @@ namespace SpaceTransit.Ships.Driving
             {
                 var stay = Mathf.Max(MinStaySeconds, Parent.Stop is IntermediateStop {MinStayMinutes: var minStay} ? minStay * 60 : 0);
                 var departIn = Parent.Stop is IDeparture {Departure: var departure} ? departure.Value - Clock.Now : TimeSpan.Zero;
-                _remainingWait = Mathf.Max((float) departIn.TotalSeconds, stay);
+                Controller.TimeToDeparture = (float) departIn.TotalSeconds;
+                _remainingWait = Mathf.Max(Controller.TimeToDeparture, stay);
                 _departed = false;
             }
 
             if ((_remainingWait -= Clock.Delta) > 0)
+            {
+                Controller.TimeToDeparture = _remainingWait;
                 return;
+            }
+
             Controller.MarkReady();
             _departed = false;
         }
