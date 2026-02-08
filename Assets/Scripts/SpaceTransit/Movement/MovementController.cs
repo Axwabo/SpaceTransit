@@ -42,8 +42,6 @@ namespace SpaceTransit.Movement
 
         private bool _relocated;
 
-        private float _pitch;
-
         public bool IsMounted { get; private set; }
 
         public Transform Mount
@@ -104,8 +102,7 @@ namespace SpaceTransit.Movement
             if (look == Vector2.zero)
                 return;
             _t.Rotate(Vector3.up, look.x * 0.1f);
-            _pitch = Mathf.Clamp(_pitch + look.y * 0.1f, -90, 90);
-            cameraTransform.localRotation = Quaternion.Euler(-_pitch, 0, 0);
+            cameraTransform.Rotate(Vector3.right, look.y * -0.1f);
         }
 
         private void UpdateGrounded()
