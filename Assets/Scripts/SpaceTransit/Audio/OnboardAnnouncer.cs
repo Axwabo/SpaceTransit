@@ -60,8 +60,10 @@ namespace SpaceTransit.Audio
             if (Assembly.IsManuallyDriven || Controller.CanProceed || Assembly.IsStationary() == _wasStationary)
                 return;
             _wasStationary = Assembly.IsStationary();
-            if (_wasStationary)
-                _player.EnqueueWithSubtitles(announcer, "The ship has stopped due to traffic reasons. We apologize for the inconvenience. Thank you.", pack);
+            if (!_wasStationary) 
+                return;
+            PlaySignal();
+            _player.EnqueueWithSubtitles(announcer, "The ship has stopped due to traffic reasons. We apologize for the inconvenience. Thank you.", pack);
         }
 
         private void PlayNextStop()
