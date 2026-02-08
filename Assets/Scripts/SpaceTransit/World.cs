@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using SpaceTransit.Cosmos;
+using SpaceTransit.Movement;
 using SpaceTransit.Routes;
 using SpaceTransit.Ships;
 using UnityEngine;
@@ -65,22 +68,25 @@ namespace SpaceTransit
                 ? null
                 : SceneManager.LoadSceneAsync(line.ToString(), LoadSceneMode.Additive);
 
-        public static void Unload(int line)
+        public static void Unload(params int[] lines)
         {
-            if (line == 0 || !Worlds.TryGetValue(line, out var world))
-                return;
-            world.parent = null;
-            if (Current == world)
-                ChangeCurrentWorld(line);
-            MoveWorld(line, world);
-            SceneManager.UnloadSceneAsync(line.ToString());
+            foreach (var line in lines)
+            {
+                if (line == 0 || !Worlds.TryGetValue(line, out var world))
+                    continue;
+                world.parent = null;
+                if (Current == world)
+                    ChangeCurrentWorld(lines);
+                MoveWorld(line, world);
+                SceneManager.UnloadSceneAsync(line.ToString());
+            }
         }
 
-        private static void ChangeCurrentWorld(int unloading)
+        private static void ChangeCurrentWorld(int[] unloading)
         {
             foreach (var (line, t) in Worlds)
             {
-                if (line == unloading)
+                if (unloading.Contains(line))
                     continue;
                 t.parent = null;
                 MoveWorld(line, t);
@@ -88,8 +94,10 @@ namespace SpaceTransit
                 foreach (var assembly in ShipAssembly.Instances)
                     if (assembly.Parent.TryGetVaulter(out var controller)
                         && controller.IsInService
-                        && !controller.Stop.Station.Lines.Contains(unloading, EqualityComparer<int>.Default))
+                        && controller.Stop.Station.Lines.IndexOfAny(unloading) == -1)
                         assembly.Transform.parent = t;
+                if (!MovementController.Current.IsMounted)
+                    MovementController.Current.transform.parent = t;
                 break;
             }
         }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using SpaceTransit.Loader;
 using SpaceTransit.Movement;
 using SpaceTransit.Routes;
@@ -70,9 +69,7 @@ namespace SpaceTransit.Menu
                 }
 
                 Error.text = "";
-                foreach (var line in World.Worlds.Keys.ToArray())
-                    if (!station.ID.Lines.Contains(line, EqualityComparer<int>.Default))
-                        World.Unload(line);
+                World.Unload(World.Worlds.Keys.Except(station.ID.Lines.ToArray()).ToArray());
                 MovementController.Current.Teleport(station.Spawnpoint);
             }
 
