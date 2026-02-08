@@ -97,6 +97,8 @@ namespace SpaceTransit.Ships
                 throw new InvalidOperationException("Cannot depart while not docked");
             if (!TryGetExit(out var exit))
                 State = ShipState.WaitingForDeparture;
+            else if (!exit.Connected.IsLoaded())
+                Destroy(gameObject);
             else if (exit.Lock(Assembly))
             {
                 Assembly.FrontModule.ExitList.Mark(exit);
