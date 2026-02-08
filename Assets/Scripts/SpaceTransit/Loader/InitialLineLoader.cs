@@ -25,11 +25,13 @@ namespace SpaceTransit.Loader
 
         private async Awaitable Start()
         {
+            var token = WorldChanger.Cts.Token;
+
             for (var i = 0; i < MovementController.StartingStation.Lines.Length; i++)
                 if (World.LoadScene(MovementController.StartingStation.Lines[i]) is { } operation)
                     await operation;
 
-            await WorldChanger.InitNewScenes();
+            await WorldChanger.InitNewScenes(token);
             Clock.OffsetSeconds = -Time.timeSinceLevelLoadAsDouble;
 
             WorldChanger.ActivateNewScenes();

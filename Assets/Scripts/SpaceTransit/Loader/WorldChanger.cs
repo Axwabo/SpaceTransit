@@ -1,3 +1,4 @@
+using System.Threading;
 using SpaceTransit.Build;
 using SpaceTransit.Routes.Sequences;
 using UnityEngine;
@@ -7,6 +8,8 @@ namespace SpaceTransit.Loader
 
     public sealed class WorldChanger : MonoBehaviour
     {
+
+        public static CancellationTokenSource Cts { get; private set; } = new();
 
         [SerializeField]
         private int unloadForwards;
@@ -30,6 +33,7 @@ namespace SpaceTransit.Loader
 
         public static async Awaitable Load(params int[] lines)
         {
+            var token = Cts.Token;
             LoadingProgress.Current = LoadingProgress.Zero;
             var any = false;
             foreach (var line in lines)
@@ -48,16 +52,17 @@ namespace SpaceTransit.Loader
             }
 
             while (SceneInfo.List.Count == 0)
-                await Awaitable.NextFrameAsync();
+                await Awaitable.NextFrameAsync(token);
 
-            await InitNewScenes();
+            await InitNewScenes(token);
 
             ActivateNewScenes();
             RouteManager.Current.RefreshLines();
         }
 
-        public static async Awaitable InitNewScenes()
+        public static async Awaitable InitNewScenes(CancellationToken token)
         {
+            token.ThrowIfCancellationRequested();
             var total = 0;
             foreach (var info in SceneInfo.List)
                 total += info.Load.Length;
@@ -68,7 +73,7 @@ namespace SpaceTransit.Loader
             {
                 o.SetActive(true);
                 progress.Completed++;
-                await Awaitable.FixedUpdateAsync();
+                await Awaitable.FixedUpdateAsync(token);
             }
         }
 
@@ -82,6 +87,15 @@ namespace SpaceTransit.Loader
             }
 
             SceneInfo.List.Clear();
+        }
+
+        public static void Cancel()
+        {
+            SceneInfo.List.Clear();
+            Cts.Cancel();
+            Cts.Dispose();
+            Cts = new CancellationTokenSource();
+            LoadingProgress.Current = null;
         }
 
     }

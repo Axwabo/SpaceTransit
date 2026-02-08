@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SpaceTransit.Loader;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace SpaceTransit.Menu
@@ -10,7 +11,11 @@ namespace SpaceTransit.Menu
         [SerializeField]
         private string sceneName;
 
-        protected override void Click() => SceneManager.LoadScene(sceneName);
+        protected override void Click()
+        {
+            WorldChanger.Cancel();
+            SceneManager.LoadScene(sceneName);
+        }
 
     }
 
