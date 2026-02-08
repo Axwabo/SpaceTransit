@@ -135,7 +135,7 @@ having to specify the audio clips in the correct order per announcement.
 - Lower-end devices will most likely face issues with lag, therefore overruns
 - Sometimes, the ship might overrun the dock; in this case you need to restart, e.g.
     - Starting at Mountypile, 09:59:00 causes 46 to overrun Cárpenter
-- Subtitles trigger before the signal (K.A.T.I.E. issue)
+- Congestion may happen
 
 Future plans:
 
