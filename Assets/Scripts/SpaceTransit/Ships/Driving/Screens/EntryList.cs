@@ -52,6 +52,14 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         protected override List<Entry> Source => _ensurer.Entries;
 
+        public override bool Select(int index)
+        {
+            for (var i = 0; i < Pickers.Count; i++)
+                if (Source[i].Dock.Index == index)
+                    return Select(Source[i], Pickers[i]);
+            return false;
+        }
+
         protected override bool Select(Entry item, PickablePicker picker)
         {
             if (HasPicked)
