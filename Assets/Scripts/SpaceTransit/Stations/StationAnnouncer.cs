@@ -41,11 +41,11 @@ namespace SpaceTransit.Stations
         {
             _queue = GetComponent<QueuePlayer>();
             _cache = GetComponentInParent<DeparturesArrivals>();
-            _cache.Station.Announcer = this;
         }
 
         private void Start()
         {
+            _cache.Station.Announcer = this;
             _departures = _cache.Departures
                 .Where(static e => e.Index == -1)
                 .OrderBy(static e => e.Departure.Departure.Value.TotalMinutes)
@@ -82,7 +82,11 @@ namespace SpaceTransit.Stations
             }
         }
 
-        private void OnDisable() => _queue.Clear();
+        private void OnDisable()
+        {
+            _queue.Clear();
+            _passingThrough.Clear();
+        }
 
         private void Announce(RouteDescriptor route, string announcement)
         {

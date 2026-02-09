@@ -18,15 +18,21 @@ namespace SpaceTransit.Cosmos.Actions
         [SerializeField]
         private bool backwards;
 
+        [SerializeField]
+        private bool enter;
+
+        [SerializeField]
+        private bool exit;
+
         public override void OnEntered(ShipModule module)
         {
-            if (Ensurer.Occupants.Count == module.Assembly.Modules.Length && Direction(module))
+            if (enter && Ensurer.Occupants.Count == module.Assembly.Modules.Length && Direction(module))
                 Announce(module.Assembly);
         }
 
         public override void OnExited(ShipModule module)
         {
-            if (!Ensurer.IsOccupied && Direction(module))
+            if (exit && !Ensurer.IsOccupied && Direction(module))
                 Announce(module.Assembly);
         }
 
