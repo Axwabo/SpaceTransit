@@ -92,7 +92,9 @@ namespace SpaceTransit
                 MoveWorld(line, t);
                 Current = t;
                 foreach (var assembly in ShipAssembly.Instances)
-                    if (assembly.Parent.TryGetVaulter(out var controller)
+                    if (assembly.IsPlayerMounted
+                        ||
+                        assembly.Parent.TryGetVaulter(out var controller)
                         && controller.IsInService
                         && controller.Stop.Station.Lines.IndexOfAny(unloading) == -1)
                         assembly.Transform.parent = t;
