@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Katie.Unity;
 using SpaceTransit.Routes;
@@ -42,6 +43,8 @@ namespace SpaceTransit.Stations
             _queue = GetComponent<QueuePlayer>();
             _cache = GetComponentInParent<DeparturesArrivals>();
         }
+
+        private void OnEnable() => _passingThrough.Clear();
 
         private void Start()
         {
