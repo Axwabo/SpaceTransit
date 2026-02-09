@@ -2,6 +2,7 @@
 using System.Linq;
 using Katie.Unity;
 using SpaceTransit.Routes;
+using SpaceTransit.Ships;
 using SpaceTransit.Vaulter;
 using UnityEngine;
 
@@ -28,6 +29,8 @@ namespace SpaceTransit.Stations
 
         private readonly Dictionary<RouteDescriptor, int> _announced = new();
 
+        private readonly List<(ShipAssembly, int)> _passingThrough = new();
+
         private List<DepartureEntry> _departures;
 
         private List<ArrivalEntry> _arrivals;
@@ -38,6 +41,7 @@ namespace SpaceTransit.Stations
         {
             _queue = GetComponent<QueuePlayer>();
             _cache = GetComponentInParent<DeparturesArrivals>();
+            _cache.Station.Announcer = this;
         }
 
         private void Start()
@@ -57,7 +61,7 @@ namespace SpaceTransit.Stations
 
         private void Update()
         {
-            if (_queue.IsYapping)
+            if (_queue.IsYapping || AnnouncePassingThrough())
                 return;
             foreach (var (route, index, arrival) in _arrivals)
             {
@@ -88,6 +92,19 @@ namespace SpaceTransit.Stations
             _queue.EnqueueWithSubtitles(_name, announcement, pack, signal);
             _queue.Delay(3);
         }
+
+        private bool AnnouncePassingThrough()
+        {
+            _passingThrough.RemoveAll(static e => !e.Item1);
+            if (_passingThrough.Count == 0)
+                return false;
+            _queue.EnqueueWithSubtitles(_name, $"A ship is passing through dock {_passingThrough[0].Item2 + 1}, please stand back from the platform edge.", pack, genericSignal);
+            _queue.Delay(1);
+            _passingThrough.RemoveAt(0);
+            return true;
+        }
+
+        public void EnqueuePassingThrough(ShipAssembly assembly, int dockIndex) => _passingThrough.Add((assembly, dockIndex));
 
     }
 

@@ -13,11 +13,14 @@ namespace SpaceTransit.Vaulter
 
         public List<ArrivalEntry> Arrivals { get; private set; }
 
+        public Station Station { get; private set; }
+        
         public StationId StationId { get; private set; }
 
         private void Awake()
         {
-            StationId = GetComponent<Station>().ID;
+            Station = GetComponent<Station>();
+            StationId = Station.ID;
             var departures = new List<DepartureEntry>();
             var arrivals = new List<ArrivalEntry>();
             foreach (var route in Cache.Routes)

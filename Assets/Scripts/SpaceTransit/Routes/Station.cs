@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SpaceTransit.Loader;
+using SpaceTransit.Stations;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -32,6 +33,8 @@ namespace SpaceTransit.Routes
         public string Name => ID.name;
 
         public ReadOnlySpan<Dock> Docks => docks;
+        
+        public StationAnnouncer Announcer { get; set; }
 
         private void OnEnable() => Loaded[Name] = this;
 
