@@ -60,7 +60,6 @@ namespace SpaceTransit.Loader
 
         public static string GetOrCreate(GameObject gameObject, GameObject sceneReference, string originalReference)
         {
-#if UNITY_EDITOR
             if (!gameObject)
                 return originalReference;
             if (gameObject.scene == sceneReference.scene)
@@ -69,6 +68,7 @@ namespace SpaceTransit.Loader
                 reference = gameObject.AddComponent<CrossSceneObject>();
             if (!string.IsNullOrEmpty(reference.id))
                 return reference.id;
+#if UNITY_EDITOR
             var id = reference.id = GUID.Generate().ToString();
             Loaded[id] = gameObject;
             EditorUtility.SetDirty(gameObject);
