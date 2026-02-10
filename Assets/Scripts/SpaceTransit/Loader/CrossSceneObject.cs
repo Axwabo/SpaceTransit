@@ -60,6 +60,7 @@ namespace SpaceTransit.Loader
 
         public static string GetOrCreate(GameObject gameObject, GameObject sceneReference, string originalReference)
         {
+#if UNITY_EDITOR
             if (!gameObject)
                 return originalReference;
             if (gameObject.scene == sceneReference.scene)
@@ -70,10 +71,11 @@ namespace SpaceTransit.Loader
                 return reference.id;
             var id = reference.id = GUID.Generate().ToString();
             Loaded[id] = gameObject;
-#if UNITY_EDITOR
             EditorUtility.SetDirty(gameObject);
-#endif
             return id;
+#else
+            return null;
+#endif
         }
 
         public static string[] GetOrCreateAll<T>(T[] objects, GameObject sceneReference, string[] originalReferences) where T : Component
