@@ -476,6 +476,7 @@ GameObject:
   - component: {fileID: 279535372}
   - component: {fileID: 279535371}
   - component: {fileID: 279535370}
+  - component: {fileID: 279535373}
   m_Layer: 0
   m_Name: 1
   m_TagString: Untagged
@@ -581,6 +582,21 @@ MonoBehaviour:
   CurveChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &279535373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 279535368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c51f90abf83e4ac7a02989cfc140ab73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.ExitClearer
+  exit: {fileID: 256242053}
+  forwards: 0
+  backwards: 1
 --- !u!1 &422447815
 GameObject:
   m_ObjectHideFlags: 0
@@ -642,7 +658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2fa6bd2fe47453bbaaf0ef35ee0f705, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.SplineTube
-  nextReference: 3058737fcf4cd6acb803b9ceabe03ada
+  nextReference: 
   <SpeedLimit>k__BackingField: 27.777779
   <Next>k__BackingField: {fileID: 1085762398}
   spline: {fileID: 422447820}
@@ -1281,7 +1297,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1356095441427340694, guid: b7b3ae72996f7ac419dbfff04e434324, type: 3}
       insertIndex: -1
       addedObject: {fileID: 256242051}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7119187108602215557, guid: b7b3ae72996f7ac419dbfff04e434324, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1223439719}
   m_SourcePrefab: {fileID: 100100000, guid: b7b3ae72996f7ac419dbfff04e434324, type: 3}
 --- !u!4 &773111857 stripped
 Transform:
@@ -1293,7 +1312,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 623531833382826857, guid: b7b3ae72996f7ac419dbfff04e434324, type: 3}
   m_PrefabInstance: {fileID: 773111856}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1223439718}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a88da54457a84086b4bb098142a1d36b, type: 3}
@@ -1554,6 +1573,24 @@ MonoBehaviour:
   CurveChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1223439718 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7119187108602215557, guid: b7b3ae72996f7ac419dbfff04e434324, type: 3}
+  m_PrefabInstance: {fileID: 773111856}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1223439719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223439718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb88648bd27b438c9590513426d4e114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Loader.CrossSceneObject
+  id: 102d3d28a0c8fb2a0871ed20876518d2
 --- !u!1 &1289287780
 GameObject:
   m_ObjectHideFlags: 0
@@ -2310,6 +2347,7 @@ GameObject:
   - component: {fileID: 2022347927}
   - component: {fileID: 2022347929}
   - component: {fileID: 2022347926}
+  - component: {fileID: 2022347930}
   m_Layer: 0
   m_Name: 2
   m_TagString: Untagged
@@ -2415,6 +2453,19 @@ MonoBehaviour:
   updateInPlayMode: 1
   curveSpace: 0
   mode: 1
+--- !u!114 &2022347930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2022347925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb88648bd27b438c9590513426d4e114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Loader.CrossSceneObject
+  id: 64eb9e7457062035eb9f2f33bd23d1f1
 --- !u!1 &2034351444
 GameObject:
   m_ObjectHideFlags: 0
