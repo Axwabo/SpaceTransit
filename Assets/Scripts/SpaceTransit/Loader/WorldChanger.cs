@@ -26,7 +26,7 @@ namespace SpaceTransit.Loader
         private void OnTriggerEnter(Collider other)
         {
             var t = transform;
-            var isBack = Vector3.Dot(t.InverseTransformPoint(other.transform.position).normalized, t.forward) < 0;
+            var isBack = Vector3.Dot((other.transform.position - t.position).normalized, t.forward) < 0;
             World.Unload(isBack ? unloadForwards : unloadBackwards);
             _ = Load(isBack ? loadForwards : loadBackwards);
         }
