@@ -53,12 +53,7 @@ namespace SpaceTransit.Tubes
 
         private void OnDestroy() => CrossSceneObject.ScenesChanged -= RefreshNext;
 
-        private void RefreshNext()
-        {
-            var next = CrossSceneObject.GetComponent(nextReference, Next);
-            if (next != Next)
-                SetNext(next);
-        }
+        private void RefreshNext() => SetNext(CrossSceneObject.GetComponent(nextReference, Next));
 
         private void PlaceSign(TubeBase tube, float distance, Quaternion rotationOffset)
         {
