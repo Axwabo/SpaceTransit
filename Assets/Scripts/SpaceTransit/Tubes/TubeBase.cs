@@ -43,7 +43,7 @@ namespace SpaceTransit.Tubes
         {
             if (!Application.isPlaying)
                 return;
-            Next = CrossSceneObject.GetComponent(nextReference, Next);
+            RefreshNext();
             CrossSceneObject.SubscribeToSceneChanges(RefreshNext, nextReference);
             if (HasNext)
                 PlaceSign(Next, 0, Quaternion.identity);
@@ -53,12 +53,7 @@ namespace SpaceTransit.Tubes
 
         private void OnDestroy() => CrossSceneObject.ScenesChanged -= RefreshNext;
 
-        private void RefreshNext()
-        {
-            var next = CrossSceneObject.GetComponent(nextReference, Next);
-            if (next != Next)
-                SetNext(next);
-        }
+        private void RefreshNext() => SetNext(CrossSceneObject.GetComponent(nextReference, Next));
 
         private void PlaceSign(TubeBase tube, float distance, Quaternion rotationOffset)
         {
