@@ -123,7 +123,7 @@ having to specify the audio clips in the correct order per announcement.
 - [X] Better controls display
 - [X] Interactive tutorial (or at least pages)
 - [X] Ship selection in test driving scene
-- [ ] Many more routes and lines (half-done?)
+- [X] Many more routes and lines
 - [X] Support for multiple entries per dock
 - [X] Control panel improvements
 - [X] Resuming at any time
@@ -132,9 +132,7 @@ having to specify the audio clips in the correct order per announcement.
 
 # Notes/Issues
 
-- Lower-end devices will most likely face issues with lag, therefore overruns
-- Sometimes, the ship might overrun the dock; in this case you need to restart, e.g.
-    - Starting at Mountypile, 09:59:00 causes 46 to overrun Cárpenter
+- Lower-end devices will most likely face issues with lag
 - Congestion may happen
 
 Future plans:
