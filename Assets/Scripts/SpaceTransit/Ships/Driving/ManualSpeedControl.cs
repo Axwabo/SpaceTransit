@@ -25,7 +25,7 @@ namespace SpaceTransit.Ships.Driving
                 _assembly.TargetSpeed -= 2;
             var limit = _assembly.FrontModule.Thruster.Tube.SpeedLimit;
             if (!Mathf.Approximately(0, limit) && _assembly.TargetSpeed > limit)
-                _assembly.SetSpeed(limit);
+                _assembly.SetTargetSpeed(limit);
         }
 
         private void OnDisable() => _assembly.IsManuallyDriven = false;

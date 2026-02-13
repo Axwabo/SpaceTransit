@@ -6,6 +6,9 @@ namespace SpaceTransit
     public readonly struct ShipSpeed
     {
 
+        public const float MpsToKmh = 3.6f;
+        public const float KmhToMps = 1 / MpsToKmh;
+
         /*
          1698.899643887 pixels = 106.69 km
           1 pixel = 0.062799472 km
@@ -21,7 +24,7 @@ namespace SpaceTransit
 
         public float Relative => IsReverse ? -Raw : Raw;
 
-        public float RawKmh => Raw * 3.6f;
+        public float RawKmh => Raw * MpsToKmh;
 
         public ShipSpeed Clamp(float max) => new(Mathf.Min(Raw, max), IsReverse);
 

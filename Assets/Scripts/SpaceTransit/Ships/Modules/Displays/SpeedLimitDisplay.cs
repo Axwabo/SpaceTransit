@@ -47,7 +47,7 @@ namespace SpaceTransit.Ships.Modules.Displays
             _previousNext = nextLimit;
         }
 
-        private static string Limit(float limit) => limit == 0 ? "--" : (limit * 3.6).ToString("N0");
+        private static string Limit(float limit) => limit == 0 ? "--" : (limit * ShipSpeed.MpsToKmh).ToString("N0");
 
     }
 

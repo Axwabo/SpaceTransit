@@ -91,7 +91,7 @@ namespace SpaceTransit.Ships
         {
             CanProceed = Assembly.FrontModule.Thruster.Tube.Safety.CanProceed(Assembly);
             if (!CanProceed)
-                Assembly.SetSpeed(0);
+                Assembly.SetTargetSpeed(0);
         }
 
         public void MarkReady()

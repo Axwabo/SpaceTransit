@@ -11,6 +11,7 @@ namespace SpaceTransit.Ships.Driving
     public sealed class AutomaticDriver : VaulterComponentBase
     {
 
+        private const float ReversingSpeed = 20 * ShipSpeed.KmhToMps;
         private const int MinStaySeconds = 15;
         private const float DefaultOverscan = 15 * World.MetersToWorld;
 
@@ -22,6 +23,8 @@ namespace SpaceTransit.Ships.Driving
 
         private bool _entryRequested;
 
+        private bool _reversing;
+
         private bool ShouldStop
         {
             get
@@ -30,12 +33,12 @@ namespace SpaceTransit.Ships.Driving
                     return false;
                 var tube = station.Docks[Parent.Stop.DockIndex];
                 var overscan = DefaultOverscan * Mathf.Sqrt(Time.timeScale);
-                var stopPoint = World.Current.TransformPoint(tube.Sample(Assembly.Reverse ? overscan : tube.Length - overscan).Position);
+                var stopPoint = World.Current.TransformPoint(tube.Sample(Assembly.Reverse != _reversing ? overscan : tube.Length - overscan).Position);
                 var speed = Assembly.CurrentSpeed.Raw;
                 var deceleration = Assembly.Deceleration;
                 var brakingTime = speed / deceleration;
                 var brakingDistance = deceleration * brakingTime * brakingTime * 0.5f;
-                return Vector3.Distance(stopPoint, FrontPosition) <= brakingDistance * World.MetersToWorld;
+                return Vector3.Distance(stopPoint, GetFrontPosition(_reversing)) <= brakingDistance * World.MetersToWorld;
             }
         }
 
@@ -46,7 +49,8 @@ namespace SpaceTransit.Ships.Driving
             switch (Controller.State)
             {
                 case ShipState.Docked:
-                    _entryRequested = _stopping = false;
+                    _entryRequested = _stopping = _reversing = false;
+                    Assembly.Reverse = Parent.Route.Reverse;
                     UpdateDocked();
                     break;
                 case ShipState.WaitingForDeparture:
@@ -88,21 +92,17 @@ namespace SpaceTransit.Ships.Driving
             {
                 if (!Controller.CanProceed)
                     return;
-                Assembly.SetSpeed(Assembly.MaxSpeed.Limit(Assembly.NextTube().SpeedLimit));
+                Assembly.SetTargetSpeed(Assembly.MaxSpeed.Limit(Assembly.NextTube().SpeedLimit));
                 _departed = true;
                 return;
             }
 
-            if (ShouldStop)
+            if (_stopping || ShouldStop)
             {
-                _stopping = true;
-                Assembly.SetSpeed(0);
-                return;
-            }
-
-            if (Controller.CanLand)
-            {
-                Controller.Land();
+                if (Controller.CanLand)
+                    Controller.Land();
+                else
+                    StopOrReverse();
                 return;
             }
 
@@ -112,7 +112,24 @@ namespace SpaceTransit.Ships.Driving
             if (!_entryRequested && tube.TryGetEntryEnsurer(Assembly.Reverse, out var ensurer))
                 Enter(ensurer);
             if (!_stopping)
-                Assembly.SetSpeed(Assembly.MaxSpeed.Limit(tube.SpeedLimit));
+                Assembly.SetTargetSpeed(Assembly.MaxSpeed.Limit(tube.SpeedLimit));
+        }
+
+        private void StopOrReverse()
+        {
+            _stopping = true;
+            var stop = _reversing
+                ? (Assembly.Reverse ? Assembly.BackModule : Assembly.FrontModule).Thruster.Tube is Dock
+                : !Assembly.IsStationary();
+            if (stop)
+            {
+                Assembly.SetTargetSpeed(0);
+                return;
+            }
+
+            _reversing = true;
+            Assembly.Reverse = !Parent.Route.Reverse;
+            Assembly.SetTargetSpeed(ReversingSpeed);
         }
 
         private void Enter(EntryEnsurer ensurer)

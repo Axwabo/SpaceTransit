@@ -88,7 +88,7 @@ namespace SpaceTransit.Ships
 
         protected override void OnInitialized() => Assemblies.Add(this);
 
-        public void SetSpeed(float raw) => TargetSpeed = new ShipSpeed(raw, Reverse);
+        public void SetTargetSpeed(float raw) => TargetSpeed = new ShipSpeed(raw, Reverse);
 
     }
 

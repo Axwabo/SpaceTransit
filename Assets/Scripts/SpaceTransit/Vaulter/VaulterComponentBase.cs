@@ -23,10 +23,11 @@ namespace SpaceTransit.Vaulter
         protected bool IsNearStation => Station.TryGetLoadedStation(Parent.Stop.Station, out var station)
                                         && Vector3.Distance(
                                             station.Docks[Parent.Stop.DockIndex].transform.position,
-                                            FrontPosition
+                                            GetFrontPosition()
                                         ) < 20f;
 
-        protected Vector3 FrontPosition => Parent.Assembly.FrontModule.Transform.position;
+        protected Vector3 GetFrontPosition(bool reverse = false)
+            => (reverse ? Parent.Assembly.BackModule : Parent.Assembly.FrontModule).Transform.position;
 
         public virtual void OnRouteChanged()
         {

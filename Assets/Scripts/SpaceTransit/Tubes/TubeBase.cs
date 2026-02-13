@@ -64,7 +64,7 @@ namespace SpaceTransit.Tubes
             var t = forwardsSign.transform;
             t.SetLocalPositionAndRotation(position, rotation * rotationOffset);
             t.parent = Transform;
-            forwardsSign.Forwards.text = tube.SpeedLimit is 0 ? "--" : (tube.SpeedLimit * 3.6f).ToString("N0");
+            forwardsSign.Forwards.text = tube.SpeedLimit is 0 ? "--" : (tube.SpeedLimit * ShipSpeed.MpsToKmh).ToString("N0");
         }
 
         private void OnValidate()
