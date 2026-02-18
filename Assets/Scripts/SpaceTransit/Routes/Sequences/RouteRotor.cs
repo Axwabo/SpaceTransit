@@ -49,9 +49,12 @@ namespace SpaceTransit.Routes.Sequences
             for (_index = 0; _index < Sequence.routes.Length; _index++)
             {
                 var route = Sequence.routes[_index];
-                if (route.Origin.Departure > Clock.Now && route.Origin.Station.IsLoaded())
+                if (route.Origin.Departure > Clock.Now)
                 {
-                    Spawn(route);
+                    if (route.Origin.Station.IsLoaded())
+                        Spawn(route);
+                    else
+                        Destroyed = true;
                     return;
                 }
 
