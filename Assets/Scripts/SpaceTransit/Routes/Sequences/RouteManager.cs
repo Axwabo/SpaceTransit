@@ -1,6 +1,5 @@
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using SpaceTransit.Cosmos;
 using SpaceTransit.Loader;
 using SpaceTransit.Routes.Stops;
@@ -15,6 +14,8 @@ namespace SpaceTransit.Routes.Sequences
     public static class RouteManager
     {
 
+        private static readonly (SpawnLocation, int) None = (null, -1);
+
         private static ServiceSequence[] _sequences;
 
         public static ServiceSequence[] Sequences => _sequences ??= Resources.LoadAll<ServiceSequence>("Services");
@@ -28,17 +29,24 @@ namespace SpaceTransit.Routes.Sequences
 
         private static (SpawnLocation, int) GetSpawnLocation(ServiceSequence sequence)
         {
-            for (var i = 0; i < sequence.routes.Length; i++)
+            for (var routeIndex = 0; routeIndex < sequence.routes.Length; routeIndex++)
             {
-                var route = sequence.routes[i];
+                var route = sequence.routes[routeIndex];
                 if (route.Origin.Departure > Clock.Now)
                     return route.Origin.Station.IsLoaded()
-                        ? (new DockSpawn(route.Origin.DockIndex), i)
-                        : (null, -1);
-                // TODO: intermediate stops
+                        ? (new DockSpawn(route.Origin.DockIndex), routeIndex)
+                        : None;
+                for (var stopIndex = 0; stopIndex < route.IntermediateStops.Length; stopIndex++)
+                {
+                    var stop = route.IntermediateStops[stopIndex];
+                    if (!stop.Station.IsLoaded())
+                        return None;
+                    if (stop.Arrival <= Clock.Now && stop.Departure > Clock.Now + TimeSpan.FromMinutes(stop.MinStayMinutes + 1))
+                        return (new DockSpawn(stop.DockIndex, stopIndex), routeIndex);
+                }
             }
 
-            return (null, -1);
+            return None;
         }
 
         private static async Awaitable Start(ServiceSequence sequence, CancellationToken token)
@@ -60,22 +68,12 @@ namespace SpaceTransit.Routes.Sequences
 
         private static async Awaitable Run(ServiceSequence sequence, SpawnLocation spawn, int index)
         {
-            var ship = Spawn(sequence, index);
-            ship.initialStopIndex = spawn.StopIndex;
-            if (spawn is EntrySpawn entrySpawn)
-            {
-                var assembly = ship.GetComponent<ShipAssembly>();
-                assembly.startTube = entrySpawn.Tube;
-                entrySpawn.Entry.Lock(assembly);
-                if (entrySpawn.Tube.Safety is LockBasedSafety lockBasedSafety)
-                    lockBasedSafety.Claim(assembly);
-            }
-
+            var ship = Spawn(sequence, spawn, index);
             var token = ship.destroyCancellationToken;
             while (!token.IsCancellationRequested)
             {
                 await Awaitable.WaitForSecondsAsync(5, token);
-                if (ship.Stop is not Destination || ship.Parent.State != ShipState.Docked || !ship.Assembly.IsStationary() || ship.Assembly.IsManuallyDriven)
+                if (!CompletedRoute(ship))
                     continue;
                 await Awaitable.WaitForSecondsAsync(60, token);
                 if (++index < sequence.routes.Length)
@@ -85,19 +83,32 @@ namespace SpaceTransit.Routes.Sequences
                 }
 
                 index = 0;
-                await WaitForTomorrow(sequence.routes[0].Origin.Departure.Value - TimeSpan.FromHours(1), token);
+                await TomorrowAsync(sequence.routes[0].Origin.Departure.Value - TimeSpan.FromHours(1), token);
                 ship.BeginRoute(sequence.routes[0]);
             }
         }
 
-        private static VaulterController Spawn(ServiceSequence sequence, int index)
+        private static bool CompletedRoute(VaulterController ship) => ship.Stop is Destination && ship.Parent.State == ShipState.Docked && ship.Assembly.IsStationary() && !ship.Assembly.IsManuallyDriven;
+
+        private static VaulterController Spawn(ServiceSequence sequence, SpawnLocation spawn, int index)
         {
             var ship = Object.Instantiate(sequence.prefab, World.Current);
-            ship.initialRoute = sequence.routes[index];
+            if (index < sequence.routes.Length)
+                ship.initialRoute = sequence.routes[index];
+            ship.initialStopIndex = spawn.StopIndex;
+            if (spawn is not TubeSpawn tubeSpawn)
+                return ship;
+            var assembly = ship.GetComponent<ShipAssembly>();
+            assembly.startTube = tubeSpawn.Tube;
+            if (spawn is not EntrySpawn entrySpawn)
+                return ship;
+            entrySpawn.Entry.Lock(assembly);
+            if (entrySpawn.Tube.Safety is LockBasedSafety lockBasedSafety)
+                lockBasedSafety.Claim(assembly);
             return ship;
         }
 
-        private static async Awaitable WaitForTomorrow(TimeSpan time, CancellationToken token)
+        private static async Awaitable TomorrowAsync(TimeSpan time, CancellationToken token)
         {
             var day = Clock.Date.Day;
             while (day == Clock.Date.Day || time > Clock.Now)
