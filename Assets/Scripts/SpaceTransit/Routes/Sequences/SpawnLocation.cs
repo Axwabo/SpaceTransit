@@ -4,9 +4,12 @@ using SpaceTransit.Tubes;
 namespace SpaceTransit.Routes.Sequences
 {
 
-    public record SpawnLocation(int StopIndex = -1);
+    public record SpawnLocation(int StopIndex = -1)
+    {
 
-    public sealed record DockSpawn(int DockIndex, int StopIndex = -1) : SpawnLocation(StopIndex);
+        public static SpawnLocation Origin { get; } = new();
+
+    }
 
     public record TubeSpawn(TubeBase Tube, int StopIndex = -1) : SpawnLocation(StopIndex);
 
