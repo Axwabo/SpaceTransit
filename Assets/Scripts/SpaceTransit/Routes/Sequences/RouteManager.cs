@@ -96,7 +96,7 @@ namespace SpaceTransit.Routes.Sequences
                 {
                 }
 
-                await Awaitable.WaitForSecondsAsync(5, token);
+                await Awaitable.WaitForSecondsAsync(RouteRotor.UpdateInterval, token);
             }
         }
 
