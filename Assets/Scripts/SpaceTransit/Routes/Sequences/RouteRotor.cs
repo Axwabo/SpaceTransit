@@ -1,9 +1,8 @@
 using System;
+using System.Threading;
 using SpaceTransit.Cosmos;
-using SpaceTransit.Loader;
 using SpaceTransit.Routes.Stops;
 using SpaceTransit.Ships;
-using SpaceTransit.Tubes;
 using SpaceTransit.Vaulter;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -11,239 +10,68 @@ using Object = UnityEngine.Object;
 namespace SpaceTransit.Routes.Sequences
 {
 
-    public sealed class RouteRotor
+    public static class RouteRotor
     {
 
-        public ServiceSequence Sequence { get; }
-
-        public RouteRotor(ServiceSequence sequence) => Sequence = sequence;
-
-        public bool Destroyed { get; private set; }
-
-        private RouteDescriptor _initial;
-
-        private int _startingStop;
-
-        private Entry _entry;
-
-        private TubeBase _tube;
-
-        private int _index;
-
-        private VaulterController _ship;
-
-        private float _delay;
-
-        private State _state;
-
-        private TimeSpan _at;
-
-        private int _day;
-
-        private bool CompletedRoute => _ship.Stop is Destination && _ship.Parent.State == ShipState.Docked && _ship.Assembly.IsStationary() && !_ship.Assembly.IsManuallyDriven;
-
-        // TODO: improve
-        public void Initialize()
+        public static async Awaitable Run(ServiceSequence sequence, SpawnLocation spawn, int index)
         {
-            _day = Clock.Date.Day;
-            for (_index = 0; _index < Sequence.routes.Length; _index++)
+            var ship = Spawn(sequence, spawn, index);
+            var token = ship.destroyCancellationToken;
+            if (spawn is TubeSpawn)
             {
-                var route = Sequence.routes[_index];
-                if (route.Origin.Departure > Clock.Now)
+                await Awaitable.NextFrameAsync(token);
+                ship.Parent.MarkReady();
+            }
+
+            while (!token.IsCancellationRequested)
+            {
+                await Awaitable.WaitForSecondsAsync(5, token);
+                if (index == -1 || index >= sequence.routes.Length)
                 {
-                    if (route.Origin.Station.IsLoaded())
-                        Spawn(route);
-                    else
-                        Destroyed = true;
-                    return;
-                }
-
-                for (var j = 0; j < route.IntermediateStops.Length; j++)
-                {
-                    var stop = route.IntermediateStops[j];
-                    if (!ShouldSpawn(stop))
-                        continue;
-                    SpawnAt(route, stop, j);
-                    return;
-                }
-            }
-
-            var destination = Sequence.routes[^1].Destination;
-            if (!Station.TryGetLoadedStation(destination.Station, out var station))
-            {
-                Destroyed = true;
-                return;
-            }
-
-            _ship = Object.Instantiate(Sequence.prefab, World.Current);
-            _ship.GetComponent<ShipAssembly>().startTube = station.Docks[destination.DockIndex];
-            _state = State.Completed;
-        }
-
-        private static bool ShouldSpawn(IntermediateStop stop)
-            => stop.Station.IsLoaded()
-               && stop.Arrival.Value - TimeSpan.FromMinutes(1) >= Clock.Now
-               && stop.Departure.Value >= Clock.Now + TimeSpan.FromMinutes(stop.MinStayMinutes + 1);
-
-        private void SpawnAt(RouteDescriptor route, IntermediateStop stop, int index)
-        {
-            var arrival = stop.Arrival.Value - TimeSpan.FromMinutes(1);
-            if (arrival < Clock.Now)
-            {
-                Spawn(route);
-                _ship.initialStopIndex = index;
-                return;
-            }
-
-            _startingStop = index;
-            if (!Station.TryGetLoadedStation(stop.Station, out var station))
-                throw new MissingComponentException($"Entry station {stop.Station.name} is not loaded");
-            var dock = station.Docks[stop.DockIndex];
-            var entries = route.Reverse ? dock.FrontEntries : dock.BackEntries;
-            if (entries.Length == 0)
-            {
-                _tube = dock.Next(!route.Reverse).Next(!route.Reverse);
-                _at = arrival;
-                return;
-            }
-
-            _entry = entries[0];
-            foreach (var entry in entries)
-            {
-                if (entry.Connected != stop.ArriveFrom)
+                    index = 0;
+                    await TomorrowAsync(sequence.routes[0].Origin.Departure.Value - TimeSpan.FromHours(1), token);
+                    ship.BeginRoute(sequence.routes[0]);
                     continue;
-                _entry = entry;
-                break;
+                }
+
+                if (!CompletedRoute(ship))
+                    continue;
+                await Awaitable.WaitForSecondsAsync(60, token);
+                ship.BeginRoute(sequence.routes[++index]);
             }
-
-            _tube = FindPreviousTube(route.Reverse);
-            if (_tube)
-            {
-                _at = arrival;
-                return;
-            }
-
-            _entry = null;
-            Spawn(route);
-            _ship.initialStopIndex = index;
         }
 
-        private TubeBase FindPreviousTube(bool reverse)
-        {
-            if (!_entry || !_entry.Ensurer)
-                return null;
-            var tube = _entry.Ensurer.Tube;
-            return !tube ? null : reverse ? tube.Next : tube;
-        }
+        private static bool CompletedRoute(VaulterController ship)
+            => ship.Stop is Destination {Station: var station}
+               && ship.Parent.State == ShipState.Docked
+               && ship.Assembly.IsStationary()
+               && !ship.Assembly.IsManuallyDriven
+               && ship.Assembly.FrontModule.Thruster.Tube is Dock dock
+               && dock.Station.ID == station;
 
-        private void Spawn(RouteDescriptor route)
+        private static VaulterController Spawn(ServiceSequence sequence, SpawnLocation spawn, int index)
         {
-            _ship = Object.Instantiate(Sequence.prefab, World.Current);
-            _ship.initialRoute = route;
-            _state = State.Sailing;
-        }
-
-        private void SpawnAtEntry()
-        {
-            if (_entry && !_entry.IsFree || _tube.Safety is LockBasedSafety {IsFree: false})
-                return;
-            Spawn(Sequence.routes[_index]);
-            var assembly = _ship.GetComponent<ShipAssembly>();
-            assembly.startTube = _tube;
-            _ship.initialStopIndex = _startingStop;
-            _state = State.Ready;
-            if (_tube.Safety is LockBasedSafety lockBasedSafety)
+            var ship = Object.Instantiate(sequence.prefab, World.Current);
+            if (index != -1 && index < sequence.routes.Length)
+                ship.initialRoute = sequence.routes[index];
+            ship.initialStopIndex = spawn.StopIndex;
+            if (spawn is not TubeSpawn tubeSpawn)
+                return ship;
+            var assembly = ship.GetComponent<ShipAssembly>();
+            assembly.startTube = tubeSpawn.Tube;
+            if (spawn is not EntrySpawn entrySpawn)
+                return ship;
+            entrySpawn.Entry.Lock(assembly);
+            if (entrySpawn.Tube.Safety is LockBasedSafety lockBasedSafety)
                 lockBasedSafety.Claim(assembly);
-            if (!_entry)
-                return;
-            foreach (var remapper in _entry.Remappers)
-                remapper.Remap();
+            return ship;
         }
 
-        public void Update()
+        private static async Awaitable TomorrowAsync(TimeSpan time, CancellationToken token)
         {
-            if (Clock.Now < _at)
-                return;
-            switch (_state)
-            {
-                case State.Waiting:
-                    SpawnAtEntry();
-                    break;
-                case State.Ready:
-                    if (_entry)
-                        _entry.Lock(_ship.Assembly);
-                    _ship.Parent.MarkReady();
-                    _state = State.Sailing;
-                    break;
-                case State.Sailing:
-                    WaitForNext();
-                    break;
-                case State.Rotating:
-                    Cycle();
-                    break;
-                case State.Completed:
-                    _ship.ExitService();
-                    _state = State.WaitingForNextDay;
-                    _at = Sequence.routes[0].Origin.Departure.Value - TimeSpan.FromHours(1);
-                    break;
-                case State.WaitingForNextDay:
-                    if (_ship.Assembly.IsManuallyDriven || _day == Clock.Date.Day)
-                        break;
-                    _ship.BeginRoute(Sequence.routes[0]);
-                    _state = State.Sailing;
-                    break;
-            }
-        }
-
-        private void WaitForNext()
-        {
-            if (Unload() || !CompletedRoute)
-                return;
-            _at = Clock.Now + TimeSpan.FromMinutes(1);
-            _state = State.Rotating;
-        }
-
-        private bool Unload()
-        {
-            if (LoadingProgress.Current != null)
-                return false;
-            if (!_ship)
-            {
-                Destroyed = true;
-                return true;
-            }
-
-            if (_ship.Assembly.IsPlayerMounted
-                || _ship.IsInService && _ship.Stop.Station.IsLoaded()
-                || _ship.Assembly.FrontModule.Thruster.Tube is Dock dock && dock.Station.ID.IsLoaded())
-                return false;
-            Destroyed = true;
-            Object.Destroy(_ship.gameObject);
-            return true;
-        }
-
-        private void Cycle()
-        {
-            if (++_index >= Sequence.routes.Length)
-            {
-                _state = State.Completed;
-                return;
-            }
-
-            _state = State.Sailing;
-            _ship.BeginRoute(Sequence.routes[_index]);
-        }
-
-        private enum State
-        {
-
-            Waiting,
-            Ready,
-            Sailing,
-            Rotating,
-            Completed,
-            WaitingForNextDay
-
+            var day = Clock.Date.Day;
+            while (day == Clock.Date.Day || time > Clock.Now)
+                await Awaitable.WaitForSecondsAsync(5, token);
         }
 
     }
