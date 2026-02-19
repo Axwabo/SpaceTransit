@@ -40,6 +40,8 @@ namespace SpaceTransit.Loader
             menu.SetActive(true);
             player.SetActive(true);
             player.transform.parent = World.Current;
+
+            await Awaitable.NextFrameAsync(token);
             RouteManager.Start();
         }
 

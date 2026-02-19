@@ -32,20 +32,20 @@ namespace SpaceTransit.Routes.Sequences
             for (var routeIndex = 0; routeIndex < sequence.routes.Length; routeIndex++)
             {
                 var route = sequence.routes[routeIndex];
-                if (route.Origin.Departure > Clock.Now)
+                 if (route.Origin.Departure > Clock.Now)
                     return route.Origin.Station.IsLoaded()
                         ? (new DockSpawn(route.Origin.DockIndex), routeIndex)
                         : None;
                 for (var stopIndex = 0; stopIndex < route.IntermediateStops.Length; stopIndex++)
                 {
                     var stop = route.IntermediateStops[stopIndex];
-                    if (!Station.TryGetLoadedStation(stop.Station, out var station))
-                        return None;
                     if (stop.Departure < Clock.Now + TimeSpan.FromMinutes(stop.MinStayMinutes + 1))
                         continue;
+                    if (!Station.TryGetLoadedStation(stop.Station, out var station))
+                        return None;
                     if (stop.Arrival <= Clock.Now)
                         return (new DockSpawn(stop.DockIndex, stopIndex), routeIndex);
-                    if (stop.Arrival >= Clock.Now + TimeSpan.FromMinutes(1))
+                    if (stop.Arrival <= Clock.Now + TimeSpan.FromMinutes(1))
                         return Enter(station, stop, route, stopIndex, routeIndex);
                 }
             }
@@ -86,7 +86,6 @@ namespace SpaceTransit.Routes.Sequences
 
         private static async Awaitable Start(ServiceSequence sequence, CancellationToken token)
         {
-            await Awaitable.NextFrameAsync(token);
             while (!token.IsCancellationRequested)
             {
                 try
