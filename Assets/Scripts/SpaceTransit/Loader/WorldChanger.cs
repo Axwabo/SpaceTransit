@@ -57,7 +57,6 @@ namespace SpaceTransit.Loader
             await InitNewScenes(token);
 
             ActivateNewScenes();
-            RouteManager.Current.RefreshLines();
         }
 
         public static async Awaitable InitNewScenes(CancellationToken token)

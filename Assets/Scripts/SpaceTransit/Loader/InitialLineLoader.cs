@@ -40,7 +40,7 @@ namespace SpaceTransit.Loader
             menu.SetActive(true);
             player.SetActive(true);
             player.transform.parent = World.Current;
-            RouteManager.Current.RefreshLines();
+            RouteManager.Start();
         }
 
     }
