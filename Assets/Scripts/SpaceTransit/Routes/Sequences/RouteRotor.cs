@@ -20,7 +20,7 @@ namespace SpaceTransit.Routes.Sequences
         {
             var ship = Spawn(sequence, spawn, index);
             var token = ship.destroyCancellationToken;
-            if (spawn is TubeSpawn)
+            if (spawn is TubeSpawn {StopIndex: not -1})
             {
                 await Awaitable.NextFrameAsync(token);
                 ship.Parent.MarkReady();
