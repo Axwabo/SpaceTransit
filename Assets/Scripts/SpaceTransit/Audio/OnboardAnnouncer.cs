@@ -12,6 +12,8 @@ namespace SpaceTransit.Audio
     public sealed class OnboardAnnouncer : VaulterComponentBase
     {
 
+        private const string StoppedTraffic = "The ship has stopped due to traffic reasons. We apologize for the inconvenience. Thank you.";
+
         [SerializeField]
         private Signal signal;
 
@@ -60,39 +62,43 @@ namespace SpaceTransit.Audio
             if (Assembly.IsManuallyDriven || Controller.CanProceed || Assembly.IsStationary() == _wasStationary)
                 return;
             _wasStationary = Assembly.IsStationary();
-            if (!_wasStationary) 
-                return;
-            PlaySignal();
-            _player.EnqueueWithSubtitles(announcer, "The ship has stopped due to traffic reasons. We apologize for the inconvenience. Thank you.", pack);
+            if (_wasStationary)
+                _player.EnqueueWithSubtitles(announcer, StoppedTraffic, pack, signal);
         }
 
         private void PlayNextStop()
         {
-            PlaySignal();
-            if (!_welcomePlayed)
+            var welcomePlayed = _welcomePlayed;
+            if (!welcomePlayed)
             {
-                _player.EnqueueWithSubtitles(announcer, $"Welcome aboard the ship to {Parent.Route.Destination.Station.name}. Please keep in mind that smoking is prohibited on the ship. We wish you a pleasant journey.", pack, Assembly.IsPlayerMounted);
+                var welcomeAnnouncement = $"Welcome aboard the ship to {Parent.Route.Destination.Station.name}. Please keep in mind that smoking is prohibited on the ship. We wish you a pleasant journey.";
+                _player.EnqueueWithSubtitles(announcer, welcomeAnnouncement, pack, signal, Assembly.IsPlayerMounted);
                 _player.Delay(2);
                 _welcomePlayed = true;
             }
 
-            _player.EnqueueWithSubtitles(announcer, IsTerminus ? $"Next stop {Parent.Stop.Station.name}, where this ship terminates." : $"Next stop {Parent.Stop.Station.name}", pack, Assembly.IsPlayerMounted);
+            var nextAnnouncement = IsTerminus ? $"Next stop {Parent.Stop.Station.name}, where this ship terminates." : $"Next stop {Parent.Stop.Station.name}";
+            _player.EnqueueWithSubtitles(announcer, nextAnnouncement, pack, welcomePlayed ? signal : null, Assembly.IsPlayerMounted);
             _player.Delay(3);
         }
 
         private void PlayCurrentStop()
         {
-            PlaySignal();
             if (IsTerminus)
-                _player.EnqueueWithSubtitles(announcer, $"{Parent.Stop.Station.name}. This ship terminates here. Thank you for choosing SpaceTransit. Goodbye!", pack, Assembly.IsPlayerMounted);
+            {
+                var announcement = $"{Parent.Stop.Station.name}. This ship terminates here. Thank you for choosing SpaceTransit. Goodbye!";
+                _player.EnqueueWithSubtitles(announcer, announcement, pack, signal, Assembly.IsPlayerMounted);
+            }
             else
+            {
+                _player.Enqueue(signal.Clip, signal.Duration);
                 _player.Enqueue(Parent.Stop.Station.Announcement);
+            }
+
             PlayDoors();
             _player.Delay(3);
             _currentStopPlayed = true;
         }
-
-        private void PlaySignal() => _player.Enqueue(signal.Clip, signal.Duration);
 
         private void PlayDoors()
         {

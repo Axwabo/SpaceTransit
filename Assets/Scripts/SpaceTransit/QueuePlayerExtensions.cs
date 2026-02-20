@@ -18,9 +18,10 @@ namespace SpaceTransit
             }
 
             var currentEnd = queue.EndDspTime;
+            var yapping = queue.IsYapping;
             var duration = queue.EnqueueAnnouncement(announcement, pack, signal);
             var signalDuration = signal ? signal.Duration : 0;
-            var delay = queue.IsYapping ? Math.Max(0, currentEnd - AudioSettings.dspTime) : 0;
+            var delay = yapping ? Math.Max(0, currentEnd - AudioSettings.dspTime) : 0;
             KatieSubtitleList.Add(name, announcement, delay + signalDuration, duration.TotalSeconds);
         }
 
