@@ -3671,6 +3671,183 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a88da54457a84086b4bb098142a1d36b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Routes.Dock
+--- !u!1 &470508818
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 470508819}
+  - component: {fileID: 470508822}
+  - component: {fileID: 470508821}
+  - component: {fileID: 470508820}
+  m_Layer: 0
+  m_Name: 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &470508819
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470508818}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2091795954}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &470508820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470508818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2fa6bd2fe47453bbaaf0ef35ee0f705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.SplineTube
+  nextReference: 
+  <SpeedLimit>k__BackingField: 0
+  <Next>k__BackingField: {fileID: 0}
+  spline: {fileID: 470508822}
+  length: 0
+--- !u!114 &470508821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470508818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 174367e175762fb48ba55d6171e99990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SplineMesh.SplineMeshTiling
+  mesh: {fileID: 4300000, guid: fb43eafc466d9714ea870793754e3118, type: 2}
+  material: {fileID: 2100000, guid: 61e30df0606e31d448e541b5cfd26d0a, type: 2}
+  physicMaterial: {fileID: 0}
+  translation: {x: 0, y: 0.3, z: 0}
+  rotation: {x: 0, y: 90, z: 0}
+  scale: {x: 0.5, y: 0.8, z: 0.8}
+  generateCollider: 0
+  updateInPlayMode: 1
+  curveSpace: 0
+  mode: 1
+--- !u!114 &470508822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470508818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a85c5879d519aa4ab2ebbf42591149a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SplineMesh.Spline
+  nodes:
+  - position: {x: -7767.3765, y: 0, z: -307.28845}
+    direction: {x: -7756.2437, y: 0, z: -297.22977}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -7642.4756, y: 0, z: -201.50397}
+    direction: {x: -7589.587, y: 0, z: -153.71806}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -7493.858, y: 0, z: -49.376892}
+    direction: {x: -7452.9233, y: 0, z: 3.3365707}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -7060.1587, y: 0, z: 494.28372}
+    direction: {x: -6978.254, y: 0, z: 596.41345}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -6900.319, y: 0, z: 700.8934}
+    direction: {x: -6862.1777, y: 0, z: 747.0365}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  curves:
+  - n1:
+      position: {x: -7767.3765, y: 0, z: -307.28845}
+      direction: {x: -7756.2437, y: 0, z: -297.22977}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -7642.4756, y: 0, z: -201.50397}
+      direction: {x: -7589.587, y: 0, z: -153.71806}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -7642.4756, y: 0, z: -201.50397}
+      direction: {x: -7589.587, y: 0, z: -153.71806}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -7493.858, y: 0, z: -49.376892}
+      direction: {x: -7452.9233, y: 0, z: 3.3365707}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -7493.858, y: 0, z: -49.376892}
+      direction: {x: -7452.9233, y: 0, z: 3.3365707}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -7060.1587, y: 0, z: 494.28372}
+      direction: {x: -6978.254, y: 0, z: 596.41345}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -7060.1587, y: 0, z: 494.28372}
+      direction: {x: -6978.254, y: 0, z: 596.41345}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -6900.319, y: 0, z: 700.8934}
+      direction: {x: -6862.1777, y: 0, z: 747.0365}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  Length: 1333.3326
+  isLoop: 0
+  CurveChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &473391929
 GameObject:
   m_ObjectHideFlags: 0
@@ -13287,6 +13464,7 @@ Transform:
   - {fileID: 1494080980}
   - {fileID: 761932448}
   - {fileID: 1571971108}
+  - {fileID: 2091795954}
   m_Father: {fileID: 988403936}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1843956111
@@ -14501,6 +14679,38 @@ MonoBehaviour:
   exit: {fileID: 110417418}
   forwards: 0
   backwards: 1
+--- !u!1 &2091795953
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2091795954}
+  m_Layer: 0
+  m_Name: Marthonfair to Venice
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2091795954
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091795953}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 470508819}
+  m_Father: {fileID: 1843956110}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2119430211
 GameObject:
   m_ObjectHideFlags: 0
