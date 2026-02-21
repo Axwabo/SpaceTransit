@@ -42,7 +42,7 @@ namespace SpaceTransit.Ships.Driving
             }
         }
 
-        private bool IsInDockReverse => (Assembly.Reverse ? Assembly.BackModule : Assembly.FrontModule).Thruster.Tube is Dock;
+        private bool IsInDockReverse => (Parent.Route.Reverse ? Assembly.BackModule : Assembly.FrontModule).Thruster.Tube is Dock;
 
         private void Update()
         {
@@ -101,7 +101,7 @@ namespace SpaceTransit.Ships.Driving
 
             if (_stopping || ShouldStop)
             {
-                if (!Controller.CanLand || _stopping && !IsInDockReverse)
+                if (!Controller.CanLand || _reversing && !IsInDockReverse)
                     StopOrReverse();
                 else
                     Controller.Land();
