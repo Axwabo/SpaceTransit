@@ -24,7 +24,8 @@ namespace SpaceTransit
         public static void Release(this Lock[] locks, ShipAssembly assembly)
         {
             foreach (var @lock in locks)
-                @lock.Release(assembly);
+                if (@lock)
+                    @lock.Release(assembly);
         }
 
         public static bool AreOnlyUsedBy(this Lock[] locks, ShipAssembly assembly)
