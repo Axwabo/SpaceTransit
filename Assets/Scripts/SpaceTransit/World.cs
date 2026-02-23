@@ -36,17 +36,12 @@ namespace SpaceTransit
 
         public static RouteDescriptor[] ExtraRoutes { get; private set; }
 
-        [field: SerializeField]
-        [field: HideInInspector]
-        public int Line { get; set; }
+        private int _line;
 
         private void Awake()
         {
-            if (Line != 0)
-                Worlds[Line] = transform;
-            else if (int.TryParse(gameObject.scene.name, out var line))
-                Worlds[Line = line] = transform;
-
+            if (int.TryParse(gameObject.scene.name, out var line))
+                Worlds[_line = line] = transform;
             if (Current)
                 return;
             Current = transform;
@@ -64,7 +59,7 @@ namespace SpaceTransit
                 t.SetParent(Current, false);
         }
 
-        private void OnDisable() => Worlds.Remove(Line);
+        private void OnDisable() => Worlds.Remove(_line);
 
         public static bool IsLoaded(int line) => Worlds.ContainsKey(line);
 
