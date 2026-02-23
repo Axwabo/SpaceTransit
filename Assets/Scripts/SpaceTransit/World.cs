@@ -91,14 +91,14 @@ namespace SpaceTransit
                     continue;
 
                 if (Current)
-                    t.parent = Current;
-                else
                 {
-                    t.parent = null;
-                    MoveWorld(line, t);
-                    Current = t;
+                    t.parent = Current;
+                    continue;
                 }
 
+                t.parent = null;
+                MoveWorld(line, t);
+                Current = t;
                 foreach (var assembly in ShipAssembly.Instances)
                     if (assembly.IsPlayerMounted
                         ||
