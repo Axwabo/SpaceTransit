@@ -37,6 +37,8 @@ namespace SpaceTransit.Loader
         private void UpdateState()
         {
             _cooldown = 5;
+            if(LoadingProgress.Current!=null)
+                return;
             var pos = MovementController.Current.LastPosition;
             var isNear = Vector3.Distance(_t.position, pos) < 100;
             if (isNear == _wasNear)
