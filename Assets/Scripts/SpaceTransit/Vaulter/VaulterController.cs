@@ -90,8 +90,7 @@ namespace SpaceTransit.Vaulter
         public override void OnStateChanged(ShipState previousState)
         {
             if (_stopIndex is not (OutOfService or Destination)
-                && Parent.State == ShipState.Sailing
-                && previousState == ShipState.LiftingOff
+                && Parent.State == ShipState.LiftingOff
                 && Assembly.FrontModule.Thruster.Tube is Dock {Station: var station} && station.ID == Stop?.Station)
                 UpdateStop(_stopIndex >= Route.IntermediateStops.Length - 1 ? Destination : _stopIndex + 1);
         }
