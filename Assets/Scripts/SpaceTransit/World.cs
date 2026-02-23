@@ -36,12 +36,17 @@ namespace SpaceTransit
 
         public static RouteDescriptor[] ExtraRoutes { get; private set; }
 
-        private int _line;
+        [field: SerializeField]
+        [field: HideInInspector]
+        public int Line { get; set; }
 
         private void Awake()
         {
-            if (int.TryParse(gameObject.scene.name, out var line))
-                Worlds[_line = line] = transform;
+            if (Line != 0)
+                Worlds[Line] = transform;
+            else if (int.TryParse(gameObject.scene.name, out var line))
+                Worlds[Line = line] = transform;
+
             if (Current)
                 return;
             Current = transform;
@@ -59,7 +64,7 @@ namespace SpaceTransit
                 t.SetParent(Current, false);
         }
 
-        private void OnDestroy() => Worlds.Remove(_line);
+        private void OnDisable() => Worlds.Remove(Line);
 
         public static bool IsLoaded(int line) => Worlds.ContainsKey(line);
 
@@ -84,13 +89,21 @@ namespace SpaceTransit
 
         private static void ChangeCurrentWorld(int[] unloading)
         {
+            Current = null;
             foreach (var (line, t) in Worlds)
             {
                 if (unloading.Contains(line))
                     continue;
-                t.parent = null;
-                MoveWorld(line, t);
-                Current = t;
+
+                if (Current)
+                    t.parent = Current;
+                else
+                {
+                    t.parent = null;
+                    MoveWorld(line, t);
+                    Current = t;
+                }
+
                 foreach (var assembly in ShipAssembly.Instances)
                     if (assembly.IsPlayerMounted
                         ||
@@ -100,7 +113,6 @@ namespace SpaceTransit
                         assembly.Transform.parent = t;
                 if (!MovementController.Current.IsMounted)
                     MovementController.Current.transform.parent = t;
-                break;
             }
         }
 
