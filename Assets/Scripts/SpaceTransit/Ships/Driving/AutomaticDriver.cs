@@ -1,5 +1,6 @@
 ﻿using System;
 using SpaceTransit.Cosmos;
+using SpaceTransit.Loader;
 using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
 using SpaceTransit.Vaulter;
@@ -136,6 +137,12 @@ namespace SpaceTransit.Ships.Driving
         {
             if (Parent.Stop is not IArrival arrival || ensurer.station != arrival.Station)
                 return;
+            if (LoadingProgress.Current != null && !Parent.Stop.Station.IsLoaded())
+            {
+                Destroy(gameObject);
+                return;
+            }
+
             var list = Assembly.FrontModule.EntryList;
             if (list.isActiveAndEnabled)
             {
