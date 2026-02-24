@@ -109,12 +109,10 @@ namespace SpaceTransit.Ships.Driving
                 return;
             }
 
-            if (!Controller.CanProceed)
-                return;
             var tube = Assembly.FrontModule.Thruster.Tube;
             if (!_entryRequested && tube.TryGetEntryEnsurer(Assembly.Reverse, out var ensurer))
                 Enter(ensurer);
-            if (!_stopping)
+            if (Controller.CanProceed && !_stopping)
                 Assembly.SetTargetSpeed(Assembly.MaxSpeed.Limit(tube.SpeedLimit));
         }
 
