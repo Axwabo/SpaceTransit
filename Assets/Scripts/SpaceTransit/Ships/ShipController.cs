@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using SpaceTransit.Cosmos;
+using SpaceTransit.Movement;
 using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
 using SpaceTransit.Ships.Modules;
@@ -105,7 +106,7 @@ namespace SpaceTransit.Ships
                 State = ShipState.WaitingForDeparture;
                 TimeToDeparture = 0;
             }
-            else if (!exit.Connected.IsLoaded())
+            else if (!exit.Connected.IsLoaded() && !Assembly.IsPlayerMounted)
                 Destroy(gameObject);
             else if (exit.Lock(Assembly))
             {

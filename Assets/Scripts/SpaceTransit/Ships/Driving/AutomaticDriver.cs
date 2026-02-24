@@ -135,7 +135,7 @@ namespace SpaceTransit.Ships.Driving
         {
             if (Parent.Stop is not IArrival arrival || ensurer.station != arrival.Station)
                 return;
-            if (LoadingProgress.Current != null && !Parent.Stop.Station.IsLoaded())
+            if (LoadingProgress.Current != null && !Parent.Stop.Station.IsLoaded() && !Assembly.IsPlayerMounted)
             {
                 Destroy(gameObject);
                 return;
