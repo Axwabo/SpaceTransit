@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using SpaceTransit.Routes;
 using UnityEditor;
 using UnityEngine;
@@ -11,13 +12,15 @@ namespace SpaceTransit.Editor
     public sealed class RouteDescriptorEditor : UnityEditor.Editor
     {
 
-        private int _offset;
+        private static int _offset;
 
         public override void OnInspectorGUI()
         {
             _offset = EditorGUILayout.IntField("Offset By", _offset);
             if (GUILayout.Button("Offset"))
                 Offset();
+            if (GUILayout.Button("Clone"))
+                Clone();
             GUILayout.Space(20);
             base.OnInspectorGUI();
         }
@@ -40,6 +43,20 @@ namespace SpaceTransit.Editor
             }
 
             EditorUtility.SetDirty(route);
+        }
+
+        private void Clone()
+        {
+            var original = (RouteDescriptor) target;
+            if (!int.TryParse(original.name, out var id))
+                return;
+            var path = AssetDatabase.GetAssetPath(original);
+            var newPath = Path.Combine(Path.GetDirectoryName(path) ?? path, (id + 2).ToString());
+            if (!AssetDatabase.CopyAsset(path, newPath))
+                return;
+            var copy = AssetDatabase.LoadAssetAtPath<RouteDescriptor>(newPath);
+            Offset(copy, TimeSpan.FromMinutes(_offset));
+            Selection.activeObject = copy;
         }
 
     }
