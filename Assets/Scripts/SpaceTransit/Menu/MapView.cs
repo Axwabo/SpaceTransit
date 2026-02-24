@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SpaceTransit.Movement;
 using SpaceTransit.Routes;
 using SpaceTransit.Ships;
 using UnityEngine;
@@ -34,6 +35,8 @@ namespace SpaceTransit.Menu
 
         private bool _placed;
 
+        private bool _anchored;
+
         private RectTransform _this;
 
         private Vector2 _previousPoint;
@@ -53,7 +56,15 @@ namespace SpaceTransit.Menu
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
-        private void OnEnable() => _previousPoint = Mouse;
+        private void OnEnable()
+        {
+            _previousPoint = Mouse;
+            if (_anchored || !MovementController.Current)
+                return;
+            _anchored = true;
+            var start = GetAnchored(World.Current.InverseTransformPoint(MovementController.Current.Position));
+            _this.pivot += new Vector2(start.x / _size.x, start.y / _size.y);
+        }
 
         private void Start() => Place();
 
@@ -61,12 +72,8 @@ namespace SpaceTransit.Menu
         {
             _placed = true;
             foreach (var station in Station.LoadedStations)
-            {
-                if (!_placedStations.Add(station.ID))
-                    continue;
-                var stationPosition = anchor.InverseTransformPoint(station.transform.localPosition);
-                Instantiate(stationPrefab, _this, false).Apply(station, new Vector3(stationPosition.x * scale, stationPosition.z * scale));
-            }
+                if (_placedStations.Add(station.ID))
+                    Instantiate(stationPrefab, _this, false).Apply(station, GetAnchored(station.transform.localPosition));
         }
 
         private void Update()
@@ -104,6 +111,12 @@ namespace SpaceTransit.Menu
         }
 
         private void OnDestroy() => SceneManager.sceneLoaded -= OnSceneLoaded;
+
+        private Vector2 GetAnchored(Vector3 localPosition)
+        {
+            var anchored = anchor.InverseTransformPoint(localPosition);
+            return new Vector2(anchored.x * scale, anchored.z * scale);
+        }
 
         private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1) => _placed = false;
 
