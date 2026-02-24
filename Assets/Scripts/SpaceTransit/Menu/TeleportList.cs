@@ -54,7 +54,7 @@ namespace SpaceTransit.Menu
                     Error.text = "Please wait for loading to complete.";
                     return;
                 }
-                
+
                 if (MovementController.Current.IsMounted)
                 {
                     Error.text = "You must disembark before teleporting.";

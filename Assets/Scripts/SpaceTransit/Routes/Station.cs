@@ -33,7 +33,7 @@ namespace SpaceTransit.Routes
         public string Name => ID.name;
 
         public ReadOnlySpan<Dock> Docks => docks;
-        
+
         public StationAnnouncer Announcer { get; set; }
 
         private void OnEnable() => Loaded[Name] = this;

@@ -14,7 +14,7 @@ namespace SpaceTransit.Vaulter
         public List<ArrivalEntry> Arrivals { get; private set; }
 
         public Station Station { get; private set; }
-        
+
         public StationId StationId { get; private set; }
 
         private void Awake()
