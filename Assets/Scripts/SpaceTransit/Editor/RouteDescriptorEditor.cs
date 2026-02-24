@@ -51,7 +51,7 @@ namespace SpaceTransit.Editor
             if (!int.TryParse(original.name, out var id))
                 return;
             var path = AssetDatabase.GetAssetPath(original);
-            var newPath = Path.Combine(Path.GetDirectoryName(path) ?? path, (id + 2).ToString());
+            var newPath = Path.Combine(Path.GetDirectoryName(path) ?? path, id + 2 + ".asset");
             if (!AssetDatabase.CopyAsset(path, newPath))
                 return;
             var copy = AssetDatabase.LoadAssetAtPath<RouteDescriptor>(newPath);
