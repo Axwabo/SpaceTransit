@@ -10,7 +10,6 @@ with significant modifications to fit the theme and also to simplify code.
 It's dynamic, making it fairly easy to add stations in the Unity editor.
 
 Several FLASH and ROSS ships serve numerous stations based on timetables.
-Currently, only 1 line has been built.
 
 The ships' ambience are designed to be both realistic and pleasing to listen to.
 
@@ -133,7 +132,6 @@ having to specify the audio clips in the correct order per announcement.
 # Notes/Issues
 
 - Lower-end devices will most likely face issues with lag
-- Congestion may happen
 
 Future plans:
 
