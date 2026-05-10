@@ -665,6 +665,7 @@ GameObject:
   - component: {fileID: 100458152}
   - component: {fileID: 100458151}
   - component: {fileID: 100458150}
+  - component: {fileID: 100458153}
   m_Layer: 0
   m_Name: 6
   m_TagString: Untagged
@@ -770,6 +771,26 @@ MonoBehaviour:
   CurveChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &100458153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100458148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5e4edfa4aa84eaa922d965fcc41e924, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.LockClearer
+  lockReferences:
+  - 99e34baf0283b2862b228c89d7dc031f
+  locks:
+  - {fileID: 0}
+  enter: 0
+  exit: 1
+  forwards: 0
+  backwards: 1
 --- !u!1 &100801724
 GameObject:
   m_ObjectHideFlags: 0
@@ -3038,7 +3059,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.SplineTube
   nextReference: 
-  <SpeedLimit>k__BackingField: 0
+  <SpeedLimit>k__BackingField: 16.666666
   <Next>k__BackingField: {fileID: 16390547}
   spline: {fileID: 434048124}
   length: 0
@@ -3669,7 +3690,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.SplineTube
   nextReference: 
-  <SpeedLimit>k__BackingField: 0
+  <SpeedLimit>k__BackingField: 16.666666
   <Next>k__BackingField: {fileID: 1468156331}
   spline: {fileID: 555652033}
   length: 0
@@ -4959,12 +4980,12 @@ MonoBehaviour:
   nextReference: 
   <SpeedLimit>k__BackingField: 0
   <Next>k__BackingField: {fileID: 1410835259}
-  <FrontExits>k__BackingField: []
-  <BackExits>k__BackingField:
+  <FrontExits>k__BackingField:
   - {fileID: 1589847922}
-  <FrontEntries>k__BackingField: []
-  <BackEntries>k__BackingField:
+  <BackExits>k__BackingField: []
+  <FrontEntries>k__BackingField:
   - {fileID: 984533140}
+  <BackEntries>k__BackingField: []
   <Left>k__BackingField: 0
   <Right>k__BackingField: 1
 --- !u!114 &705030273
@@ -5225,7 +5246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.SplineTube
   nextReference: 
-  <SpeedLimit>k__BackingField: 0
+  <SpeedLimit>k__BackingField: 16.666666
   <Next>k__BackingField: {fileID: 555652032}
   spline: {fileID: 732029268}
   length: 0
@@ -9143,7 +9164,6 @@ GameObject:
   - component: {fileID: 1157380637}
   - component: {fileID: 1157380639}
   - component: {fileID: 1157380636}
-  - component: {fileID: 1157380640}
   m_Layer: 0
   m_Name: 3
   m_TagString: Untagged
@@ -9249,26 +9269,6 @@ MonoBehaviour:
   updateInPlayMode: 1
   curveSpace: 0
   mode: 1
---- !u!114 &1157380640
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1157380635}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5e4edfa4aa84eaa922d965fcc41e924, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.LockClearer
-  lockReferences:
-  - 99e34baf0283b2862b228c89d7dc031f
-  locks:
-  - {fileID: 0}
-  enter: 1
-  exit: 0
-  forwards: 1
-  backwards: 0
 --- !u!1 &1202201092
 GameObject:
   m_ObjectHideFlags: 0
@@ -10528,7 +10528,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.SplineTube
   nextReference: 
-  <SpeedLimit>k__BackingField: 0
+  <SpeedLimit>k__BackingField: 33.333332
   <Next>k__BackingField: {fileID: 117181194}
   spline: {fileID: 1468156332}
   length: 0
@@ -13033,7 +13033,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.SplineTube
   nextReference: 
-  <SpeedLimit>k__BackingField: 0
+  <SpeedLimit>k__BackingField: 16.666666
   <Next>k__BackingField: {fileID: 434048122}
   spline: {fileID: 1758194611}
   length: 0
@@ -15989,7 +15989,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2135892303}
   m_Layer: 0
-  m_Name: 3
+  m_Name: 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
