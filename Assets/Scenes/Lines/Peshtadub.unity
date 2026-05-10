@@ -1225,9 +1225,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.TubeRemapper
   tubeReference: 
-  toReference: 8af98a761cfa40cb580543e15060e048
+  toReference: 
   connectTube: {fileID: 1402876538}
-  connectTo: {fileID: 0}
+  connectTo: {fileID: 538587318}
 --- !u!1 &99833547
 GameObject:
   m_ObjectHideFlags: 0
@@ -1864,7 +1864,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.TubeRemapper
   tubeReference: 
   toReference: 
-  connectTube: {fileID: 0}
+  connectTube: {fileID: 1758953811}
   connectTo: {fileID: 1325994700}
 --- !u!1 &112079500
 GameObject:
@@ -2405,54 +2405,6 @@ Transform:
   - {fileID: 607423493}
   m_Father: {fileID: 425580488}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &131727816
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 131727817}
-  - component: {fileID: 131727818}
-  m_Layer: 0
-  m_Name: Tubes
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &131727817
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131727816}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1930285028}
-  - {fileID: 1847147212}
-  - {fileID: 2073918761}
-  - {fileID: 1114688988}
-  m_Father: {fileID: 425580488}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &131727818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131727816}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 456ae4c4f2fe421faffc0d58ad87abd0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Build.Activate
 --- !u!1 &139762068
 GameObject:
   m_ObjectHideFlags: 0
@@ -6937,6 +6889,137 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 340512888}
   m_CullTransparentMesh: 1
+--- !u!1 &345473961
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 345473962}
+  - component: {fileID: 345473965}
+  - component: {fileID: 345473964}
+  - component: {fileID: 345473963}
+  - component: {fileID: 345473966}
+  m_Layer: 0
+  m_Name: 4 to F
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &345473962
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345473961}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 491040071}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &345473963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345473961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2fa6bd2fe47453bbaaf0ef35ee0f705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.SplineTube
+  nextReference: 
+  <SpeedLimit>k__BackingField: 27.777779
+  <Next>k__BackingField: {fileID: 0}
+  spline: {fileID: 345473965}
+  length: 0
+--- !u!114 &345473964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345473961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 174367e175762fb48ba55d6171e99990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SplineMesh.SplineMeshTiling
+  mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+  material: {fileID: 2100000, guid: d5719a9290c0f004ea01708958d5a9ef, type: 2}
+  physicMaterial: {fileID: 0}
+  translation: {x: 0, y: 0, z: 0}
+  rotation: {x: 90, y: 0, z: 0}
+  scale: {x: 0.5, y: 1, z: 0.4}
+  generateCollider: 0
+  updateInPlayMode: 0
+  curveSpace: 0
+  mode: 1
+--- !u!114 &345473965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345473961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a85c5879d519aa4ab2ebbf42591149a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SplineMesh.Spline
+  nodes:
+  - position: {x: -4102.164, y: 0, z: 2288.823}
+    direction: {x: -4096.2563, y: 0, z: 2284.7717}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -4089.6094, y: 0, z: 2276.6382}
+    direction: {x: -4083.3557, y: 0, z: 2272.4978}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  curves:
+  - n1:
+      position: {x: -4102.164, y: 0, z: 2288.823}
+      direction: {x: -4096.2563, y: 0, z: 2284.7717}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -4089.6094, y: 0, z: 2276.6382}
+      direction: {x: -4083.3557, y: 0, z: 2272.4978}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  Length: 17.578085
+  isLoop: 0
+  CurveChanged:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &345473966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345473961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb88648bd27b438c9590513426d4e114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Loader.CrossSceneObject
+  id: 38fd76edd4b1d6f12818714e4951f916
 --- !u!1 &351669803
 GameObject:
   m_ObjectHideFlags: 0
@@ -8784,7 +8867,11 @@ Transform:
   - {fileID: 552571667}
   - {fileID: 1722145512}
   - {fileID: 15315281}
-  - {fileID: 131727817}
+  - {fileID: 1930285028}
+  - {fileID: 1847147212}
+  - {fileID: 2073918761}
+  - {fileID: 1114688988}
+  - {fileID: 491040071}
   m_Father: {fileID: 742643507}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &425580489
@@ -9816,6 +9903,41 @@ Transform:
   - {fileID: 2136807143}
   m_Father: {fileID: 1845444427}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &491040070
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 491040071}
+  m_Layer: 0
+  m_Name: Stonemine-Smallpesht entries
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &491040071
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 491040070}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1758953810}
+  - {fileID: 345473962}
+  - {fileID: 901271750}
+  - {fileID: 753871468}
+  m_Father: {fileID: 425580488}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &492799760
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10300,9 +10422,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a88da54457a84086b4bb098142a1d36b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Routes.Dock
-  nextReference: dbbf65b943954b8b399dea4bcf4cde1d
+  nextReference: 
   <SpeedLimit>k__BackingField: 0
-  <Next>k__BackingField: {fileID: 0}
+  <Next>k__BackingField: {fileID: 206991615}
   <FrontExits>k__BackingField: []
   <BackExits>k__BackingField: []
   <FrontEntries>k__BackingField: []
@@ -10808,7 +10930,6 @@ GameObject:
   - component: {fileID: 538587320}
   - component: {fileID: 538587319}
   - component: {fileID: 538587318}
-  - component: {fileID: 538587321}
   m_Layer: 0
   m_Name: 1
   m_TagString: Untagged
@@ -10914,19 +11035,6 @@ MonoBehaviour:
   CurveChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &538587321
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 538587316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb88648bd27b438c9590513426d4e114, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Loader.CrossSceneObject
-  id: 8af98a761cfa40cb580543e15060e048
 --- !u!1 &540693740
 GameObject:
   m_ObjectHideFlags: 0
@@ -13028,9 +13136,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.TubeRemapper
   tubeReference: 
-  toReference: fd699012c84d2074a8cde87e2e5eae0c
+  toReference: 
   connectTube: {fileID: 1402876536}
-  connectTo: {fileID: 0}
+  connectTo: {fileID: 1585146879}
 --- !u!114 &658607955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13045,8 +13153,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Entry
   <Connected>k__BackingField: {fileID: 11400000, guid: 2a8e73ebfba265e428e404749ddf1365, type: 2}
   <Locks>k__BackingField: []
-  ensurerReference: fd699012c84d2074a8cde87e2e5eae0c
-  <Ensurer>k__BackingField: {fileID: 0}
+  ensurerReference: 
+  <Ensurer>k__BackingField: {fileID: 1585146882}
 --- !u!1001 &659285477
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13679,7 +13787,6 @@ GameObject:
   - component: {fileID: 693687975}
   - component: {fileID: 693687970}
   - component: {fileID: 693687974}
-  - component: {fileID: 693687976}
   m_Layer: 0
   m_Name: 1
   m_TagString: Untagged
@@ -13799,19 +13906,6 @@ MonoBehaviour:
   updateInPlayMode: 1
   curveSpace: 0
   mode: 1
---- !u!114 &693687976
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 693687969}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb88648bd27b438c9590513426d4e114, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Loader.CrossSceneObject
-  id: dce6d2f42ea784a6984d34f8d076488c
 --- !u!1 &693888547
 GameObject:
   m_ObjectHideFlags: 0
@@ -14527,6 +14621,123 @@ MonoBehaviour:
   - {fileID: 1488661434}
   ensurerReference: 
   <Ensurer>k__BackingField: {fileID: 1235061253}
+--- !u!1 &753871467
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 753871468}
+  - component: {fileID: 753871472}
+  - component: {fileID: 753871471}
+  - component: {fileID: 753871470}
+  m_Layer: 0
+  m_Name: 3 from W
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &753871468
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753871467}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 491040071}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &753871470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753871467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2fa6bd2fe47453bbaaf0ef35ee0f705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.SplineTube
+  nextReference: 
+  <SpeedLimit>k__BackingField: 27.777779
+  <Next>k__BackingField: {fileID: 654117504}
+  spline: {fileID: 753871472}
+  length: 0
+--- !u!114 &753871471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753871467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 174367e175762fb48ba55d6171e99990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SplineMesh.SplineMeshTiling
+  mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+  material: {fileID: 2100000, guid: d5719a9290c0f004ea01708958d5a9ef, type: 2}
+  physicMaterial: {fileID: 0}
+  translation: {x: 0, y: 0, z: 0}
+  rotation: {x: 90, y: 0, z: 0}
+  scale: {x: 0.5, y: 1, z: 0.4}
+  generateCollider: 0
+  updateInPlayMode: 0
+  curveSpace: 0
+  mode: 1
+--- !u!114 &753871472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753871467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a85c5879d519aa4ab2ebbf42591149a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SplineMesh.Spline
+  nodes:
+  - position: {x: -4088.5044, y: 0, z: 2278.305}
+    direction: {x: -4096.2275, y: 0, z: 2283.4146}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -4100.723, y: 0, z: 2290.4775}
+    direction: {x: -4107.2764, y: 0, z: 2295.2341}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  curves:
+  - n1:
+      position: {x: -4088.5044, y: 0, z: 2278.305}
+      direction: {x: -4096.2275, y: 0, z: 2283.4146}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -4100.723, y: 0, z: 2290.4775}
+      direction: {x: -4107.2764, y: 0, z: 2295.2341}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  Length: 17.368937
+  isLoop: 0
+  CurveChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &756544576
 GameObject:
   m_ObjectHideFlags: 0
@@ -17601,6 +17812,123 @@ MonoBehaviour:
   <Locks>k__BackingField:
   - {fileID: 1488661434}
   - {fileID: 388186221}
+--- !u!1 &901271749
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 901271750}
+  - component: {fileID: 901271753}
+  - component: {fileID: 901271752}
+  - component: {fileID: 901271751}
+  m_Layer: 0
+  m_Name: 2 to W
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &901271750
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 901271749}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 491040071}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &901271751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 901271749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2fa6bd2fe47453bbaaf0ef35ee0f705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.SplineTube
+  nextReference: 
+  <SpeedLimit>k__BackingField: 27.777779
+  <Next>k__BackingField: {fileID: 254022303}
+  spline: {fileID: 901271753}
+  length: 0
+--- !u!114 &901271752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 901271749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 174367e175762fb48ba55d6171e99990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SplineMesh.SplineMeshTiling
+  mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+  material: {fileID: 2100000, guid: d5719a9290c0f004ea01708958d5a9ef, type: 2}
+  physicMaterial: {fileID: 0}
+  translation: {x: 0, y: 0, z: 0}
+  rotation: {x: 90, y: 0, z: 0}
+  scale: {x: 0.5, y: 1, z: 0.4}
+  generateCollider: 0
+  updateInPlayMode: 0
+  curveSpace: 0
+  mode: 1
+--- !u!114 &901271753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 901271749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a85c5879d519aa4ab2ebbf42591149a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SplineMesh.Spline
+  nodes:
+  - position: {x: -4087.401, y: 0, z: 2279.973}
+    direction: {x: -4095.1243, y: 0, z: 2285.0825}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -4099.584, y: 0, z: 2292.1218}
+    direction: {x: -4106.137, y: 0, z: 2296.8784}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  curves:
+  - n1:
+      position: {x: -4087.401, y: 0, z: 2279.973}
+      direction: {x: -4095.1243, y: 0, z: 2285.0825}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -4099.584, y: 0, z: 2292.1218}
+      direction: {x: -4106.137, y: 0, z: 2296.8784}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  Length: 17.32806
+  isLoop: 0
+  CurveChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &914674699
 GameObject:
   m_ObjectHideFlags: 0
@@ -19483,7 +19811,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Routes.Dock
   nextReference: 
   <SpeedLimit>k__BackingField: 16.666666
-  <Next>k__BackingField: {fileID: 0}
+  <Next>k__BackingField: {fileID: 1663473044}
   <FrontExits>k__BackingField: []
   <BackExits>k__BackingField: []
   <FrontEntries>k__BackingField: []
@@ -20182,7 +20510,6 @@ GameObject:
   - component: {fileID: 1044065011}
   - component: {fileID: 1044065010}
   - component: {fileID: 1044065009}
-  - component: {fileID: 1044065012}
   m_Layer: 0
   m_Name: 4 to F
   m_TagString: Untagged
@@ -20288,19 +20615,6 @@ MonoBehaviour:
   CurveChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1044065012
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1044065006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb88648bd27b438c9590513426d4e114, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Loader.CrossSceneObject
-  id: 6f1b61fb4589c7b58b8e705855e421f9
 --- !u!1 &1044583734
 GameObject:
   m_ObjectHideFlags: 0
@@ -21363,7 +21677,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1114688987}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -21372,7 +21686,7 @@ Transform:
   - {fileID: 1000437978}
   - {fileID: 1223551437}
   - {fileID: 1816228320}
-  m_Father: {fileID: 131727817}
+  m_Father: {fileID: 425580488}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1122227174
 GameObject:
@@ -23921,7 +24235,6 @@ GameObject:
   - component: {fileID: 1235061250}
   - component: {fileID: 1235061249}
   - component: {fileID: 1235061253}
-  - component: {fileID: 1235061254}
   m_Layer: 0
   m_Name: 1
   m_TagString: Untagged
@@ -24041,19 +24354,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.EntryEnsurer
   station: {fileID: 11400000, guid: cb4833e0cea621d41952451d3a6d8319, type: 2}
   <Backwards>k__BackingField: 1
---- !u!114 &1235061254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1235061247}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb88648bd27b438c9590513426d4e114, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Loader.CrossSceneObject
-  id: 045c1859c91508a2c9c3a7090a8a71d9
 --- !u!1 &1236575680
 GameObject:
   m_ObjectHideFlags: 0
@@ -24952,7 +25252,6 @@ GameObject:
   - component: {fileID: 1311130710}
   - component: {fileID: 1311130709}
   - component: {fileID: 1311130708}
-  - component: {fileID: 1311130711}
   m_Layer: 0
   m_Name: 2 from S
   m_TagString: Untagged
@@ -25118,19 +25417,6 @@ MonoBehaviour:
   exit: {fileID: 710347329}
   forwards: 0
   backwards: 1
---- !u!114 &1311130711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1311130701}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb88648bd27b438c9590513426d4e114, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Loader.CrossSceneObject
-  id: 1e5ca20032de5ed099d1a2a80cb84f9d
 --- !u!1 &1321534475
 GameObject:
   m_ObjectHideFlags: 0
@@ -25567,7 +25853,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Routes.Dock
   nextReference: 
   <SpeedLimit>k__BackingField: 0
-  <Next>k__BackingField: {fileID: 0}
+  <Next>k__BackingField: {fileID: 345473963}
   <FrontExits>k__BackingField: []
   <BackExits>k__BackingField:
   - {fileID: 110417418}
@@ -26148,7 +26434,7 @@ PrefabInstance:
     - target: {fileID: 623531833382826857, guid: b7b3ae72996f7ac419dbfff04e434324, type: 3}
       propertyPath: <Next>k__BackingField
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 901271751}
     - target: {fileID: 623531833382826857, guid: b7b3ae72996f7ac419dbfff04e434324, type: 3}
       propertyPath: <BackEntry>k__BackingField
       value: 
@@ -26360,7 +26646,7 @@ PrefabInstance:
     - target: {fileID: 7546599010439329404, guid: b7b3ae72996f7ac419dbfff04e434324, type: 3}
       propertyPath: <Next>k__BackingField
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 753871470}
     - target: {fileID: 7546599010439329404, guid: b7b3ae72996f7ac419dbfff04e434324, type: 3}
       propertyPath: <FrontEntry>k__BackingField
       value: 
@@ -27371,6 +27657,18 @@ PrefabInstance:
     - target: {fileID: 7356256515737672035, guid: 72381a3b1972365daac1a65f763de96d, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7830681750825212015, guid: 72381a3b1972365daac1a65f763de96d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7830681750825212015, guid: 72381a3b1972365daac1a65f763de96d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7830681750825212015, guid: 72381a3b1972365daac1a65f763de96d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 8929609974237685805, guid: 72381a3b1972365daac1a65f763de96d, type: 3}
       propertyPath: m_AnchorMax.x
@@ -28678,7 +28976,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.TubeRemapper
   tubeReference: 
   toReference: 
-  connectTube: {fileID: 0}
+  connectTube: {fileID: 345473963}
   connectTo: {fileID: 1325994700}
 --- !u!1 &1519948413
 GameObject:
@@ -29725,7 +30023,6 @@ GameObject:
   - component: {fileID: 1585146880}
   - component: {fileID: 1585146879}
   - component: {fileID: 1585146882}
-  - component: {fileID: 1585146883}
   m_Layer: 0
   m_Name: 1
   m_TagString: Untagged
@@ -29885,19 +30182,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.EntryEnsurer
   station: {fileID: 11400000, guid: 2a8e73ebfba265e428e404749ddf1365, type: 2}
   <Backwards>k__BackingField: 1
---- !u!114 &1585146883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1585146876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb88648bd27b438c9590513426d4e114, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Loader.CrossSceneObject
-  id: fd699012c84d2074a8cde87e2e5eae0c
 --- !u!1001 &1588484328
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33400,6 +33684,137 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 576458793950265353, guid: 3463dd95b250c54ad9a73b72a08ebbed, type: 3}
   m_PrefabInstance: {fileID: 1756304324}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1758953809
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1758953810}
+  - component: {fileID: 1758953813}
+  - component: {fileID: 1758953812}
+  - component: {fileID: 1758953811}
+  - component: {fileID: 1758953814}
+  m_Layer: 0
+  m_Name: 4 from F
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1758953810
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758953809}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 491040071}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1758953811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758953809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2fa6bd2fe47453bbaaf0ef35ee0f705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.SplineTube
+  nextReference: 
+  <SpeedLimit>k__BackingField: 27.777779
+  <Next>k__BackingField: {fileID: 0}
+  spline: {fileID: 1758953813}
+  length: 0
+--- !u!114 &1758953812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758953809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 174367e175762fb48ba55d6171e99990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SplineMesh.SplineMeshTiling
+  mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+  material: {fileID: 2100000, guid: d5719a9290c0f004ea01708958d5a9ef, type: 2}
+  physicMaterial: {fileID: 0}
+  translation: {x: 0, y: 0, z: 0}
+  rotation: {x: 90, y: 0, z: 0}
+  scale: {x: 0.5, y: 1, z: 0.4}
+  generateCollider: 0
+  updateInPlayMode: 0
+  curveSpace: 0
+  mode: 1
+--- !u!114 &1758953813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758953809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a85c5879d519aa4ab2ebbf42591149a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SplineMesh.Spline
+  nodes:
+  - position: {x: -4103.2954, y: 0, z: 2287.1736}
+    direction: {x: -4097.3877, y: 0, z: 2283.1223}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -4089.6094, y: 0, z: 2276.6382}
+    direction: {x: -4083.3557, y: 0, z: 2272.4978}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  curves:
+  - n1:
+      position: {x: -4103.2954, y: 0, z: 2287.1736}
+      direction: {x: -4097.3877, y: 0, z: 2283.1223}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -4089.6094, y: 0, z: 2276.6382}
+      direction: {x: -4083.3557, y: 0, z: 2272.4978}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  Length: 17.28251
+  isLoop: 0
+  CurveChanged:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &1758953814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1758953809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb88648bd27b438c9590513426d4e114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Loader.CrossSceneObject
+  id: f3d94a36b1f5139999674368c1285037
 --- !u!1001 &1762482585
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33415,7 +33830,7 @@ PrefabInstance:
     - target: {fileID: 623531833382826857, guid: b7b3ae72996f7ac419dbfff04e434324, type: 3}
       propertyPath: <Next>k__BackingField
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 40949128}
     - target: {fileID: 691245347730282721, guid: b7b3ae72996f7ac419dbfff04e434324, type: 3}
       propertyPath: <ID>k__BackingField
       value: 
@@ -33547,7 +33962,7 @@ PrefabInstance:
     - target: {fileID: 7546599010439329404, guid: b7b3ae72996f7ac419dbfff04e434324, type: 3}
       propertyPath: <Next>k__BackingField
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 112079502}
     - target: {fileID: 7804775148985941135, guid: b7b3ae72996f7ac419dbfff04e434324, type: 3}
       propertyPath: m_text
       value: 2
@@ -35200,7 +35615,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1847147211}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -35208,7 +35623,7 @@ Transform:
   - {fileID: 279535369}
   - {fileID: 257137229}
   - {fileID: 422447816}
-  m_Father: {fileID: 131727817}
+  m_Father: {fileID: 425580488}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1853898499
 GameObject:
@@ -36121,7 +36536,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Routes.Dock
   nextReference: 
   <SpeedLimit>k__BackingField: 16.666666
-  <Next>k__BackingField: {fileID: 0}
+  <Next>k__BackingField: {fileID: 1734761720}
   <FrontExits>k__BackingField: []
   <BackExits>k__BackingField: []
   <FrontEntries>k__BackingField: []
@@ -36835,14 +37250,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1930285027}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1085762397}
   - {fileID: 1136570846}
-  m_Father: {fileID: 131727817}
+  m_Father: {fileID: 425580488}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1930341025
 GameObject:
@@ -36891,7 +37306,6 @@ GameObject:
   - component: {fileID: 1939034008}
   - component: {fileID: 1939034007}
   - component: {fileID: 1939034010}
-  - component: {fileID: 1939034011}
   m_Layer: 0
   m_Name: 3 to S
   m_TagString: Untagged
@@ -37017,19 +37431,6 @@ MonoBehaviour:
   exit: 1
   forwards: 1
   backwards: 0
---- !u!114 &1939034011
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1939034004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb88648bd27b438c9590513426d4e114, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Loader.CrossSceneObject
-  id: d9945849d2283d19fb1454da61abd5eb
 --- !u!1001 &1940345610
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37595,7 +37996,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Routes.Dock
   nextReference: 
   <SpeedLimit>k__BackingField: 0
-  <Next>k__BackingField: {fileID: 0}
+  <Next>k__BackingField: {fileID: 2103835422}
   <FrontExits>k__BackingField: []
   <BackExits>k__BackingField: []
   <FrontEntries>k__BackingField: []
@@ -38242,7 +38643,6 @@ GameObject:
   - component: {fileID: 2004044478}
   - component: {fileID: 2004044477}
   - component: {fileID: 2004044476}
-  - component: {fileID: 2004044479}
   m_Layer: 0
   m_Name: 1 from F
   m_TagString: Untagged
@@ -38348,19 +38748,6 @@ MonoBehaviour:
   CurveChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2004044479
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2004044473}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb88648bd27b438c9590513426d4e114, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Loader.CrossSceneObject
-  id: 2d857af80f0390dad96351774b912ca0
 --- !u!1001 &2008908704
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38725,9 +39112,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2fa6bd2fe47453bbaaf0ef35ee0f705, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.SplineTube
-  nextReference: 861ba86bd83469753a6003ed5ebdd835
+  nextReference: 
   <SpeedLimit>k__BackingField: 0
-  <Next>k__BackingField: {fileID: 0}
+  <Next>k__BackingField: {fileID: 1762482588}
   spline: {fileID: 2015670373}
   length: 0
 --- !u!114 &2015670372
@@ -39374,7 +39761,7 @@ PrefabInstance:
     - target: {fileID: 623531833382826857, guid: b7b3ae72996f7ac419dbfff04e434324, type: 3}
       propertyPath: <Next>k__BackingField
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2015670371}
     - target: {fileID: 623531833382826857, guid: b7b3ae72996f7ac419dbfff04e434324, type: 3}
       propertyPath: <BackEntry>k__BackingField
       value: 
@@ -39561,12 +39948,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7546599010439329404, guid: b7b3ae72996f7ac419dbfff04e434324, type: 3}
       propertyPath: nextReference
-      value: 0d858d01a5a428551a3799887e339489
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7546599010439329404, guid: b7b3ae72996f7ac419dbfff04e434324, type: 3}
       propertyPath: <Next>k__BackingField
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1853898502}
     - target: {fileID: 7546599010439329404, guid: b7b3ae72996f7ac419dbfff04e434324, type: 3}
       propertyPath: <FrontEntry>k__BackingField
       value: 
@@ -40273,7 +40660,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2073918760}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -40282,7 +40669,7 @@ Transform:
   - {fileID: 247082183}
   - {fileID: 2132739581}
   - {fileID: 103171100}
-  m_Father: {fileID: 131727817}
+  m_Father: {fileID: 425580488}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2077352339
 GameObject:
@@ -40565,9 +40952,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2fa6bd2fe47453bbaaf0ef35ee0f705, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.SplineTube
-  nextReference: d012f60b6a690055bb18d5b060122363
+  nextReference: 
   <SpeedLimit>k__BackingField: 0
-  <Next>k__BackingField: {fileID: 0}
+  <Next>k__BackingField: {fileID: 1762482587}
   spline: {fileID: 2103835424}
   length: 0
 --- !u!114 &2103835423
