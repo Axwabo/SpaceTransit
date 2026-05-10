@@ -11,16 +11,16 @@ namespace SpaceTransit.Loader
         public static CancellationTokenSource Cts { get; private set; } = new();
 
         [SerializeField]
-        private int unloadForwards;
+        private string unloadForwards;
 
         [SerializeField]
-        private int unloadBackwards;
+        private string unloadBackwards;
 
         [SerializeField]
-        private int loadForwards;
+        private string loadForwards;
 
         [SerializeField]
-        private int loadBackwards;
+        private string loadBackwards;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -32,7 +32,7 @@ namespace SpaceTransit.Loader
             _ = Load(isBack ? loadForwards : loadBackwards);
         }
 
-        public static async Awaitable Load(params int[] lines)
+        public static async Awaitable Load(params string[] lines)
         {
             var token = Cts.Token;
             LoadingProgress.Current = LoadingProgress.Zero;

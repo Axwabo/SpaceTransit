@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 
 namespace SpaceTransit.Routes
@@ -14,7 +15,16 @@ namespace SpaceTransit.Routes
         [SerializeField]
         private int[] lines;
 
-        public ReadOnlySpan<int> Lines => lines;
+        [SerializeField]
+        private string[] lineNames;
+
+        public ReadOnlySpan<string> Lines => lineNames;
+
+        private void OnValidate()
+        {
+            if (lines is {Length: not 0})
+                lineNames = lines.Select(e => e.ToString()).ToArray();
+        }
 
     }
 
