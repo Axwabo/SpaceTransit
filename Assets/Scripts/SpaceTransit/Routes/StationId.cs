@@ -13,17 +13,21 @@ namespace SpaceTransit.Routes
         public AudioClip Announcement { get; set; }
 
         [SerializeField]
+        [HideInInspector]
         private int[] lines;
 
         [SerializeField]
+        [InspectorName("Lines")]
         private string[] lineNames;
 
         public ReadOnlySpan<string> Lines => lineNames;
 
         private void OnValidate()
         {
-            if (lines is {Length: not 0})
-                lineNames = lines.Select(e => e.ToString()).ToArray();
+            if (lines is not {Length: not 0})
+                return;
+            lineNames = lines.Select(e => e.ToString()).ToArray();
+            lines = null;
         }
 
     }
