@@ -305,6 +305,76 @@ MonoBehaviour:
   CurveChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &16781172
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 16781173}
+  - component: {fileID: 16781175}
+  - component: {fileID: 16781174}
+  m_Layer: 0
+  m_Name: Solenhoch Loader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &16781173
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16781172}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.96975434, z: -0, w: 0.24408314}
+  m_LocalPosition: {x: 3014.9, y: 0, z: -151.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1788766077}
+  m_LocalEulerAnglesHint: {x: 0, y: 151.745, z: 0}
+--- !u!114 &16781174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16781172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4646d4f7f098491cba1384b25090dd52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Loader.WorldChanger
+  unloadForwards: 0
+  unloadBackwards: 0
+  loadForwards: 100
+  loadBackwards: 0
+--- !u!65 &16781175
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16781172}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 247
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 30, y: 10, z: 120}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &21248265
 GameObject:
   m_ObjectHideFlags: 0
@@ -2246,96 +2316,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.EntryEnsurer
   station: {fileID: 11400000, guid: 390fd1a4eef9e4c4f943a7ed93ab6695, type: 2}
   <Backwards>k__BackingField: 1
---- !u!1001 &283038338
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1788766077}
-    m_Modifications:
-    - target: {fileID: 3657211752956477493, guid: 3dc60bdd0b9f84d44a2aa3fcc8079903, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3657211752956477493, guid: 3dc60bdd0b9f84d44a2aa3fcc8079903, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3657211752956477493, guid: 3dc60bdd0b9f84d44a2aa3fcc8079903, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3657211752956477493, guid: 3dc60bdd0b9f84d44a2aa3fcc8079903, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3657211752956477493, guid: 3dc60bdd0b9f84d44a2aa3fcc8079903, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3657211752956477493, guid: 3dc60bdd0b9f84d44a2aa3fcc8079903, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3657211752956477493, guid: 3dc60bdd0b9f84d44a2aa3fcc8079903, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3657211752956477493, guid: 3dc60bdd0b9f84d44a2aa3fcc8079903, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3657211752956477493, guid: 3dc60bdd0b9f84d44a2aa3fcc8079903, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3657211752956477493, guid: 3dc60bdd0b9f84d44a2aa3fcc8079903, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6077470257365729673, guid: 3dc60bdd0b9f84d44a2aa3fcc8079903, type: 3}
-      propertyPath: startTube
-      value: 
-      objectReference: {fileID: 336491521}
-    - target: {fileID: 6922756181045592338, guid: 3dc60bdd0b9f84d44a2aa3fcc8079903, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7758001285672445733, guid: 3dc60bdd0b9f84d44a2aa3fcc8079903, type: 3}
-      propertyPath: m_Name
-      value: Automatic ROSS
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7758001285672445733, guid: 3dc60bdd0b9f84d44a2aa3fcc8079903, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 283038341}
-  m_SourcePrefab: {fileID: 100100000, guid: 3dc60bdd0b9f84d44a2aa3fcc8079903, type: 3}
---- !u!4 &283038339 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3657211752956477493, guid: 3dc60bdd0b9f84d44a2aa3fcc8079903, type: 3}
-  m_PrefabInstance: {fileID: 283038338}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &283038340 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7758001285672445733, guid: 3dc60bdd0b9f84d44a2aa3fcc8079903, type: 3}
-  m_PrefabInstance: {fileID: 283038338}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &283038341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 283038340}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33720deaa0f24c42bc02e7a60370ca96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Driving.ManualSpeedControl
 --- !u!1 &295247170
 GameObject:
   m_ObjectHideFlags: 0
@@ -5198,6 +5178,76 @@ MonoBehaviour:
   - {fileID: 164034973}
   ensurerReference: 
   <Ensurer>k__BackingField: {fileID: 270194698}
+--- !u!1 &727462793
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 727462794}
+  - component: {fileID: 727462796}
+  - component: {fileID: 727462795}
+  m_Layer: 0
+  m_Name: Solenhoch Unloader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &727462794
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727462793}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.2628786, z: -0, w: 0.9648289}
+  m_LocalPosition: {x: 2918.5, y: 0, z: 20.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1788766077}
+  m_LocalEulerAnglesHint: {x: 0, y: -30.482, z: 0}
+--- !u!114 &727462795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727462793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4646d4f7f098491cba1384b25090dd52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Loader.WorldChanger
+  unloadForwards: 100
+  unloadBackwards: 0
+  loadForwards: 0
+  loadBackwards: 0
+--- !u!65 &727462796
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727462793}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 247
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 30, y: 10, z: 120}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &732029264
 GameObject:
   m_ObjectHideFlags: 0
@@ -13406,7 +13456,8 @@ Transform:
   - {fileID: 1608168365}
   - {fileID: 2076812400}
   - {fileID: 1005155796}
-  - {fileID: 283038339}
+  - {fileID: 16781173}
+  - {fileID: 727462794}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1788766078
