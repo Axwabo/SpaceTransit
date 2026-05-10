@@ -26,6 +26,12 @@ namespace SpaceTransit.Cosmos
 
         private void Update() => _usedBy.RemoveWhere(static e => !e);
 
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = IsFree ? Color.green : Color.red;
+            Gizmos.DrawWireCube(transform.position, Vector3.one);
+        }
+
     }
 
 }
