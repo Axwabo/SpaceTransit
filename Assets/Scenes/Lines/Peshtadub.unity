@@ -14257,6 +14257,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7987418763307056947, guid: d565d6906fc20f346a869be32968e482, type: 3}
   m_PrefabInstance: {fileID: 666098366}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &666098368 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 342873159335543462, guid: d565d6906fc20f346a869be32968e482, type: 3}
+  m_PrefabInstance: {fileID: 666098366}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a88da54457a84086b4bb098142a1d36b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Routes.Dock
 --- !u!114 &666098369 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2708433068314240443, guid: d565d6906fc20f346a869be32968e482, type: 3}
@@ -16833,7 +16844,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.SplineTube
   nextReference: 
   <SpeedLimit>k__BackingField: 27.777779
-  <Next>k__BackingField: {fileID: 0}
+  <Next>k__BackingField: {fileID: 666098369}
   spline: {fileID: 812469374}
   length: 0
 --- !u!114 &812469373
@@ -19386,7 +19397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.SplineTube
   nextReference: 
   <SpeedLimit>k__BackingField: 27.777779
-  <Next>k__BackingField: {fileID: 0}
+  <Next>k__BackingField: {fileID: 1899459298}
   spline: {fileID: 948948032}
   length: 0
 --- !u!114 &948948031
@@ -25154,7 +25165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.SplineTube
   nextReference: 
   <SpeedLimit>k__BackingField: 27.777779
-  <Next>k__BackingField: {fileID: 0}
+  <Next>k__BackingField: {fileID: 666098368}
   spline: {fileID: 1223439722}
   length: 0
 --- !u!114 &1223439721
@@ -33448,8 +33459,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.TubeRemapper
   tubeReference: 
   toReference: 
-  connectTube: {fileID: 0}
-  connectTo: {fileID: 0}
+  connectTube: {fileID: 920789801}
+  connectTo: {fileID: 812469372}
 --- !u!114 &1660530472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38530,7 +38541,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.SplineTube
   nextReference: 
   <SpeedLimit>k__BackingField: 27.777779
-  <Next>k__BackingField: {fileID: 0}
+  <Next>k__BackingField: {fileID: 1000420240}
   spline: {fileID: 1911346022}
   length: 0
 --- !u!114 &1911346022
@@ -39361,6 +39372,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1956180825}
   - component: {fileID: 1956180826}
+  - component: {fileID: 1956180827}
   m_Layer: 0
   m_Name: Adubguard L
   m_TagString: Untagged
@@ -39395,6 +39407,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 166d277a1b5444daae45515d0c1a0690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Lock
+--- !u!114 &1956180827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1956180824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb88648bd27b438c9590513426d4e114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Loader.CrossSceneObject
+  id: da86bc3d863ca2e63819789811b43f2d
 --- !u!1001 &1956186309
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -41285,7 +41310,6 @@ GameObject:
   - component: {fileID: 2025427085}
   - component: {fileID: 2025427084}
   - component: {fileID: 2025427083}
-  - component: {fileID: 2025427088}
   m_Layer: 0
   m_Name: 2
   m_TagString: Untagged
@@ -41405,21 +41429,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2089260888}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2025427088
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2025427082}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c51f90abf83e4ac7a02989cfc140ab73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.ExitClearer
-  exit: {fileID: 0}
-  forwards: 1
-  backwards: 0
 --- !u!1 &2028979902
 GameObject:
   m_ObjectHideFlags: 0
