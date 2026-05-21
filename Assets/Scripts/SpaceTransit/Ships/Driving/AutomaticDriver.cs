@@ -87,6 +87,8 @@ namespace SpaceTransit.Ships.Driving
 
             Controller.MarkReady();
             _departed = false;
+            if (!Assembly.FrontModule.Thruster.Tube.Next(Assembly.Reverse))
+                Destroy(Assembly.gameObject);
         }
 
         private void UpdateSailing()
