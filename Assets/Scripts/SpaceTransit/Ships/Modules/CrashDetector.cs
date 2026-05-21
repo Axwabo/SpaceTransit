@@ -1,4 +1,5 @@
-﻿using SpaceTransit.Menu;
+﻿using SpaceTransit.Loader;
+using SpaceTransit.Menu;
 using UnityEngine;
 
 namespace SpaceTransit.Ships.Modules
@@ -15,8 +16,16 @@ namespace SpaceTransit.Ships.Modules
 
         private void OnTriggerEnter(Collider other)
         {
-            if (_wait < 0 && other.TryGetComponent(out CrashDetector _))
+            if (_wait > 0)
+                return;
+            if (other.TryGetComponent(out CrashDetector _))
                 CrashDisplay.DisplayCrash(transform.position);
+        }
+
+        private void OnTriggerStay(Collider other)
+        {
+            if (other.TryGetComponent(out WorldBorder _))
+                _wait = 1;
         }
 
     }
