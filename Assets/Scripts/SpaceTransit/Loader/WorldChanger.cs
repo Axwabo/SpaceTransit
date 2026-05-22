@@ -1,5 +1,7 @@
+using System;
 using System.Threading;
 using SpaceTransit.Build;
+using UnityEditor;
 using UnityEngine;
 
 namespace SpaceTransit.Loader
@@ -10,17 +12,41 @@ namespace SpaceTransit.Loader
 
         public static CancellationTokenSource Cts { get; private set; } = new();
 
-        [SerializeField]
+        [Obsolete, SerializeField, HideInInspector]
         private string unloadForwards;
 
-        [SerializeField]
+        [Obsolete, SerializeField, HideInInspector]
         private string unloadBackwards;
 
-        [SerializeField]
+        [Obsolete, SerializeField, HideInInspector]
         private string loadForwards;
 
-        [SerializeField]
+        [Obsolete, SerializeField, HideInInspector]
         private string loadBackwards;
+
+        [SerializeField]
+        private string[] unloadFront;
+
+        [SerializeField]
+        private string[] unloadBack;
+
+        [SerializeField]
+        private string[] loadFront;
+
+        [SerializeField]
+        private string[] loadBack;
+
+        [Obsolete, ContextMenu("Migrate to array")]
+        private void Migrate()
+        {
+            unloadFront = ToArray(unloadForwards);
+            unloadBack = ToArray(unloadBackwards);
+            loadFront = ToArray(loadForwards);
+            loadBack = ToArray(loadBackwards);
+            EditorUtility.SetDirty(this);
+        }
+
+        private static string[] ToArray(string s) => string.IsNullOrEmpty(s) ? Array.Empty<string>() : new[] {s};
 
         private void OnTriggerEnter(Collider other)
         {
@@ -28,8 +54,8 @@ namespace SpaceTransit.Loader
                 return;
             var t = transform;
             var isBack = Vector3.Dot((other.transform.position - t.position).normalized, t.forward) < 0;
-            World.Unload(isBack ? unloadForwards : unloadBackwards);
-            _ = Load(isBack ? loadForwards : loadBackwards);
+            World.Unload(isBack ? unloadFront : unloadBack);
+            _ = Load(isBack ? loadFront : loadBack);
         }
 
         public static async Awaitable Load(params string[] lines)
