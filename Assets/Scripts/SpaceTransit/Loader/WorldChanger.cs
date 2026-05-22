@@ -1,7 +1,5 @@
-using System;
 using System.Threading;
 using SpaceTransit.Build;
-using UnityEditor;
 using UnityEngine;
 
 namespace SpaceTransit.Loader
@@ -11,18 +9,6 @@ namespace SpaceTransit.Loader
     {
 
         public static CancellationTokenSource Cts { get; private set; } = new();
-
-        [Obsolete, SerializeField, HideInInspector]
-        private string unloadForwards;
-
-        [Obsolete, SerializeField, HideInInspector]
-        private string unloadBackwards;
-
-        [Obsolete, SerializeField, HideInInspector]
-        private string loadForwards;
-
-        [Obsolete, SerializeField, HideInInspector]
-        private string loadBackwards;
 
         [SerializeField]
         private string[] unloadFront;
@@ -35,18 +21,6 @@ namespace SpaceTransit.Loader
 
         [SerializeField]
         private string[] loadBack;
-
-        [Obsolete, ContextMenu("Migrate to array")]
-        private void Migrate()
-        {
-            unloadFront = ToArray(unloadForwards);
-            unloadBack = ToArray(unloadBackwards);
-            loadFront = ToArray(loadForwards);
-            loadBack = ToArray(loadBackwards);
-            EditorUtility.SetDirty(this);
-        }
-
-        private static string[] ToArray(string s) => string.IsNullOrEmpty(s) ? Array.Empty<string>() : new[] {s};
 
         private void OnTriggerEnter(Collider other)
         {
