@@ -31,7 +31,7 @@ namespace SpaceTransit.Loader
                 if (World.LoadScene(MovementController.StartingStation.Lines[i]) is { } operation)
                     await operation;
 
-            await WorldChanger.InitNewScenes(token);
+            await WorldChanger.InitNewScenes(token, true);
             Clock.OffsetSeconds = -Time.timeSinceLevelLoadAsDouble;
 
             WorldChanger.ActivateNewScenes();

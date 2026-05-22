@@ -60,7 +60,7 @@ namespace SpaceTransit.Loader
             ActivateNewScenes();
         }
 
-        public static async Awaitable InitNewScenes(CancellationToken token)
+        public static async Awaitable InitNewScenes(CancellationToken token, bool fast = false)
         {
             token.ThrowIfCancellationRequested();
             var total = 0;
@@ -73,7 +73,10 @@ namespace SpaceTransit.Loader
             {
                 o.SetActive(true);
                 progress.Completed++;
-                await Awaitable.FixedUpdateAsync(token);
+                if (fast)
+                    await Awaitable.FixedUpdateAsync(token);
+                else
+                    await Awaitable.NextFrameAsync(token);
             }
         }
 
