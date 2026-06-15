@@ -44,7 +44,7 @@ namespace SpaceTransit.Editor
             base.OnInspectorGUI();
             GUILayout.Space(20);
             foreach (var descriptor in rotor.routes)
-                GUILayout.Label(descriptor.Summary());
+                GUILayout.Label($"[{descriptor.Origin.DockIndex + 1}] {descriptor.Summary()} [{descriptor.Destination.DockIndex + 1}]");
         }
 
         private static bool IsMidnightResetInvalid(ServiceSequence rotor)
