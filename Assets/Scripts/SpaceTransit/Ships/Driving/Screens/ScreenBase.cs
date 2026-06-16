@@ -12,6 +12,8 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         public abstract bool Select(int index);
 
+        public abstract void SetVisibility(bool visible);
+
     }
 
 }

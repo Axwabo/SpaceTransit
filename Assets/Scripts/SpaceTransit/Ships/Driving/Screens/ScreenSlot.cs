@@ -1,12 +1,12 @@
 ﻿using SpaceTransit.Routes;
-using SpaceTransit.Ships.Modules;
-using TMPro;
+using SpaceTransit.Ships.Modules.Displays;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace SpaceTransit.Ships.Driving.Screens
 {
 
-    public sealed class ScreenSlot : ModuleComponentBase
+    public sealed class ScreenSlot : ModuleUIComponent
     {
 
         [SerializeField]
@@ -15,8 +15,7 @@ namespace SpaceTransit.Ships.Driving.Screens
         [SerializeField]
         private ScreenBase exitList;
 
-        [SerializeField]
-        private TextMeshProUGUI text;
+        private Label _text;
 
         private ScreenBase _current;
 
@@ -28,10 +27,19 @@ namespace SpaceTransit.Ships.Driving.Screens
         {
             base.Awake();
             _current = exitList;
-            text.text = "Exit Towards";
         }
 
-        protected override void OnInitialized() => dockList.gameObject.SetActive(false);
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+            dockList.SetVisibility(false);
+        }
+
+        protected override void Initialize(VisualElement root)
+        {
+            _text = root.Q<Label>("Title");
+            _text.text = "Exit Towards";
+        }
 
         public override void OnStateChanged() => Show(Assembly.FrontModule.Thruster.Tube is Dock && Controller.State is ShipState.Docked or ShipState.WaitingForDeparture);
 
@@ -46,10 +54,10 @@ namespace SpaceTransit.Ships.Driving.Screens
             if (_exitsShown == exits)
                 return;
             _current = exits ? exitList : dockList;
-            text.text = exits ? "Exit Towards" : "Enter Dock";
+            _text.text = exits ? "Exit Towards" : "Enter Dock";
             _exitsShown = exits;
-            dockList.gameObject.SetActive(!exits);
-            exitList.gameObject.SetActive(exits);
+            dockList.SetVisibility(!exits);
+            exitList.SetVisibility(exits);
         }
 
     }

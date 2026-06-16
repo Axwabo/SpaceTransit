@@ -17,6 +17,7 @@ namespace SpaceTransit.Ships.Driving.Screens
                 if (_list != null)
                     return _list;
                 _list = GetListView(this.RootVisual());
+                _list.makeItem = () => new Label();
                 _list.bindItem = (element, i) =>
                 {
                     var picker = new TPicker();
@@ -94,7 +95,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         public override void Confirm() => Select(Selected);
 
-        public void SetVisibility(bool visible) => List.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
+        public override void SetVisibility(bool visible) => List.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
 
     }
 
