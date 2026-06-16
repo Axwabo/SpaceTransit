@@ -4,8 +4,7 @@ using UnityEngine.UIElements;
 namespace SpaceTransit.Ships.Modules.Displays
 {
 
-    [RequireComponent(typeof(UIDocument))]
-    public sealed class SpeedDisplay : ModuleComponentBase
+    public sealed class SpeedDisplay : ModuleUIComponent
     {
 
         private Label _text;
@@ -15,8 +14,6 @@ namespace SpaceTransit.Ships.Modules.Displays
         [SerializeField]
         private bool max;
 
-        private void Start() => _text = GetComponent<UIDocument>().rootVisualElement.Q<Label>("Speed");
-
         private void Update()
         {
             var current = Assembly.CurrentSpeed;
@@ -24,6 +21,8 @@ namespace SpaceTransit.Ships.Modules.Displays
             if (current.Raw != _previous.Raw)
                 UpdateText(current);
         }
+
+        protected override void Initialize(VisualElement root) => _text = root.Q<Label>("Speed");
 
         private void UpdateText(ShipSpeed current)
         {

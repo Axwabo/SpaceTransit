@@ -4,8 +4,7 @@ using UnityEngine.UIElements;
 namespace SpaceTransit.Ships.Modules.Displays
 {
 
-    [RequireComponent(typeof(UIDocument))]
-    public sealed class SpeedLimitDisplay : ModuleComponentBase
+    public sealed class SpeedLimitDisplay : ModuleUIComponent
     {
 
         private bool _everDisplayed;
@@ -18,9 +17,8 @@ namespace SpaceTransit.Ships.Modules.Displays
 
         private Label _next;
 
-        private void Start()
+        protected override void Initialize(VisualElement root)
         {
-            var root = GetComponent<UIDocument>().rootVisualElement;
             _main = root.Q<Label>("Limit");
             _next = root.Q<Label>("Next");
         }
