@@ -1162,6 +1162,8 @@ GameObject:
   m_Component:
   - component: {fileID: 226504656558239231}
   - component: {fileID: 7840000144196776279}
+  - component: {fileID: 2638175457375748642}
+  - component: {fileID: 1727314467394578090}
   m_Layer: 0
   m_Name: COSMOS
   m_TagString: Untagged
@@ -1207,6 +1209,31 @@ MonoBehaviour:
   m_PivotReferenceSize: 0
   m_Pivot: 0
   m_WorldSpaceCollider: {fileID: 0}
+--- !u!114 &2638175457375748642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2469828175633104415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f86105c8b12c4b9a88e6a912f2ff9269, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Modules.Displays.SpeedLimitDisplay
+--- !u!114 &1727314467394578090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2469828175633104415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44609725131743b5ae980fd93ec27f63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Modules.Displays.SpeedDisplay
+  max: 1
 --- !u!1 &2935084724426344055
 GameObject:
   m_ObjectHideFlags: 0
@@ -2560,7 +2587,6 @@ GameObject:
   - component: {fileID: 1211972411588872881}
   - component: {fileID: 1591594009535736881}
   - component: {fileID: 2142305240783105328}
-  - component: {fileID: 8995570755464887713}
   - component: {fileID: 3352778087986051544}
   - component: {fileID: 111853789201185085}
   - component: {fileID: 7666975194610187660}
@@ -2644,20 +2670,6 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 1
---- !u!114 &8995570755464887713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4799321616151026131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f86105c8b12c4b9a88e6a912f2ff9269, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Modules.Displays.SpeedLimitDisplay
-  main: {fileID: 6052827683464472436}
-  next: {fileID: 7488370177430243542}
 --- !u!222 &3352778087986051544
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4426,7 +4438,6 @@ GameObject:
   - component: {fileID: 4718642084524169716}
   - component: {fileID: 4624708966174093300}
   - component: {fileID: 9135093856360341907}
-  - component: {fileID: 3901608198719865687}
   m_Layer: 5
   m_Name: Speed
   m_TagString: Untagged
@@ -4552,19 +4563,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &3901608198719865687
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8265588034714048829}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44609725131743b5ae980fd93ec27f63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Modules.Displays.SpeedDisplay
-  max: 1
 --- !u!1 &8899023564236419924
 GameObject:
   m_ObjectHideFlags: 0

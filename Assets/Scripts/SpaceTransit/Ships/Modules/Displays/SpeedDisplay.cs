@@ -1,25 +1,21 @@
-﻿using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace SpaceTransit.Ships.Modules.Displays
 {
 
-    [RequireComponent(typeof(TextMeshProUGUI))]
+    [RequireComponent(typeof(UIDocument))]
     public sealed class SpeedDisplay : ModuleComponentBase
     {
 
-        private TextMeshProUGUI _text;
+        private Label _text;
 
         private ShipSpeed _previous;
 
         [SerializeField]
         private bool max;
 
-        protected override void Awake()
-        {
-            base.Awake();
-            _text = GetComponent<TextMeshProUGUI>();
-        }
+        private void Start() => _text = GetComponent<UIDocument>().rootVisualElement.Q<Label>("Speed");
 
         private void Update()
         {

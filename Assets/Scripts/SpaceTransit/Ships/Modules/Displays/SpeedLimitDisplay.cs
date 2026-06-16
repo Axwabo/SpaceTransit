@@ -1,23 +1,29 @@
-﻿using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace SpaceTransit.Ships.Modules.Displays
 {
 
+    [RequireComponent(typeof(UIDocument))]
     public sealed class SpeedLimitDisplay : ModuleComponentBase
     {
-
-        [SerializeField]
-        private TextMeshProUGUI main;
-
-        [SerializeField]
-        private TextMeshProUGUI next;
 
         private bool _everDisplayed;
 
         private float _previous;
 
         private float _previousNext;
+
+        private Label _main;
+
+        private Label _next;
+
+        private void Start()
+        {
+            var root = GetComponent<UIDocument>().rootVisualElement;
+            _main = root.Q<Label>("Limit");
+            _next = root.Q<Label>("Next");
+        }
 
         private void Update()
         {
@@ -29,13 +35,13 @@ namespace SpaceTransit.Ships.Modules.Displays
             // ReSharper disable once CompareOfFloatsByEqualityOperator
             if (limit != _previous)
             {
-                main.text = Limit(limit);
+                _main.text = Limit(limit);
                 _previous = limit;
             }
 
             if (Assembly.Reverse ? !tube.HasPrevious : !tube.HasNext)
             {
-                next.text = "";
+                _next.text = "";
                 return;
             }
 
@@ -43,7 +49,7 @@ namespace SpaceTransit.Ships.Modules.Displays
             var nextLimit = nextTube.SpeedLimit;
             if (Mathf.Approximately(nextLimit, _previousNext))
                 return;
-            next.text = Mathf.Approximately(nextLimit, limit) ? "" : $"Next: {Limit(nextLimit)}";
+            _next.text = Mathf.Approximately(nextLimit, limit) ? "" : $"Next: {Limit(nextLimit)}";
             _previousNext = nextLimit;
         }
 
