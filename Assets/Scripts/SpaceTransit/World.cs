@@ -26,7 +26,7 @@ namespace SpaceTransit
         [SerializeField]
         private RouteDescriptor[] extraRoutes;
 
-        public static Dictionary<int, Transform> Worlds { get; } = new();
+        public static Dictionary<string, Transform> Worlds { get; } = new();
 
         public static SpeedLimitSign SpeedLimitSignPrefab { get; private set; }
 
@@ -36,11 +36,12 @@ namespace SpaceTransit
 
         public static RouteDescriptor[] ExtraRoutes { get; private set; }
 
-        private int _line;
+        private string _line;
 
         private void Awake()
         {
-            if (int.TryParse(gameObject.scene.name, out var line))
+            var line = gameObject.scene.name;
+            if (!string.IsNullOrEmpty(line))
                 Worlds[_line = line] = transform;
             if (Current)
                 return;
@@ -61,28 +62,28 @@ namespace SpaceTransit
 
         private void OnDisable() => Worlds.Remove(_line);
 
-        public static bool IsLoaded(int line) => Worlds.ContainsKey(line);
+        public static bool IsLoaded(string line) => Worlds.ContainsKey(line);
 
-        public static AsyncOperation LoadScene(int line)
-            => line == 0 || IsLoaded(line)
+        public static AsyncOperation LoadScene(string line)
+            => string.IsNullOrEmpty(line) || IsLoaded(line)
                 ? null
-                : SceneManager.LoadSceneAsync(line.ToString(), LoadSceneMode.Additive);
+                : SceneManager.LoadSceneAsync(line, LoadSceneMode.Additive);
 
-        public static void Unload(params int[] lines)
+        public static void Unload(params string[] lines)
         {
             foreach (var line in lines)
             {
-                if (line == 0 || !Worlds.TryGetValue(line, out var world))
+                if (string.IsNullOrEmpty(line) || !Worlds.TryGetValue(line, out var world))
                     continue;
                 world.parent = null;
                 if (Current == world)
                     ChangeCurrentWorld(lines);
                 MoveWorld(line, world);
-                SceneManager.UnloadSceneAsync(line.ToString());
+                SceneManager.UnloadSceneAsync(line);
             }
         }
 
-        private static void ChangeCurrentWorld(int[] unloading)
+        private static void ChangeCurrentWorld(string[] unloading)
         {
             Current = null;
             foreach (var (line, t) in Worlds)
@@ -111,7 +112,7 @@ namespace SpaceTransit
             }
         }
 
-        private static void MoveWorld(int line, Transform world) => SceneManager.MoveGameObjectToScene(world.gameObject, SceneManager.GetSceneByName(line.ToString()));
+        private static void MoveWorld(string line, Transform world) => SceneManager.MoveGameObjectToScene(world.gameObject, SceneManager.GetSceneByName(line));
 
     }
 

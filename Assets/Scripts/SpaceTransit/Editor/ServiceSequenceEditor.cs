@@ -2,6 +2,7 @@
 using SpaceTransit.Routes;
 using SpaceTransit.Routes.Sequences;
 using UnityEditor;
+using UnityEngine;
 
 namespace SpaceTransit.Editor
 {
@@ -20,7 +21,7 @@ namespace SpaceTransit.Editor
             var lastDock = rotor.routes.Length == 0 ? 0 : rotor.routes[0].Origin.DockIndex;
             if (!IsMidnightResetInvalid(rotor))
             {
-                base.OnInspectorGUI();
+                DefaultInspector(rotor);
                 return;
             }
 
@@ -35,7 +36,15 @@ namespace SpaceTransit.Editor
                 lastDock = descriptor.Destination.DockIndex;
             }
 
+            DefaultInspector(rotor);
+        }
+
+        private void DefaultInspector(ServiceSequence rotor)
+        {
             base.OnInspectorGUI();
+            GUILayout.Space(20);
+            foreach (var descriptor in rotor.routes)
+                GUILayout.Label($"[{descriptor.Origin.DockIndex + 1}] {descriptor.Summary()} [{descriptor.Destination.DockIndex + 1}]");
         }
 
         private static bool IsMidnightResetInvalid(ServiceSequence rotor)

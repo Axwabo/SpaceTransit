@@ -62,8 +62,10 @@ namespace SpaceTransit.Loader
         {
             if (!gameObject)
                 return originalReference;
+#if UNITY_EDITOR
             if (gameObject.scene == sceneReference.scene)
-                return null;
+                return Application.isPlaying ? originalReference : null;
+#endif
             if (!gameObject.TryGetComponent(out CrossSceneObject reference))
                 reference = gameObject.AddComponent<CrossSceneObject>();
             if (!string.IsNullOrEmpty(reference.id))

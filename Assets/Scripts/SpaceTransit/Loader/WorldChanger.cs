@@ -11,16 +11,16 @@ namespace SpaceTransit.Loader
         public static CancellationTokenSource Cts { get; private set; } = new();
 
         [SerializeField]
-        private int unloadForwards;
+        private string[] unloadFront;
 
         [SerializeField]
-        private int unloadBackwards;
+        private string[] unloadBack;
 
         [SerializeField]
-        private int loadForwards;
+        private string[] loadFront;
 
         [SerializeField]
-        private int loadBackwards;
+        private string[] loadBack;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -28,11 +28,11 @@ namespace SpaceTransit.Loader
                 return;
             var t = transform;
             var isBack = Vector3.Dot((other.transform.position - t.position).normalized, t.forward) < 0;
-            World.Unload(isBack ? unloadForwards : unloadBackwards);
-            _ = Load(isBack ? loadForwards : loadBackwards);
+            World.Unload(isBack ? unloadFront : unloadBack);
+            _ = Load(isBack ? loadFront : loadBack);
         }
 
-        public static async Awaitable Load(params int[] lines)
+        public static async Awaitable Load(params string[] lines)
         {
             var token = Cts.Token;
             LoadingProgress.Current = LoadingProgress.Zero;
@@ -60,7 +60,7 @@ namespace SpaceTransit.Loader
             ActivateNewScenes();
         }
 
-        public static async Awaitable InitNewScenes(CancellationToken token)
+        public static async Awaitable InitNewScenes(CancellationToken token, bool fast = false)
         {
             token.ThrowIfCancellationRequested();
             var total = 0;
@@ -73,7 +73,10 @@ namespace SpaceTransit.Loader
             {
                 o.SetActive(true);
                 progress.Completed++;
-                await Awaitable.FixedUpdateAsync(token);
+                if (fast)
+                    await Awaitable.FixedUpdateAsync(token);
+                else
+                    await Awaitable.NextFrameAsync(token);
             }
         }
 
