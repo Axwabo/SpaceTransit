@@ -1815,6 +1815,7 @@ Transform:
   - {fileID: 1211972411588872881}
   - {fileID: 6624548987377205414}
   - {fileID: 226504656558239231}
+  - {fileID: 8784119543227900813}
   m_Father: {fileID: 2441339848484895405}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3945646554620835103
@@ -2942,7 +2943,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6624548987377205414
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3027,7 +3028,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Vaulter.VaulterScreen
   title: {fileID: 3025524455551632826}
   routes: {fileID: 651928772989206642}
-  stops: {fileID: 7223348185607025607}
+  stops: {fileID: 0}
 --- !u!1 &5437118457804615589
 GameObject:
   m_ObjectHideFlags: 0
@@ -3549,7 +3550,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4253056466247688110}
   - component: {fileID: 3695886674550672082}
-  - component: {fileID: 7223348185607025607}
   m_Layer: 5
   m_Name: Stops
   m_TagString: Untagged
@@ -3602,19 +3602,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &7223348185607025607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6751614959292130019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e96f45724094eb3848bc4882fd6d9eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Vaulter.StopList
-  prefab: {fileID: 3796877607342693194, guid: e673467861e2ee6479576ea53c4207d6, type: 3}
 --- !u!1 &6889300939197912814
 GameObject:
   m_ObjectHideFlags: 0
@@ -4380,6 +4367,74 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Driving.ReverseButton
   rotation: 90
+--- !u!1 &7991320967782111893
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8784119543227900813}
+  - component: {fileID: 8580975825512292425}
+  - component: {fileID: 1867016098831946073}
+  m_Layer: 0
+  m_Name: Vaulter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8784119543227900813
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7991320967782111893}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.54201436, y: -0.010691222, z: 0.0153774675, w: 0.84016055}
+  m_LocalPosition: {x: -0.512, y: 1.455, z: 11.441}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5344101114842284877}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8580975825512292425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7991320967782111893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_PanelSettings: {fileID: 11400000, guid: 391bd4509078bbff0b52c43b718fa862, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 7da4b92e5ce78f8018c7f1cf6b471ac5, type: 3}
+  m_SortingOrder: 0
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 500
+  m_WorldSpaceHeight: 400
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
+--- !u!114 &1867016098831946073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7991320967782111893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e96f45724094eb3848bc4882fd6d9eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Vaulter.StopList
 --- !u!1 &8216697829556654595
 GameObject:
   m_ObjectHideFlags: 0

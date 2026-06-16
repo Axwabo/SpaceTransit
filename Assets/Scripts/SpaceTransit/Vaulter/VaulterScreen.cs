@@ -45,6 +45,12 @@ namespace SpaceTransit.Vaulter
 
         public override void OnRouteChanged()
         {
+            if (Random.value >= 0)
+            {
+                // TODO
+                return;
+            }
+
             if (!IsInService)
             {
                 ShowRoutes();

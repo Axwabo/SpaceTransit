@@ -8,11 +8,7 @@ namespace SpaceTransit.Ships.Modules.Displays
     public abstract class ModuleUIComponent : ModuleComponentBase
     {
 
-        protected override void OnInitialized()
-        {
-            var root = GetComponent<UIDocument>().rootVisualElement;
-            Initialize(root);
-        }
+        protected override void OnInitialized() => Initialize(this.RootVisual());
 
         protected abstract void Initialize(VisualElement root);
 
