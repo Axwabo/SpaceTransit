@@ -25,8 +25,6 @@ namespace SpaceTransit.Ships.Modules.Displays
                 UpdateText(current);
         }
 
-        protected override void OnInitialized() => UpdateText(Assembly.CurrentSpeed);
-
         private void UpdateText(ShipSpeed current)
         {
             _text.text = max && Mathf.Approximately(Assembly.MaxSpeed, current.Raw)
