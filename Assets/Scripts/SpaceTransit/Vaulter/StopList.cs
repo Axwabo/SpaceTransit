@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using SpaceTransit.Routes.Stops;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace SpaceTransit.Vaulter
@@ -14,6 +15,8 @@ namespace SpaceTransit.Vaulter
 
         private ScrollView _scrollView;
 
+        private float? _itemHeight;
+
         private void OnEnable()
         {
             if (Parent)
@@ -23,8 +26,6 @@ namespace SpaceTransit.Vaulter
         protected override void OnInitialized()
         {
             _list = this.RootVisual().Q<ListView>("Stops");
-            _scrollView = _list.Q<ScrollView>();
-            _scrollView.verticalScrollerVisibility = ScrollerVisibility.Hidden;
             _list.itemsSource = _stops;
             _list.bindItem = (element, i) =>
             {
@@ -34,6 +35,8 @@ namespace SpaceTransit.Vaulter
                 element.Q<Label>("Departure").text = (stop as IDeparture)?.Departure.ToString() ?? "";
                 element.Q<Label>("DockIndex").text = (stop.DockIndex + 1).ToString();
             };
+            _scrollView = _list.Q<ScrollView>();
+            _scrollView.verticalScrollerVisibility = ScrollerVisibility.Hidden;
         }
 
         public override void OnRouteChanged()
@@ -52,6 +55,7 @@ namespace SpaceTransit.Vaulter
 
         private void RefreshStops()
         {
+            ResetPosition();
             if (!IsInService)
             {
                 _stops.Clear();
@@ -68,13 +72,17 @@ namespace SpaceTransit.Vaulter
 
         public void Navigate(bool forwards)
         {
-            // TODO
+            var container = _scrollView.contentContainer;
+            var childCount = container.childCount;
+            if (childCount == 0)
+                return;
+            _itemHeight ??= container.hierarchy.ElementAt(0).layout.height;
+            _scrollView.scrollOffset += new Vector2(0, _itemHeight.Value * (forwards ? -1 : 1));
         }
 
-        public void ResetPosition()
-        {
-            // TODO
-        }
+        public void ResetPosition() => _scrollView.scrollOffset = Vector2.zero;
+
+        public void SetVisibility(bool visible) => _list.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
 
     }
 

@@ -2,8 +2,8 @@
 using SpaceTransit.Routes.Stops;
 using SpaceTransit.Ships;
 using SpaceTransit.Ships.Driving.Screens;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace SpaceTransit.Vaulter
 {
@@ -12,17 +12,14 @@ namespace SpaceTransit.Vaulter
     {
 
         [SerializeField]
-        private TextMeshProUGUI title;
-
-        [SerializeField]
         private RouteList routes;
 
         [SerializeField]
         private StopList stops;
 
-        private GameObject _routes;
+        private Label _title;
 
-        private GameObject _stops;
+        private GameObject _routes;
 
         private bool _routesVisible = true;
 
@@ -30,7 +27,6 @@ namespace SpaceTransit.Vaulter
         {
             base.Awake();
             _routes = routes.gameObject;
-            _stops = stops.gameObject;
         }
 
         private void Update()
@@ -43,14 +39,10 @@ namespace SpaceTransit.Vaulter
                 ShowRoutes();
         }
 
+        protected override void OnInitialized() => _title = this.RootVisual().Q<Label>("Title");
+
         public override void OnRouteChanged()
         {
-            if (Random.value >= 0)
-            {
-                // TODO
-                return;
-            }
-
             if (!IsInService)
             {
                 ShowRoutes();
@@ -59,16 +51,16 @@ namespace SpaceTransit.Vaulter
 
             _routesVisible = false;
             _routes.SetActive(false);
-            _stops.SetActive(true);
-            title.text = $"{Parent.Route.name} {Parent.Route.Summary()}";
+            stops.SetVisibility(true);
+            _title.text = $"{Parent.Route.name} {Parent.Route.Summary()}";
         }
 
         private void ShowRoutes()
         {
             _routesVisible = true;
             _routes.SetActive(true);
-            _stops.SetActive(false);
-            title.text = "Pick a Route";
+            stops.SetVisibility(false);
+            _title.text = "Pick a Route";
         }
 
         public void Navigate(bool forwards)
