@@ -15,8 +15,6 @@ namespace SpaceTransit.Vaulter
 
         private ScrollView _scrollView;
 
-        private float? _itemHeight;
-
         private void OnEnable()
         {
             if (Parent)
@@ -70,15 +68,7 @@ namespace SpaceTransit.Vaulter
             _stops.Add(Parent.Route.Destination);
         }
 
-        public void Navigate(bool forwards)
-        {
-            var container = _scrollView.contentContainer;
-            var childCount = container.childCount;
-            if (childCount == 0)
-                return;
-            _itemHeight ??= container.hierarchy.ElementAt(0).layout.height;
-            _scrollView.scrollOffset += new Vector2(0, _itemHeight.Value * (forwards ? -1 : 1));
-        }
+        public void Navigate(bool forwards) => _scrollView.scrollOffset += new Vector2(0, _list.fixedItemHeight * (forwards ? -1 : 1));
 
         public void ResetPosition() => _scrollView.scrollOffset = Vector2.zero;
 
