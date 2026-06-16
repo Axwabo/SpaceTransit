@@ -44,14 +44,8 @@ namespace SpaceTransit
                 _label = document.rootVisualElement.Q<Label>("Clock");
                 _isUIDocument = true;
             }
-            else if (TryGetComponent(out _text))
-            {
+            else if (!TryGetComponent(out _text))
                 Destroy(this);
-            }
-            else
-            {
-                Destroy(this);
-            }
 
             if (TimeSpan.TryParse(start, CultureInfo.InvariantCulture, out var startTime))
                 StartTime = startTime;
