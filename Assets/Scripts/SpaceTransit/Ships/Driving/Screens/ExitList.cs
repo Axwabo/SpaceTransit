@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using SpaceTransit.Cosmos;
 using SpaceTransit.Routes;
+using UnityEngine.UIElements;
 
 namespace SpaceTransit.Ships.Driving.Screens
 {
@@ -91,6 +92,8 @@ namespace SpaceTransit.Ships.Driving.Screens
             exit = null;
             return false;
         }
+
+        protected override ListView GetListView(VisualElement root) => root.Q<ListView>("Exits");
 
     }
 

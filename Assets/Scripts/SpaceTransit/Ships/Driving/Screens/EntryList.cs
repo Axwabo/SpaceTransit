@@ -2,6 +2,7 @@
 using SpaceTransit.Cosmos;
 using SpaceTransit.Loader;
 using SpaceTransit.Routes;
+using UnityEngine.UIElements;
 
 namespace SpaceTransit.Ships.Driving.Screens
 {
@@ -52,6 +53,8 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         protected override List<Entry> Source => _ensurer.Entries;
 
+        protected override ListView GetListView(VisualElement root) => root.Q<ListView>("Entries");
+
         public override bool Select(int index)
         {
             for (var i = 0; i < Pickers.Count; i++)
@@ -71,7 +74,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         protected override string GetContent(Entry item) => $"{item.Dock.Index + 1}";
 
-        public bool SelectDock(int dockIndex) => Pickers.Count != 0 && isActiveAndEnabled && Select(dockIndex);
+        public bool SelectDock(int dockIndex) => CanPick && isActiveAndEnabled && Select(dockIndex);
 
     }
 

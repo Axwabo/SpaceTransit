@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using SpaceTransit.Routes;
 using SpaceTransit.Vaulter;
+using UnityEngine.UIElements;
 
 namespace SpaceTransit.Ships.Driving.Screens
 {
@@ -60,6 +61,8 @@ namespace SpaceTransit.Ships.Driving.Screens
                 vaulter.ExitService();
             return true;
         }
+
+        protected override ListView GetListView(VisualElement root) => root.Q<ListView>("Routes");
 
     }
 

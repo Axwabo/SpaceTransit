@@ -1,9 +1,9 @@
-﻿using SpaceTransit.Ships.Modules;
+﻿using SpaceTransit.Ships.Modules.Displays;
 
 namespace SpaceTransit.Ships.Driving.Screens
 {
 
-    public abstract class ScreenBase : ModuleComponentBase
+    public abstract class ScreenBase : ModuleUIComponent
     {
 
         public abstract void Navigate(bool forwards);

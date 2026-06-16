@@ -1,14 +1,36 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
+using Mono.Collections.Generic;
+using UnityEngine.UIElements;
 
 namespace SpaceTransit.Ships.Driving.Screens
 {
 
-    public abstract class ListBase<TItem, TPicker> : ScreenBase where TPicker : PickerBase
+    public abstract class ListBase<TItem, TPicker> : ScreenBase where TPicker : PickerBase, new()
     {
 
-        [SerializeReference]
-        private TPicker prefab;
+        private ListView _list;
+
+        protected ListView List
+        {
+            get
+            {
+                if (_list != null)
+                    return _list;
+                _list = GetListView(this.RootVisual());
+                _list.bindItem = (element, i) =>
+                {
+                    var picker = new TPicker();
+                    picker.Bind(element);
+                    picker.Text = GetContent(Source[i]);
+                    Pickers.Add(picker);
+                };
+                return _list;
+            }
+        }
+
+        protected override void Initialize(VisualElement root) => _ = List;
+
+        protected abstract ListView GetListView(VisualElement root);
 
         protected List<TPicker> Pickers { get; } = new();
 
@@ -16,7 +38,11 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         protected abstract string GetContent(TItem item);
 
-        public int Selected => Pickers.FindIndex(static e => e.Selected);
+        public int Selected
+        {
+            get => List.selectedIndex;
+            private set => List.selectedIndex = value;
+        }
 
         protected bool HasPicked
         {
@@ -29,22 +55,21 @@ namespace SpaceTransit.Ships.Driving.Screens
             }
         }
 
+        protected bool CanPick => Pickers.Count != 0;
+
         protected void Clear()
         {
-            foreach (var picker in Pickers)
-                Destroy(picker.gameObject);
             Pickers.Clear();
+            List.itemsSource = ReadOnlyCollection<TItem>.Empty;
+            List.RefreshItems();
         }
 
         protected void SetUp()
         {
-            for (var i = 0; i < Source.Count; i++)
-            {
-                var clone = Instantiate(prefab, Transform);
-                clone.Index = i;
-                clone.Text = GetContent(Source[i]);
-                Pickers.Add(clone);
-            }
+            Pickers.Clear();
+            Pickers.Capacity = Source.Count;
+            List.itemsSource = Source;
+            List.RefreshItems();
         }
 
         public override void Navigate(bool forwards)
@@ -60,6 +85,7 @@ namespace SpaceTransit.Ships.Driving.Screens
             if (previous != -1 && previous != index)
                 Pickers[previous].Selected = false;
             Pickers[index].Selected = true;
+            Selected = index;
         }
 
         public override bool Select(int index) => index != -1 && Pickers.Count != 0 && index < Pickers.Count && Select(Source[index], Pickers[index]);
@@ -67,6 +93,8 @@ namespace SpaceTransit.Ships.Driving.Screens
         protected abstract bool Select(TItem item, TPicker picker);
 
         public override void Confirm() => Select(Selected);
+
+        public void SetVisibility(bool visible) => List.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
 
     }
 

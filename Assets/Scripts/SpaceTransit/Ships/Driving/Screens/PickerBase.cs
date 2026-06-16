@@ -1,38 +1,41 @@
-﻿using TMPro;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace SpaceTransit.Ships.Driving.Screens
 {
 
-    public class PickerBase : MonoBehaviour
+    public class PickerBase
     {
 
-        [SerializeField]
-        private TextMeshProUGUI text;
+        private VisualElement _element;
 
-        [SerializeField]
-        private Image background;
+        private Label _label;
 
         private static readonly Color SelectedColor = new(1f, 1f, 0f, 0.24f);
+
+        public void Bind(VisualElement element)
+        {
+            _element = element;
+            _label = element.Q<Label>();
+        }
 
         public int Index { get; set; }
 
         public string Text
         {
-            set => text.text = value;
+            set => _label.text = value;
         }
 
         public bool Selected
         {
-            get => background.color == SelectedColor;
-            set => background.color = value ? SelectedColor : Color.clear;
+            get => BackgroundColor == SelectedColor;
+            set => BackgroundColor = value ? SelectedColor : Color.clear;
         }
 
         protected Color BackgroundColor
         {
-            get => background.color;
-            set => background.color = value;
+            get => _element.style.backgroundColor.value;
+            set => _element.style.backgroundColor = value;
         }
 
         public virtual bool Picked => false;

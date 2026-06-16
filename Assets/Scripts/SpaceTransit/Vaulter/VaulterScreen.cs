@@ -19,15 +19,7 @@ namespace SpaceTransit.Vaulter
 
         private Label _title;
 
-        private GameObject _routes;
-
         private bool _routesVisible = true;
-
-        protected override void Awake()
-        {
-            base.Awake();
-            _routes = routes.gameObject;
-        }
 
         private void Update()
         {
@@ -50,7 +42,7 @@ namespace SpaceTransit.Vaulter
             }
 
             _routesVisible = false;
-            _routes.SetActive(false);
+            routes.SetVisibility(false);
             stops.SetVisibility(true);
             _title.text = $"{Parent.Route.name} {Parent.Route.Summary()}";
         }
@@ -58,7 +50,7 @@ namespace SpaceTransit.Vaulter
         private void ShowRoutes()
         {
             _routesVisible = true;
-            _routes.SetActive(true);
+            routes.SetVisibility(true);
             stops.SetVisibility(false);
             _title.text = "Pick a Route";
         }
