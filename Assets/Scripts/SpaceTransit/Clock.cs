@@ -2,6 +2,7 @@
 using System.Globalization;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace SpaceTransit
 {
@@ -25,7 +26,11 @@ namespace SpaceTransit
 
         public static TimeSpan StartTime { get; set; } = DateTime.Now.TimeOfDay;
 
+        private bool _isUIDocument;
+
         private TextMeshProUGUI _text;
+
+        private Label _label;
 
         private int _previous;
 
@@ -34,8 +39,20 @@ namespace SpaceTransit
 
         private void Awake()
         {
-            if (!TryGetComponent(out _text))
+            if (TryGetComponent(out UIDocument document))
+            {
+                _label = document.rootVisualElement.Q<Label>("Clock");
+                _isUIDocument = true;
+            }
+            else if (TryGetComponent(out _text))
+            {
                 Destroy(this);
+            }
+            else
+            {
+                Destroy(this);
+            }
+
             if (TimeSpan.TryParse(start, CultureInfo.InvariantCulture, out var startTime))
                 StartTime = startTime;
         }
@@ -46,7 +63,11 @@ namespace SpaceTransit
             var seconds = now.Seconds;
             if (seconds == _previous)
                 return;
-            _text.text = now.ToString("hh':'mm':'ss");
+            var content = now.ToString("hh':'mm':'ss");
+            if (_isUIDocument)
+                _label.text = content;
+            else
+                _text.text = content;
             _previous = seconds;
         }
 

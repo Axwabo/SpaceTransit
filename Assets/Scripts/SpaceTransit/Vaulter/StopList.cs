@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using SpaceTransit.Routes.Stops;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace SpaceTransit.Vaulter
@@ -9,12 +8,11 @@ namespace SpaceTransit.Vaulter
     public sealed class StopList : VaulterComponentBase
     {
 
-        [SerializeField]
-        private VisualTreeAsset prefab;
-
         private readonly List<Stop> _stops = new();
 
         private ListView _list;
+
+        private ScrollView _scrollView;
 
         private void OnEnable()
         {
@@ -25,13 +23,9 @@ namespace SpaceTransit.Vaulter
         protected override void OnInitialized()
         {
             _list = this.RootVisual().Q<ListView>("Stops");
+            _scrollView = _list.Q<ScrollView>();
+            _scrollView.verticalScrollerVisibility = ScrollerVisibility.Hidden;
             _list.itemsSource = _stops;
-            _list.makeItem = () =>
-            {
-                var element = new VisualElement();
-                prefab.CloneTree(element);
-                return element;
-            };
             _list.bindItem = (element, i) =>
             {
                 var stop = _stops[i];
