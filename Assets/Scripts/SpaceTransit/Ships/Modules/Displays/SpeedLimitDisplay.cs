@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 namespace SpaceTransit.Ships.Modules.Displays
 {
 
-    public sealed class SpeedLimitDisplay : ModuleUIComponent
+    public sealed class SpeedLimitDisplay : ModuleUIComponent, ICullingListener
     {
 
         private bool _everDisplayed;

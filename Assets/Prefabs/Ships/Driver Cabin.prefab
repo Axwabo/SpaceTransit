@@ -781,8 +781,8 @@ GameObject:
   - component: {fileID: 1727314467394578090}
   - component: {fileID: 8409751743089852759}
   - component: {fileID: 5447839220280176271}
-  - component: {fileID: 2521855509382076208}
   - component: {fileID: 2598670258856049409}
+  - component: {fileID: 2521855509382076208}
   m_Layer: 0
   m_Name: COSMOS
   m_TagString: Untagged
@@ -799,11 +799,11 @@ Transform:
   m_GameObject: {fileID: 2469828175633104415}
   serializedVersion: 2
   m_LocalRotation: {x: 0.54201305, y: 0.010692291, z: -0.015377255, w: 0.8401614}
-  m_LocalPosition: {x: 0.47, y: 1.431, z: 11.454}
+  m_LocalPosition: {x: 0.47, y: 1.431, z: 1.4540005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5344101114842284877}
+  m_Father: {fileID: 2441339848484895405}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7840000144196776279
 MonoBehaviour:
@@ -877,6 +877,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b3aff0dd8704516b4da1465e7f4e5a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Driving.Screens.EntryList
+--- !u!114 &2598670258856049409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2469828175633104415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80dbd7246d8c4e41aca2013707117851, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Driving.CanProceedDiode
 --- !u!114 &2521855509382076208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -891,18 +903,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Driving.Screens.ScreenSlot
   dockList: {fileID: 5447839220280176271}
   exitList: {fileID: 8409751743089852759}
---- !u!114 &2598670258856049409
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2469828175633104415}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80dbd7246d8c4e41aca2013707117851, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Driving.CanProceedDiode
 --- !u!1 &2935084724426344055
 GameObject:
   m_ObjectHideFlags: 0
@@ -1025,6 +1025,8 @@ Transform:
   - {fileID: 5344101114842284877}
   - {fileID: 8402515989173995494}
   - {fileID: 4002341417790049253}
+  - {fileID: 226504656558239231}
+  - {fileID: 8784119543227900813}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3713243874073962330
@@ -1163,6 +1165,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5344101114842284877}
+  - component: {fileID: 2569471835483338793}
   m_Layer: 0
   m_Name: Cullable
   m_TagString: Untagged
@@ -1194,10 +1197,23 @@ Transform:
   - {fileID: 8685852421365245426}
   - {fileID: 1002974378418551773}
   - {fileID: 9185282448894155388}
-  - {fileID: 226504656558239231}
-  - {fileID: 8784119543227900813}
   m_Father: {fileID: 2441339848484895405}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2569471835483338793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3810747585398839362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e5788fd5d6542c4a9daeabe7d339149, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.CullingNotifier
+  objects:
+  - {fileID: 2469828175633104415}
+  - {fileID: 7991320967782111893}
 --- !u!1 &3973360748004176905
 GameObject:
   m_ObjectHideFlags: 0
@@ -2812,11 +2828,11 @@ Transform:
   m_GameObject: {fileID: 7991320967782111893}
   serializedVersion: 2
   m_LocalRotation: {x: 0.54201436, y: -0.010691222, z: 0.0153774675, w: 0.84016055}
-  m_LocalPosition: {x: -0.512, y: 1.455, z: 11.441}
+  m_LocalPosition: {x: -0.512, y: 1.455, z: 1.441}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5344101114842284877}
+  m_Father: {fileID: 2441339848484895405}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8580975825512292425
 MonoBehaviour:

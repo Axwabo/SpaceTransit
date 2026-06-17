@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 namespace SpaceTransit.Ships.Driving.Screens
 {
 
-    public sealed class ScreenSlot : ModuleUIComponent
+    public sealed class ScreenSlot : ModuleUIComponent, ICullingListener
     {
 
         [SerializeField]
@@ -19,6 +19,8 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private ScreenBase _current;
 
+        private VisualElement _root;
+
         private bool _disabled;
 
         private bool _exitsShown = true;
@@ -29,6 +31,10 @@ namespace SpaceTransit.Ships.Driving.Screens
             _current = exitList;
         }
 
+        private void OnEnable() => _root?.SetVisibility(true);
+
+        private void OnDisable() => _root?.SetVisibility(false);
+
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -37,6 +43,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         protected override void Initialize(VisualElement root)
         {
+            _root = root;
             _text = root.Q<Label>("Title");
             _text.text = "Exit Towards";
         }

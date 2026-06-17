@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 namespace SpaceTransit.Ships.Modules.Displays
 {
 
-    public sealed class SpeedDisplay : ModuleUIComponent
+    public sealed class SpeedDisplay : ModuleUIComponent, ICullingListener
     {
 
         private Label _text;

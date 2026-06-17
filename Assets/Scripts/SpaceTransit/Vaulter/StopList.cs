@@ -15,11 +15,14 @@ namespace SpaceTransit.Vaulter
 
         private ScrollView _scrollView;
 
-        public void Enable()
+        public void OnEnable()
         {
+            _list?.SetVisibility(true);
             if (Parent)
                 OnRouteChanged();
         }
+
+        private void OnDisable() => _list?.SetVisibility(false);
 
         protected override void OnInitialized()
         {
@@ -68,8 +71,6 @@ namespace SpaceTransit.Vaulter
         public void Navigate(bool forwards) => _scrollView.scrollOffset += new Vector2(0, _list.fixedItemHeight * (forwards ? -1 : 1));
 
         public void ResetPosition() => _scrollView.scrollOffset = Vector2.zero;
-
-        public void SetVisibility(bool visible) => _list.SetVisibility(visible);
 
     }
 

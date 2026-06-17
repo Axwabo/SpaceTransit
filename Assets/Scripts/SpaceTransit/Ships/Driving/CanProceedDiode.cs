@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 namespace SpaceTransit.Ships.Driving
 {
 
-    public sealed class CanProceedDiode : ModuleUIComponent
+    public sealed class CanProceedDiode : ModuleUIComponent, ICullingListener
     {
 
         private VisualElement _element;

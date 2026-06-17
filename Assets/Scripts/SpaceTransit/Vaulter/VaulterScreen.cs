@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 namespace SpaceTransit.Vaulter
 {
 
-    public sealed class VaulterScreen : VaulterComponentBase
+    public sealed class VaulterScreen : VaulterComponentBase, ICullingListener
     {
 
         [SerializeField]
@@ -21,6 +21,12 @@ namespace SpaceTransit.Vaulter
 
         private bool _routesVisible = true;
 
+        private VisualElement _root;
+
+        private void OnEnable() => _root?.SetVisibility(true);
+
+        private void OnDisable() => _root?.SetVisibility(false);
+
         private void Update()
         {
             if (!_routesVisible
@@ -31,7 +37,11 @@ namespace SpaceTransit.Vaulter
                 ShowRoutes();
         }
 
-        protected override void OnInitialized() => _title = this.RootVisual().Q<Label>("Title");
+        protected override void OnInitialized()
+        {
+            _root = this.RootVisual();
+            _title = _root.Q<Label>("Title");
+        }
 
         public override void OnRouteChanged()
         {
@@ -43,17 +53,16 @@ namespace SpaceTransit.Vaulter
 
             _routesVisible = false;
             routes.SetVisibility(false);
-            stops.SetVisibility(true);
-            stops.Enable();
+            routes.enabled = false;
+            stops.enabled = true;
             _title.text = $"{Parent.Route.name} {Parent.Route.Summary()}";
         }
 
         private void ShowRoutes()
         {
             _routesVisible = true;
-            routes.SetVisibility(true);
-            routes.Enable();
-            stops.SetVisibility(false);
+            routes.enabled = true;
+            stops.enabled = false;
             _title.text = "Pick a Route";
         }
 

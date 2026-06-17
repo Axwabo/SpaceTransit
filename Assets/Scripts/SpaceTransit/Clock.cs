@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using SpaceTransit.Ships;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -7,7 +8,7 @@ using UnityEngine.UIElements;
 namespace SpaceTransit
 {
 
-    public sealed class Clock : MonoBehaviour
+    public sealed class Clock : MonoBehaviour, ICullingListener
     {
 
         private static readonly DateTime Today = DateTime.Today;

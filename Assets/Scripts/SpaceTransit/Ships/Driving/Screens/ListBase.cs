@@ -17,6 +17,7 @@ namespace SpaceTransit.Ships.Driving.Screens
                 if (_list != null)
                     return _list;
                 _list = GetListView(this.RootVisual());
+                _list.Q<ScrollView>().verticalScrollerVisibility = ScrollerVisibility.Hidden;
                 _list.makeItem = () => new Label();
                 _list.bindItem = (element, i) =>
                 {
