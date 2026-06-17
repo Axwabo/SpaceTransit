@@ -15,7 +15,7 @@ namespace SpaceTransit.Menu.Main
 
         private int _index = -1;
 
-        private void Start() => Click();
+        protected override void Start() => Click();
 
         protected override void Click()
         {

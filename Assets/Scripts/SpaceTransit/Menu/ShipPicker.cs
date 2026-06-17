@@ -18,9 +18,8 @@ namespace SpaceTransit.Menu
 
         private VaulterController _current;
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
             _text = GetComponentInChildren<TextMeshProUGUI>();
             Click();
             _current.gameObject.AddComponent<ParentFixer>();
