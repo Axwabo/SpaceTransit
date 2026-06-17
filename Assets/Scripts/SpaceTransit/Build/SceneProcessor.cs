@@ -16,6 +16,8 @@ namespace SpaceTransit.Build
 
         public void OnProcessScene(Scene scene, BuildReport report)
         {
+            if (scene.name == "SampleScene")
+                return;
             var rootGameObjects = scene.GetRootGameObjects();
             var splines = new List<Spline>();
             var hoist = new List<HoistColliders>();

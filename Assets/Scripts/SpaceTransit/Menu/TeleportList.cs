@@ -23,7 +23,7 @@ namespace SpaceTransit.Menu
         private void Start()
         {
             var t = transform;
-            var stations = World.Current.name == "Test" ? Station.LoadedStations.Select(e => e.ID) : Cache.Stations;
+            var stations = World.IsTestWorld ? Station.LoadedStations.Select(e => e.ID) : Cache.Stations;
             foreach (var station in stations.OrderBy(e => e.name))
             {
                 var teleport = Instantiate(prefab, t).AddComponent<Teleport>();
@@ -76,7 +76,8 @@ namespace SpaceTransit.Menu
                 }
 
                 Error.text = "";
-                World.Unload(World.Worlds.Keys.Except(station.ID.Lines.ToArray()).ToArray());
+                if (!World.IsTestWorld)
+                    World.Unload(World.Worlds.Keys.Except(station.ID.Lines.ToArray()).ToArray());
                 MovementController.Current.Teleport(station.Spawnpoint);
             }
 

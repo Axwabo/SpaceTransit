@@ -34,6 +34,8 @@ namespace SpaceTransit
 
         public static Transform Current { get; private set; }
 
+        public static bool IsTestWorld => Current.name == "Test";
+
         public static RouteDescriptor[] ExtraRoutes { get; private set; }
 
         private string _line;
