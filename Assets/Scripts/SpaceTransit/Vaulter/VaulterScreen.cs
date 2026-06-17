@@ -44,6 +44,7 @@ namespace SpaceTransit.Vaulter
             _routesVisible = false;
             routes.SetVisibility(false);
             stops.SetVisibility(true);
+            stops.Enable();
             _title.text = $"{Parent.Route.name} {Parent.Route.Summary()}";
         }
 
@@ -51,6 +52,7 @@ namespace SpaceTransit.Vaulter
         {
             _routesVisible = true;
             routes.SetVisibility(true);
+            routes.Enable();
             stops.SetVisibility(false);
             _title.text = "Pick a Route";
         }

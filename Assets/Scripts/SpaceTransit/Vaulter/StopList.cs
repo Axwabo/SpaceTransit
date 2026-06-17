@@ -15,7 +15,7 @@ namespace SpaceTransit.Vaulter
 
         private ScrollView _scrollView;
 
-        private void OnEnable()
+        public void Enable()
         {
             if (Parent)
                 OnRouteChanged();
@@ -54,12 +54,9 @@ namespace SpaceTransit.Vaulter
         private void RefreshStops()
         {
             ResetPosition();
+            _stops.Clear();
             if (!IsInService)
-            {
-                _stops.Clear();
                 return;
-            }
-
             _stops.Add(Parent.Stop);
             if (Parent.Stop is Destination)
                 return;

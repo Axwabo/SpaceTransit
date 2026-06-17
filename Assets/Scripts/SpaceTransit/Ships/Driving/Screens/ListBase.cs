@@ -60,6 +60,8 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         protected void Clear()
         {
+            if (Pickers.Count == 0)
+                return;
             Pickers.Clear();
             List.itemsSource = ReadOnlyCollection<TItem>.Empty;
             List.RefreshItems();
