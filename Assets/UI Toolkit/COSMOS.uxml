@@ -1,15 +1,26 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/COSMOS%20Styles.uss?fileID=7433441132597879392&amp;guid=240d291e3b27d5e648c92a09e81f4082&amp;type=3#COSMOS Styles" />
     <ui:VisualElement name="Background" style="flex-grow: 1; background-color: rgb(0, 0, 0);">
-        <ui:VisualElement name="Proceed" style="flex-grow: 1; width: 50px; height: 50px; position: absolute; top: 10px; left: 10px; border-top-left-radius: 25px; border-top-right-radius: 25px; border-bottom-right-radius: 25px; border-bottom-left-radius: 25px; background-color: rgb(0, 255, 0);" />
-        <ui:VisualElement name="Title" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Sprites/COSMOS.png?fileID=2800000&amp;guid=b3a5e549e1fac444f956b4aa27536cf7&amp;type=3#COSMOS&quot;); width: 388px; height: 90px; position: absolute; top: 10px; left: 50%; right: auto; translate: -50% 0%;" />
-        <ui:Label text="0" name="Speed" enable-rich-text="false" class="bold" style="position: absolute; bottom: 0; left: 0; color: rgb(255, 0, 0); font-size: 200px; width: 500px; height: 200px;" />
-        <ui:VisualElement name="LimitContainer" style="flex-grow: 1; width: 200px; height: 200px; background-image: url(&quot;project://database/Assets/Sprites/Red%20Circle.png?fileID=2800000&amp;guid=aa18298e831ba4f4d97e751b3bf3e083&amp;type=3#Red Circle&quot;); position: absolute; top: 100px; left: 60px; justify-content: center; align-items: center;">
-            <ui:Label text="--" name="Limit" style="font-size: 80px;" />
+        <ui:VisualElement name="Header" style="flex-direction: row; justify-content: space-between; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px; flex-grow: 1;">
+            <ui:VisualElement name="Proceed" style="width: 50px; height: 50px; background-color: rgb(0, 255, 0); border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%;" />
+            <ui:VisualElement name="Title" style="background-image: url(&quot;project://database/Assets/Sprites/COSMOS.png?fileID=2800000&amp;guid=b3a5e549e1fac444f956b4aa27536cf7&amp;type=3#COSMOS&quot;); width: 388px; -unity-background-scale-mode: scale-to-fit;" />
+            <ui:VisualElement style="width: 50px; height: 50px; background-color: rgb(0, 255, 0); visibility: hidden;" />
         </ui:VisualElement>
-        <ui:Label name="Next" enable-rich-text="false" style="font-size: 60px; width: 230px; height: 200px; white-space: normal; position: absolute; top: 100px; left: 270px;" />
-        <ui:Label name="Title" class="bold" style="position: absolute; right: 0; top: 100px; width: 290px; height: 40px; font-size: 30px;" />
-        <ui:ListView fixed-item-height="60" name="Exits" style="position: absolute; bottom: 0; right: 0; width: 290px; height: 350px;" />
-        <ui:ListView fixed-item-height="60" name="Entries" style="position: absolute; bottom: 0; right: 0; width: 290px; height: 350px;" />
+        <ui:VisualElement name="Body" style="flex-direction: row;">
+            <ui:VisualElement name="SpeedInfo" style="flex-grow: 1;">
+                <ui:VisualElement name="Limits" style="flex-grow: 1; margin-left: 5px;">
+                    <ui:VisualElement name="LimitContainer" style="width: 200px; height: 200px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; border-left-color: rgb(255, 0, 0); border-right-color: rgb(255, 0, 0); border-top-color: rgb(255, 0, 0); border-bottom-color: rgb(255, 0, 0); border-top-width: 10px; border-right-width: 10px; border-bottom-width: 10px; border-left-width: 10px; align-items: center; justify-content: center;">
+                        <ui:Label text="--" name="Limit" style="font-size: 80px;" />
+                    </ui:VisualElement>
+                    <ui:Label name="Next" enable-rich-text="false" style="font-size: 60px; width: 230px; height: 200px; white-space: normal; position: absolute; top: 100px; left: 270px;" />
+                </ui:VisualElement>
+                <ui:Label text="0" name="Speed" enable-rich-text="false" class="bold" style="color: rgb(255, 0, 0); font-size: 200px; height: 200px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Lists" style="width: 290px;">
+                <ui:ListView fixed-item-height="60" name="Exits" />
+                <ui:ListView fixed-item-height="60" name="Entries" />
+                <ui:Label name="Title" class="bold" style="font-size: 30px; height: 40px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
