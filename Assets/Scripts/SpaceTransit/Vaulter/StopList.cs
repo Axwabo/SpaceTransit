@@ -72,7 +72,7 @@ namespace SpaceTransit.Vaulter
 
         public void ResetPosition() => _scrollView.scrollOffset = Vector2.zero;
 
-        public void SetVisibility(bool visible) => _list.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
+        public void SetVisibility(bool visible) => _list.SetVisibility(visible);
 
     }
 
