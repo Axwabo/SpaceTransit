@@ -3,9 +3,16 @@ Button {
     height: 60px;
     margin: 10px;
     font-size: 36px;
-    background-color: #1E1E1E;
-    border-width: 0;
     -unity-font-definition: var(--tektur-regular);
+}
+
+Button, DropdownField > .unity-base-field__input {
+    background-color: #1e1e1e;
+    border-width: 0;
+}
+
+DropdownField:hover > .unity-base-field__input {
+    background-color: #323232;
 }
 
 Button:hover {
@@ -14,4 +21,18 @@ Button:hover {
 
 Button:active {
     background-color: #646464;
+}
+
+SliderInt {
+    margin-top: 0;
+    margin-bottom: 0;
+    height: 40px;
+}
+
+DropdownField, .unity-base-dropdown {
+    font-size: 18px;
+}
+
+DropdownField .unity-base-popup-field__arrow {
+    -unity-background-image-tint-color: white;
 }

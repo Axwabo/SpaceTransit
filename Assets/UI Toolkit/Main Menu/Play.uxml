@@ -1,17 +1,23 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/Main%20Menu/Main%20Menu.uss?fileID=7433441132597879392&amp;guid=beaf9333cae447ccbb8cdfc6cfde625e&amp;type=3#Main Menu" />
-    <ui:VisualElement style="flex-grow: 1;">
-        <ui:VisualElement class="tektur bold" style="margin-top: 30px;">
+    <ui:VisualElement style="flex-grow: 1; align-items: center;">
+        <ui:VisualElement class="tektur bold" style="margin-top: 30px; flex-grow: 1;">
             <ui:Label text="Play" style="font-size: 36px;" />
             <ui:Label text="EPILEPSY WARNING!" class="warning" style="font-size: 50px;" />
             <ui:Label text="Due to floating-point limitations, objects begin flickering and distorting the further you go from the origin.&#10;Continuing is not recommended for those with photosensitive epilepsy." class="warning" style="font-size: 20px;" />
         </ui:VisualElement>
-    </ui:VisualElement>
-    <ui:VisualElement style="align-items: center; justify-content: flex-end; flex-direction: column-reverse;">
-        <ui:VisualElement style="background-color: rgba(0, 0, 0, 0.59);">
-            <ui:Button text="Button" />
-            <ui:Button text="Button" />
+        <ui:VisualElement class="tektur" style="align-items: center; justify-content: flex-end; flex-direction: column-reverse;">
+            <ui:VisualElement style="flex-direction: row;">
+                <ui:Button text="Begin" name="Begin" style="width: 200px;" />
+                <ui:Button text="Cancel" name="Cancel" style="width: 200px;" />
+            </ui:VisualElement>
+            <ui:VisualElement style="width: 100%; font-size: 32px; background-color: rgba(0, 0, 0, 0.59); padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;">
+                <ui:Label text="Starting station:" />
+                <ui:DropdownField name="Stations" style="height: 40px;" />
+                <ui:SliderInt label="Hours" value="0" high-value="23" name="H" />
+                <ui:SliderInt label="Minutes" value="0" high-value="59" name="M" />
+                <ui:SliderInt label="Seconds" value="0" high-value="59" />
+            </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement />
     </ui:VisualElement>
 </ui:UXML>

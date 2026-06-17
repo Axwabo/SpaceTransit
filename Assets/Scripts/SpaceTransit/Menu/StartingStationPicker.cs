@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using SpaceTransit.Movement;
 using SpaceTransit.Routes;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Cache = SpaceTransit.Vaulter.Cache;
 
 namespace SpaceTransit.Menu
 {
 
-    [RequireComponent(typeof(TMP_Dropdown))]
     public sealed class StartingStationPicker : MonoBehaviour
     {
 
@@ -31,10 +30,10 @@ namespace SpaceTransit.Menu
             list.Sort(StringComparer.OrdinalIgnoreCase);
             _stations.Sort((a, b) => StringComparer.OrdinalIgnoreCase.Compare(a.name, b.name));
             var index = list.IndexOf(defaultValue);
-            var dropdown = GetComponent<TMP_Dropdown>();
-            dropdown.AddOptions(list);
-            dropdown.value = Mathf.Max(0, index);
-            dropdown.onValueChanged.AddListener(Change);
+            var dropdown = this.RootVisual().Q<DropdownField>("Stations");
+            dropdown.choices = list;
+            dropdown.index = index;
+            dropdown.RegisterValueChangedCallback(_ => Change(dropdown.index));
             Change(index);
         }
 
