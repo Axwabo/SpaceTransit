@@ -23,7 +23,8 @@ namespace SpaceTransit.Menu
         private void Start()
         {
             var t = transform;
-            foreach (var station in Cache.Stations.OrderBy(e => e.name))
+            var stations = World.Current.name == "Test" ? Station.LoadedStations.Select(e => e.ID) : Cache.Stations;
+            foreach (var station in stations.OrderBy(e => e.name))
             {
                 var teleport = Instantiate(prefab, t).AddComponent<Teleport>();
                 teleport.Id = station;
