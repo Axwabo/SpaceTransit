@@ -17,6 +17,10 @@ namespace SpaceTransit.Vaulter
         [SerializeField]
         private StopList stops;
 
+        private GameObject _routes;
+
+        private GameObject _stops;
+
         private Label _title;
 
         private bool _routesVisible = true;
@@ -31,7 +35,12 @@ namespace SpaceTransit.Vaulter
                 ShowRoutes();
         }
 
-        protected override void OnInitialized() => _title = this.RootVisual().Q<Label>("Title");
+        protected override void OnInitialized()
+        {
+            _title = this.RootVisual().Q<Label>("Title");
+            _routes = routes.gameObject;
+            _stops = stops.gameObject;
+        }
 
         public override void OnRouteChanged()
         {
@@ -42,18 +51,16 @@ namespace SpaceTransit.Vaulter
             }
 
             _routesVisible = false;
-            routes.SetVisibility(false);
-            stops.SetVisibility(true);
-            stops.Enable();
+            _routes.SetActive(false);
+            _stops.SetActive(true);
             _title.text = $"{Parent.Route.name} {Parent.Route.Summary()}";
         }
 
         private void ShowRoutes()
         {
             _routesVisible = true;
-            routes.SetVisibility(true);
-            routes.Enable();
-            stops.SetVisibility(false);
+            _routes.SetActive(true);
+            _stops.SetActive(false);
             _title.text = "Pick a Route";
         }
 

@@ -15,10 +15,12 @@ namespace SpaceTransit.Vaulter
 
         private ScrollView _scrollView;
 
-        public void Enable()
+        private void OnEnable()
         {
-            if (Parent)
-                OnRouteChanged();
+            if (!Parent)
+                return;
+            OnInitialized();
+            OnRouteChanged();
         }
 
         protected override void OnInitialized()

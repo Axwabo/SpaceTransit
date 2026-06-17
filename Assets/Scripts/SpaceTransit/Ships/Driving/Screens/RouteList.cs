@@ -14,10 +14,11 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         protected override List<RouteDescriptor> Source { get; } = new();
 
-        public void Enable()
+        private void OnEnable()
         {
             if (!Parent)
                 return;
+            OnInitialized();
             Source.Clear();
             Source.Add(null);
             Clear();
