@@ -11,12 +11,13 @@
                 <ui:Button text="Begin" name="Begin" style="width: 200px;" />
                 <ui:Button text="Cancel" name="Cancel" style="width: 200px;" />
             </ui:VisualElement>
-            <ui:VisualElement style="width: 100%; font-size: 32px; background-color: rgba(0, 0, 0, 0.59); padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;">
-                <ui:Label text="Starting station:" />
+            <ui:VisualElement style="width: 100%; font-size: 32px;">
+                <ui:Label text="Starting station:" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
                 <ui:DropdownField name="Stations" style="height: 40px;" />
+                <ui:Label text="Starting time: 00:00:00" name="Time" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
                 <ui:SliderInt label="Hours" value="0" high-value="23" name="H" />
                 <ui:SliderInt label="Minutes" value="0" high-value="59" name="M" />
-                <ui:SliderInt label="Seconds" value="0" high-value="59" />
+                <ui:SliderInt label="Seconds" value="0" high-value="59" name="S" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
