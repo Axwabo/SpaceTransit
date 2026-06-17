@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
-using TMPro;
+using SpaceTransit.Vaulter;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace SpaceTransit.Menu
 {
@@ -10,35 +11,34 @@ namespace SpaceTransit.Menu
     public sealed class RouteTimetable : MonoBehaviour
     {
 
-        [SerializeField]
-        private TextMeshProUGUI type;
+        private readonly List<Stop> _stops = new();
 
-        [SerializeField]
-        private TextMeshProUGUI summary;
+        private Label _type;
 
-        [SerializeField]
-        private StopRow prefab;
+        private Label _summary;
 
-        private readonly List<StopRow> _children = new();
+        private ListView _list;
+
+        private void Start()
+        {
+            var root = this.RootVisual();
+            _type = root.Q<Label>("Type");
+            _summary = root.Q<Label>("Summary");
+            _list = root.Q<ListView>("Stops");
+            _list.itemsSource = _stops;
+            _list.bindItem = StopList.CreateBindFunction(_stops);
+        }
 
         public void Apply(RouteDescriptor descriptor)
         {
-            foreach (var row in _children)
-                Destroy(row.gameObject);
-            _children.Clear();
-            type.text = $"{descriptor.name} {descriptor.Type.ToStringFast()}";
-            summary.text = descriptor.Summary();
-            Instantiate(descriptor.Origin);
+            _type.text = $"{descriptor.name} {descriptor.Type.ToStringFast()}";
+            _summary.text = descriptor.Summary();
+            _stops.Clear();
+            _stops.Add(descriptor.Origin);
             foreach (var stop in descriptor.IntermediateStops)
-                Instantiate(stop);
-            Instantiate(descriptor.Destination);
-        }
-
-        private void Instantiate(Stop stop)
-        {
-            var clone = Instantiate(prefab, transform, false);
-            clone.Apply(stop);
-            _children.Add(clone);
+                _stops.Add(stop);
+            _stops.Add(descriptor.Destination);
+            _list.RefreshItems();
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SpaceTransit.Routes.Stops;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -8,6 +9,15 @@ namespace SpaceTransit.Vaulter
 
     public sealed class StopList : VaulterComponentBase
     {
+
+        public static Action<VisualElement, int> CreateBindFunction(List<Stop> stops) => (element, i) =>
+        {
+            var stop = stops[i];
+            element.Q<Label>("Station").text = stop.Station.name;
+            element.Q<Label>("Arrival").text = (stop as IArrival)?.Arrival.ToString() ?? "";
+            element.Q<Label>("Departure").text = (stop as IDeparture)?.Departure.ToString() ?? "";
+            element.Q<Label>("DockIndex").text = (stop.DockIndex + 1).ToString();
+        };
 
         private readonly List<Stop> _stops = new();
 
@@ -28,14 +38,7 @@ namespace SpaceTransit.Vaulter
         {
             _list = this.RootVisual().Q<ListView>("Stops");
             _list.itemsSource = _stops;
-            _list.bindItem = (element, i) =>
-            {
-                var stop = _stops[i];
-                element.Q<Label>("Station").text = stop.Station.name;
-                element.Q<Label>("Arrival").text = (stop as IArrival)?.Arrival.ToString() ?? "";
-                element.Q<Label>("Departure").text = (stop as IDeparture)?.Departure.ToString() ?? "";
-                element.Q<Label>("DockIndex").text = (stop.DockIndex + 1).ToString();
-            };
+            _list.bindItem = CreateBindFunction(_stops);
             _scrollView = _list.Q<ScrollView>();
             _scrollView.verticalScrollerVisibility = ScrollerVisibility.Hidden;
         }

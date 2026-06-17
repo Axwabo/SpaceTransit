@@ -27,7 +27,8 @@ namespace SpaceTransit.Menu
         {
             var showTarget = _this.style.display != DisplayStyle.None;
             _this.SetVisibility(!showTarget);
-            target.rootVisualElement.SetVisibility(showTarget);
+            if (target)
+                target.rootVisualElement.SetVisibility(showTarget);
         }
 
     }
