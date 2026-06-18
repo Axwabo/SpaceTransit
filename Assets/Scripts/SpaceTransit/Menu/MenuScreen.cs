@@ -41,7 +41,7 @@ namespace SpaceTransit.Menu
             if (IsOpen)
                 return;
             foreach (var panel in toggles)
-                panel.SetTargetVisibility(false);
+                panel.SetVisibility(false);
         }
 
         public static void Disable() => _current.SetActive(false);

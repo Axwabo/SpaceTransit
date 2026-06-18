@@ -34,17 +34,14 @@ namespace SpaceTransit.Menu
             var showTarget = ignoreThis
                 ? target.rootVisualElement.style.display != DisplayStyle.Flex
                 : _this.style.display != DisplayStyle.None;
-            _this?.SetVisibility(!showTarget);
-            SetTargetVisibility(showTarget);
-        }
-
-        public void SetTargetVisibility(bool showTarget)
-        {
+            SetVisibility(!showTarget);
             if (target)
                 target.rootVisualElement.SetVisibility(showTarget);
             if (behavior)
                 behavior.enabled = showTarget;
         }
+
+        public void SetVisibility(bool show) => _this?.SetVisibility(show);
 
     }
 

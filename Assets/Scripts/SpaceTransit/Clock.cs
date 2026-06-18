@@ -38,7 +38,7 @@ namespace SpaceTransit
         [SerializeField]
         private string start;
 
-        private void Awake()
+        private void Start()
         {
             if (TryGetComponent(out UIDocument document))
             {
