@@ -13,6 +13,9 @@ namespace SpaceTransit.Menu
         private UIDocument target;
 
         [SerializeField]
+        private MonoBehaviour behavior;
+
+        [SerializeField]
         private bool hideThisByDefault;
 
         protected override void Start()
@@ -29,6 +32,8 @@ namespace SpaceTransit.Menu
             _this.SetVisibility(!showTarget);
             if (target)
                 target.rootVisualElement.SetVisibility(showTarget);
+            if (behavior)
+                behavior.enabled = showTarget;
         }
 
     }

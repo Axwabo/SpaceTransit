@@ -24,6 +24,8 @@ namespace SpaceTransit.Menu
                 return;
             }
 
+            if (string.IsNullOrEmpty(buttonName))
+                return;
             _toolkit = this.RootVisual().Q<ToolkitButton>(buttonName);
             _toolkit.clicked += Click;
         }
