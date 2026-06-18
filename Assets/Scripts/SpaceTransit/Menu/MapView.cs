@@ -4,7 +4,6 @@ using SpaceTransit.Movement;
 using SpaceTransit.Routes;
 using SpaceTransit.Ships;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using Cache = SpaceTransit.Vaulter.Cache;
 
@@ -56,7 +55,22 @@ namespace SpaceTransit.Menu
             _items = root.Q("Items");
             _items.style.translate = -GetAnchored(World.Current.InverseTransformPoint(MovementController.Current.Position));
             container.RegisterCallback<PointerMoveEvent>(OnPointerMove);
+            container.RegisterCallback<WheelEvent>(OnWheel);
             Place();
+        }
+
+        private void OnWheel(WheelEvent evt)
+        {
+            var scroll = evt.delta.y switch
+            {
+                > 0 => -1,
+                < 0 => 1,
+                _ => 0
+            };
+            if (scroll == 0)
+                return;
+            _zoom = Mathf.Clamp(_zoom + scroll * scrollSensitivity, 0.1f, 10);
+            _anchor.style.scale = Vector3.one * _zoom;
         }
 
         private void OnPointerMove(PointerMoveEvent evt)
@@ -100,12 +114,6 @@ namespace SpaceTransit.Menu
             if (!_placed)
                 Place();
             // TODO
-            var scroll = InputSystem.actions["Speed"].ReadValue<float>();
-            if (scroll != 0)
-            {
-                _zoom = Mathf.Clamp(_zoom + scroll * scrollSensitivity, 0.1f, 10);
-                _anchor.style.scale = Vector3.one * _zoom;
-            }
 
             /*foreach (var assembly in ShipAssembly.Instances)
             {
