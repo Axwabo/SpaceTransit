@@ -1,13 +1,14 @@
-﻿using UnityEngine;
-using UnityEngine.UIElements;
+﻿using TMPro;
+using UnityEngine;
 
 namespace SpaceTransit.Routes
 {
 
+    [RequireComponent(typeof(TextMeshProUGUI))]
     public sealed class StationNameDisplay : MonoBehaviour
     {
 
-        private void Start() => this.RootVisual().Q<Label>("Station").text = GetComponentInParent<Station>().Name;
+        private void Awake() => GetComponent<TextMeshProUGUI>().text = GetComponentInParent<Station>().Name;
 
     }
 
