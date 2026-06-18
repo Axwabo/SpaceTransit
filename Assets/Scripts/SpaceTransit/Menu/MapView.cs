@@ -63,15 +63,7 @@ namespace SpaceTransit.Menu
 
         private void OnWheel(WheelEvent evt)
         {
-            var scroll = evt.delta.y switch
-            {
-                > 0 => -1,
-                < 0 => 1,
-                _ => 0
-            };
-            if (scroll == 0)
-                return;
-            _zoom = Mathf.Clamp(_zoom + scroll * scrollSensitivity, 0.1f, 10);
+            _zoom = Mathf.Clamp(_zoom + evt.delta.y * -scrollSensitivity, 0.1f, 10);
             _anchor.style.scale = Vector3.one * _zoom;
         }
 
