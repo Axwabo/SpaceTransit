@@ -2,7 +2,7 @@
     <ui:Template name="Stop Row" src="project://database/Assets/UI%20Toolkit/Stop%20Row.uxml?fileID=9197481963319205126&amp;guid=354f96d3d4106a892b4d626d99f60c1d&amp;type=3#Stop Row" />
     <Style src="project://database/Assets/UI%20Toolkit/Main%20Menu/Main%20Menu.uss?fileID=7433441132597879392&amp;guid=beaf9333cae447ccbb8cdfc6cfde625e&amp;type=3#Main Menu" />
     <Style src="project://database/Assets/UI%20Toolkit/Route%20List.uss?fileID=7433441132597879392&amp;guid=b0ab9ad7616ee4b92a7273c47ff4566d&amp;type=3#Route List" />
-    <ui:VisualElement class="tektur" style="flex-grow: 1; align-items: center;">
+    <ui:VisualElement class="tektur cyan-background" style="flex-grow: 1; align-items: center;">
         <ui:Label text="Routes" class="bold" style="font-size: 36px;" />
         <ui:VisualElement style="flex-grow: 1; width: 100%; flex-direction: row; justify-content: center;">
             <ui:ListView name="Routes" fixed-item-height="40" style="margin-right: 10px; width: 550px; -unity-text-align: middle-left; font-size: 24px;" />
@@ -15,7 +15,7 @@
                     <AttributeOverrides element-name="Departure" text="Dep." />
                     <AttributeOverrides element-name="DockIndex" text="Dock" />
                 </ui:Instance>
-                <ui:ListView item-template="project://database/Assets/UI%20Toolkit/Stop%20Row.uxml?fileID=9197481963319205126&amp;guid=354f96d3d4106a892b4d626d99f60c1d&amp;type=3#Stop Row" fixed-item-height="40" name="Stops" selection-type="None" />
+                <ui:ListView item-template="project://database/Assets/UI%20Toolkit/Stop%20Row.uxml?fileID=9197481963319205126&amp;guid=354f96d3d4106a892b4d626d99f60c1d&amp;type=3#Stop Row" fixed-item-height="40" name="Stops" selection-type="None" class="no-selection" />
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:Button text="Close" name="Close" />
