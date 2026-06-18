@@ -14,7 +14,7 @@ namespace SpaceTransit.Menu
 
         private UGUIButton _ugui;
 
-        private ToolkitButton _toolkit;
+        protected ToolkitButton _toolkit;
 
         protected virtual void Start()
         {

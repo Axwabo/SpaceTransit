@@ -1,6 +1,5 @@
 ﻿using SpaceTransit.Movement;
 using SpaceTransit.Vaulter;
-using TMPro;
 using UnityEngine;
 
 namespace SpaceTransit.Menu
@@ -12,15 +11,13 @@ namespace SpaceTransit.Menu
         [SerializeField]
         private VaulterController[] options;
 
-        private TextMeshProUGUI _text;
-
         private int _index = -1;
 
         private VaulterController _current;
 
-        private void Awake()
+        protected override void Start()
         {
-            _text = GetComponentInChildren<TextMeshProUGUI>();
+            base.Start();
             Click();
             _current.gameObject.AddComponent<ParentFixer>();
         }
@@ -32,7 +29,7 @@ namespace SpaceTransit.Menu
             if (_current)
                 Destroy(_current.gameObject);
             _index = Wrap(_index + 1);
-            _text.text = options[Wrap(_index + 1)].gameObject.name;
+            _toolkit.text = options[Wrap(_index + 1)].gameObject.name;
             _current = Instantiate(options[_index], World.Current, false);
         }
 
