@@ -416,8 +416,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3614506efa4649f1baab381bc01d6fb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Menu.MapView
-  stationPrefab: {fileID: -105105543705637315, guid: 39551cd41dcd21c4f898d959219a0c65, type: 3}
-  shipPrefab: {fileID: -105105543705637315, guid: c9e3abe0971bcdd44a5520265c6e20e0, type: 3}
+  stationPrefab: {fileID: 0}
+  shipPrefab: {fileID: 0}
   anchor: {fileID: 2024462240}
   scale: 0.3548648
   sensitivity: 1
@@ -642,6 +642,98 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e176ce8e98814adbb764123c14ea0364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Movement.MovementController
+--- !u!1 &1345110384
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1345110385}
+  - component: {fileID: 1345110388}
+  - component: {fileID: 1345110387}
+  - component: {fileID: 1345110386}
+  m_Layer: 5
+  m_Name: Map
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1345110385
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345110384}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1566737914}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1345110386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345110384}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3614506efa4649f1baab381bc01d6fb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Menu.MapView
+  stationPrefab: {fileID: 9197481963319205126, guid: f61a27d54b8183701a70f9d9373d4de6, type: 3}
+  shipPrefab: {fileID: 0}
+  anchor: {fileID: 2024462240}
+  scale: 0.3548648
+  sensitivity: 1
+  scrollSensitivity: 0.1
+--- !u!114 &1345110387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345110384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15da2a9a94a4490a8b9d488d2f6d4fdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Menu.PanelToggleButton
+  buttonName: 
+  target: {fileID: 1345110388}
+  behavior: {fileID: 1345110386}
+  ignoreThis: 0
+  hideThisByDefault: 1
+--- !u!114 &1345110388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345110384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_PanelSettings: {fileID: 11400000, guid: 72b0188db270a72d38605be73b937d7d, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 938ae6735c1004d81a8170c747b3c3ae, type: 3}
+  m_SortingOrder: 0
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
 --- !u!1 &1398325470
 GameObject:
   m_ObjectHideFlags: 0
@@ -1623,15 +1715,24 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4825488239570393670, guid: 08841657ef5b6cc6aae9d6cf342da6c7, type: 3}
-      insertIndex: 2
+      insertIndex: 1
+      addedObject: {fileID: 1345110385}
+    - targetCorrespondingSourceObject: {fileID: 4825488239570393670, guid: 08841657ef5b6cc6aae9d6cf342da6c7, type: 3}
+      insertIndex: 3
       addedObject: {fileID: 1475960247}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8383708019251805628, guid: 08841657ef5b6cc6aae9d6cf342da6c7, type: 3}
       insertIndex: 5
       addedObject: {fileID: 4644738625709952234}
     - targetCorrespondingSourceObject: {fileID: 8383708019251805628, guid: 08841657ef5b6cc6aae9d6cf342da6c7, type: 3}
-      insertIndex: 7
+      insertIndex: 6
+      addedObject: {fileID: 4644738625709952243}
+    - targetCorrespondingSourceObject: {fileID: 8383708019251805628, guid: 08841657ef5b6cc6aae9d6cf342da6c7, type: 3}
+      insertIndex: 8
       addedObject: {fileID: 4644738625709952235}
+    - targetCorrespondingSourceObject: {fileID: 8383708019251805628, guid: 08841657ef5b6cc6aae9d6cf342da6c7, type: 3}
+      insertIndex: 9
+      addedObject: {fileID: 4644738625709952244}
   m_SourcePrefab: {fileID: 100100000, guid: 08841657ef5b6cc6aae9d6cf342da6c7, type: 3}
 --- !u!1 &4644738625709952233 stripped
 GameObject:
@@ -1667,6 +1768,37 @@ MonoBehaviour:
   buttonName: Routes
   target: {fileID: 1475960249}
   behavior: {fileID: 0}
+  ignoreThis: 1
+  hideThisByDefault: 0
+--- !u!114 &4644738625709952243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4644738625709952233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eb1cddd9624462d899f82115f5e5bf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Menu.AddButton
+  buttonName: Map
+  content: Map
+--- !u!114 &4644738625709952244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4644738625709952233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15da2a9a94a4490a8b9d488d2f6d4fdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Menu.PanelToggleButton
+  buttonName: Map
+  target: {fileID: 1345110388}
+  behavior: {fileID: 1345110386}
   ignoreThis: 1
   hideThisByDefault: 0
 --- !u!1660057539 &9223372036854775807

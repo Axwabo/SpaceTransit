@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using SpaceTransit.Build;
 using UnityEngine;
@@ -9,6 +10,8 @@ namespace SpaceTransit.Loader
     {
 
         public static CancellationTokenSource Cts { get; private set; } = new();
+
+        public static event Action SceneFullyLoaded;
 
         [SerializeField]
         private string[] unloadFront;
@@ -44,6 +47,7 @@ namespace SpaceTransit.Loader
                 Time.timeScale = 1;
                 any = true;
                 await operation;
+                SceneFullyLoaded?.Invoke();
             }
 
             if (!any)
