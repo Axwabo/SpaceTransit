@@ -1,7 +1,8 @@
 ﻿using System.Linq;
 using SpaceTransit.Routes;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
+using Cursor = UnityEngine.Cursor;
 
 namespace SpaceTransit.Menu
 {
@@ -9,15 +10,18 @@ namespace SpaceTransit.Menu
     public sealed class CrashDisplay : MonoBehaviour
     {
 
-        [SerializeField]
-        private TextMeshProUGUI station;
-
         public static CrashDisplay Current { get; private set; }
 
-        private void Awake()
+        private VisualElement _root;
+
+        private Label _station;
+
+        private void Start()
         {
             Current = this;
-            gameObject.SetActive(false);
+            _root = this.RootVisual();
+            _root.SetVisibility(false);
+            _station = _root.Q<Label>("Station");
         }
 
         public static void DisplayCrash(Vector3 position)
@@ -26,8 +30,8 @@ namespace SpaceTransit.Menu
             AudioListener.pause = true;
             Cursor.lockState = CursorLockMode.None;
             var closest = Station.LoadedStations.Select(e => (Vector3.Distance(e.transform.position, position), e)).OrderBy(e => e.Item1).First();
-            Current.gameObject.SetActive(true);
-            Current.station.text = closest.e.Name;
+            Current._root.SetVisibility(true);
+            Current._station.text = closest.e.Name;
             MenuScreen.Disable();
         }
 
