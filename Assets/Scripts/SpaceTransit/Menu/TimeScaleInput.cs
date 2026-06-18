@@ -1,6 +1,5 @@
-﻿using TMPro;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace SpaceTransit.Menu
 {
@@ -8,15 +7,21 @@ namespace SpaceTransit.Menu
     public sealed class TimeScaleInput : MonoBehaviour
     {
 
-        [SerializeField]
-        private TextMeshProUGUI text;
+        private Label _text;
 
-        [SerializeField]
-        private Slider slider;
+        private SliderInt _slider;
 
         private float _previous;
 
-        public void UpdateValue() => Time.timeScale = slider.value;
+        private void Start()
+        {
+            var root = this.RootVisual();
+            _text = root.Q<Label>("SpeedScalar");
+            _slider = root.Q<SliderInt>("Speed");
+            _slider.RegisterValueChangedCallback(Callback);
+        }
+
+        private static void Callback(ChangeEvent<int> evt) => Time.timeScale = evt.newValue;
 
         private void Update()
         {
@@ -24,7 +29,8 @@ namespace SpaceTransit.Menu
             // ReSharper disable once CompareOfFloatsByEqualityOperator
             if (_previous == scale)
                 return;
-            text.text = $"{Time.timeScale:N}x speed";
+            _text.text = $"Speed: {Time.timeScale:N0}x";
+            _slider.value = (int) Time.timeScale;
             _previous = scale;
         }
 

@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
+using Cursor = UnityEngine.Cursor;
 
 namespace SpaceTransit.Menu
 {
@@ -11,13 +13,13 @@ namespace SpaceTransit.Menu
 
         private static GameObject _current;
 
-        [SerializeField]
-        private GameObject ui;
+        private VisualElement _root;
 
         private void Start()
         {
             _current = gameObject;
-            IsOpen = false;
+            IsOpen = true;
+            _root = this.RootVisual();
             Toggle();
         }
 
@@ -31,7 +33,7 @@ namespace SpaceTransit.Menu
 
         private void Toggle()
         {
-            ui.SetActive(IsOpen = !ui.activeSelf);
+            _root.SetVisibility(IsOpen = !IsOpen);
             Cursor.lockState = IsOpen ? CursorLockMode.None : CursorLockMode.Locked;
         }
 
