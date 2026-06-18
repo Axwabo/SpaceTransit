@@ -12,6 +12,8 @@ namespace SpaceTransit.Menu
 
         private readonly MapView _view;
 
+        private readonly CancellationToken _cancellationToken;
+
         public VisualElement Element { get; }
 
         public ShipAssembly Assembly { get; }
@@ -24,8 +26,6 @@ namespace SpaceTransit.Menu
 
         private RouteDescriptor _previousRoute;
 
-        private CancellationToken _cancellationToken;
-
         public MapShip(VisualElement element, ShipAssembly assembly, MapView view)
         {
             _view = view;
@@ -34,6 +34,7 @@ namespace SpaceTransit.Menu
             _type = Element.Q<Label>("Type");
             _route = Element.Q<Label>("Route");
             _image = Element.Q<VisualElement>("Background");
+            _cancellationToken = assembly.destroyCancellationToken;
         }
 
         public float Scale { get; init; } = 1;
