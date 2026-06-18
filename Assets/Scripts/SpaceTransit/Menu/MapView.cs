@@ -41,6 +41,8 @@ namespace SpaceTransit.Menu
 
         private bool _pointerDown;
 
+        private readonly List<MapShip> _ships = new();
+
         private readonly HashSet<ShipAssembly> _spawnedAssemblies = new();
 
         private readonly HashSet<StationId> _placedStations = new();
@@ -113,35 +115,29 @@ namespace SpaceTransit.Menu
         {
             if (!_placed)
                 Place();
-            // TODO
-
-            /*foreach (var assembly in ShipAssembly.Instances)
+            foreach (var assembly in ShipAssembly.Instances)
             {
                 if (!_spawnedAssemblies.Add(assembly))
                     continue;
-                var ship = Instantiate(shipPrefab, _this, false);
-                ship.Scale = scale;
-                ship.Apply(anchor, assembly);
+                var element = CreateMapItem(shipPrefab, Vector3.zero);
+                _ships.Add(new MapShip(element, assembly, this) {Scale = scale});
+                _items.Add(element);
             }
 
-            var point = Mouse;
-            if (!InputSystem.actions["Click"].IsPressed())
+            for (var i = _ships.Count - 1; i >= 0; i--)
             {
-                _previousPoint = point;
-                return;
+                var ship = _ships[i];
+                if (ship.Update())
+                    continue;
+                ship.Element.RemoveFromHierarchy();
+                _ships.RemoveAt(i);
+                _spawnedAssemblies.Remove(ship.Assembly);
             }
-
-            if (point == _previousPoint)
-                return;
-            var delta = _previousPoint - point;
-            _this.pivot += new Vector2(delta.x * sensitivity / _size.x / _zoom, delta.y * sensitivity / _size.y / _zoom);
-            _previousPoint = point;
-        */
         }
 
         private void OnDestroy() => WorldChanger.SceneFullyLoaded -= OnSceneLoaded;
 
-        private Vector2 GetAnchored(Vector3 localPosition)
+        public Vector2 GetAnchored(Vector3 localPosition)
         {
             var anchored = anchor.InverseTransformPoint(localPosition);
             return new Vector2(anchored.x * scale, -anchored.z * scale);
