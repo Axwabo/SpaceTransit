@@ -63,8 +63,8 @@ namespace SpaceTransit.Menu
             if (evt.pressedButtons != 1)
                 return;
             var currentTranslate = _items.style.translate.value;
-            var scaleRoot = Mathf.Sqrt(scale);
-            _items.style.translate = new Vector2(currentTranslate.x.value + evt.deltaPosition.x * sensitivity / scaleRoot, currentTranslate.y.value + evt.deltaPosition.y * sensitivity / scaleRoot);
+            var scalar = sensitivity / Mathf.Pow(scale, 0.75f);
+            _items.style.translate = new Vector2(currentTranslate.x.value + evt.deltaPosition.x * scalar, currentTranslate.y.value + evt.deltaPosition.y * scalar);
         }
 
         private void Place()
