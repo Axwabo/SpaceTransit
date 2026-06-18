@@ -53,7 +53,6 @@ namespace SpaceTransit.Menu
             _anchor = root.Q("Anchor");
             _items = root.Q("Items");
             var position = GetAnchored(World.Current.InverseTransformPoint(MovementController.Current.Position));
-            // _anchor.style.transformOrigin = new TransformOrigin(position.x, position.y);
             _items.style.translate = -position;
             Place();
         }
@@ -64,14 +63,19 @@ namespace SpaceTransit.Menu
             foreach (var station in Station.LoadedStations)
                 if (_placedStations.Add(station.ID))
                 {
-                    var anchored = GetAnchored(station.transform.localPosition);
-                    var element = stationPrefab.Instantiate();
-                    element.AddToClassList("map-item");
-                    element.style.top = anchored.y;
-                    element.style.left = anchored.x;
+                    var element = CreateMapItem(stationPrefab, station.transform.localPosition);
                     element.Q<Label>().text = station.name;
                     _items.Add(element);
                 }
+        }
+
+        private TemplateContainer CreateMapItem(VisualTreeAsset prefab, Vector3 position)
+        {
+            var anchored = GetAnchored(position);
+            var element = prefab.Instantiate();
+            element.AddToClassList("map-item");
+            element.style.translate = anchored;
+            return element;
         }
 
         private void Update()
