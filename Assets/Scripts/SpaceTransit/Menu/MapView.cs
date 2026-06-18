@@ -13,8 +13,6 @@ namespace SpaceTransit.Menu
     public sealed class MapView : MonoBehaviour
     {
 
-        private static Vector2 Mouse => InputSystem.actions["Point"].ReadValue<Vector2>();
-
         [SerializeField]
         private VisualTreeAsset stationPrefab;
 
@@ -41,6 +39,8 @@ namespace SpaceTransit.Menu
 
         private float _zoom = 1;
 
+        private bool _pointerDown;
+
         private readonly HashSet<ShipAssembly> _spawnedAssemblies = new();
 
         private readonly HashSet<StationId> _placedStations = new();
@@ -50,11 +50,21 @@ namespace SpaceTransit.Menu
         private void Start()
         {
             var root = this.RootVisual();
+            var container = root.Q("Container");
             _anchor = root.Q("Anchor");
             _items = root.Q("Items");
-            var position = GetAnchored(World.Current.InverseTransformPoint(MovementController.Current.Position));
-            _items.style.translate = -position;
+            _items.style.translate = -GetAnchored(World.Current.InverseTransformPoint(MovementController.Current.Position));
+            container.RegisterCallback<PointerMoveEvent>(OnPointerMove);
             Place();
+        }
+
+        private void OnPointerMove(PointerMoveEvent evt)
+        {
+            if (evt.pressedButtons != 1)
+                return;
+            var currentTranslate = _items.style.translate.value;
+            var scaleRoot = Mathf.Sqrt(scale);
+            _items.style.translate = new Vector2(currentTranslate.x.value + evt.deltaPosition.x * sensitivity / scaleRoot, currentTranslate.y.value + evt.deltaPosition.y * sensitivity / scaleRoot);
         }
 
         private void Place()
