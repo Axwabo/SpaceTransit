@@ -1,5 +1,5 @@
-﻿using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace SpaceTransit.Loader
 {
@@ -7,33 +7,32 @@ namespace SpaceTransit.Loader
     public sealed class ProgressDisplay : MonoBehaviour
     {
 
-        [SerializeField]
-        private TextMeshProUGUI text;
+        private VisualElement _container;
 
-        [SerializeField]
-        private RectTransform rect;
+        private Label _percentage;
 
-        [SerializeField]
-        private GameObject activate;
+        private VisualElement _bar;
 
-        private bool _shouldActivate;
-
-        private void Awake() => _shouldActivate = activate;
+        private void Start()
+        {
+            var root = this.RootVisual();
+            _container = root.Q<VisualElement>("Loading");
+            _percentage = root.Q<Label>("Percentage");
+            _bar = root.Q<VisualElement>("Progress");
+        }
 
         private void Update()
         {
-            if (LoadingProgress.Current == null || Time.timeSinceLevelLoadAsDouble < Clock.OffsetSeconds + 0.5)
+            if (LoadingProgress.Current == null || Time.timeSinceLevelLoadAsDouble < Clock.OffsetSeconds + 1)
             {
-                if (_shouldActivate)
-                    activate.SetActive(false);
+                _container?.SetVisibility(false);
                 return;
             }
 
-            if (_shouldActivate)
-                activate.SetActive(true);
+            _container?.SetVisibility(true);
             var progress = (float) LoadingProgress.Current.Completed / LoadingProgress.Current.Total;
-            text.text = progress.ToString("P0");
-            rect.localScale = new Vector3(progress, 1);
+            _percentage.text = progress.ToString("P0");
+            _bar.style.width = Length.Percent(progress * 100);
             if (progress >= 1)
                 LoadingProgress.Current = null;
         }

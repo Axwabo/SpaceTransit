@@ -9,18 +9,16 @@ namespace SpaceTransit.Loader
     {
 
         [SerializeField]
-        private GameObject loader;
-
-        [SerializeField]
         private GameObject menu;
 
         [SerializeField]
-        private GameObject player;
+        private MovementController player;
 
         private void Awake()
         {
-            player.SetActive(false);
             menu.SetActive(false);
+            player.Awake();
+            player.gameObject.SetActive(false);
         }
 
         private async Awaitable Start()
@@ -36,9 +34,9 @@ namespace SpaceTransit.Loader
 
             WorldChanger.ActivateNewScenes();
 
-            Destroy(loader);
+            Destroy(gameObject);
             menu.SetActive(true);
-            player.SetActive(true);
+            player.gameObject.SetActive(true);
             player.transform.parent = World.Current;
 
             await Awaitable.NextFrameAsync(token);

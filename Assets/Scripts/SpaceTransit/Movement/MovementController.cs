@@ -59,7 +59,7 @@ namespace SpaceTransit.Movement
 
         public Vector3 LastPosition { get; private set; }
 
-        private void Awake()
+        public void Awake()
         {
             _t = transform;
             _cc = GetComponent<CharacterController>();
