@@ -1,5 +1,6 @@
 ﻿#if UNITY_EDITOR
 using System.Collections.Generic;
+using SpaceTransit.Routes;
 using SplineMesh;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
@@ -25,8 +26,9 @@ namespace SpaceTransit.Build
             var load = new List<GameObject>();
             var activate = new List<GameObject>();
             var hoistTransforms = new List<Collider>();
+            var stations = new List<Station>();
             foreach (var root in rootGameObjects)
-                ProcessRoot(root, splines, activates, load, activate, hoist, hoistTransforms);
+                ProcessRoot(root, splines, activates, load, activate, hoist, hoistTransforms, stations);
             if (activate.Count == 0)
                 return;
             var loader = rootGameObjects[0].AddComponent<SceneInfo>();
@@ -34,11 +36,12 @@ namespace SpaceTransit.Build
             loader.Activate = activate.ToArray();
         }
 
-        private static void ProcessRoot(GameObject root, List<Spline> splines, List<Activate> activates, List<GameObject> load, List<GameObject> activate, List<HoistColliders> hoist, List<Collider> hoistTransforms)
+        private static void ProcessRoot(GameObject root, List<Spline> splines, List<Activate> activates, List<GameObject> load, List<GameObject> activate, List<HoistColliders> hoist, List<Collider> hoistTransforms, List<Station> stations)
         {
             root.GetComponentsInChildren(splines);
             root.GetComponentsInChildren(activates);
             root.GetComponentsInChildren(hoist);
+            root.GetComponentsInChildren(stations);
             foreach (var spline in splines)
             {
                 var go = spline.gameObject;
@@ -61,6 +64,10 @@ namespace SpaceTransit.Build
                 go.SetActive(false);
                 Object.DestroyImmediate(instance);
             }
+
+            foreach (var station in stations)
+                if (station.ID)
+                    station.ID.position = station.transform.localPosition;
         }
 
     }

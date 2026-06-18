@@ -6,6 +6,7 @@ using SpaceTransit.Ships;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using Cache = SpaceTransit.Vaulter.Cache;
 
 namespace SpaceTransit.Menu
 {
@@ -70,13 +71,19 @@ namespace SpaceTransit.Menu
         private void Place()
         {
             _placed = true;
+            foreach (var station in Cache.Stations)
+                if (station.position != Vector3.zero && _placedStations.Add(station))
+                    PlaceStation(station.position, station.name);
             foreach (var station in Station.LoadedStations)
                 if (_placedStations.Add(station.ID))
-                {
-                    var element = CreateMapItem(stationPrefab, station.transform.localPosition);
-                    element.Q<Label>().text = station.name;
-                    _items.Add(element);
-                }
+                    PlaceStation(station.transform.localPosition, station.ID.name);
+        }
+
+        private void PlaceStation(Vector3 position, string stationName)
+        {
+            var element = CreateMapItem(stationPrefab, position);
+            element.Q<Label>().text = stationName;
+            _items.Add(element);
         }
 
         private TemplateContainer CreateMapItem(VisualTreeAsset prefab, Vector3 position)
