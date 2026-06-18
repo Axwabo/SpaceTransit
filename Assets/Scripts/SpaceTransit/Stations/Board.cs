@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 namespace SpaceTransit.Stations
 {
 
-    public abstract class Board<TEntry> : MonoBehaviour, ICullingListener
+    public abstract class Board<TEntry> : MonoBehaviour
     {
 
         private readonly List<TEntry> _items = new();
@@ -30,8 +30,7 @@ namespace SpaceTransit.Stations
         private void Start()
         {
             _departuresArrivals = GetComponentInParent<DeparturesArrivals>();
-            _list = this.RootVisual().Q(className: ClassName).Q<ListView>();
-            _list.Q<ScrollView>().verticalScrollerVisibility = ScrollerVisibility.Hidden;
+            _list = this.RootVisual().Q<ListView>(className: ClassName);
             _list.itemsSource = _items;
             _list.bindItem = BindItem;
         }
