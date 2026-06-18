@@ -1,6 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/In-Game%20Menu/Map.uss?fileID=7433441132597879392&amp;guid=c0f607cb7199baaf7a2c368439bbd930&amp;type=3#Map" />
-    <ui:ScrollView>
-        <ui:VisualElement name="Items" style="flex-grow: 1; width: 10000px; height: 10000px;" />
-    </ui:ScrollView>
+    <ui:VisualElement name="Container" style="flex-grow: 1; align-items: center; justify-content: center;">
+        <ui:VisualElement name="Anchor" style="position: absolute; width: 8192px; height: 4096px;">
+            <ui:VisualElement name="Items" style="background-image: url(&quot;project://database/Assets/Sprites/Map%20Render%20Target.png?fileID=2800000&amp;guid=3ccebaaf18fca2745a5683d4c58c47c5&amp;type=3#Map Render Target&quot;); flex-grow: 1;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
 </ui:UXML>

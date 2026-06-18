@@ -4,6 +4,7 @@ using UnityEngine.UIElements;
 namespace SpaceTransit.Menu
 {
 
+    [DefaultExecutionOrder(-1)]
     public sealed class AddButton : MonoBehaviour
     {
 

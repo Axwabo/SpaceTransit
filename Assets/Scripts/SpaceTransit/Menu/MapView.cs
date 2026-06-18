@@ -33,6 +33,8 @@ namespace SpaceTransit.Menu
         [SerializeField]
         private float scrollSensitivity = 0.1f;
 
+        private VisualElement _anchor;
+
         private VisualElement _items;
 
         private bool _placed;
@@ -48,9 +50,11 @@ namespace SpaceTransit.Menu
         private void Start()
         {
             var root = this.RootVisual();
+            _anchor = root.Q("Anchor");
             _items = root.Q("Items");
-            var start = GetAnchored(World.Current.InverseTransformPoint(MovementController.Current.Position));
-            _items.style.transformOrigin = new TransformOrigin(start.x, start.y);
+            var position = GetAnchored(World.Current.InverseTransformPoint(MovementController.Current.Position));
+            // _anchor.style.transformOrigin = new TransformOrigin(position.x, position.y);
+            _items.style.translate = -position;
             Place();
         }
 
@@ -60,7 +64,7 @@ namespace SpaceTransit.Menu
             foreach (var station in Station.LoadedStations)
                 if (_placedStations.Add(station.ID))
                 {
-                    var anchored = GetAnchored(station.transform.position);
+                    var anchored = GetAnchored(station.transform.localPosition);
                     var element = stationPrefab.Instantiate();
                     element.AddToClassList("map-item");
                     element.style.top = anchored.y;
@@ -75,6 +79,13 @@ namespace SpaceTransit.Menu
             if (!_placed)
                 Place();
             // TODO
+            var scroll = InputSystem.actions["Speed"].ReadValue<float>();
+            if (scroll != 0)
+            {
+                _zoom = Mathf.Clamp(_zoom + scroll * scrollSensitivity, 0.1f, 10);
+                _anchor.style.scale = Vector3.one * _zoom;
+            }
+
             /*foreach (var assembly in ShipAssembly.Instances)
             {
                 if (!_spawnedAssemblies.Add(assembly))
@@ -82,13 +93,6 @@ namespace SpaceTransit.Menu
                 var ship = Instantiate(shipPrefab, _this, false);
                 ship.Scale = scale;
                 ship.Apply(anchor, assembly);
-            }
-
-            var scroll = InputSystem.actions["Speed"].ReadValue<float>();
-            if (scroll != 0)
-            {
-                _zoom = Mathf.Clamp(_zoom + scroll * scrollSensitivity, 0.1f, 10);
-                _this.localScale = Vector3.one * _zoom;
             }
 
             var point = Mouse;
@@ -102,7 +106,8 @@ namespace SpaceTransit.Menu
                 return;
             var delta = _previousPoint - point;
             _this.pivot += new Vector2(delta.x * sensitivity / _size.x / _zoom, delta.y * sensitivity / _size.y / _zoom);
-            _previousPoint = point;*/
+            _previousPoint = point;
+        */
         }
 
         private void OnDestroy() => WorldChanger.SceneFullyLoaded -= OnSceneLoaded;
