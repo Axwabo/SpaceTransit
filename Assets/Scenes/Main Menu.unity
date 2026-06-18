@@ -119,104 +119,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &187345297
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 187345302}
-  - component: {fileID: 187345301}
-  - component: {fileID: 187345300}
-  - component: {fileID: 187345299}
-  - component: {fileID: 187345298}
-  m_Layer: 0
-  m_Name: Route List
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &187345298
+--- !u!114 &187345301 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 733263691248910551, guid: 083e42e4396ee6e448d19df8ad63443c, type: 3}
+  m_PrefabInstance: {fileID: 6154219475484149503}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 187345297}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9085de037f242a98209dae46a52f6d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Menu.RouteTimetable
---- !u!114 &187345299
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 187345297}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 147af9457cf5493188a36ea332fdb69b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Menu.RouteList
-  timetable: {fileID: 187345298}
---- !u!114 &187345300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 187345297}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15da2a9a94a4490a8b9d488d2f6d4fdb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Menu.PanelToggleButton
-  buttonName: Close
-  target: {fileID: 868202268}
-  hideThisByDefault: 1
---- !u!114 &187345301
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 187345297}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
-  m_PanelSettings: {fileID: 11400000, guid: 5b90bf85018e3553cacd962c5f9e7eca, type: 2}
-  m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 9197481963319205126, guid: bfd9ac3c7d5cc945e9376ace83fce1b0, type: 3}
-  m_SortingOrder: 0
-  m_Position: 0
-  m_WorldSpaceSizeMode: 1
-  m_WorldSpaceWidth: 1920
-  m_WorldSpaceHeight: 1080
-  m_PivotReferenceSize: 0
-  m_Pivot: 0
-  m_WorldSpaceCollider: {fileID: 0}
---- !u!4 &187345302
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 187345297}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &440012701
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -449,6 +362,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Menu.PanelToggleButton
   buttonName: Close
   target: {fileID: 868202268}
+  behavior: {fileID: 0}
+  ignoreThis: 0
   hideThisByDefault: 1
 --- !u!114 &475640745
 MonoBehaviour:
@@ -785,6 +700,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Menu.PanelToggleButton
   buttonName: Play
   target: {fileID: 1102451381}
+  behavior: {fileID: 0}
+  ignoreThis: 0
   hideThisByDefault: 0
 --- !u!114 &868202272
 MonoBehaviour:
@@ -800,6 +717,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Menu.PanelToggleButton
   buttonName: Tutorial
   target: {fileID: 475640745}
+  behavior: {fileID: 0}
+  ignoreThis: 0
   hideThisByDefault: 0
 --- !u!114 &868202273
 MonoBehaviour:
@@ -815,6 +734,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Menu.PanelToggleButton
   buttonName: RouteList
   target: {fileID: 187345301}
+  behavior: {fileID: 0}
+  ignoreThis: 0
   hideThisByDefault: 0
 --- !u!1 &1102451380
 GameObject:
@@ -889,6 +810,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Menu.PanelToggleButton
   buttonName: Cancel
   target: {fileID: 868202268}
+  behavior: {fileID: 0}
+  ignoreThis: 0
   hideThisByDefault: 1
 --- !u!114 &1102451384
 MonoBehaviour:
@@ -1754,6 +1677,67 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Menu.PassByRandomly
   source: {fileID: 9044105939105287407}
+--- !u!1001 &6154219475484149503
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1525972614279353136, guid: 083e42e4396ee6e448d19df8ad63443c, type: 3}
+      propertyPath: m_Name
+      value: Route List
+      objectReference: {fileID: 0}
+    - target: {fileID: 8004148282261479575, guid: 083e42e4396ee6e448d19df8ad63443c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8004148282261479575, guid: 083e42e4396ee6e448d19df8ad63443c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8004148282261479575, guid: 083e42e4396ee6e448d19df8ad63443c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8004148282261479575, guid: 083e42e4396ee6e448d19df8ad63443c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8004148282261479575, guid: 083e42e4396ee6e448d19df8ad63443c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8004148282261479575, guid: 083e42e4396ee6e448d19df8ad63443c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8004148282261479575, guid: 083e42e4396ee6e448d19df8ad63443c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8004148282261479575, guid: 083e42e4396ee6e448d19df8ad63443c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8004148282261479575, guid: 083e42e4396ee6e448d19df8ad63443c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8004148282261479575, guid: 083e42e4396ee6e448d19df8ad63443c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9177793998384643943, guid: 083e42e4396ee6e448d19df8ad63443c, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 868202268}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 083e42e4396ee6e448d19df8ad63443c, type: 3}
 --- !u!4 &8581256410345853179
 Transform:
   m_ObjectHideFlags: 0
@@ -1877,4 +1861,4 @@ SceneRoots:
   - {fileID: 868202269}
   - {fileID: 1102451382}
   - {fileID: 475640746}
-  - {fileID: 187345302}
+  - {fileID: 6154219475484149503}

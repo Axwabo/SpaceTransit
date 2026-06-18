@@ -15,6 +15,9 @@ namespace SpaceTransit.Menu
 
         private VisualElement _root;
 
+        [SerializeField]
+        private PanelToggleButton[] toggles;
+
         private void Start()
         {
             _current = gameObject;
@@ -35,6 +38,10 @@ namespace SpaceTransit.Menu
         {
             _root.SetVisibility(IsOpen = !IsOpen);
             Cursor.lockState = IsOpen ? CursorLockMode.None : CursorLockMode.Locked;
+            if (IsOpen)
+                return;
+            foreach (var panel in toggles)
+                panel.SetTargetVisibility(false);
         }
 
         public static void Disable() => _current.SetActive(false);

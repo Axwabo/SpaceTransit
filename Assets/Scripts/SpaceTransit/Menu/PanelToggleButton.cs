@@ -16,20 +16,30 @@ namespace SpaceTransit.Menu
         private MonoBehaviour behavior;
 
         [SerializeField]
+        private bool ignoreThis;
+
+        [SerializeField]
         private bool hideThisByDefault;
 
         protected override void Start()
         {
             base.Start();
-            _this = this.RootVisual();
+            _this = ignoreThis ? null : this.RootVisual();
             if (hideThisByDefault)
-                _this.SetVisibility(false);
+                _this?.SetVisibility(false);
         }
 
         protected override void Click()
         {
-            var showTarget = _this.style.display != DisplayStyle.None;
-            _this.SetVisibility(!showTarget);
+            var showTarget = ignoreThis
+                ? target.rootVisualElement.style.display != DisplayStyle.Flex
+                : _this.style.display != DisplayStyle.None;
+            _this?.SetVisibility(!showTarget);
+            SetTargetVisibility(showTarget);
+        }
+
+        public void SetTargetVisibility(bool showTarget)
+        {
             if (target)
                 target.rootVisualElement.SetVisibility(showTarget);
             if (behavior)
