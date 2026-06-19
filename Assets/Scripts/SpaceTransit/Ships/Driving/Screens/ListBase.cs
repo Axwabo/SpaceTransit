@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Mono.Collections.Generic;
 using UnityEngine.UIElements;
 
 namespace SpaceTransit.Ships.Driving.Screens
@@ -8,39 +7,11 @@ namespace SpaceTransit.Ships.Driving.Screens
     public abstract class ListBase<T> : ScreenBase where T : PickerBase
     {
 
-        private ListView _list;
-
-        protected ListView List
-        {
-            get
-            {
-                if (_list != null)
-                    return _list;
-                _list = GetListView(this.RootVisual());
-                _list.Q<ScrollView>().verticalScrollerVisibility = ScrollerVisibility.Hidden;
-                _list.makeItem = () => new Label();
-                _list.bindItem = (element, i) =>
-                {
-                    var picker = Source[i];
-                    var label = element.Q<Label>();
-                    label.text = GetContent(picker);
-                    label.EnableInClassList("succeeded", picker.Success);
-                    label.EnableInClassList("failed", picker.Failure);
-                };
-                _list.itemsSource = Source;
-                return _list;
-            }
-        }
-
-        protected override void Initialize(VisualElement root) => _ = List;
-
-        protected abstract ListView GetListView(VisualElement root);
+        protected ListView List { get; private set; }
 
         protected List<T> Source { get; } = new();
 
-        protected abstract string GetContent(T item);
-
-        public int Selected
+        protected int Selected
         {
             get => List.selectedIndex;
             private set => List.selectedIndex = value;
@@ -57,7 +28,27 @@ namespace SpaceTransit.Ships.Driving.Screens
             }
         }
 
-        protected bool CanPick => !Equals(List.itemsSource, ReadOnlyCollection<T>.Empty) && Source is {Count: not 0};
+        protected bool CanPick => Source.Count != 0 && !HasPicked;
+
+        protected void Initialize()
+        {
+            List = GetListView(this.RootVisual());
+            List.Q<ScrollView>().verticalScrollerVisibility = ScrollerVisibility.Hidden;
+            List.makeItem = () => new Label();
+            List.bindItem = (element, i) =>
+            {
+                var picker = Source[i];
+                var label = element.Q<Label>();
+                label.text = GetContent(picker);
+                label.EnableInClassList("succeeded", picker.Success);
+                label.EnableInClassList("failed", picker.Failure);
+            };
+            List.itemsSource = Source;
+        }
+
+        protected abstract ListView GetListView(VisualElement root);
+
+        protected abstract string GetContent(T item);
 
         protected void Clear()
         {
@@ -69,17 +60,14 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         public override void Navigate(bool forwards)
         {
-            if (Pickers.Count == 0 || HasPicked)
+            if (!CanPick)
                 return;
             var previous = Selected;
             var index = previous + (forwards ? 1 : -1);
-            if (index >= Pickers.Count)
+            if (index >= Source.Count)
                 index = 0;
             else if (index < 0)
-                index = Pickers.Count - 1;
-            if (previous != -1 && previous != index)
-                Pickers[previous].Selected = false;
-            Pickers[index].Selected = true;
+                index = Source.Count - 1;
             Selected = index;
         }
 
@@ -87,14 +75,13 @@ namespace SpaceTransit.Ships.Driving.Screens
         {
             if (index == -1 || !CanPick || index >= Source.Count)
                 return false;
-            var success = Select(Source[index]);
-            _refreshingState = success;
-            _list.RefreshItem(index);
-            _refreshingState = null;
-            return success;
+            var item = Source[index];
+            Select(item);
+            List.RefreshItem(index);
+            return item.Success;
         }
 
-        protected abstract bool Select(T item);
+        protected abstract void Select(T item);
 
         public override void Confirm() => Select(Selected);
 
