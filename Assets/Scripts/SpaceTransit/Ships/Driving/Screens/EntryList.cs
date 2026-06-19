@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 namespace SpaceTransit.Ships.Driving.Screens
 {
 
-    public sealed class EntryList : ListBase<Entry, PickablePicker>
+    public sealed class EntryList : ListBase<Entry>
     {
 
         private StationId _previousStation;

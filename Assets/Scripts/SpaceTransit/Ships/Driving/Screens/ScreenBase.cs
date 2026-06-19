@@ -1,9 +1,9 @@
-﻿using SpaceTransit.Ships.Modules.Displays;
+﻿using UnityEngine;
 
 namespace SpaceTransit.Ships.Driving.Screens
 {
 
-    public abstract class ScreenBase : ModuleUIComponent
+    public abstract class ScreenBase : MonoBehaviour
     {
 
         public abstract void Navigate(bool forwards);
