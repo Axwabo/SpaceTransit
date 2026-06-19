@@ -9,7 +9,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         protected ListView List { get; private set; }
 
-        protected List<T> Source { get; } = new();
+        public List<T> Source { get; } = new();
 
         protected int Selected
         {
@@ -30,10 +30,11 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         protected bool CanPick => Source.Count != 0 && !HasPicked;
 
-        protected void Initialize()
+        protected override void Initialize(VisualElement root)
         {
-            List = GetListView(this.RootVisual());
+            List = GetListView(root);
             List.Q<ScrollView>().verticalScrollerVisibility = ScrollerVisibility.Hidden;
+            List.itemsSource = Source;
             List.makeItem = () => new Label();
             List.bindItem = (element, i) =>
             {
@@ -43,20 +44,19 @@ namespace SpaceTransit.Ships.Driving.Screens
                 label.EnableInClassList("succeeded", picker.Success);
                 label.EnableInClassList("failed", picker.Failure);
             };
-            List.itemsSource = Source;
         }
 
         protected abstract ListView GetListView(VisualElement root);
 
         protected abstract string GetContent(T item);
 
-        protected void Clear()
+        public void Clear()
         {
             Source.Clear();
             Refresh();
         }
 
-        protected void Refresh() => List.RefreshItems();
+        public void Refresh() => List.RefreshItems();
 
         public override void Navigate(bool forwards)
         {

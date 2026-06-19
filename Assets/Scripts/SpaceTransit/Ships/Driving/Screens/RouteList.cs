@@ -1,70 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using SpaceTransit.Routes;
-using SpaceTransit.Vaulter;
+﻿using SpaceTransit.Vaulter;
+using UnityEngine;
 using UnityEngine.UIElements;
-using Cache = SpaceTransit.Vaulter.Cache;
 
 namespace SpaceTransit.Ships.Driving.Screens
 {
 
-    public sealed class RouteList : ListBase<RouteDescriptor, PickerBase>
+    [RequireComponent(typeof(RouteListManager))]
+    public sealed class RouteList : ListBase<RoutePicker>
     {
 
-        private static readonly HashSet<StationId> AvailableExits = new();
+        private RouteListManager _manager;
 
-        protected override List<RouteDescriptor> Source { get; } = new();
+        private void Awake() => _manager = GetComponent<RouteListManager>();
 
-        private ScrollView _scrollView;
+        protected override string GetContent(RoutePicker item)
+            => ReferenceEquals(item, RoutePicker.ExitService) ? "Exit Service" : RouteDisplay.Format(item.Descriptor);
 
-        private void OnEnable()
+        protected override void Select(RoutePicker item)
         {
-            SetVisibility(true);
-            if (!Parent)
+            if (!_manager.Controller.TryGetVaulter(out var vaulter))
                 return;
-            Source.Clear();
-            Source.Add(null);
-            Clear();
-            if (Assembly.FrontModule.Thruster.Tube is not Dock dock)
-                return;
-            CacheExits(dock.Station);
-            Append(World.ExtraRoutes.Length != 0 ? World.ExtraRoutes : Cache.Routes, dock);
-            SetUp();
-        }
-
-        private void OnDisable() => SetVisibility(false);
-
-        private void Append(ReadOnlySpan<RouteDescriptor> routes, Dock dock)
-        {
-            foreach (var route in routes)
-                if (route.Origin.Station == dock.Station.ID && (AvailableExits.Count == 0 || AvailableExits.Contains(route.Origin.ExitTowards)))
-                    Source.Add(route);
-        }
-
-        private static void CacheExits(Station station)
-        {
-            AvailableExits.Clear();
-            foreach (var dock in station.Docks)
-            {
-                foreach (var exit in dock.FrontExits)
-                    AvailableExits.Add(exit.Connected);
-                foreach (var exit in dock.BackExits)
-                    AvailableExits.Add(exit.Connected);
-            }
-        }
-
-        protected override string GetContent(RouteDescriptor item)
-            => item == null ? "Exit Service" : RouteDisplay.Format(item);
-
-        protected override bool Select(RouteDescriptor item, PickerBase picker)
-        {
-            if (!Controller.TryGetVaulter(out var vaulter))
-                return false;
-            if (item)
-                vaulter.BeginRoute(item);
-            else
+            if (ReferenceEquals(item, RoutePicker.ExitService))
                 vaulter.ExitService();
-            return true;
+            else
+                vaulter.BeginRoute(item.Descriptor);
         }
 
         public override void Navigate(bool forwards)
