@@ -24,9 +24,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         protected override void Select(ExitPicker item)
         {
-            if (HasPicked || _screen.State != ShipState.Docked)
-                return;
-            if (_screen.Assembly.Lock(item))
+            if (!HasPicked && _screen.Assembly.Lock(item))
                 Text = "Exiting Towards";
         }
 

@@ -52,7 +52,7 @@ namespace SpaceTransit.Ships.Driving.Screens
             enabled = visible;
         }
 
-        public bool SelectDock(int dockIndex) => this.CanPick && this.isActiveAndEnabled && this.Select(dockIndex);
+        public bool SelectDock(int dockIndex) => CanPick && isActiveAndEnabled && Select(dockIndex);
 
     }
 
