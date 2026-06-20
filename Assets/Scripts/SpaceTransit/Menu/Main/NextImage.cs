@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 namespace SpaceTransit.Menu.Main
 {
@@ -8,20 +8,24 @@ namespace SpaceTransit.Menu.Main
     {
 
         [SerializeField]
-        private Image image;
-
-        [SerializeField]
         private Sprite[] sprites;
+
+        private VisualElement _element;
 
         private int _index = -1;
 
-        private void Start() => Click();
+        protected override void Start()
+        {
+            base.Start();
+            _element = this.RootVisual().Q<VisualElement>("Image");
+            Click();
+        }
 
         protected override void Click()
         {
             if (++_index >= sprites.Length)
                 _index = 0;
-            image.sprite = sprites[_index];
+            _element.style.backgroundImage = new StyleBackground(sprites[_index]);
         }
 
     }

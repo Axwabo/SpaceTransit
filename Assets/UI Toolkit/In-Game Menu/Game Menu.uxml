@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/In-Game%20Menu/Game%20Menu.uss?fileID=7433441132597879392&amp;guid=d64cdfc28921b1469a65412f69429e44&amp;type=3#Game Menu" />
+    <ui:VisualElement picking-mode="Ignore" class="tektur" style="flex-grow: 1; background-color: rgba(50, 50, 50, 0.39);">
+        <ui:VisualElement name="About" picking-mode="Ignore" style="position: absolute; top: 20px; left: 20px; -unity-text-align: middle-left;">
+            <ui:Label text="SpaceTransit" class="bold" style="font-size: 80px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+            <ui:Label text="00:00:00" name="Clock" picking-mode="Ignore" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; font-size: 36px;" />
+            <ui:Label text="Speed: 1x" name="SpeedScalar" picking-mode="Ignore" style="font-size: 36px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 20px; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+            <ui:SliderInt value="1" high-value="20" low-value="1" name="Speed" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; width: 200px;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Buttons" style="position: absolute; left: 20px; bottom: 20px; flex-direction: column-reverse;">
+            <ui:Button text="Exit" name="Exit" />
+            <ui:Button text="Teleport" name="Teleport" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

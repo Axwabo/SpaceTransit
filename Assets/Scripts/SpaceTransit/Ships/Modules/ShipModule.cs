@@ -52,9 +52,9 @@ namespace SpaceTransit.Ships.Modules
                 component.OnStateChanged();
         }
 
-        public EntryList EntryList => _components.OfType<EntryList>().First();
+        public EntryListManager EntryList => _components.OfType<EntryListManager>().First();
 
-        public ExitList ExitList => _components.OfType<ExitList>().First();
+        public ExitListManager ExitList => _components.OfType<ExitListManager>().First();
 
     }
 

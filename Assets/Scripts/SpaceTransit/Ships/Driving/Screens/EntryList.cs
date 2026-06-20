@@ -1,77 +1,34 @@
-﻿using System.Collections.Generic;
-using SpaceTransit.Cosmos;
-using SpaceTransit.Loader;
-using SpaceTransit.Routes;
+﻿using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace SpaceTransit.Ships.Driving.Screens
 {
 
-    public sealed class EntryList : ListBase<Entry, PickablePicker>
+    [RequireComponent(typeof(EntryListManager))]
+    public sealed class EntryList : PickableList<EntryPicker>
     {
 
-        private StationId _previousStation;
+        private EntryListManager _manager;
 
-        private EntryEnsurer _ensurer;
+        private void Awake() => _manager = GetComponent<EntryListManager>();
 
-        public override void OnStateChanged()
-        {
-            if (State != ShipState.Sailing)
-                Clear();
-            if (State == ShipState.Docked)
-                _previousStation = null;
-        }
-
-        private void OnEnable()
-        {
-            if (didStart)
-                Update();
-        }
-
-        private void Update()
-        {
-            var tube = Assembly.FrontModule.Thruster.Tube;
-            if (tube.TryGetEntryEnsurer(Assembly.Reverse, out var ensurer))
-                UpdateStation(ensurer);
-            else
-                Clear();
-        }
-
-        private void UpdateStation(EntryEnsurer ensurer)
-        {
-            if (LoadingProgress.Current != null || ensurer.Entries.Count == 0)
-                return;
-            var station = ensurer.station;
-            if (_previousStation == station)
-                return;
-            _previousStation = station;
-            _ensurer = ensurer;
-            _ensurer.Entries.Sort(static (a, b) => a.Dock.Index - b.Dock.Index);
-            Clear();
-            SetUp();
-        }
-
-        protected override List<Entry> Source => _ensurer.Entries;
+        protected override ListView GetListView(VisualElement root) => root.Q<ListView>("Entries");
 
         public override bool Select(int index)
         {
-            for (var i = 0; i < Pickers.Count; i++)
-                if (Source[i].Dock.Index == index)
-                    return Select(Source[i], Pickers[i]);
+            for (var i = 0; i < Source.Count; i++)
+                if (Source[i].Entry.Dock.Index == index)
+                    return base.Select(i);
             return false;
         }
 
-        protected override bool Select(Entry item, PickablePicker picker)
+        protected override void Select(EntryPicker item)
         {
-            if (HasPicked)
-                return false;
-            var locked = item.Lock(Assembly);
-            picker.Pick(locked);
-            return locked;
+            if (!HasPicked)
+                _manager.Assembly.Lock(item);
         }
 
-        protected override string GetContent(Entry item) => $"{item.Dock.Index + 1}";
-
-        public bool SelectDock(int dockIndex) => Pickers.Count != 0 && isActiveAndEnabled && Select(dockIndex);
+        protected override string GetContent(EntryPicker item) => $"{item.Entry.Dock.Index + 1}";
 
     }
 

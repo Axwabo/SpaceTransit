@@ -1,0 +1,17 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="Board" src="project://database/Assets/UI%20Toolkit/Board.uxml?fileID=9197481963319205126&amp;guid=387d71b97635b2ec88ec0e501812a41c&amp;type=3#Board" />
+    <Style src="project://database/Assets/UI%20Toolkit/Departures%20Arrivals.uss?fileID=7433441132597879392&amp;guid=341d97a2eef5261649aeeb5b7da326e0&amp;type=3#Departures Arrivals" />
+    <ui:VisualElement style="flex-grow: 1; align-items: center; justify-content: space-between;">
+        <ui:Label text="Label" name="Station" class="oxanium" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; height: 70px; font-size: 45px;" />
+        <ui:VisualElement style="flex-direction: row; height: 80px;">
+            <ui:Instance template="Board" class="departures" style="flex-grow: 1;">
+                <AttributeOverrides element-name="Title" text="DEPARTURES" />
+                <AttributeOverrides element-name="Station" text="Destination" />
+            </ui:Instance>
+            <ui:Instance template="Board" class="arrivals" style="flex-grow: 1;">
+                <AttributeOverrides element-name="Title" text="ARRIVALS" />
+                <AttributeOverrides element-name="Station" text="From" />
+            </ui:Instance>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

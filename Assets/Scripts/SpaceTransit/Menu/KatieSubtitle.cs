@@ -1,51 +1,35 @@
-using TMPro;
 using UnityEngine;
 
 namespace SpaceTransit.Menu
 {
 
-    public sealed class KatieSubtitle : MonoBehaviour
+    public sealed class KatieSubtitle
     {
 
-        [SerializeField]
-        private TextMeshProUGUI main;
+        private readonly double _removeAt;
 
-        [SerializeField]
-        private MonoBehaviour background;
+        public double ActivateAt { get; }
 
-        private double _activateAt;
+        public bool Activated { get; private set; }
 
-        private double _removeAt;
+        public string Text { get; }
 
-        private bool _activated;
-
-        private float _preferredSize;
-
-        public void SetUp(string announcer, string text, double delay, double duration)
+        public KatieSubtitle(string announcer, string text, double delay, double duration)
         {
-            _activateAt = AudioSettings.dspTime + delay;
-            _removeAt = _activateAt + duration + 0.5;
-            main.text = $"<b>{announcer}:</b> {text}";
+            ActivateAt = AudioSettings.dspTime + delay;
+            _removeAt = ActivateAt + duration + 0.5;
+            Text = $"<b>{announcer}:</b> {text}";
         }
 
-        private void Start()
-        {
-            _preferredSize = main.preferredHeight;
-            main.enabled = background.enabled = false;
-        }
-
-        private void Update()
+        public bool Update()
         {
             var time = AudioSettings.dspTime;
             if (time >= _removeAt)
-                Destroy(gameObject);
-            else if (_activated || time < _activateAt)
-                return;
-            _activated = true;
-            main.enabled = background.enabled = true;
-            var t = (RectTransform) transform;
-            t.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, _preferredSize);
-            t.SetAsLastSibling();
+                return false;
+            if (Activated || time < ActivateAt)
+                return true;
+            Activated = true;
+            return true;
         }
 
     }

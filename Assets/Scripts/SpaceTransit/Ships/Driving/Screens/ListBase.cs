@@ -1,72 +1,56 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine.UIElements;
 
 namespace SpaceTransit.Ships.Driving.Screens
 {
 
-    public abstract class ListBase<TItem, TPicker> : ScreenBase where TPicker : PickerBase
+    public abstract class ListBase<T> : ScreenBase
     {
 
-        [SerializeReference]
-        private TPicker prefab;
+        protected ListView List { get; private set; }
 
-        protected List<TPicker> Pickers { get; } = new();
+        public List<T> Source { get; } = new();
 
-        protected abstract List<TItem> Source { get; }
-
-        protected abstract string GetContent(TItem item);
-
-        public int Selected => Pickers.FindIndex(static e => e.Selected);
-
-        protected bool HasPicked
+        public int Selected
         {
-            get
-            {
-                foreach (var p in Pickers)
-                    if (p.Picked)
-                        return true;
-                return false;
-            }
+            get => List.selectedIndex;
+            private set => List.selectedIndex = value;
         }
 
-        protected void Clear()
+        protected override void Initialize(VisualElement root)
         {
-            foreach (var picker in Pickers)
-                Destroy(picker.gameObject);
-            Pickers.Clear();
-        }
-
-        protected void SetUp()
-        {
-            for (var i = 0; i < Source.Count; i++)
-            {
-                var clone = Instantiate(prefab, Transform);
-                clone.Index = i;
-                clone.Text = GetContent(Source[i]);
-                Pickers.Add(clone);
-            }
+            List = GetListView(root);
+            List.Q<ScrollView>().verticalScrollerVisibility = ScrollerVisibility.Hidden;
+            List.itemsSource = Source;
+            List.bindItem = BindItem;
         }
 
         public override void Navigate(bool forwards)
         {
-            if (Pickers.Count == 0 || HasPicked)
-                return;
             var previous = Selected;
             var index = previous + (forwards ? 1 : -1);
-            if (index >= Pickers.Count)
+            if (index >= Source.Count)
                 index = 0;
             else if (index < 0)
-                index = Pickers.Count - 1;
-            if (previous != -1 && previous != index)
-                Pickers[previous].Selected = false;
-            Pickers[index].Selected = true;
+                index = Source.Count - 1;
+            Selected = index;
         }
 
-        public override bool Select(int index) => index != -1 && Pickers.Count != 0 && index < Pickers.Count && Select(Source[index], Pickers[index]);
+        public override void SetVisibility(bool visible) => List?.SetVisibility(visible);
 
-        protected abstract bool Select(TItem item, TPicker picker);
+        protected abstract ListView GetListView(VisualElement root);
 
-        public override void Confirm() => Select(Selected);
+        protected abstract void BindItem(VisualElement element, int i);
+
+        public void Clear()
+        {
+            if (Source.Count == 0)
+                return;
+            Source.Clear();
+            Refresh();
+        }
+
+        public void Refresh() => List.RefreshItems();
 
     }
 

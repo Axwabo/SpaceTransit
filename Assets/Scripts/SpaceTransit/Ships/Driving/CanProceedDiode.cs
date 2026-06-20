@@ -1,19 +1,18 @@
-﻿using SpaceTransit.Ships.Modules;
+﻿using SpaceTransit.Ships.Modules.Displays;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 namespace SpaceTransit.Ships.Driving
 {
 
-    [RequireComponent(typeof(Image))]
-    public sealed class CanProceedDiode : ModuleComponentBase
+    public sealed class CanProceedDiode : ModuleUIComponent, ICullingListener
     {
 
-        private Image _image;
+        private VisualElement _element;
 
-        protected override void Awake() => _image = GetComponent<Image>();
+        protected override void Initialize(VisualElement root) => _element = root.Q<VisualElement>("Proceed");
 
-        private void Update() => _image.color = Controller.CanProceed ? Color.green : Color.red;
+        private void Update() => _element.style.backgroundColor = Controller.CanProceed ? Color.green : Color.red;
 
     }
 

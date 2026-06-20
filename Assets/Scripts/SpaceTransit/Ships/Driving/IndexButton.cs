@@ -10,7 +10,7 @@ namespace SpaceTransit.Ships.Driving
     {
 
         [SerializeField]
-        private ScreenSlot slot;
+        private CosmosScreen slot;
 
         [SerializeField]
         private int index;

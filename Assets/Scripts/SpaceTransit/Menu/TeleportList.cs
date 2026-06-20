@@ -1,11 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using SpaceTransit.Loader;
 using SpaceTransit.Movement;
 using SpaceTransit.Routes;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
 using Cache = SpaceTransit.Vaulter.Cache;
 
 namespace SpaceTransit.Menu
@@ -14,71 +15,66 @@ namespace SpaceTransit.Menu
     public sealed class TeleportList : MonoBehaviour
     {
 
-        [SerializeField]
-        private GameObject prefab;
+        private readonly List<StationId> _stations = new();
 
-        [SerializeField]
-        private TextMeshProUGUI error;
+        private Label _error;
+
+        private ListView _list;
 
         private void Start()
         {
-            var t = transform;
-            foreach (var station in Cache.Stations.OrderBy(e => e.name))
-            {
-                var teleport = Instantiate(prefab, t).AddComponent<Teleport>();
-                teleport.Id = station;
-                teleport.Error = error;
-            }
+            _stations.AddRange(World.IsTestWorld ? Station.LoadedStations.Select(e => e.ID) : Cache.Stations);
+            _stations.Sort((a, b) => string.Compare(a.name, b.name, StringComparison.OrdinalIgnoreCase));
+            var root = this.RootVisual();
+            _error = root.Q<Label>("Error");
+            _list = root.Q<ListView>();
+            _list.makeItem = () => new Label();
+            _list.bindItem = (element, i) => (element as Label ?? element.Q<Label>()).text = _stations[i].name;
+            _list.itemsSource = _stations;
+            _list.selectedIndicesChanged += Click;
         }
 
-        private void OnDisable() => error.text = "";
-
-        // TODO: refactor
-        private sealed class Teleport : MonoBehaviour
+        private void OnDisable()
         {
+            if (_error != null)
+                _error.text = "";
+        }
 
-            public StationId Id { get; set; }
-
-            public TextMeshProUGUI Error { get; set; }
-
-            private void Start()
+        private void Click(IEnumerable<int> obj)
+        {
+            if (_list.selectedIndex == -1)
+                return;
+            var id = _stations[_list.selectedIndex];
+            _list.selectedIndex = -1;
+            if (LoadingProgress.Current != null)
             {
-                GetComponent<Button>().onClick.AddListener(Click);
-                GetComponentInChildren<TextMeshProUGUI>().text = Id.name;
+                _error.text = "Please wait for loading to complete.";
+                return;
             }
 
-            private void Click()
+            if (MovementController.Current.IsMounted)
             {
-                if (LoadingProgress.Current != null)
-                {
-                    Error.text = "Please wait for loading to complete.";
-                    return;
-                }
+                _error.text = "You must disembark before teleporting.";
+                return;
+            }
 
-                if (MovementController.Current.IsMounted)
-                {
-                    Error.text = "You must disembark before teleporting.";
-                    return;
-                }
+            if (InputSystem.actions["Move"].ReadValue<Vector2>() != Vector2.zero)
+            {
+                _error.text = "You mustn't be moving when teleporting.";
+                return;
+            }
 
-                if (InputSystem.actions["Move"].ReadValue<Vector2>() != Vector2.zero)
-                {
-                    Error.text = "You mustn't be moving when teleporting.";
-                    return;
-                }
+            if (!Station.TryGetLoadedStation(id, out var station))
+            {
+                _ = WorldChanger.Load(id.Lines.ToArray());
+                _error.text = "Now loading, please try again later.";
+                return;
+            }
 
-                if (!Station.TryGetLoadedStation(Id, out var station))
-                {
-                    _ = WorldChanger.Load(Id.Lines.ToArray());
-                    Error.text = "Now loading, please try again later.";
-                    return;
-                }
-
-                Error.text = "";
+            _error.text = "";
+            if (!World.IsTestWorld)
                 World.Unload(World.Worlds.Keys.Except(station.ID.Lines.ToArray()).ToArray());
-                MovementController.Current.Teleport(station.Spawnpoint);
-            }
-
+            MovementController.Current.Teleport(station.Spawnpoint);
         }
 
     }

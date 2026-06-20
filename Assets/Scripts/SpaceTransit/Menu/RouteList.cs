@@ -1,8 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using SpaceTransit.Routes;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
 using Cache = SpaceTransit.Vaulter.Cache;
 
 namespace SpaceTransit.Menu
@@ -11,39 +11,34 @@ namespace SpaceTransit.Menu
     public sealed class RouteList : MonoBehaviour
     {
 
-        [SerializeField]
-        private GameObject prefab;
+        private ListView _list;
+
+        private RouteDescriptor[] _routes;
 
         [SerializeField]
         private RouteTimetable timetable;
 
         private void Start()
         {
-            var t = transform;
-            foreach (var route in Cache.Routes.OrderBy(static e => int.Parse(e.name)))
-            {
-                var picker = Instantiate(prefab, t).AddComponent<RoutePicker>();
-                picker.Route = route;
-                picker.Timetable = timetable;
-            }
+            _routes = Cache.Routes.OrderBy(e => int.Parse(e.name)).ToArray();
+            _list = this.RootVisual().Q<ListView>("Routes");
+            _list.makeItem = () => new Label();
+            _list.bindItem = Bind;
+            _list.itemsSource = _routes;
+            _list.selectionChanged += OnSelectionChanged;
         }
 
-        // TODO: refactor
-        private sealed class RoutePicker : MonoBehaviour
+        private void Bind(VisualElement element, int i)
         {
+            var route = _routes[i];
+            ((Label) element).text = $"{route.name} {route.Origin.Station.name} - {route.Destination.Station.name}";
+        }
 
-            public RouteDescriptor Route { get; set; }
-
-            public RouteTimetable Timetable { get; set; }
-
-            private void Start()
-            {
-                GetComponent<Button>().onClick.AddListener(Click);
-                GetComponentInChildren<TextMeshProUGUI>().text = $"{Route.name} {Route.Origin.Station.name} - {Route.Destination.Station.name}";
-            }
-
-            private void Click() => Timetable.Apply(Route);
-
+        private void OnSelectionChanged(IEnumerable<object> objects)
+        {
+            var descriptor = objects.FirstOrDefault();
+            if (descriptor is RouteDescriptor route)
+                timetable.Apply(route);
         }
 
     }

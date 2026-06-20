@@ -1,7 +1,6 @@
 ﻿using System;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 namespace SpaceTransit.Menu
 {
@@ -9,47 +8,46 @@ namespace SpaceTransit.Menu
     public sealed class StartingTimePicker : MonoBehaviour
     {
 
-        private static TimeSpan Time(float h, float m, float s) => new((int) h, (int) m, (int) s);
+        private SliderInt _hours;
 
-        [SerializeField]
-        private Slider hours;
+        private SliderInt _minutes;
 
-        [SerializeField]
-        private Slider minutes;
+        private SliderInt _seconds;
 
-        [SerializeField]
-        private Slider seconds;
+        private Label _display;
 
-        [SerializeField]
-        private TextMeshProUGUI display;
-
-        private void Awake()
+        private void Start()
         {
-            var min = Time(hours.minValue, minutes.minValue, seconds.minValue);
-            var max = Time(hours.maxValue, minutes.maxValue, seconds.maxValue);
+            var visual = this.RootVisual();
+            _hours = visual.Q<SliderInt>("H");
+            _minutes = visual.Q<SliderInt>("M");
+            _seconds = visual.Q<SliderInt>("S");
+            _display = visual.Q<Label>("Time");
+            var min = new TimeSpan(_hours.lowValue, _minutes.lowValue, _seconds.lowValue);
+            var max = new TimeSpan(_hours.highValue, _minutes.highValue, _seconds.highValue);
             if (Clock.StartTime < min)
                 Clock.StartTime = min;
             else if (Clock.StartTime > max)
                 Clock.StartTime = max;
             Apply();
-            hours.onValueChanged.AddListener(OnValueChanged);
-            minutes.onValueChanged.AddListener(OnValueChanged);
-            seconds.onValueChanged.AddListener(OnValueChanged);
+            _hours.RegisterValueChangedCallback(OnValueChanged);
+            _minutes.RegisterValueChangedCallback(OnValueChanged);
+            _seconds.RegisterValueChangedCallback(OnValueChanged);
         }
 
-        private void OnValueChanged(float arg0)
+        private void OnValueChanged(ChangeEvent<int> evt)
         {
-            Clock.StartTime = Time(hours.value, minutes.value, seconds.value);
+            Clock.StartTime = new TimeSpan(_hours.value, _minutes.value, _seconds.value);
             Apply();
         }
 
         private void Apply()
         {
             var start = Clock.StartTime;
-            display.text = $"Starting time: {start:hh':'mm':'ss}";
-            hours.value = start.Hours;
-            minutes.value = start.Minutes;
-            seconds.value = start.Seconds;
+            _display.text = $"Starting time: {start:hh':'mm':'ss}";
+            _hours.value = start.Hours;
+            _minutes.value = start.Minutes;
+            _seconds.value = start.Seconds;
         }
 
     }

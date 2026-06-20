@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public static class ComponentExtensions
 {
@@ -15,5 +16,7 @@ public static class ComponentExtensions
             if (t.GetChild(i).TryGetComponent(out T component))
                 yield return component;
     }
+
+    public static VisualElement RootVisual(this Component component) => component.GetComponent<UIDocument>().rootVisualElement;
 
 }

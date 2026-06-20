@@ -1,0 +1,24 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Main%20Menu/Main%20Menu.uss?fileID=7433441132597879392&amp;guid=beaf9333cae447ccbb8cdfc6cfde625e&amp;type=3#Main Menu" />
+    <ui:VisualElement style="flex-grow: 1; align-items: center;">
+        <ui:VisualElement class="tektur bold" style="margin-top: 30px; flex-grow: 1;">
+            <ui:Label text="Play" style="font-size: 36px;" />
+            <ui:Label text="EPILEPSY WARNING!" class="warning" style="font-size: 50px;" />
+            <ui:Label text="Due to floating-point limitations, objects begin flickering and distorting the further you go from the origin.&#10;Continuing is not recommended for those with photosensitive epilepsy." class="warning" style="font-size: 20px;" />
+        </ui:VisualElement>
+        <ui:VisualElement class="tektur" style="align-items: center; justify-content: flex-end; flex-direction: column-reverse;">
+            <ui:VisualElement style="flex-direction: row;">
+                <ui:Button text="Cancel" name="Cancel" />
+                <ui:Button text="Begin" name="Begin" />
+            </ui:VisualElement>
+            <ui:VisualElement style="width: 100%; font-size: 32px;">
+                <ui:Label text="Starting station:" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+                <ui:DropdownField name="Stations" style="height: 40px;" />
+                <ui:Label text="Starting time: 00:00:00" name="Time" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
+                <ui:SliderInt label="Hours" value="0" high-value="23" name="H" />
+                <ui:SliderInt label="Minutes" value="0" high-value="59" name="M" />
+                <ui:SliderInt label="Seconds" value="0" high-value="59" name="S" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

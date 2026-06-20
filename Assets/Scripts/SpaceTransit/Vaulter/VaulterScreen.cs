@@ -2,84 +2,76 @@
 using SpaceTransit.Routes.Stops;
 using SpaceTransit.Ships;
 using SpaceTransit.Ships.Driving.Screens;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace SpaceTransit.Vaulter
 {
 
-    public sealed class VaulterScreen : VaulterComponentBase
+    public sealed class VaulterScreen : VaulterComponentBase, ICullingListener
     {
 
         [SerializeField]
-        private TextMeshProUGUI title;
+        private RouteListManager routes;
 
         [SerializeField]
-        private RouteList routes;
+        private StopListManager stops;
 
-        [SerializeField]
-        private StopList stops;
+        private Label _title;
 
-        private GameObject _routes;
+        private ScreenBase _current;
 
-        private GameObject _stops;
+        private bool _routesShown = true;
 
-        private bool _routesVisible = true;
+        private VisualElement _root;
 
-        protected override void Awake()
+        private void OnEnable()
         {
-            base.Awake();
-            _routes = routes.gameObject;
-            _stops = stops.gameObject;
+            if (_root == null)
+                return;
+            _root.SetVisibility(true);
+            Show(_routesShown, true);
+        }
+
+        private void OnDisable()
+        {
+            _root?.SetVisibility(false);
+            routes.enabled = false;
+            stops.enabled = false;
         }
 
         private void Update()
         {
-            if (!_routesVisible
+            if (!_routesShown
                 && Parent.Stop is Destination
                 && Controller.State == ShipState.Docked
                 && Assembly.FrontModule.Thruster.Tube is Dock dock
                 && dock.Station.ID == Parent.Stop.Station)
-                ShowRoutes();
+                Show(true, false);
         }
 
-        public override void OnRouteChanged()
+        protected override void OnInitialized()
         {
-            if (!IsInService)
-            {
-                ShowRoutes();
+            _root = this.RootVisual();
+            _title = _root.Q<Label>("Title");
+        }
+
+        public override void OnRouteChanged() => Show(!IsInService, false);
+
+        private void Show(bool showRoutes, bool force)
+        {
+            if (!force && _routesShown == showRoutes)
                 return;
-            }
-
-            _routesVisible = false;
-            _routes.SetActive(false);
-            _stops.SetActive(true);
-            title.text = $"{Parent.Route.name} {Parent.Route.Summary()}";
+            _routesShown = showRoutes;
+            _current = showRoutes ? routes.Screen : stops.Screen;
+            _title.text = showRoutes ? "Pick a  Route" : $"{Parent.Route.name} {Parent.Route.Summary()}";
+            routes.enabled = showRoutes;
+            stops.enabled = !showRoutes;
         }
 
-        private void ShowRoutes()
-        {
-            _routesVisible = true;
-            _routes.SetActive(true);
-            _stops.SetActive(false);
-            title.text = "Pick a Route";
-        }
+        public void Navigate(bool forwards) => _current.Navigate(forwards);
 
-        public void Navigate(bool forwards)
-        {
-            if (_routesVisible)
-                routes.Navigate(forwards);
-            else
-                stops.Navigate(forwards);
-        }
-
-        public void Confirm()
-        {
-            if (_routesVisible)
-                routes.Confirm();
-            else
-                stops.ResetPosition();
-        }
+        public void Confirm() => _current.Confirm();
 
     }
 

@@ -1,80 +1,68 @@
 ﻿using System.Threading;
 using SpaceTransit.Routes;
 using SpaceTransit.Ships;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 namespace SpaceTransit.Menu
 {
 
-    [RequireComponent(typeof(RectTransform))]
-    public sealed class MapShip : MonoBehaviour
+    public sealed class MapShip
     {
 
-        [SerializeField]
-        private TextMeshProUGUI route;
+        private readonly MapView _view;
 
-        [SerializeField]
-        private TextMeshProUGUI type;
+        private readonly CancellationToken _cancellationToken;
 
-        [SerializeField]
-        private RectTransform point;
+        public VisualElement Element { get; }
 
-        [SerializeField]
-        private Image image;
+        public ShipAssembly Assembly { get; }
 
-        private ShipAssembly _assembly;
+        private readonly Label _type;
 
-        private Transform _anchor;
+        private readonly Label _route;
 
-        private RectTransform _this;
+        private readonly VisualElement _image;
 
         private RouteDescriptor _previousRoute;
 
-        private CancellationToken _cancellationToken;
-
-        public float Scale { get; set; } = 1;
-
-        private void Awake() => _this = (RectTransform) transform;
-
-        public void Apply(Transform anchor, ShipAssembly assembly)
+        public MapShip(VisualElement element, ShipAssembly assembly, MapView view)
         {
-            _assembly = assembly;
-            _anchor = anchor;
+            _view = view;
+            Element = element;
+            Assembly = assembly;
+            _type = Element.Q<Label>("Type");
+            _route = Element.Q<Label>("Route");
+            _image = Element.Q<VisualElement>("Background");
             _cancellationToken = assembly.destroyCancellationToken;
-            UpdatePosition();
-            if (!assembly.Parent.TryGetVaulter(out var vaulter))
-                return;
-            var currentRoute = vaulter.Route;
-            Apply(currentRoute);
         }
+
+        public float Scale { get; init; } = 1;
 
         private void Apply(RouteDescriptor currentRoute)
         {
             _previousRoute = currentRoute;
-            route.text = currentRoute?.name ?? "---";
-            (type.text, image.color) = currentRoute.GetAbbreviation();
+            _route.text = currentRoute?.name ?? "---";
+            (_type.text, _image.style.unityBackgroundImageTintColor) = currentRoute.GetAbbreviation();
         }
 
-        private void Update()
+        public bool Update()
         {
             if (_cancellationToken.IsCancellationRequested)
-                Destroy(gameObject);
-            else
-                UpdatePosition();
+                return false;
+            UpdatePosition();
+            return true;
         }
 
         private void UpdatePosition()
         {
-            _assembly.FrontModule.Transform.GetLocalPositionAndRotation(out var pos, out var rot);
-            var position = _anchor.InverseTransformPoint(pos);
+            Assembly.FrontModule.Transform.GetLocalPositionAndRotation(out var pos, out var rot);
             var rotation = rot.eulerAngles.y;
-            if (_assembly.Reverse)
+            if (Assembly.Reverse)
                 rotation += 180;
-            _this.anchoredPosition = new Vector2(position.x * Scale, position.z * Scale);
-            point.eulerAngles = new Vector3(0, 0, -rotation);
-            if (!_assembly.didStart || !_assembly.Parent.TryGetVaulter(out var vaulter))
+            Element.style.translate = _view.GetAnchored(pos);
+            _image.style.rotate = new Rotate(rotation, Vector3.forward);
+            if (!Assembly.didStart || !Assembly.Parent.TryGetVaulter(out var vaulter))
                 return;
             var currentRoute = vaulter.Route;
             if (currentRoute != _previousRoute)

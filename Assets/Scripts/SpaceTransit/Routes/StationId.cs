@@ -20,6 +20,10 @@ namespace SpaceTransit.Routes
         [InspectorName("Lines")]
         private string[] lineNames;
 
+        [SerializeField]
+        [HideInInspector]
+        public Vector3 position;
+
         public ReadOnlySpan<string> Lines => lineNames;
 
         private void OnValidate()
