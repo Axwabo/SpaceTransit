@@ -17,7 +17,7 @@ namespace SpaceTransit.Stations
         protected override void Bind(VisualElement element, DepartureEntry entry) => Apply(
             element,
             entry.Route.Type,
-            entry.Route.Origin.Station.name,
+            entry.Route.Destination.Station.name,
             entry.Departure.Departure.Value,
             entry.Departure.DockIndex
         );
