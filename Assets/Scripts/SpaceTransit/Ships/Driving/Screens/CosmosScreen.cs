@@ -54,7 +54,11 @@ namespace SpaceTransit.Ships.Driving.Screens
             if (tube.TryGetEntryEnsurer(Assembly.Reverse, out var ensurer))
                 UpdateEntries(ensurer);
             else if (!_entering || !_entering.IsUsedOnlyBy(Assembly))
+            {
                 _entryList.Clear();
+                _entryList.Text = "";
+            }
+
             if (_exiting && tube is not Dock)
                 _exitList.Clear();
         }
@@ -101,8 +105,8 @@ namespace SpaceTransit.Ships.Driving.Screens
                 _entryList.Source.Add(new EntryPicker(entry));
             _entryList.Source.Sort((a, b) => a.Entry.Dock.Index - b.Entry.Dock.Index);
             _entryList.Refresh();
-            _entryList.Text = "Enter Dock";
             _entryList.SetVisibility(true);
+            _entryList.Text = "Enter Dock";
             _current = _entryList;
         }
 
