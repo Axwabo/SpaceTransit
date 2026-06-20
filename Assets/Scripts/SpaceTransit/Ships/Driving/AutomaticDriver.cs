@@ -143,10 +143,10 @@ namespace SpaceTransit.Ships.Driving
                 return;
             }
 
-            var cosmos = Assembly.FrontModule.Cosmos;
-            if (cosmos.isActiveAndEnabled)
+            var list = Assembly.FrontModule.Cosmos.EntryList;
+            if (list.isActiveAndEnabled)
             {
-                _entryRequested = cosmos.SelectDock(arrival.DockIndex);
+                _entryRequested = list.SelectDock(arrival.DockIndex);
                 return;
             }
 

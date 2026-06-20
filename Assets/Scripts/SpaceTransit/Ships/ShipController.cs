@@ -110,7 +110,7 @@ namespace SpaceTransit.Ships
                 Destroy(gameObject);
             else if (exit.Lock(Assembly))
             {
-                Assembly.FrontModule.ExitList.Mark(exit);
+                Assembly.FrontModule.Cosmos.ExitList.Mark(exit);
                 State = ShipState.WaitingForDeparture;
                 TimeToDeparture = 0;
             }
@@ -156,7 +156,7 @@ namespace SpaceTransit.Ships
 
         private bool TryGetExit(out Exit exit)
         {
-            var list = Assembly.FrontModule.ExitList;
+            var list = Assembly.FrontModule.Cosmos.ExitList;
             if (list.TryGetPicked(out exit))
                 return true;
             if (!TryGetVaulter(out var controller)

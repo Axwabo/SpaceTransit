@@ -10,9 +10,9 @@ namespace SpaceTransit.Ships.Driving.Screens
     public sealed class CosmosScreen : ModuleUIComponent, ICullingListener
     {
 
-        private EntryList _entryList;
+        public EntryList EntryList { get; private set; }
 
-        private ExitList _exitList;
+        public ExitList ExitList { get; private set; }
 
         private Label _text;
 
@@ -20,7 +20,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private Entry _entering;
 
-        private bool _exiting;
+        private bool _wasInDock;
 
         private ScreenBase _current;
 
@@ -29,8 +29,8 @@ namespace SpaceTransit.Ships.Driving.Screens
         protected override void Awake()
         {
             base.Awake();
-            _entryList = GetComponent<EntryList>();
-            _exitList = GetComponent<ExitList>();
+            EntryList = GetComponent<EntryList>();
+            ExitList = GetComponent<ExitList>();
         }
 
         private void OnEnable()
@@ -44,8 +44,8 @@ namespace SpaceTransit.Ships.Driving.Screens
         private void OnDisable()
         {
             _root?.SetVisibility(false);
-            _entryList.SetVisibility(false);
-            _exitList.SetVisibility(false);
+            EntryList.SetVisibility(false);
+            ExitList.SetVisibility(false);
         }
 
         private void Update()
@@ -55,22 +55,31 @@ namespace SpaceTransit.Ships.Driving.Screens
                 UpdateEntries(ensurer);
             else if (!_entering || !_entering.IsUsedOnlyBy(Assembly))
             {
-                _entryList.Clear();
-                _entryList.Text = "";
+                EntryList.Clear();
+                EntryList.Text = "";
             }
 
-            if (_exiting && tube is not Dock)
-                _exitList.Clear();
+            var inDock = tube is Dock;
+            if (_wasInDock && !inDock)
+            {
+                ExitList.Clear();
+                ExitList.Text = "";
+                if (EntryList.Source.Count == 0)
+                    _text.text = "";
+            }
+
+            _wasInDock = inDock;
         }
 
         protected override void Initialize(VisualElement root)
         {
             _root = root;
             _text = root.Q<Label>("Station");
-            _entryList.Initialize();
-            _exitList.Initialize();
-            _entryList.SetVisibility(false);
-            _exitList.SetVisibility(false);
+            EntryList.Initialize();
+            ExitList.Initialize();
+            EntryList.SetVisibility(false);
+            ExitList.SetVisibility(false);
+            OnStateChanged();
         }
 
         public void Select(int index)
@@ -81,14 +90,13 @@ namespace SpaceTransit.Ships.Driving.Screens
             _current.Confirm();
         }
 
-        public bool SelectDock(int dockIndex) => _entryList.CanPick && isActiveAndEnabled && _entryList.Select(dockIndex);
-
         public override void OnStateChanged()
         {
-            if (State == ShipState.Docked)
-            {
-                _previousStation = null;
-            }
+            if (State != ShipState.Docked)
+                return;
+            _previousStation = null;
+            if (Assembly.FrontModule.Thruster.Tube is Dock dock)
+                UpdateExits(dock);
         }
 
         private void UpdateEntries(EntryEnsurer ensurer)
@@ -100,17 +108,35 @@ namespace SpaceTransit.Ships.Driving.Screens
                 return;
             _text.text = station.name;
             _previousStation = station;
-            _entryList.Source.Clear();
+            EntryList.Source.Clear();
             foreach (var entry in ensurer.Entries)
-                _entryList.Source.Add(new EntryPicker(entry));
-            _entryList.Source.Sort((a, b) => a.Entry.Dock.Index - b.Entry.Dock.Index);
-            _entryList.Refresh();
-            _entryList.SetVisibility(true);
-            _entryList.Text = "Enter Dock";
-            _current = _entryList;
+                EntryList.Source.Add(new EntryPicker(entry));
+            EntryList.Source.Sort((a, b) => a.Entry.Dock.Index - b.Entry.Dock.Index);
+            EntryList.Refresh();
+            EntryList.SetVisibility(true);
+            EntryList.Text = "Enter Dock";
+            _current = EntryList;
         }
 
-        public void OnEntrySelected(Entry entry) => _entering = entry;
+        private void UpdateExits(Dock dock)
+        {
+            _text.text = dock.Station.Name;
+            ExitList.Source.Clear();
+            foreach (var exit in dock.FrontExits)
+                ExitList.Source.Add(new ExitPicker(exit));
+            foreach (var exit in dock.BackExits)
+                ExitList.Source.Add(new ExitPicker(exit));
+            ExitList.Refresh();
+            ExitList.SetVisibility(true);
+            ExitList.Text = "Exit Towards";
+            _current = ExitList;
+        }
+
+        public void OnEntrySelected(Entry entry)
+        {
+            _entering = entry;
+            UpdateExits(entry.Dock);
+        }
 
     }
 

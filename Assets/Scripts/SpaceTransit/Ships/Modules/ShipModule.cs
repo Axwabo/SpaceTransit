@@ -54,8 +54,6 @@ namespace SpaceTransit.Ships.Modules
 
         public CosmosScreen Cosmos => _components.OfType<CosmosScreen>().First();
 
-        public ExitListManager ExitList => _components.OfType<ExitListManager>().First();
-
     }
 
 }

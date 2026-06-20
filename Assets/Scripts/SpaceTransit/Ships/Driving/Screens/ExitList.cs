@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SpaceTransit.Cosmos;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace SpaceTransit.Ships.Driving.Screens
@@ -43,12 +44,49 @@ namespace SpaceTransit.Ships.Driving.Screens
         {
             base.SetVisibility(visible);
             _text?.SetVisibility(visible);
+            enabled = visible;
         }
 
-        public override void Refresh()
+        public void Mark(Exit exit)
         {
-            base.Refresh();
-            SetVisibility(Source.Count != 0);
+            if (!isActiveAndEnabled || Source.Count == 0)
+                return;
+            for (var i = 0; i < Source.Count; i++)
+            {
+                var picker = Source[i];
+                if (picker.Exit != exit)
+                    continue;
+                picker.Success = true;
+                List.RefreshItem(i);
+                Text = "Exiting Towards";
+                break;
+            }
+        }
+
+        public bool TryGetPicked(out Exit exit)
+        {
+            if (!isActiveAndEnabled)
+            {
+                exit = null;
+                return false;
+            }
+
+            foreach (var picker in Source)
+            {
+                if (!picker.Success)
+                    continue;
+                exit = picker.Exit;
+                return true;
+            }
+
+            if (Selected != -1)
+            {
+                exit = Source[Selected].Exit;
+                return true;
+            }
+
+            exit = null;
+            return false;
         }
 
     }

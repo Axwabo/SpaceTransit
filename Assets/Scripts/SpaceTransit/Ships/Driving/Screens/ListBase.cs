@@ -14,7 +14,7 @@ namespace SpaceTransit.Ships.Driving.Screens
         public int Selected
         {
             get => List.selectedIndex;
-            private set => List.selectedIndex = value;
+            protected set => List.selectedIndex = value;
         }
 
         protected override void Initialize(VisualElement root)
