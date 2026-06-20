@@ -18,6 +18,10 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private StationId _previousStation;
 
+        private Entry _entering;
+
+        private bool _exiting;
+
         private ScreenBase _current;
 
         private VisualElement _root;
@@ -48,12 +52,11 @@ namespace SpaceTransit.Ships.Driving.Screens
         {
             var tube = Assembly.FrontModule.Thruster.Tube;
             if (tube.TryGetEntryEnsurer(Assembly.Reverse, out var ensurer))
-                UpdateStation(ensurer);
-            else if (_entryList.Source.Count != 0)
-            {
+                UpdateEntries(ensurer);
+            else if (!_entering || !_entering.IsUsedOnlyBy(Assembly))
                 _entryList.Clear();
-                _entryList.SetVisibility(false);
-            }
+            if (_exiting && tube is not Dock)
+                _exitList.Clear();
         }
 
         protected override void Initialize(VisualElement root)
@@ -62,6 +65,8 @@ namespace SpaceTransit.Ships.Driving.Screens
             _text = root.Q<Label>("Station");
             _entryList.Initialize();
             _exitList.Initialize();
+            _entryList.SetVisibility(false);
+            _exitList.SetVisibility(false);
         }
 
         public void Select(int index)
@@ -82,7 +87,7 @@ namespace SpaceTransit.Ships.Driving.Screens
             }
         }
 
-        private void UpdateStation(EntryEnsurer ensurer)
+        private void UpdateEntries(EntryEnsurer ensurer)
         {
             if (LoadingProgress.Current != null || ensurer.Entries.Count == 0)
                 return;
@@ -100,6 +105,8 @@ namespace SpaceTransit.Ships.Driving.Screens
             _entryList.SetVisibility(true);
             _current = _entryList;
         }
+
+        public void OnEntrySelected(Entry entry) => _entering = entry;
 
     }
 

@@ -50,7 +50,7 @@ namespace SpaceTransit.Ships.Driving.Screens
             Refresh();
         }
 
-        public void Refresh() => List.RefreshItems();
+        public virtual void Refresh() => List.RefreshItems();
 
     }
 

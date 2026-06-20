@@ -45,6 +45,12 @@ namespace SpaceTransit.Ships.Driving.Screens
             _text?.SetVisibility(visible);
         }
 
+        public override void Refresh()
+        {
+            base.Refresh();
+            SetVisibility(Source.Count != 0);
+        }
+
     }
 
 }

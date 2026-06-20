@@ -37,8 +37,10 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         protected override void Select(EntryPicker item)
         {
-            if (!HasPicked && _manager.Assembly.Lock(item))
-                Text = "Entering Dock";
+            if (HasPicked || !_manager.Assembly.Lock(item))
+                return;
+            Text = "Entering Dock";
+            _manager.OnEntrySelected(item.Entry);
         }
 
         protected override string GetContent(EntryPicker item) => $"{item.Entry.Dock.Index + 1}";
@@ -47,6 +49,12 @@ namespace SpaceTransit.Ships.Driving.Screens
         {
             base.SetVisibility(visible);
             _text?.SetVisibility(visible);
+        }
+
+        public override void Refresh()
+        {
+            base.Refresh();
+            SetVisibility(Source.Count != 0);
         }
 
     }
