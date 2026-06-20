@@ -85,7 +85,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         public override void Confirm() => Select(Selected);
 
-        public override void SetVisibility(bool visible) => List.SetVisibility(visible);
+        public override void SetVisibility(bool visible) => List?.SetVisibility(visible);
 
     }
 
