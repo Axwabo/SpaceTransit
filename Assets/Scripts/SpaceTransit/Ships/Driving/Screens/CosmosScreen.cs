@@ -1,5 +1,4 @@
-﻿using SpaceTransit.Routes;
-using SpaceTransit.Ships.Modules.Displays;
+﻿using SpaceTransit.Ships.Modules.Displays;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -21,8 +20,6 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private VisualElement _root;
 
-        private bool _disabled;
-
         private bool _exitsShown = true;
 
         private void OnEnable()
@@ -30,7 +27,8 @@ namespace SpaceTransit.Ships.Driving.Screens
             if (_root == null)
                 return;
             _root.SetVisibility(true);
-            ForceShow(_exitsShown);
+            dockList.enabled = true;
+            exitList.enabled = true;
         }
 
         private void OnDisable()
@@ -40,39 +38,16 @@ namespace SpaceTransit.Ships.Driving.Screens
             exitList.enabled = false;
         }
 
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-            ForceShow(true);
-        }
-
         protected override void Initialize(VisualElement root)
         {
             _root = root;
             _text = root.Q<Label>("Title");
         }
 
-        public override void OnStateChanged() => Show(Assembly.FrontModule.Thruster.Tube is Dock && Controller.State is ShipState.Docked or ShipState.WaitingForDeparture);
-
         public void Select(int index)
         {
             _current.Select(index);
             _current.Confirm();
-        }
-
-        private void ForceShow(bool exits)
-        {
-            _current = exits ? exitList.Screen : dockList.Screen;
-            _text.text = exits ? "Exit Towards" : "Enter Dock";
-            _exitsShown = exits;
-            dockList.enabled = !exits;
-            exitList.enabled = exits;
-        }
-
-        public void Show(bool exits)
-        {
-            if (_exitsShown != exits)
-                ForceShow(exits);
         }
 
     }
