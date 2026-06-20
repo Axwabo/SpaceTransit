@@ -11,7 +11,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         public List<T> Source { get; } = new();
 
-        protected int Selected
+        public int Selected
         {
             get => List.selectedIndex;
             private set => List.selectedIndex = value;
@@ -28,7 +28,7 @@ namespace SpaceTransit.Ships.Driving.Screens
             }
         }
 
-        protected bool CanPick => Source.Count != 0 && !HasPicked;
+        public bool CanPick => Source.Count != 0 && !HasPicked;
 
         protected override void Initialize(VisualElement root)
         {

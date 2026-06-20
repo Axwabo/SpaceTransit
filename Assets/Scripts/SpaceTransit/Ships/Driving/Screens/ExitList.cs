@@ -1,97 +1,26 @@
-﻿using System.Collections.Generic;
-using SpaceTransit.Cosmos;
-using SpaceTransit.Routes;
+﻿using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace SpaceTransit.Ships.Driving.Screens
 {
 
-    public sealed class ExitList : ListBase<Exit, PickablePicker>
+    [RequireComponent(typeof(ExitListManager))]
+    public sealed class ExitList : ListBase<ExitPicker>
     {
+
+        private ExitListManager _manager;
 
         private bool _loaded;
 
-        private void OnEnable()
+        private void Awake() => _manager = GetComponent<ExitListManager>();
+
+        protected override void Select(ExitPicker item)
         {
-            if (!Parent)
-                return;
-            _loaded = true;
-            OnStateChanged();
+            if (!HasPicked && _manager.State == ShipState.Docked)
+                _manager.Assembly.Lock(item);
         }
 
-        private void Update()
-        {
-            if (_loaded)
-                return;
-            _loaded = true;
-            UpdateList();
-        }
-
-        public override void OnStateChanged()
-        {
-            Source.Clear();
-            Clear();
-            if (State == ShipState.Docked)
-                UpdateList();
-        }
-
-        private void UpdateList()
-        {
-            if (Assembly.FrontModule.Thruster.Tube is not Dock dock)
-                return;
-            Source.AddRange(dock.FrontExits);
-            Source.AddRange(dock.BackExits);
-            SetUp();
-        }
-
-        protected override List<Exit> Source { get; } = new();
-
-        protected override bool Select(Exit item, PickablePicker picker)
-        {
-            if (HasPicked || State != ShipState.Docked)
-                return false;
-            picker.Pick(item.Lock(Assembly));
-            return true;
-        }
-
-        protected override string GetContent(Exit item) => item.Connected.name;
-
-        public void Mark(Exit exit)
-        {
-            if (!isActiveAndEnabled || Pickers.Count == 0)
-                return;
-            var index = Source.IndexOf(exit);
-            if (index != -1)
-                Pickers[index].Pick(true);
-        }
-
-        public bool TryGetPicked(out Exit exit)
-        {
-            if (!isActiveAndEnabled)
-            {
-                exit = null;
-                return false;
-            }
-
-            for (var i = 0; i < Pickers.Count; i++)
-            {
-                if (!Pickers[i].Picked)
-                    continue;
-                exit = Source[i];
-                return true;
-            }
-
-            for (var i = 0; i < Pickers.Count; i++)
-            {
-                if (!Pickers[i].Selected)
-                    continue;
-                exit = Source[i];
-                return true;
-            }
-
-            exit = null;
-            return false;
-        }
+        protected override string GetContent(ExitPicker item) => item.Exit.Connected.name;
 
         protected override ListView GetListView(VisualElement root) => root.Q<ListView>("Exits");
 
