@@ -44,6 +44,8 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         public void Clear()
         {
+            if (Source.Count == 0)
+                return;
             Source.Clear();
             Refresh();
         }
