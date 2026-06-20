@@ -33,7 +33,12 @@ namespace SpaceTransit.Vaulter
             Show(_routesShown, true);
         }
 
-        private void OnDisable() => _root?.SetVisibility(false);
+        private void OnDisable()
+        {
+            _root?.SetVisibility(false);
+            routes.enabled = false;
+            stops.enabled = false;
+        }
 
         private void Update()
         {
@@ -51,21 +56,7 @@ namespace SpaceTransit.Vaulter
             _title = _root.Q<Label>("Title");
         }
 
-        public override void OnRouteChanged()
-        {
-            Show(IsInService, false);
-            if (!IsInService)
-            {
-                ShowRoutes();
-                return;
-            }
-
-            _routesShown = false;
-            routes.enabled = false;
-            stops.enabled = true;
-            _title.text = $"{Parent.Route.name} {Parent.Route.Summary()}";
-            _current = stops.Screen;
-        }
+        public override void OnRouteChanged() => Show(IsInService, false);
 
         private void Show(bool showRoutes, bool force)
         {
@@ -76,14 +67,6 @@ namespace SpaceTransit.Vaulter
             _title.text = showRoutes ? "Pick a  Route" : $"{Parent.Route.name} {Parent.Route.Summary()}";
             routes.enabled = showRoutes;
             stops.enabled = !showRoutes;
-        }
-
-        private void ShowRoutes()
-        {
-            routes.enabled = true;
-            stops.enabled = false;
-            _title.text = "Pick a Route";
-            _current = routes.Screen;
         }
 
         public void Navigate(bool forwards) => _current.Navigate(forwards);

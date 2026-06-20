@@ -40,6 +40,7 @@ namespace SpaceTransit.Ships.Driving.Screens
         {
             if (Assembly.FrontModule.Thruster.Tube is not Dock dock)
                 return;
+            Screen.Source.Clear();
             foreach (var exit in dock.FrontExits)
                 Screen.Source.Add(new ExitPicker(exit));
             foreach (var exit in dock.BackExits)
