@@ -29,6 +29,8 @@ namespace SpaceTransit.Stations
 
         private readonly Dictionary<RouteDescriptor, int> _announced = new();
 
+        private readonly List<(ShipAssembly, int)> _departing = new();
+
         private readonly List<(ShipAssembly, int)> _passingThrough = new();
 
         private List<DepartureEntry> _departures;
@@ -43,7 +45,11 @@ namespace SpaceTransit.Stations
             _cache = GetComponentInParent<DeparturesArrivals>();
         }
 
-        private void OnEnable() => _passingThrough.Clear();
+        private void OnEnable()
+        {
+            _departing.Clear();
+            _passingThrough.Clear();
+        }
 
         private void Start()
         {
@@ -63,7 +69,7 @@ namespace SpaceTransit.Stations
 
         private void Update()
         {
-            if (_queue.IsYapping || AnnouncePassingThrough())
+            if (_queue.IsYapping || AnnounceDeparting() || AnnouncePassingThrough())
                 return;
             foreach (var (route, index, arrival) in _arrivals)
             {
@@ -99,6 +105,20 @@ namespace SpaceTransit.Stations
             _queue.Delay(3);
         }
 
+        private bool AnnounceDeparting()
+        {
+            _departing.RemoveAll(static e => !e.Item1);
+            if (_departing.Count == 0)
+                return false;
+            var announcement = $"A ship is departing from dock {_departing[0].Item2 + 1}, please stand back from the platform edge.";
+            _queue.EnqueueWithSubtitles(_name, announcement, pack, genericSignal);
+            _queue.Delay(1);
+            _queue.EnqueueWithSubtitles(_name, announcement, pack);
+            _queue.Delay(1);
+            _departing.RemoveAt(0);
+            return true;
+        }
+
         private bool AnnouncePassingThrough()
         {
             _passingThrough.RemoveAll(static e => !e.Item1);
@@ -109,6 +129,8 @@ namespace SpaceTransit.Stations
             _passingThrough.RemoveAt(0);
             return true;
         }
+
+        public void EnqueueDeparting(ShipAssembly assembly, int dockIndex) => _departing.Add((assembly, dockIndex));
 
         public void EnqueuePassingThrough(ShipAssembly assembly, int dockIndex) => _passingThrough.Add((assembly, dockIndex));
 

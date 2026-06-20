@@ -100,6 +100,7 @@ namespace SpaceTransit.Ships
                 return;
             if (State != ShipState.Docked)
                 throw new InvalidOperationException("Cannot depart while not docked");
+            NotifyDeparture();
             if (!TryGetExit(out var exit))
             {
                 State = ShipState.WaitingForDeparture;
@@ -113,6 +114,14 @@ namespace SpaceTransit.Ships
                 State = ShipState.WaitingForDeparture;
                 TimeToDeparture = 0;
             }
+        }
+
+        private void NotifyDeparture()
+        {
+            if (!TryGetVaulter(out var vaulter) || Assembly.FrontModule.Thruster.Tube is not Dock dock)
+                return;
+            if (!vaulter.IsInService || vaulter.Stop.Station != dock.Station.ID)
+                dock.Station.Announcer.EnqueueDeparting(Assembly, dock.Index);
         }
 
         public void Land()
