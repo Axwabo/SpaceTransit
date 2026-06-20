@@ -31,26 +31,19 @@ namespace SpaceTransit
 
         public static TubeBase NextTube(this ShipAssembly assembly) => assembly.FrontModule.Thruster.Tube.Next(assembly.Reverse);
 
-        public static void Lock(this ShipAssembly assembly, PickerBase picker)
+        public static bool Lock(this ShipAssembly assembly, PickerBase picker) => picker switch
         {
-            switch (picker)
-            {
-                case EntryPicker entryPicker:
-                    Lock(assembly, picker, entryPicker.Entry);
-                    break;
-                case ExitPicker exitPicker:
-                    Lock(assembly, picker, exitPicker.Exit);
-                    break;
-                default:
-                    throw new InvalidOperationException();
-            }
-        }
+            EntryPicker entryPicker => Lock(assembly, picker, entryPicker.Entry),
+            ExitPicker exitPicker => Lock(assembly, picker, exitPicker.Exit),
+            _ => throw new InvalidOperationException()
+        };
 
-        private static void Lock(ShipAssembly assembly, PickerBase picker, EntryOrExit exit)
+        private static bool Lock(ShipAssembly assembly, PickerBase picker, EntryOrExit exit)
         {
             var locked = exit.Lock(assembly);
             picker.Success = locked;
             picker.Failure = !locked;
+            return locked;
         }
 
         public static bool ShouldAnnounceNonScheduled(this ShipAssembly assembly, StationId stationId)

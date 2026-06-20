@@ -10,7 +10,15 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private EntryListManager _manager;
 
+        private Label _text;
+
         private void Awake() => _manager = GetComponent<EntryListManager>();
+
+        protected override void Initialize(VisualElement root)
+        {
+            base.Initialize(root);
+            _text = root.Q<Label>("EnterTitle");
+        }
 
         protected override ListView GetListView(VisualElement root) => root.Q<ListView>("Entries");
 
@@ -24,11 +32,22 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         protected override void Select(EntryPicker item)
         {
-            if (!HasPicked)
-                _manager.Assembly.Lock(item);
+            if (!HasPicked && _manager.Assembly.Lock(item))
+                _text.text = "Entering Dock";
         }
 
         protected override string GetContent(EntryPicker item) => $"{item.Entry.Dock.Index + 1}";
+
+        public override void Refresh()
+        {
+            base.Refresh();
+        }
+
+        public override void SetVisibility(bool visible)
+        {
+            base.SetVisibility(visible);
+            _text?.SetVisibility(visible);
+        }
 
     }
 

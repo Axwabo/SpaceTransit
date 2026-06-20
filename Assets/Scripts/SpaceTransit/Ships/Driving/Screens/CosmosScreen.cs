@@ -22,6 +22,11 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private bool _exitsShown = true;
 
+        protected override void Awake()
+        {
+            base.Awake();
+        }
+
         private void OnEnable()
         {
             if (_root == null)
@@ -41,7 +46,7 @@ namespace SpaceTransit.Ships.Driving.Screens
         protected override void Initialize(VisualElement root)
         {
             _root = root;
-            _text = root.Q<Label>("Title");
+            _text = root.Q<Label>("StationTitle");
         }
 
         public void Select(int index)
