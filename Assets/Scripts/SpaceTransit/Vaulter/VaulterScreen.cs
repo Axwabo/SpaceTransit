@@ -21,7 +21,7 @@ namespace SpaceTransit.Vaulter
 
         private ScreenBase _current;
 
-        private bool _routesShown = true;
+        private bool _routesShown;
 
         private VisualElement _root;
 
@@ -30,7 +30,7 @@ namespace SpaceTransit.Vaulter
             if (_root == null)
                 return;
             _root.SetVisibility(true);
-            Show(_routesShown, true);
+            Show(IsInService, true);
         }
 
         private void OnDisable()
