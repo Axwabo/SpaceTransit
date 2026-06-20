@@ -56,7 +56,7 @@ namespace SpaceTransit.Vaulter
             _title = _root.Q<Label>("Title");
         }
 
-        public override void OnRouteChanged() => Show(IsInService, false);
+        public override void OnRouteChanged() => Show(!IsInService, false);
 
         private void Show(bool showRoutes, bool force)
         {
