@@ -4,15 +4,20 @@ using UnityEngine.UIElements;
 namespace SpaceTransit.Ships.Driving.Screens
 {
 
-    [RequireComponent(typeof(EntryListManager))]
+    [RequireComponent(typeof(CosmosScreen))]
     public sealed class EntryList : PickableList<EntryPicker>
     {
 
-        private EntryListManager _manager;
+        private CosmosScreen _manager;
 
         private Label _text;
 
-        private void Awake() => _manager = GetComponent<EntryListManager>();
+        public string Text
+        {
+            set => _text.text = value;
+        }
+
+        private void Awake() => _manager = GetComponent<CosmosScreen>();
 
         protected override void Initialize(VisualElement root)
         {
@@ -33,15 +38,10 @@ namespace SpaceTransit.Ships.Driving.Screens
         protected override void Select(EntryPicker item)
         {
             if (!HasPicked && _manager.Assembly.Lock(item))
-                _text.text = "Entering Dock";
+                Text = "Entering Dock";
         }
 
         protected override string GetContent(EntryPicker item) => $"{item.Entry.Dock.Index + 1}";
-
-        public override void Refresh()
-        {
-            base.Refresh();
-        }
 
         public override void SetVisibility(bool visible)
         {

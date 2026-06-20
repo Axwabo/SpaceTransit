@@ -4,24 +4,29 @@ using UnityEngine.UIElements;
 namespace SpaceTransit.Ships.Driving.Screens
 {
 
-    [RequireComponent(typeof(ExitListManager))]
+    [RequireComponent(typeof(CosmosScreen))]
     public sealed class ExitList : PickableList<ExitPicker>
     {
 
-        private ExitListManager _manager;
+        private CosmosScreen _screen;
 
         private bool _loaded;
 
         private Label _text;
 
-        private void Awake() => _manager = GetComponent<ExitListManager>();
+        public string Text
+        {
+            set => _text.text = value;
+        }
+
+        private void Awake() => _screen = GetComponent<CosmosScreen>();
 
         protected override void Select(ExitPicker item)
         {
-            if (HasPicked || _manager.State != ShipState.Docked)
+            if (HasPicked || _screen.State != ShipState.Docked)
                 return;
-            if (_manager.Assembly.Lock(item))
-                _text.text = "Exiting Towards";
+            if (_screen.Assembly.Lock(item))
+                Text = "Exiting Towards";
         }
 
         protected override string GetContent(ExitPicker item) => item.Exit.Connected.name;
@@ -32,12 +37,6 @@ namespace SpaceTransit.Ships.Driving.Screens
         {
             base.Initialize(root);
             _text = root.Q<Label>("ExitTitle");
-        }
-
-        public override void Refresh()
-        {
-            base.Refresh();
-            _text.text = "Exit Towards";
         }
 
         public override void SetVisibility(bool visible)

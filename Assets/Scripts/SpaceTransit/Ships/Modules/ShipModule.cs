@@ -52,7 +52,7 @@ namespace SpaceTransit.Ships.Modules
                 component.OnStateChanged();
         }
 
-        public EntryListManager EntryList => _components.OfType<EntryListManager>().First();
+        public CosmosScreen Cosmos => _components.OfType<CosmosScreen>().First();
 
         public ExitListManager ExitList => _components.OfType<ExitListManager>().First();
 
