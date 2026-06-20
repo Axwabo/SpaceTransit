@@ -783,6 +783,8 @@ GameObject:
   - component: {fileID: 5447839220280176271}
   - component: {fileID: 2598670258856049409}
   - component: {fileID: 2521855509382076208}
+  - component: {fileID: 6105563922975167229}
+  - component: {fileID: 2499327417794575141}
   m_Layer: 0
   m_Name: COSMOS
   m_TagString: Untagged
@@ -901,8 +903,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 871e6d63258d42778bd7ed6c8495bf4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Driving.Screens.ScreenSlot
-  dockList: {fileID: 5447839220280176271}
-  exitList: {fileID: 8409751743089852759}
+  dockList: {fileID: 2499327417794575141}
+  exitList: {fileID: 6105563922975167229}
+--- !u!114 &6105563922975167229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2469828175633104415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2c326b01f3b4566868afe253b0eb3c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Driving.Screens.ExitListManager
+--- !u!114 &2499327417794575141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2469828175633104415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a4d5d3f98543b384e31f60ea0df376, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Driving.Screens.EntryListManager
 --- !u!1 &2935084724426344055
 GameObject:
   m_ObjectHideFlags: 0
@@ -2812,6 +2838,8 @@ GameObject:
   - component: {fileID: 1867016098831946073}
   - component: {fileID: 138153279631409443}
   - component: {fileID: 743270439328079125}
+  - component: {fileID: 51655828343121604}
+  - component: {fileID: 8872148581606846881}
   m_Layer: 0
   m_Name: Vaulter
   m_TagString: Untagged
@@ -2906,8 +2934,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c625dd83bec940348b74d195f2041118, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Vaulter.VaulterScreen
-  routes: {fileID: 138153279631409443}
-  stops: {fileID: 1867016098831946073}
+  routes: {fileID: 8872148581606846881}
+  stops: {fileID: 51655828343121604}
+--- !u!114 &51655828343121604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7991320967782111893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e393670049f407f9a1d0f596008400a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Vaulter.StopListManager
+--- !u!114 &8872148581606846881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7991320967782111893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3ba279cc65149fbab665bdb12828199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Ships.Driving.Screens.RouteListManager
 --- !u!1 &8216697829556654595
 GameObject:
   m_ObjectHideFlags: 0

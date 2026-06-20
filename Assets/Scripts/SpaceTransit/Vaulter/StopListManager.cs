@@ -17,6 +17,12 @@ namespace SpaceTransit.Vaulter
             Screen = GetComponent<StopList>();
         }
 
+        private void OnEnable() => Screen.SetVisibility(false);
+
+        private void OnDisable() => Screen.SetVisibility(false);
+
+        protected override void OnInitialized() => Screen.Initialize();
+
         public override void OnRouteChanged()
         {
             RefreshStops();

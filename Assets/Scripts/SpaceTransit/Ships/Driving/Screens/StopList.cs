@@ -35,11 +35,19 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         protected override void BindItem(VisualElement element, int i) => Bind(Source, element, i);
 
-        public override void Navigate(bool forwards) => _scrollView.scrollOffset += new Vector2(0, List.fixedItemHeight * (forwards ? -1 : 1));
+        public override void Navigate(bool forwards)
+        {
+            if (_scrollView != null)
+                _scrollView.scrollOffset += new Vector2(0, List.fixedItemHeight * (forwards ? -1 : 1));
+        }
 
         public override void Confirm() => ResetPosition();
 
-        public void ResetPosition() => _scrollView.scrollOffset = Vector2.zero;
+        public void ResetPosition()
+        {
+            if (_scrollView != null)
+                _scrollView.scrollOffset = Vector2.zero;
+        }
 
     }
 
