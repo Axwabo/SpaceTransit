@@ -17,7 +17,7 @@ namespace SpaceTransit.Vaulter
             Screen = GetComponent<StopList>();
         }
 
-        private void OnEnable() => Screen.SetVisibility(false);
+        private void OnEnable() => Screen.SetVisibility(true);
 
         private void OnDisable() => Screen.SetVisibility(false);
 
