@@ -6,7 +6,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 {
 
     [RequireComponent(typeof(RouteListManager))]
-    public sealed class RouteList : ListBase<RoutePicker>
+    public sealed class RouteList : PickableList<RoutePicker>
     {
 
         private RouteListManager _manager;

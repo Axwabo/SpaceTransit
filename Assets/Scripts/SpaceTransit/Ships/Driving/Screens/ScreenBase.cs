@@ -23,7 +23,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         public abstract void Confirm();
 
-        public abstract bool Select(int index);
+        public virtual bool Select(int index) => false;
 
         public abstract void SetVisibility(bool visible);
 

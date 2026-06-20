@@ -6,14 +6,14 @@ using UnityEngine.UIElements;
 namespace SpaceTransit.Ships.Driving.Screens
 {
 
-    public sealed class ScreenSlot : ModuleUIComponent, ICullingListener
+    public sealed class CosmosScreen : ModuleUIComponent, ICullingListener
     {
 
         [SerializeField]
-        private ScreenBase dockList;
+        private EntryListManager dockList;
 
         [SerializeField]
-        private ScreenBase exitList;
+        private ExitListManager exitList;
 
         private Label _text;
 
@@ -25,27 +25,31 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private bool _exitsShown = true;
 
-        protected override void Awake()
+        private void OnEnable()
         {
-            base.Awake();
-            _current = exitList;
+            if (_root == null)
+                return;
+            _root.SetVisibility(true);
+            ForceShow(_exitsShown);
         }
 
-        private void OnEnable() => _root?.SetVisibility(true);
-
-        private void OnDisable() => _root?.SetVisibility(false);
+        private void OnDisable()
+        {
+            _root?.SetVisibility(false);
+            dockList.enabled = false;
+            exitList.enabled = false;
+        }
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            dockList.SetVisibility(false);
+            ForceShow(true);
         }
 
         protected override void Initialize(VisualElement root)
         {
             _root = root;
             _text = root.Q<Label>("Title");
-            _text.text = "Exit Towards";
         }
 
         public override void OnStateChanged() => Show(Assembly.FrontModule.Thruster.Tube is Dock && Controller.State is ShipState.Docked or ShipState.WaitingForDeparture);
@@ -56,15 +60,19 @@ namespace SpaceTransit.Ships.Driving.Screens
             _current.Confirm();
         }
 
-        public void Show(bool exits)
+        private void ForceShow(bool exits)
         {
-            if (_exitsShown == exits)
-                return;
-            _current = exits ? exitList : dockList;
+            _current = exits ? exitList.Screen : dockList.Screen;
             _text.text = exits ? "Exit Towards" : "Enter Dock";
             _exitsShown = exits;
-            dockList.SetVisibility(!exits);
-            exitList.SetVisibility(exits);
+            dockList.enabled = !exits;
+            exitList.enabled = exits;
+        }
+
+        public void Show(bool exits)
+        {
+            if (_exitsShown != exits)
+                ForceShow(exits);
         }
 
     }

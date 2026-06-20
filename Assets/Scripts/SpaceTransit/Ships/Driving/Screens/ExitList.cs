@@ -5,7 +5,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 {
 
     [RequireComponent(typeof(ExitListManager))]
-    public sealed class ExitList : ListBase<ExitPicker>
+    public sealed class ExitList : PickableList<ExitPicker>
     {
 
         private ExitListManager _manager;

@@ -5,7 +5,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 {
 
     [RequireComponent(typeof(EntryListManager))]
-    public sealed class EntryList : ListBase<EntryPicker>
+    public sealed class EntryList : PickableList<EntryPicker>
     {
 
         private EntryListManager _manager;
