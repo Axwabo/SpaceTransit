@@ -1,5 +1,6 @@
 ﻿using System;
 using SpaceTransit.Cosmos;
+using SpaceTransit.Routes;
 using SpaceTransit.Ships;
 using SpaceTransit.Ships.Driving.Screens;
 using SpaceTransit.Tubes;
@@ -51,6 +52,11 @@ namespace SpaceTransit
             picker.Success = locked;
             picker.Failure = !locked;
         }
+
+        public static bool ShouldAnnounceNonScheduled(this ShipAssembly assembly, StationId stationId)
+            => !assembly.Parent.TryGetVaulter(out var vaulter)
+               || !vaulter.IsInService
+               || vaulter.Stop.Station != stationId;
 
     }
 

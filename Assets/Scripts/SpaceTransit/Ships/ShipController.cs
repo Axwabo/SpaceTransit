@@ -118,9 +118,7 @@ namespace SpaceTransit.Ships
 
         private void NotifyDeparture()
         {
-            if (!TryGetVaulter(out var vaulter) || Assembly.FrontModule.Thruster.Tube is not Dock dock)
-                return;
-            if (!vaulter.IsInService || vaulter.Stop.Station != dock.Station.ID)
+            if (Assembly.FrontModule.Thruster.Tube is Dock dock && Assembly.ShouldAnnounceNonScheduled(dock.Station.ID) && dock.Station.Announcer)
                 dock.Station.Announcer.EnqueueDeparting(Assembly, dock.Index);
         }
 

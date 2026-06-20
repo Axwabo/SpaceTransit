@@ -33,6 +33,8 @@ namespace SpaceTransit.Stations
 
         private readonly List<(ShipAssembly, int)> _passingThrough = new();
 
+        private readonly List<(ShipAssembly, int)> _arriving = new();
+
         private List<DepartureEntry> _departures;
 
         private List<ArrivalEntry> _arrivals;
@@ -49,6 +51,7 @@ namespace SpaceTransit.Stations
         {
             _departing.Clear();
             _passingThrough.Clear();
+            _arriving.Clear();
         }
 
         private void Start()
@@ -69,7 +72,7 @@ namespace SpaceTransit.Stations
 
         private void Update()
         {
-            if (_queue.IsYapping || AnnounceDeparting() || AnnouncePassingThrough())
+            if (_queue.IsYapping || AnnounceDeparting() || AnnouncePassingThrough() || AnnounceArriving())
                 return;
             foreach (var (route, index, arrival) in _arrivals)
             {
@@ -105,19 +108,7 @@ namespace SpaceTransit.Stations
             _queue.Delay(3);
         }
 
-        private bool AnnounceDeparting()
-        {
-            _departing.RemoveAll(static e => !e.Item1);
-            if (_departing.Count == 0)
-                return false;
-            var announcement = $"A ship is departing from dock {_departing[0].Item2 + 1}, please stand back from the platform edge.";
-            _queue.EnqueueWithSubtitles(_name, announcement, pack, genericSignal);
-            _queue.Delay(1);
-            _queue.EnqueueWithSubtitles(_name, announcement, pack);
-            _queue.Delay(1);
-            _departing.RemoveAt(0);
-            return true;
-        }
+        private bool AnnounceDeparting() => AnnounceTwice(_departing, "departing from");
 
         private bool AnnouncePassingThrough()
         {
@@ -130,9 +121,27 @@ namespace SpaceTransit.Stations
             return true;
         }
 
+        private bool AnnounceArriving() => AnnounceTwice(_arriving, "arriving at");
+
+        private bool AnnounceTwice(List<(ShipAssembly, int)> list, string action)
+        {
+            list.RemoveAll(static e => !e.Item1);
+            if (list.Count == 0)
+                return false;
+            var announcement = $"A ship is {action} dock {list[0].Item2 + 1}, please stand back from the platform edge.";
+            _queue.EnqueueWithSubtitles(_name, announcement, pack, genericSignal);
+            _queue.Delay(3);
+            _queue.EnqueueWithSubtitles(_name, announcement, pack);
+            _queue.Delay(1);
+            list.RemoveAt(0);
+            return true;
+        }
+
         public void EnqueueDeparting(ShipAssembly assembly, int dockIndex) => _departing.Add((assembly, dockIndex));
 
         public void EnqueuePassingThrough(ShipAssembly assembly, int dockIndex) => _passingThrough.Add((assembly, dockIndex));
+
+        public void EnqueueArriving(ShipAssembly assembly, int dockIndex) => _arriving.Add((assembly, dockIndex));
 
     }
 

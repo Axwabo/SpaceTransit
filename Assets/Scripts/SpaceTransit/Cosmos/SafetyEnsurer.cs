@@ -38,7 +38,7 @@ namespace SpaceTransit.Cosmos
 
         public abstract bool CanProceed(ShipAssembly assembly);
 
-        public void OnEntered(ShipModule module)
+        public virtual void OnEntered(ShipModule module)
         {
             foreach (var action in _actions)
                 action.OnEntering(module);
@@ -47,7 +47,7 @@ namespace SpaceTransit.Cosmos
                 action.OnEntered(module);
         }
 
-        public void OnExited(ShipModule module)
+        public virtual void OnExited(ShipModule module)
         {
             foreach (var action in _actions)
                 action.OnExiting(module);

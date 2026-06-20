@@ -42,7 +42,14 @@ namespace SpaceTransit.Cosmos
                 Ensurer.Entries.Add(this);
         }
 
-        public override bool Lock(ShipAssembly assembly) => !Dock.Safety.IsOccupied && base.Lock(assembly);
+        public override bool Lock(ShipAssembly assembly)
+        {
+            if (Dock.Safety.IsOccupied || !base.Lock(assembly))
+                return false;
+            if (assembly.FrontModule.Thruster.Tube.Safety == Ensurer && assembly.ShouldAnnounceNonScheduled(Dock.Station.ID))
+                Ensurer.EnqueueArriving(assembly, this);
+            return true;
+        }
 
     }
 
