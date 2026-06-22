@@ -85,6 +85,8 @@ namespace SpaceTransit.Ships
                 return;
             _liftProgress = -1;
             State = lifting ? ShipState.Sailing : ShipState.Docked;
+            if (!lifting)
+                NotifyArrival();
         }
 
         private void LateUpdate()
@@ -114,6 +116,12 @@ namespace SpaceTransit.Ships
                 State = ShipState.WaitingForDeparture;
                 TimeToDeparture = 0;
             }
+        }
+
+        private void NotifyArrival()
+        {
+            if (TryGetVaulter(out var vaulter) && vaulter.IsInService && Assembly.FrontModule.Thruster.Tube is Dock dock && dock.Station.ID == vaulter.Stop.Station && dock.Station.Announcer)
+                dock.Station.Announcer.EnqueueArrived(vaulter.Route, vaulter.Stop);
         }
 
         private void NotifyDeparture()

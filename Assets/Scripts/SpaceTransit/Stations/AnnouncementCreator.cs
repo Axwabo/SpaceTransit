@@ -9,6 +9,8 @@ namespace SpaceTransit.Stations
     public static class AnnouncementCreator
     {
 
+        private const string PleaseBoard = "Please board the ship.";
+
         private static bool AnyShipWithStop(IStop stop)
         {
             foreach (var assembly in ShipAssembly.Instances)
@@ -44,10 +46,16 @@ namespace SpaceTransit.Stations
             => $"{route.Type} ship is arriving from {route.Origin.Station.name} at dock {arrival.DockIndex + 1}.";
 
         private static string In(int deltaMinutes, RouteDescriptor route, IDeparture departure)
-            => $"The {route.Type} ship to {route.Destination.Station.name} is departing from dock {departure.DockIndex + 1} in {deltaMinutes} minutes. Please board the ship.";
+            => $"The {route.Type} ship to {route.Destination.Station.name} is departing from dock {departure.DockIndex + 1} in {deltaMinutes} minutes. {PleaseBoard}";
 
         private static string Immediate(RouteDescriptor route, IDeparture departure)
-            => $"The {route.Type} ship to {route.Destination.Station.name} is departing from dock {departure.DockIndex + 1} immediately. Please stop boarding.";
+            => $"{DepartingCore(route, departure)} immediately. Please stop boarding.";
+
+        public static string Departing(RouteDescriptor route, IDeparture departure)
+            => $"{DepartingCore(route, departure)}. {PleaseBoard}";
+
+        private static string DepartingCore(RouteDescriptor route, IDeparture departure)
+            => $"The {route.Type} ship to {route.Destination.Station.name} is departing from dock {departure.DockIndex + 1}";
 
         private static string ArrivingAndDeparts(RouteDescriptor route, int index, IArrival arrival)
         {

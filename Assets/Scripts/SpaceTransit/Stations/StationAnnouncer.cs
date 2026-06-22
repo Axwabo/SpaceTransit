@@ -2,6 +2,7 @@
 using System.Linq;
 using Katie.Unity;
 using SpaceTransit.Routes;
+using SpaceTransit.Routes.Stops;
 using SpaceTransit.Ships;
 using SpaceTransit.Vaulter;
 using UnityEngine;
@@ -35,6 +36,8 @@ namespace SpaceTransit.Stations
 
         private readonly List<(ShipAssembly, int)> _arriving = new();
 
+        private readonly Queue<(RouteDescriptor, IntermediateStop)> _arrivedShips = new();
+
         private List<DepartureEntry> _departures;
 
         private List<ArrivalEntry> _arrivals;
@@ -52,6 +55,7 @@ namespace SpaceTransit.Stations
             _departing.Clear();
             _passingThrough.Clear();
             _arriving.Clear();
+            _arrivedShips.Clear();
         }
 
         private void Start()
@@ -74,13 +78,19 @@ namespace SpaceTransit.Stations
         {
             if (_queue.IsYapping || AnnounceDeparting() || AnnouncePassingThrough() || AnnounceArriving())
                 return;
+            if (_arrivedShips.TryDequeue(out var tuple))
+            {
+                Announce(tuple.Item1, AnnouncementCreator.Departing(tuple.Item1, tuple.Item2));
+                return;
+            }
+
             foreach (var (route, index, arrival) in _arrivals)
             {
                 if (arrival.Arrival.Value < Clock.Now
                     || AnnouncementCreator.GetAnnouncement(route, index, arrival, _announced.GetValueOrDefault(route, -1)) is not { } announcement)
                     continue;
                 Announce(route, announcement);
-                break;
+                return;
             }
 
             foreach (var (route, index, departure) in _departures)
@@ -142,6 +152,12 @@ namespace SpaceTransit.Stations
         public void EnqueuePassingThrough(ShipAssembly assembly, int dockIndex) => _passingThrough.Add((assembly, dockIndex));
 
         public void EnqueueArriving(ShipAssembly assembly, int dockIndex) => _arriving.Add((assembly, dockIndex));
+
+        public void EnqueueArrived(RouteDescriptor route, Stop stop)
+        {
+            if (stop is IntermediateStop intermediate && intermediate.Arrival.Value != intermediate.Departure.Value)
+                _arrivedShips.Enqueue((route, intermediate));
+        }
 
     }
 
