@@ -61,6 +61,7 @@ namespace SpaceTransit.Ships.Driving.Screens
                 if (picker.Exit != exit)
                     continue;
                 picker.Success = true;
+                picker.Failure = false;
                 List.RefreshItem(i);
                 Text = "Exiting Towards";
                 break;
