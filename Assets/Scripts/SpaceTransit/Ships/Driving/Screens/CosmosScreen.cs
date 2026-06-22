@@ -71,6 +71,9 @@ namespace SpaceTransit.Ships.Driving.Screens
                     _text.text = "";
             }
 
+            if (!_wasInDock && inDock)
+                _previousStation = null;
+
             _wasInDock = inDock;
         }
 
