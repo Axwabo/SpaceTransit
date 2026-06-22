@@ -72,7 +72,7 @@ namespace SpaceTransit.Routes.Sequences
                 return ship;
             await Awaitable.NextFrameAsync();
             entrySpawn.Entry.Lock(assembly);
-            if (entrySpawn.Tube.Safety is LockBasedSafety lockBasedSafety)
+            if (entrySpawn.Tube.Safety is EllenmenetetMegtiltóSafety lockBasedSafety)
                 lockBasedSafety.Claim(assembly);
             return ship;
         }

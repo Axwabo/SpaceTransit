@@ -4,13 +4,13 @@ using UnityEngine;
 namespace SpaceTransit.Cosmos.Actions
 {
 
-    [RequireComponent(typeof(LockBasedSafety))]
+    [RequireComponent(typeof(EllenmenetetMegtiltóSafety))]
     public sealed class LockTaker : SafetyActionBase
     {
 
-        private LockBasedSafety _safety;
+        private EllenmenetetMegtiltóSafety _safety;
 
-        private void Awake() => _safety = GetComponent<LockBasedSafety>();
+        private void Awake() => _safety = GetComponent<EllenmenetetMegtiltóSafety>();
 
         public override void OnEntered(ShipModule module) => _safety.Claim(module.Assembly);
 

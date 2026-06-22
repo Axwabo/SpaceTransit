@@ -7,7 +7,7 @@ namespace SpaceTransit.Cosmos
 {
 
     [RequireComponent(typeof(LockTaker))]
-    public sealed class LockBasedSafety : NextSegmentSafety
+    public sealed class EllenmenetetMegtiltóSafety : NextSegmentSafety
     {
 
         [SerializeField]
