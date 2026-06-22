@@ -1105,10 +1105,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4646d4f7f098491cba1384b25090dd52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Loader.WorldChanger
-  unloadForwards: 16
-  unloadBackwards: 1
-  loadForwards: 1
-  loadBackwards: 16
   unloadFront:
   - 16
   unloadBack:
@@ -1421,6 +1417,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
   <Connected>k__BackingField: {fileID: 11400000, guid: a0dc90b742088b144b94f2c1f517be94, type: 2}
   <Locks>k__BackingField: []
+  clearanceReference: f5e09330f58e4c6d1948b83951806dd1
+  clearance: {fileID: 0}
 --- !u!114 &1382362352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1805,12 +1803,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1944545841}
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1149902421944169489, guid: d565d6906fc20f346a869be32968e482, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 2154082508705745743, guid: d565d6906fc20f346a869be32968e482, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1834585965}
-    - targetCorrespondingSourceObject: {fileID: 3431895649032777519, guid: d565d6906fc20f346a869be32968e482, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1834585964}
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: d565d6906fc20f346a869be32968e482, type: 3}
 --- !u!4 &1445144225 stripped
 Transform:
@@ -1832,7 +1827,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2708433068314240443, guid: d565d6906fc20f346a869be32968e482, type: 3}
   m_PrefabInstance: {fileID: 1445144224}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1834585963}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a88da54457a84086b4bb098142a1d36b, type: 3}
@@ -1843,7 +1838,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 342873159335543462, guid: d565d6906fc20f346a869be32968e482, type: 3}
   m_PrefabInstance: {fileID: 1445144224}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1834585962}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a88da54457a84086b4bb098142a1d36b, type: 3}
@@ -2051,6 +2046,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
   <Connected>k__BackingField: {fileID: 11400000, guid: efe2b07e57bf0134e99fedb0e3d30208, type: 2}
   <Locks>k__BackingField: []
+  clearanceReference: 
+  clearance: {fileID: 1596674382}
 --- !u!114 &1591795947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2444,48 +2441,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb7dfc8cf3e47f69a7d8d818f2626e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.LockTaker
---- !u!1 &1834585962 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3431895649032777519, guid: d565d6906fc20f346a869be32968e482, type: 3}
-  m_PrefabInstance: {fileID: 1445144224}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1834585963 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1149902421944169489, guid: d565d6906fc20f346a869be32968e482, type: 3}
-  m_PrefabInstance: {fileID: 1445144224}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1834585964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1834585962}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d616c78e98b406b9d69df89514a61f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.DockSafety
-  lockReferences:
-  - f5e09330f58e4c6d1948b83951806dd1
-  locks:
-  - {fileID: 0}
---- !u!114 &1834585965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1834585963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d616c78e98b406b9d69df89514a61f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.DockSafety
-  lockReferences:
-  - 
-  locks:
-  - {fileID: 1596674382}
 --- !u!1 &1849227911
 GameObject:
   m_ObjectHideFlags: 0
