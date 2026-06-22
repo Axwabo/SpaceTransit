@@ -1,9 +1,7 @@
 using System;
 using System.Threading;
-using SpaceTransit.Cosmos;
 using SpaceTransit.Loader;
 using SpaceTransit.Routes.Stops;
-using SpaceTransit.Tubes;
 using UnityEngine;
 
 namespace SpaceTransit.Routes.Sequences
@@ -64,8 +62,7 @@ namespace SpaceTransit.Routes.Sequences
                 if (!next)
                     return (new SpawnLocation(stopIndex), routeIndex);
                 var second = dock.Next(!route.Reverse);
-                var finalNonEntry = second ? second : next;
-                return IsFree(finalNonEntry, route) ? (new TubeSpawn(finalNonEntry), routeIndex) : None;
+                return (new TubeSpawn(second ? second : next, stopIndex), routeIndex);
             }
 
             var finalEntry = entries[0];
@@ -81,14 +78,10 @@ namespace SpaceTransit.Routes.Sequences
                 return None;
             var tube = finalEntry.Ensurer.Tube;
             var finalTube = route.Reverse ? tube.Next : tube;
-            return !finalTube
-                ? (new SpawnLocation(stopIndex), routeIndex)
-                : IsFree(finalTube, route)
-                    ? (new EntrySpawn(tube, finalEntry, stopIndex), routeIndex)
-                    : None;
+            return finalTube
+                ? (new EntrySpawn(tube, finalEntry, stopIndex), routeIndex)
+                : (new SpawnLocation(stopIndex), routeIndex);
         }
-
-        private static bool IsFree(TubeBase finalTube, RouteDescriptor route) => finalTube.Safety is not EllenmenetetMegtiltóSafety safety || safety.Clearance.CanClaim(route.Reverse);
 
         private static async Awaitable Start(ServiceSequence sequence, CancellationToken token)
         {

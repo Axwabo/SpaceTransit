@@ -72,8 +72,9 @@ namespace SpaceTransit.Routes.Sequences
                 return ship;
             await Awaitable.NextFrameAsync();
             entrySpawn.Entry.Lock(assembly);
-            if (entrySpawn.Tube.Safety is EllenmenetetMegtiltóSafety lockBasedSafety)
-                lockBasedSafety.Clearance.Claim(assembly);
+            if (entrySpawn.Tube.Safety is not EllenmenetetMegtiltóSafety lockBasedSafety || !ship.initialRoute)
+                return ship;
+            lockBasedSafety.Clearance.Claim(assembly, ship.initialRoute.Reverse);
             return ship;
         }
 
