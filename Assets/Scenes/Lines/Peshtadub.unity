@@ -838,6 +838,8 @@ MonoBehaviour:
   <Connected>k__BackingField: {fileID: 11400000, guid: 5202ebef62875b549b91e4cd9563907c, type: 2}
   <Locks>k__BackingField:
   - {fileID: 1686389005}
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 0}
 --- !u!114 &73551708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1266,6 +1268,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
   <Connected>k__BackingField: {fileID: 11400000, guid: 5202ebef62875b549b91e4cd9563907c, type: 2}
   <Locks>k__BackingField: []
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 0}
 --- !u!114 &97757807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1925,6 +1929,8 @@ MonoBehaviour:
   <Connected>k__BackingField: {fileID: 11400000, guid: 2a8e73ebfba265e428e404749ddf1365, type: 2}
   <Locks>k__BackingField:
   - {fileID: 588345219}
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 0}
 --- !u!114 &110417419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2858,6 +2864,7 @@ GameObject:
   - component: {fileID: 147847750}
   - component: {fileID: 147847751}
   - component: {fileID: 147847749}
+  - component: {fileID: 147847753}
   m_Layer: 0
   m_Name: From Angelland
   m_TagString: Untagged
@@ -2963,6 +2970,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1122227175}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &147847753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 147847748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd3773830b3a4f9db4187a36de84b369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.ClearanceClearer
+  clearanceReference: 
+  clearance: {fileID: 193238064}
+  forwards: 0
+  backwards: 1
 --- !u!1001 &150312778
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3480,6 +3503,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 78db689cd3514522b8004de021420613, type: 3}
   m_PrefabInstance: {fileID: 190619958}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &193238062
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 193238063}
+  - component: {fileID: 193238064}
+  m_Layer: 0
+  m_Name: Clearance
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &193238063
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193238062}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 862900689}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &193238064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193238062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69e956fa279b46828768161fce047ad5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.OpposingTrafficClearance
 --- !u!1 &197362534
 GameObject:
   m_ObjectHideFlags: 0
@@ -3545,6 +3612,8 @@ MonoBehaviour:
   <Connected>k__BackingField: {fileID: 11400000, guid: cb4833e0cea621d41952451d3a6d8319, type: 2}
   <Locks>k__BackingField:
   - {fileID: 805903202}
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 0}
 --- !u!114 &197362538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4677,6 +4746,7 @@ GameObject:
   - component: {fileID: 245616261}
   - component: {fileID: 245616260}
   - component: {fileID: 245616259}
+  - component: {fileID: 245616262}
   m_Layer: 0
   m_Name: From Oldadub
   m_TagString: Untagged
@@ -4782,6 +4852,22 @@ MonoBehaviour:
   CurveChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &245616262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245616257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd3773830b3a4f9db4187a36de84b369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.ClearanceClearer
+  clearanceReference: 
+  clearance: {fileID: 1062626351}
+  forwards: 1
+  backwards: 0
 --- !u!1 &247082182
 GameObject:
   m_ObjectHideFlags: 0
@@ -5210,6 +5296,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
   <Connected>k__BackingField: {fileID: 11400000, guid: 84da45c60d2b43f4b8684f45dd91d530, type: 2}
   <Locks>k__BackingField: []
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 1411744589}
 --- !u!1 &257137228
 GameObject:
   m_ObjectHideFlags: 0
@@ -5746,6 +5834,8 @@ MonoBehaviour:
   <Connected>k__BackingField: {fileID: 11400000, guid: 2a8e73ebfba265e428e404749ddf1365, type: 2}
   <Locks>k__BackingField:
   - {fileID: 860043035}
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 0}
 --- !u!1 &273185486
 GameObject:
   m_ObjectHideFlags: 0
@@ -6161,6 +6251,7 @@ GameObject:
   - component: {fileID: 279535370}
   - component: {fileID: 279535373}
   - component: {fileID: 279535374}
+  - component: {fileID: 279535375}
   m_Layer: 0
   m_Name: 1
   m_TagString: Untagged
@@ -6294,6 +6385,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Loader.CrossSceneObject
   id: 811771986b757d18bb0c9dd1f64702c0
+--- !u!114 &279535375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 279535368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd3773830b3a4f9db4187a36de84b369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.ClearanceClearer
+  clearanceReference: 
+  clearance: {fileID: 1411744589}
+  forwards: 0
+  backwards: 1
 --- !u!1 &284221001
 GameObject:
   m_ObjectHideFlags: 0
@@ -7977,6 +8084,8 @@ MonoBehaviour:
   <Connected>k__BackingField: {fileID: 11400000, guid: cb4833e0cea621d41952451d3a6d8319, type: 2}
   <Locks>k__BackingField:
   - {fileID: 805903202}
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 0}
 --- !u!114 &357572495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9092,6 +9201,8 @@ MonoBehaviour:
   <Connected>k__BackingField: {fileID: 11400000, guid: 05d14c88ba30c344a9b173df3ab4ee7f, type: 2}
   <Locks>k__BackingField:
   - {fileID: 706264703}
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 0}
 --- !u!1001 &396372626
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10554,6 +10665,8 @@ MonoBehaviour:
   <Connected>k__BackingField: {fileID: 11400000, guid: 05d14c88ba30c344a9b173df3ab4ee7f, type: 2}
   <Locks>k__BackingField:
   - {fileID: 706264703}
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 0}
 --- !u!1 &473391929
 GameObject:
   m_ObjectHideFlags: 0
@@ -10706,6 +10819,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
   <Connected>k__BackingField: {fileID: 11400000, guid: c42c86ce39da5e94688361df9fc83d3f, type: 2}
   <Locks>k__BackingField: []
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 0}
 --- !u!4 &478771888 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1265406682350705670, guid: 72381a3b1972365daac1a65f763de96d, type: 3}
@@ -11075,6 +11190,8 @@ MonoBehaviour:
   <Connected>k__BackingField: {fileID: 11400000, guid: 148f0a1bcfa4dbc40a388fdfe0ac9d32, type: 2}
   <Locks>k__BackingField:
   - {fileID: 1977149502}
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 0}
 --- !u!1 &499633838
 GameObject:
   m_ObjectHideFlags: 0
@@ -11329,6 +11446,8 @@ MonoBehaviour:
   <Connected>k__BackingField: {fileID: 11400000, guid: 3d835a84e1c37c24da29d4a268acaf72, type: 2}
   <Locks>k__BackingField:
   - {fileID: 35479597}
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 0}
 --- !u!114 &507600213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14536,6 +14655,8 @@ MonoBehaviour:
   <Connected>k__BackingField: {fileID: 11400000, guid: c6ba9fd56a4dde041be043617a26ec1d, type: 2}
   <Locks>k__BackingField:
   - {fileID: 1977149502}
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 0}
 --- !u!1001 &666098366
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15688,6 +15809,8 @@ MonoBehaviour:
   <Connected>k__BackingField: {fileID: 11400000, guid: cb4833e0cea621d41952451d3a6d8319, type: 2}
   <Locks>k__BackingField:
   - {fileID: 805903202}
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 0}
 --- !u!114 &710347330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15889,6 +16012,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
   <Connected>k__BackingField: {fileID: 11400000, guid: 6c319035a8d03774da1a08191f4baecd, type: 2}
   <Locks>k__BackingField: []
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 0}
 --- !u!114 &733100734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17485,6 +17610,7 @@ GameObject:
   - component: {fileID: 812469374}
   - component: {fileID: 812469373}
   - component: {fileID: 812469372}
+  - component: {fileID: 812469375}
   m_Layer: 0
   m_Name: Right
   m_TagString: Untagged
@@ -17590,6 +17716,22 @@ MonoBehaviour:
   CurveChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &812469375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812469370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd3773830b3a4f9db4187a36de84b369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.ClearanceClearer
+  clearanceReference: 
+  clearance: {fileID: 193238064}
+  forwards: 1
+  backwards: 0
 --- !u!1 &817216291
 GameObject:
   m_ObjectHideFlags: 0
@@ -18244,6 +18386,8 @@ MonoBehaviour:
   <Connected>k__BackingField: {fileID: 11400000, guid: 2a8e73ebfba265e428e404749ddf1365, type: 2}
   <Locks>k__BackingField:
   - {fileID: 860043035}
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 0}
 --- !u!1 &851622080 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6507248381752028928, guid: b7b3ae72996f7ac419dbfff04e434324, type: 3}
@@ -18803,6 +18947,7 @@ Transform:
   m_Children:
   - {fileID: 1000218645}
   - {fileID: 920789800}
+  - {fileID: 193238063}
   m_Father: {fileID: 425580488}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &863077242
@@ -18991,6 +19136,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
   <Connected>k__BackingField: {fileID: 11400000, guid: c42c86ce39da5e94688361df9fc83d3f, type: 2}
   <Locks>k__BackingField: []
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 0}
 --- !u!1 &885689813
 GameObject:
   m_ObjectHideFlags: 0
@@ -19294,6 +19441,8 @@ MonoBehaviour:
   <Locks>k__BackingField:
   - {fileID: 1488661434}
   - {fileID: 388186221}
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 0}
 --- !u!1 &901271749
 GameObject:
   m_ObjectHideFlags: 0
@@ -22907,6 +23056,50 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 30, y: 10, z: 30}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1062626350
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1062626352}
+  - component: {fileID: 1062626351}
+  m_Layer: 0
+  m_Name: Clearance
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1062626351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062626350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69e956fa279b46828768161fce047ad5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.OpposingTrafficClearance
+--- !u!4 &1062626352
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062626350}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2089260888}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1063234408
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23104,6 +23297,7 @@ GameObject:
   - component: {fileID: 1085762400}
   - component: {fileID: 1085762399}
   - component: {fileID: 1085762398}
+  - component: {fileID: 1085762401}
   m_Layer: 0
   m_Name: Entry
   m_TagString: Untagged
@@ -23209,6 +23403,22 @@ MonoBehaviour:
   CurveChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1085762401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1085762396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd3773830b3a4f9db4187a36de84b369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.ClearanceClearer
+  clearanceReference: 
+  clearance: {fileID: 1411744589}
+  forwards: 1
+  backwards: 0
 --- !u!1001 &1099124923
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24555,6 +24765,8 @@ MonoBehaviour:
   <Connected>k__BackingField: {fileID: 11400000, guid: cb4833e0cea621d41952451d3a6d8319, type: 2}
   <Locks>k__BackingField:
   - {fileID: 805903202}
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 0}
 --- !u!114 &1153388528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25736,6 +25948,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
   <Connected>k__BackingField: {fileID: 11400000, guid: 2229479a747fe0949aa267f8828b9ef3, type: 2}
   <Locks>k__BackingField: []
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 1062626351}
 --- !u!114 &1201772770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26618,6 +26832,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
   <Connected>k__BackingField: {fileID: 11400000, guid: 84da45c60d2b43f4b8684f45dd91d530, type: 2}
   <Locks>k__BackingField: []
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 193238064}
 --- !u!4 &1249663343 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 576458793950265353, guid: 3463dd95b250c54ad9a73b72a08ebbed, type: 3}
@@ -27203,6 +27419,8 @@ MonoBehaviour:
   <Locks>k__BackingField:
   - {fileID: 634979378}
   - {fileID: 1686389005}
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 0}
 --- !u!114 &1273467331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29374,6 +29592,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
   <Connected>k__BackingField: {fileID: 11400000, guid: 6c319035a8d03774da1a08191f4baecd, type: 2}
   <Locks>k__BackingField: []
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 193238064}
 --- !u!1001 &1385318005
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30248,6 +30468,50 @@ MonoBehaviour:
   toReference: 
   connectTube: {fileID: 1402876538}
   connectTo: {fileID: 824765898}
+--- !u!1 &1411744588
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1411744590}
+  - component: {fileID: 1411744589}
+  m_Layer: 0
+  m_Name: Clearance
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1411744589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411744588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69e956fa279b46828768161fce047ad5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.OpposingTrafficClearance
+--- !u!4 &1411744590
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411744588}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1847147212}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1417756064
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33230,6 +33494,8 @@ MonoBehaviour:
   <Locks>k__BackingField:
   - {fileID: 860043035}
   - {fileID: 706264703}
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 0}
 --- !u!1001 &1592989786
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34457,6 +34723,7 @@ GameObject:
   - component: {fileID: 1644445769}
   - component: {fileID: 1644445768}
   - component: {fileID: 1644445767}
+  - component: {fileID: 1644445770}
   m_Layer: 0
   m_Name: From Newpesht
   m_TagString: Untagged
@@ -34562,6 +34829,22 @@ MonoBehaviour:
   CurveChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1644445770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644445765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd3773830b3a4f9db4187a36de84b369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.ClearanceClearer
+  clearanceReference: 
+  clearance: {fileID: 1062626351}
+  forwards: 0
+  backwards: 1
 --- !u!1 &1645982761
 GameObject:
   m_ObjectHideFlags: 0
@@ -34903,6 +35186,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
   <Connected>k__BackingField: {fileID: 11400000, guid: 6c319035a8d03774da1a08191f4baecd, type: 2}
   <Locks>k__BackingField: []
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 193238064}
 --- !u!1 &1663473043
 GameObject:
   m_ObjectHideFlags: 0
@@ -35076,6 +35361,7 @@ GameObject:
   - component: {fileID: 1223439722}
   - component: {fileID: 1223439721}
   - component: {fileID: 1223439720}
+  - component: {fileID: 1687342838}
   m_Layer: 0
   m_Name: Left
   m_TagString: Untagged
@@ -35098,6 +35384,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 376131851}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1687342838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687342836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd3773830b3a4f9db4187a36de84b369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.ClearanceClearer
+  clearanceReference: 
+  clearance: {fileID: 193238064}
+  forwards: 1
+  backwards: 0
 --- !u!1 &1697529314
 GameObject:
   m_ObjectHideFlags: 0
@@ -35875,6 +36177,8 @@ MonoBehaviour:
   <Locks>k__BackingField:
   - {fileID: 410954401}
   - {fileID: 1956180826}
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 0}
 --- !u!114 &1721359482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38769,6 +39073,7 @@ Transform:
   - {fileID: 279535369}
   - {fileID: 257137229}
   - {fileID: 422447816}
+  - {fileID: 1411744590}
   m_Father: {fileID: 425580488}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1853898499
@@ -39233,6 +39538,8 @@ MonoBehaviour:
   <Connected>k__BackingField: {fileID: 11400000, guid: 8e72c7c059aafb1448036485d94c01b7, type: 2}
   <Locks>k__BackingField:
   - {fileID: 410954401}
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 0}
 --- !u!1 &1868042920
 GameObject:
   m_ObjectHideFlags: 0
@@ -43395,6 +43702,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
   <Connected>k__BackingField: {fileID: 11400000, guid: c6ba9fd56a4dde041be043617a26ec1d, type: 2}
   <Locks>k__BackingField: []
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 0}
 --- !u!1001 &2054927252
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44557,6 +44866,7 @@ Transform:
   m_Children:
   - {fileID: 150792344}
   - {fileID: 2025427087}
+  - {fileID: 1062626352}
   m_Father: {fileID: 425580488}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2103835420
@@ -45519,6 +45829,8 @@ MonoBehaviour:
   <Connected>k__BackingField: {fileID: 11400000, guid: 7c1ca06b05ea5f040b98bc469d3770e7, type: 2}
   <Locks>k__BackingField:
   - {fileID: 1956180826}
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 0}
 --- !u!114 &2127638652
 MonoBehaviour:
   m_ObjectHideFlags: 0
