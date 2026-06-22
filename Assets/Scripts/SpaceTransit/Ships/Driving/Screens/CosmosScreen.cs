@@ -55,16 +55,17 @@ namespace SpaceTransit.Ships.Driving.Screens
                 UpdateEntries(ensurer);
             else if (!_entering || !_entering.IsUsedOnlyBy(Assembly))
             {
-                EntryList.SetVisibility(false);
                 EntryList.Clear();
+                EntryList.SetVisibility(false);
                 EntryList.Text = "";
+                _entering = null;
             }
 
             var inDock = tube is Dock;
             if (_wasInDock && !inDock)
             {
-                ExitList.SetVisibility(false);
                 ExitList.Clear();
+                ExitList.SetVisibility(false);
                 ExitList.Text = "";
                 if (EntryList.Source.Count == 0)
                     _text.text = "";
@@ -122,6 +123,8 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private void UpdateExits(Dock dock)
         {
+            if (ExitList.Selected != -1)
+                return;
             _text.text = dock.Station.Name;
             ExitList.Source.Clear();
             foreach (var exit in dock.FrontExits)
