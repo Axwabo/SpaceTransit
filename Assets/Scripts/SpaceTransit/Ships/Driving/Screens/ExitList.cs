@@ -9,6 +9,8 @@ namespace SpaceTransit.Ships.Driving.Screens
     public sealed class ExitList : PickableList<ExitPicker>
     {
 
+        private bool _isEnabled = true;
+
         private CosmosScreen _screen;
 
         private bool _loaded;
@@ -42,12 +44,12 @@ namespace SpaceTransit.Ships.Driving.Screens
         {
             base.SetVisibility(visible);
             _text?.SetVisibility(visible);
-            enabled = visible;
+            _isEnabled = visible;
         }
 
         public void Mark(Exit exit)
         {
-            if (!isActiveAndEnabled || Source.Count == 0)
+            if (!_isEnabled || Source.Count == 0)
                 return;
             for (var i = 0; i < Source.Count; i++)
             {
@@ -63,7 +65,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         public bool TryGetPicked(out Exit exit)
         {
-            if (!isActiveAndEnabled)
+            if (!_isEnabled)
             {
                 exit = null;
                 return false;

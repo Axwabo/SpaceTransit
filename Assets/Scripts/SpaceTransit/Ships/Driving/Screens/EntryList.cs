@@ -8,6 +8,8 @@ namespace SpaceTransit.Ships.Driving.Screens
     public sealed class EntryList : PickableList<EntryPicker>
     {
 
+        private bool _isEnabled = true;
+
         private CosmosScreen _manager;
 
         private Label _text;
@@ -49,10 +51,10 @@ namespace SpaceTransit.Ships.Driving.Screens
         {
             base.SetVisibility(visible);
             _text?.SetVisibility(visible);
-            enabled = visible;
+            _isEnabled = visible;
         }
 
-        public bool SelectDock(int dockIndex) => CanPick && isActiveAndEnabled && Select(dockIndex);
+        public bool SelectDock(int dockIndex) => CanPick && _isEnabled && Select(dockIndex);
 
     }
 
