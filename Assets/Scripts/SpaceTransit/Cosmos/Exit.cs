@@ -12,8 +12,8 @@ namespace SpaceTransit.Cosmos
         [HideInInspector]
         private string clearanceReference;
 
-        [SerializeField]
-        private Lock clearance;
+        [field: SerializeField]
+        public OpposingTrafficClearance Clearance { get; private set; }
 
         private void Start()
         {
@@ -21,32 +21,32 @@ namespace SpaceTransit.Cosmos
             CrossSceneObject.SubscribeToSceneChanges(RefreshClearance, clearanceReference);
         }
 
-        private void OnValidate() => clearanceReference = CrossSceneObject.GetOrCreate(clearance, gameObject, clearanceReference);
+        private void OnValidate() => clearanceReference = CrossSceneObject.GetOrCreate(Clearance, gameObject, clearanceReference);
 
         private void OnDestroy() => CrossSceneObject.ScenesChanged -= RefreshClearance;
 
-        private void RefreshClearance() => clearance = CrossSceneObject.GetComponent(clearanceReference, clearance);
+        private void RefreshClearance() => Clearance = CrossSceneObject.GetComponent(clearanceReference, Clearance);
 
-        public override bool IsFree => (!clearance || clearance.IsFree) && base.IsFree;
+        public override bool IsFree => (!Clearance || Clearance.IsFree) && base.IsFree;
 
         public override bool Lock(ShipAssembly assembly)
         {
-            if (!clearance)
+            if (!Clearance)
                 return base.Lock(assembly);
-            if (!clearance.CanClaim(assembly))
+            if (!Clearance.CanClaim(assembly))
                 return false;
-            clearance.Claim(assembly);
+            Clearance.Claim(assembly);
             return base.Lock(assembly);
         }
 
         public override void Release(ShipAssembly assembly)
         {
             base.Release(assembly);
-            if (clearance)
-                clearance.Release(assembly);
+            if (Clearance)
+                Clearance.Release(assembly);
         }
 
-        public override bool IsUsedOnlyBy(ShipAssembly assembly) => base.IsUsedOnlyBy(assembly) && (!clearance || clearance.IsUsedOnlyBy(assembly));
+        public override bool IsUsedOnlyBy(ShipAssembly assembly) => base.IsUsedOnlyBy(assembly) && (!Clearance || Clearance.CanProceed(assembly));
 
     }
 
