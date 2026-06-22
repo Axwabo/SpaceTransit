@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using SpaceTransit.Routes;
 using SplineMesh;
+using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
@@ -66,8 +67,15 @@ namespace SpaceTransit.Build
             }
 
             foreach (var station in stations)
-                if (station.ID)
-                    station.ID.position = station.transform.localPosition;
+            {
+                if (!station.ID)
+                    continue;
+                var position = station.transform.localPosition;
+                if (position == station.ID.position)
+                    continue;
+                station.ID.position = position;
+                EditorUtility.SetDirty(station.ID);
+            }
         }
 
     }
