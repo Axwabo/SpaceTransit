@@ -43,6 +43,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private void OnDisable()
         {
+            _previousStation = null;
             _entering = null;
             _wasInDock = false;
             _text.text = "";
@@ -94,7 +95,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         public override void OnStateChanged()
         {
-            if (State != ShipState.Docked)
+            if (State != ShipState.Docked || !isActiveAndEnabled)
                 return;
             _previousStation = null;
             if (Assembly.FrontModule.Thruster.Tube is not Dock dock)
