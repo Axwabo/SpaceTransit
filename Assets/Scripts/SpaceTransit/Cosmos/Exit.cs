@@ -31,7 +31,9 @@ namespace SpaceTransit.Cosmos
 
         public override bool Lock(ShipAssembly assembly)
         {
-            if (clearance && !clearance.CanClaim(assembly))
+            if (!clearance)
+                return base.Lock(assembly);
+            if (!clearance.CanClaim(assembly))
                 return false;
             clearance.Claim(assembly);
             return base.Lock(assembly);
