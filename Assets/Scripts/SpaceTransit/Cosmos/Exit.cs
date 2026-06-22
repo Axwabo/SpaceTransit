@@ -13,7 +13,7 @@ namespace SpaceTransit.Cosmos
         private string clearanceReference;
 
         [SerializeField]
-        private Lock clearance;
+        private OpposingTrafficClearance clearance;
 
         private void Start()
         {
@@ -46,7 +46,7 @@ namespace SpaceTransit.Cosmos
                 clearance.Release(assembly);
         }
 
-        public override bool IsUsedOnlyBy(ShipAssembly assembly) => base.IsUsedOnlyBy(assembly) && (!clearance || clearance.IsUsedOnlyBy(assembly));
+        public override bool IsUsedOnlyBy(ShipAssembly assembly) => base.IsUsedOnlyBy(assembly) && (!clearance || clearance.CanClaim(assembly));
 
     }
 

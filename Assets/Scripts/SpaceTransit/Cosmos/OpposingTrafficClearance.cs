@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using SpaceTransit.Ships;
 using UnityEngine;
 
@@ -7,18 +8,32 @@ namespace SpaceTransit.Cosmos
     public sealed class OpposingTrafficClearance : MonoBehaviour
     {
 
-        [SerializeField]
-        private Lock forwards;
+        private readonly HashSet<ShipAssembly> _forwards = new();
 
-        [SerializeField]
-        private Lock backwards;
+        private readonly HashSet<ShipAssembly> _backwards = new();
 
-        public bool CanClaim(ShipAssembly assembly) => assembly.Reverse ? forwards.IsFree : backwards.IsFree;
+        public bool IsFree => _forwards.Count == 0 && _backwards.Count == 0;
+
+        public bool CanProceed(ShipAssembly assembly) => CanClaim(assembly) && (assembly.Reverse ? _backwards : _forwards).Contains(assembly);
+
+        public bool CanClaim(ShipAssembly assembly) => assembly.Reverse ? _forwards.Count == 0 : _backwards.Count == 0;
 
         public void Claim(ShipAssembly assembly)
         {
             if (CanClaim(assembly))
-                (assembly.Reverse ? backwards.Claim(assembly))
+                (assembly.Reverse ? _backwards : _forwards).Add(assembly);
+        }
+
+        public void Release(ShipAssembly assembly)
+        {
+            _forwards.Remove(assembly);
+            _backwards.Remove(assembly);
+        }
+
+        private void Update()
+        {
+            _forwards.RemoveDestroyed();
+            _backwards.RemoveDestroyed();
         }
 
     }

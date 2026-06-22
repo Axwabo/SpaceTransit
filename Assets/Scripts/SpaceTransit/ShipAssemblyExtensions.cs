@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using SpaceTransit.Cosmos;
 using SpaceTransit.Routes;
 using SpaceTransit.Ships;
@@ -50,6 +51,8 @@ namespace SpaceTransit
             => !assembly.Parent.TryGetVaulter(out var vaulter)
                || !vaulter.IsInService
                || vaulter.Stop.Station != stationId;
+
+        public static void RemoveDestroyed(this HashSet<ShipAssembly> assemblies) => assemblies.RemoveWhere(e => !e);
 
     }
 

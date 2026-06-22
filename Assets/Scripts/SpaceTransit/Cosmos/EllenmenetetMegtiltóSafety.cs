@@ -1,4 +1,3 @@
-using SpaceTransit.Cosmos.Actions;
 using SpaceTransit.Loader;
 using SpaceTransit.Ships;
 using UnityEngine;
@@ -6,18 +5,15 @@ using UnityEngine;
 namespace SpaceTransit.Cosmos
 {
 
-    [RequireComponent(typeof(LockTaker))]
     public sealed class EllenmenetetMegtiltóSafety : NextSegmentSafety
     {
 
         [SerializeField]
         [HideInInspector]
-        private string lockReference;
+        private string clearanceReference;
 
-        [SerializeField]
-        private Lock @lock;
-
-        public bool IsFree => @lock.IsFree;
+        [field: SerializeField]
+        public OpposingTrafficClearance Clearance { get; private set; }
 
         private void Start()
         {
@@ -25,15 +21,15 @@ namespace SpaceTransit.Cosmos
             CrossSceneObject.ScenesChanged += RefreshLock;
         }
 
-        private void OnValidate() => lockReference = CrossSceneObject.GetOrCreate(@lock, gameObject, lockReference);
+        private void OnValidate() => clearanceReference = CrossSceneObject.GetOrCreate(Clearance, gameObject, clearanceReference);
 
         private void OnDestroy() => CrossSceneObject.ScenesChanged -= RefreshLock;
 
-        private void RefreshLock() => @lock = CrossSceneObject.GetComponent(lockReference, @lock);
+        private void RefreshLock() => Clearance = CrossSceneObject.GetComponent(clearanceReference, Clearance);
 
-        public void Claim(ShipAssembly assembly) => @lock.Claim(assembly);
+        public void Claim(ShipAssembly assembly) => Clearance.Claim(assembly);
 
-        public override bool CanProceed(ShipAssembly assembly) => @lock.IsUsedOnlyBy(assembly) && base.CanProceed(assembly);
+        public override bool CanProceed(ShipAssembly assembly) => Clearance.CanProceed(assembly) && base.CanProceed(assembly);
 
     }
 
