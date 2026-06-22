@@ -51,7 +51,11 @@ namespace SpaceTransit.Ships.Driving.Screens
         {
             base.SetVisibility(visible);
             _text?.SetVisibility(visible);
+            if (_isEnabled == visible)
+                return;
             _isEnabled = visible;
+            List?.MarkDirtyRepaint();
+            _text?.MarkDirtyRepaint();
         }
 
         public bool SelectDock(int dockIndex) => CanPick && _isEnabled && Select(dockIndex);
