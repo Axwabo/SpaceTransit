@@ -27,8 +27,6 @@ namespace SpaceTransit.Cosmos
 
         private void RefreshLock() => Clearance = CrossSceneObject.GetComponent(clearanceReference, Clearance);
 
-        public void Claim(ShipAssembly assembly) => Clearance.Claim(assembly);
-
         public override bool CanProceed(ShipAssembly assembly) => Clearance.CanProceed(assembly) && base.CanProceed(assembly);
 
     }

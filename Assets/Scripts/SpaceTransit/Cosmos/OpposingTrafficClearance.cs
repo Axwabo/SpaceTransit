@@ -16,7 +16,9 @@ namespace SpaceTransit.Cosmos
 
         public bool CanProceed(ShipAssembly assembly) => CanClaim(assembly) && (assembly.Reverse ? _backwards : _forwards).Contains(assembly);
 
-        public bool CanClaim(ShipAssembly assembly) => assembly.Reverse ? _forwards.Count == 0 : _backwards.Count == 0;
+        public bool CanClaim(ShipAssembly assembly) => CanClaim(assembly.Reverse);
+
+        public bool CanClaim(bool reverse) => reverse ? _forwards.Count == 0 : _backwards.Count == 0;
 
         public void Claim(ShipAssembly assembly)
         {
