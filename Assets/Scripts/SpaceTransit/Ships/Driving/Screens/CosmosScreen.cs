@@ -150,6 +150,8 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         public void OnEntrySelected(Entry entry)
         {
+            if (!isActiveAndEnabled)
+                return;
             _entering = entry;
             UpdateExits(entry.Dock);
         }
