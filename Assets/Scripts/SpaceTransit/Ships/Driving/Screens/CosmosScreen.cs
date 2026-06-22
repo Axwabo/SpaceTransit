@@ -43,6 +43,11 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private void OnDisable()
         {
+            _entering = null;
+            _wasInDock = false;
+            _text.text = "";
+            EntryList.Clear();
+            ExitList.Clear();
             _root?.SetVisibility(false);
             EntryList.SetVisibility(false);
             ExitList.SetVisibility(false);
@@ -129,15 +134,17 @@ namespace SpaceTransit.Ships.Driving.Screens
         {
             if (ExitList.Source.Count != 0)
                 return;
-            _text.text = dock.Station.Name;
             ExitList.Source.Clear();
             foreach (var exit in dock.FrontExits)
                 ExitList.Source.Add(new ExitPicker(exit));
             foreach (var exit in dock.BackExits)
                 ExitList.Source.Add(new ExitPicker(exit));
+            if (ExitList.Source.Count == 0)
+                return;
             ExitList.Refresh();
             ExitList.SetVisibility(true);
             ExitList.Text = "Exit Towards";
+            _text.text = dock.Station.Name;
             _current = ExitList;
         }
 
