@@ -14,12 +14,6 @@ namespace SpaceTransit.Routes.Sequences
     public static class RouteRotor
     {
 
-        private static readonly InstantiateParameters Instantiate = new()
-        {
-            parent = World.Current,
-            worldSpace = false
-        };
-
         public const int UpdateInterval = 5;
 
         public static async Awaitable Run(ServiceSequence sequence, SpawnLocation spawn, int index)
@@ -62,7 +56,11 @@ namespace SpaceTransit.Routes.Sequences
         private static async Awaitable<VaulterController> Spawn(ServiceSequence sequence, SpawnLocation spawn, int index)
         {
             // why tf is the result an array
-            var ship = (await Object.InstantiateAsync(sequence.prefab, Instantiate))[0];
+            var ship = (await Object.InstantiateAsync(sequence.prefab, (InstantiateParameters) new()
+            {
+                parent = World.Current,
+                worldSpace = false
+            }))[0];
             if (index != -1 && index < sequence.routes.Length)
                 ship.initialRoute = sequence.routes[index];
             ship.initialStopIndex = spawn.StopIndex;
