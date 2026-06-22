@@ -33,7 +33,7 @@ namespace SpaceTransit.Cosmos
         public override void OnEntered(ShipModule module)
         {
             base.OnEntered(module);
-            if (Occupants.Count != 1 || !module.Assembly.ShouldAnnounceNonScheduled(station))
+            if (Occupants.Count != 1 || module.Assembly.Reverse != Backwards || !module.Assembly.ShouldAnnounceNonScheduled(station))
                 return;
             foreach (var entry in Entries)
             {

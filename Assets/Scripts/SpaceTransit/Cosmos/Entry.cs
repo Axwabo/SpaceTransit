@@ -46,7 +46,7 @@ namespace SpaceTransit.Cosmos
         {
             if (Dock.Safety.IsOccupied || !base.Lock(assembly))
                 return false;
-            if (assembly.FrontModule.Thruster.Tube.Safety == Ensurer && assembly.ShouldAnnounceNonScheduled(Dock.Station.ID))
+            if (assembly.FrontModule.Thruster.Tube.Safety == Ensurer && assembly.Reverse == Ensurer.Backwards && assembly.ShouldAnnounceNonScheduled(Dock.Station.ID))
                 Ensurer.EnqueueArriving(assembly, this);
             return true;
         }
