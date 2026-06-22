@@ -2047,8 +2047,8 @@ GameObject:
   - component: {fileID: 81552427}
   - component: {fileID: 81552426}
   - component: {fileID: 81552425}
-  - component: {fileID: 81552428}
   - component: {fileID: 81552429}
+  - component: {fileID: 81552430}
   m_Layer: 0
   m_Name: 3 from S
   m_TagString: Untagged
@@ -2154,26 +2154,6 @@ MonoBehaviour:
   CurveChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &81552428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 81552423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5e4edfa4aa84eaa922d965fcc41e924, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.LockClearer
-  lockReferences:
-  - 26249c319a68d193aac2d6c283d8aba5
-  locks:
-  - {fileID: 0}
-  enter: 0
-  exit: 1
-  forwards: 1
-  backwards: 0
 --- !u!114 &81552429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2187,6 +2167,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Loader.CrossSceneObject
   id: 8a9a5beacd4ee50df9d67ecd64411cc7
+--- !u!114 &81552430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 81552423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd3773830b3a4f9db4187a36de84b369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.ClearanceClearer
+  clearanceReference: 26249c319a68d193aac2d6c283d8aba5
+  clearance: {fileID: 0}
 --- !u!1001 &87654415
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2790,7 +2784,6 @@ GameObject:
   - component: {fileID: 131233256}
   - component: {fileID: 131233261}
   - component: {fileID: 131233259}
-  - component: {fileID: 131233262}
   - component: {fileID: 131233263}
   m_Layer: 0
   m_Name: 2 to S
@@ -2924,20 +2917,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e9e199b65c24ae48f193b1c5f318c48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.LockBasedSafety
-  lockReference: 26249c319a68d193aac2d6c283d8aba5
-  lock: {fileID: 0}
---- !u!114 &131233262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131233254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bb7dfc8cf3e47f69a7d8d818f2626e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.LockTaker
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 0}
 --- !u!114 &131233263
 MonoBehaviour:
   m_ObjectHideFlags: 0
