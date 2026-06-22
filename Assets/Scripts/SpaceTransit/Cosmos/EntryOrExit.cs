@@ -31,9 +31,9 @@ namespace SpaceTransit.Cosmos
             return true;
         }
 
-        public void Release(ShipAssembly assembly) => Locks.Release(assembly);
+        public virtual void Release(ShipAssembly assembly) => Locks.Release(assembly);
 
-        public bool IsUsedOnlyBy(ShipAssembly assembly) => Locks.AreOnlyUsedBy(assembly);
+        public virtual bool IsUsedOnlyBy(ShipAssembly assembly) => Locks.AreOnlyUsedBy(assembly);
 
     }
 
