@@ -24,7 +24,7 @@ namespace SpaceTransit.Cosmos
 
         public void Release(ShipAssembly assembly) => _usedBy.Remove(assembly);
 
-        private void Update() => _usedBy.RemoveDestroyed();
+        private void Update() => _usedBy.RemoveWhere(static e => !e);
 
         private void OnDrawGizmos()
         {

@@ -1,7 +1,6 @@
 using SpaceTransit.Loader;
 using SpaceTransit.Routes;
 using SpaceTransit.Ships;
-using SpaceTransit.Ships.Modules;
 using UnityEngine;
 
 namespace SpaceTransit.Cosmos
@@ -47,17 +46,6 @@ namespace SpaceTransit.Cosmos
                 if (exit.IsUsedOnlyBy(assembly))
                     return base.CanProceed(assembly);
             return false;
-        }
-
-        public override void OnEntered(ShipModule module)
-        {
-            base.OnEntered(module);
-            if (Occupants.Count != module.Assembly.Modules.Length)
-                return;
-            var exits = module.Assembly.Reverse ? Dock.FrontExits : Dock.BackExits;
-            foreach (var exit in exits)
-                if (exit.Clearance)
-                    exit.Clearance.Release(module.Assembly);
         }
 
     }

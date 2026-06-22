@@ -56,7 +56,7 @@ namespace SpaceTransit.Routes.Sequences
         private static async Awaitable<VaulterController> Spawn(ServiceSequence sequence, SpawnLocation spawn, int index)
         {
             // why tf is the result an array
-            var ship = (await Object.InstantiateAsync(sequence.prefab, new InstantiateParameters
+            var ship = (await Object.InstantiateAsync(sequence.prefab, (InstantiateParameters) new()
             {
                 parent = World.Current,
                 worldSpace = false
@@ -72,9 +72,8 @@ namespace SpaceTransit.Routes.Sequences
                 return ship;
             await Awaitable.NextFrameAsync();
             entrySpawn.Entry.Lock(assembly);
-            if (entrySpawn.Tube.Safety is not OpposingTrafficPreventiveSafety lockBasedSafety)
-                return ship;
-            lockBasedSafety.Claim(assembly,);
+            if (entrySpawn.Tube.Safety is LockBasedSafety lockBasedSafety)
+                lockBasedSafety.Claim(assembly);
             return ship;
         }
 
