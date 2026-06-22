@@ -14,11 +14,17 @@ namespace SpaceTransit.Routes.Sequences
     public static class RouteRotor
     {
 
+        private static readonly InstantiateParameters Instantiate = new()
+        {
+            parent = World.Current,
+            worldSpace = false
+        };
+
         public const int UpdateInterval = 5;
 
         public static async Awaitable Run(ServiceSequence sequence, SpawnLocation spawn, int index)
         {
-            var ship = Spawn(sequence, spawn, index);
+            var ship = await Spawn(sequence, spawn, index);
             var token = ship.destroyCancellationToken;
             if (spawn is TubeSpawn {StopIndex: not -1})
             {
@@ -53,9 +59,10 @@ namespace SpaceTransit.Routes.Sequences
                && ship.Assembly.FrontModule.Thruster.Tube is Dock dock
                && dock.Station.ID == station;
 
-        private static VaulterController Spawn(ServiceSequence sequence, SpawnLocation spawn, int index)
+        private static async Awaitable<VaulterController> Spawn(ServiceSequence sequence, SpawnLocation spawn, int index)
         {
-            var ship = Object.Instantiate(sequence.prefab, World.Current);
+            // why tf is the result an array
+            var ship = (await Object.InstantiateAsync(sequence.prefab, Instantiate))[0];
             if (index != -1 && index < sequence.routes.Length)
                 ship.initialRoute = sequence.routes[index];
             ship.initialStopIndex = spawn.StopIndex;
@@ -65,6 +72,7 @@ namespace SpaceTransit.Routes.Sequences
             assembly.startTube = tubeSpawn.Tube;
             if (spawn is not EntrySpawn entrySpawn)
                 return ship;
+            await Awaitable.NextFrameAsync();
             entrySpawn.Entry.Lock(assembly);
             if (entrySpawn.Tube.Safety is LockBasedSafety lockBasedSafety)
                 lockBasedSafety.Claim(assembly);
