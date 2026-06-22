@@ -132,7 +132,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private void UpdateExits(Dock dock)
         {
-            if (ExitList.Source.Count != 0)
+            if (ExitList.HasPicked)
                 return;
             ExitList.Source.Clear();
             foreach (var exit in dock.FrontExits)

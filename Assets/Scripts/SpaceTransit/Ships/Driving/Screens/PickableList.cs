@@ -6,7 +6,7 @@ namespace SpaceTransit.Ships.Driving.Screens
     public abstract class PickableList<T> : ListBase<T> where T : PickerBase
     {
 
-        protected bool HasPicked
+        public bool HasPicked
         {
             get
             {
