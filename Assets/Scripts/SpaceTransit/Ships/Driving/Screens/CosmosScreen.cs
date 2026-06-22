@@ -54,13 +54,7 @@ namespace SpaceTransit.Ships.Driving.Screens
             if (tube.TryGetEntryEnsurer(Assembly.Reverse, out var ensurer))
                 UpdateEntries(ensurer);
             else if (!_entering || !_entering.IsUsedOnlyBy(Assembly))
-            {
-                EntryList.Clear();
-                EntryList.SetVisibility(false);
-                EntryList.Text = "";
-                _entering = null;
-            }
-
+                ClearEntryList();
             var inDock = tube is Dock;
             if (_wasInDock && !inDock)
             {
@@ -98,8 +92,18 @@ namespace SpaceTransit.Ships.Driving.Screens
             if (State != ShipState.Docked)
                 return;
             _previousStation = null;
-            if (Assembly.FrontModule.Thruster.Tube is Dock dock)
-                UpdateExits(dock);
+            if (Assembly.FrontModule.Thruster.Tube is not Dock dock)
+                return;
+            ClearEntryList();
+            UpdateExits(dock);
+        }
+
+        private void ClearEntryList()
+        {
+            EntryList.Clear();
+            EntryList.SetVisibility(false);
+            EntryList.Text = "";
+            _entering = null;
         }
 
         private void UpdateEntries(EntryEnsurer ensurer)
@@ -123,7 +127,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private void UpdateExits(Dock dock)
         {
-            if (ExitList.Selected != -1)
+            if (ExitList.Source.Count != 0)
                 return;
             _text.text = dock.Station.Name;
             ExitList.Source.Clear();
