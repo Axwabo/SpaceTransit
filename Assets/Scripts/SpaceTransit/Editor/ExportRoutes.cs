@@ -1,27 +1,17 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
-using UnityEngine;
 using Cache = SpaceTransit.Vaulter.Cache;
 
 namespace SpaceTransit.Editor
 {
 
-    public class ExportRoutes : EditorWindow
+    public static class ExportRoutes
     {
 
         [MenuItem("Window/SpaceTransit/Export Routes")]
-        private static void ShowWindow()
+        private static void Export()
         {
-            var window = GetWindow<ExportRoutes>();
-            window.titleContent = new GUIContent("Export Routes");
-            window.Show();
-        }
-
-        private void OnGUI()
-        {
-            if (!GUILayout.Button("Export"))
-                return;
             var routes = new List<string>();
             var stops = new List<string>();
             foreach (var route in Cache.Routes)
