@@ -34,15 +34,16 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         protected override void BindItem(VisualElement element, int i)
         {
+            element.EnableInClassList("separator", i < Source.Count - 1 && Source[i + 1] is not ExitTowards);
             if (Source[i] is not ExitTowards exitTowards)
             {
                 Bind(element, Source[i].Target);
-                element.RemoveFromClassList("towards");
+                element.RemoveFromClassList("indent");
                 return;
             }
 
             element.Q<Label>("Station").text = $"» {exitTowards.Exit.ExitTowards.name}";
-            element.AddToClassList("towards");
+            element.AddToClassList("indent");
         }
 
         public override void Navigate(bool forwards)

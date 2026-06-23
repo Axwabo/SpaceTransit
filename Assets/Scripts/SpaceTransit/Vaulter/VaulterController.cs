@@ -101,7 +101,7 @@ namespace SpaceTransit.Vaulter
                 Destination => Route.Destination,
                 _ => _targets[index]
             };
-            Stop = index switch
+            Stop = Target as Stop ?? index switch
             {
                 OutOfService => null,
                 Origin => Route.Origin,
