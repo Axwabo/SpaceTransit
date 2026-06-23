@@ -28783,6 +28783,50 @@ Transform:
   - {fileID: 1020659419}
   m_Father: {fileID: 1129488958}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1535339755
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1535339757}
+  - component: {fileID: 1535339756}
+  m_Layer: 0
+  m_Name: Exit Lock
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1535339756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535339755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166d277a1b5444daae45515d0c1a0690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Lock
+--- !u!4 &1535339757
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535339755}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1769025571}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1537502680
 GameObject:
   m_ObjectHideFlags: 0
@@ -29758,7 +29802,7 @@ GameObject:
   - component: {fileID: 1573209508}
   - component: {fileID: 1573209509}
   m_Layer: 0
-  m_Name: Lock
+  m_Name: Entry Lock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29773,7 +29817,7 @@ Transform:
   m_GameObject: {fileID: 1573209507}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -32730,6 +32774,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 939616891}
     - target: {fileID: 7205802345363282216, guid: 72381a3b1972365daac1a65f763de96d, type: 3}
+      propertyPath: <BackExits>k__BackingField.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7205802345363282216, guid: 72381a3b1972365daac1a65f763de96d, type: 3}
+      propertyPath: '<BackExits>k__BackingField.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1783470225}
+    - target: {fileID: 7205802345363282216, guid: 72381a3b1972365daac1a65f763de96d, type: 3}
       propertyPath: <FrontEntries>k__BackingField.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -32822,6 +32874,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8258940253578942800, guid: 72381a3b1972365daac1a65f763de96d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1573209508}
+    - targetCorrespondingSourceObject: {fileID: 8258940253578942800, guid: 72381a3b1972365daac1a65f763de96d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1535339757}
+    - targetCorrespondingSourceObject: {fileID: 8258940253578942800, guid: 72381a3b1972365daac1a65f763de96d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1783470226}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 9018125086761275585, guid: 72381a3b1972365daac1a65f763de96d, type: 3}
       insertIndex: -1
@@ -32995,6 +33053,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1770983961}
   m_CullTransparentMesh: 1
+--- !u!1 &1783470224
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1783470226}
+  - component: {fileID: 1783470225}
+  m_Layer: 0
+  m_Name: Exit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1783470225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783470224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c43dfdd9e06143cc9745b3f999851f85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
+  <Connected>k__BackingField: {fileID: 11400000, guid: c60092262908a3a4889587d604bd0fbb, type: 2}
+  <Locks>k__BackingField:
+  - {fileID: 1535339756}
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 0}
+--- !u!4 &1783470226
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783470224}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1769025571}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1784356218
 GameObject:
   m_ObjectHideFlags: 0
@@ -35654,6 +35761,7 @@ GameObject:
   - component: {fileID: 1961315608}
   - component: {fileID: 1961315607}
   - component: {fileID: 1961315606}
+  - component: {fileID: 1961315609}
   m_Layer: 0
   m_Name: 6
   m_TagString: Untagged
@@ -35759,6 +35867,21 @@ MonoBehaviour:
   CurveChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1961315609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961315604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c51f90abf83e4ac7a02989cfc140ab73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.ExitClearer
+  exit: {fileID: 1783470225}
+  forwards: 0
+  backwards: 1
 --- !u!1001 &1966230738
 PrefabInstance:
   m_ObjectHideFlags: 0
