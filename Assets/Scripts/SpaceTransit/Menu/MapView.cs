@@ -131,7 +131,7 @@ namespace SpaceTransit.Menu
 
         public Vector2 GetAnchored(Vector3 localPosition)
         {
-            var anchored = anchor.InverseTransformPoint(localPosition);
+            var anchored = localPosition - anchor.position;
             return new Vector2(anchored.x * scale, -anchored.z * scale);
         }
 
