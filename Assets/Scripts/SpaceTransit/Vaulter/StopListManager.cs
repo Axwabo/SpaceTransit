@@ -29,11 +29,13 @@ namespace SpaceTransit.Vaulter
             Screen.Refresh();
         }
 
-        public override void OnStopChanged()
+        public override void OnTargetChanged()
         {
             if (Screen.Source.Count == 0)
                 return;
             Screen.Source.RemoveAt(0);
+            if (Screen.Source.Count != 0 && Screen.Source[0] is ExitTowards)
+                Screen.Source.RemoveAt(0);
             Screen.Refresh();
         }
 
@@ -43,12 +45,19 @@ namespace SpaceTransit.Vaulter
             Screen.Source.Clear();
             if (!IsInService)
                 return;
-            Screen.Source.Add(Parent.Stop);
-            if (Parent.Stop is Destination)
+            Add(Parent.Target);
+            if (Parent.Target is Destination)
                 return;
-            foreach (var stop in Parent.NextIntermediateStops)
-                Screen.Source.Add(stop);
-            Screen.Source.Add(Parent.Route.Destination);
+            foreach (var stop in Parent.NextTargets)
+                Add(stop);
+            Add(Parent.Route.Destination);
+        }
+
+        private void Add(ITarget target)
+        {
+            Screen.Source.Add(new StopListEntry(target));
+            if (target is IExitTowards exitTowards && exitTowards.ExitTowards)
+                Screen.Source.Add(new ExitTowards(exitTowards));
         }
 
     }

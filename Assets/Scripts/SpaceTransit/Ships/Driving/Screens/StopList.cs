@@ -9,18 +9,25 @@ namespace SpaceTransit.Ships.Driving.Screens
 {
 
     [RequireComponent(typeof(StopListManager))]
-    public sealed class StopList : ListBase<Stop>
+    public sealed class StopList : ListBase<StopListEntry>
     {
 
-        public static Action<VisualElement, int> CreateBindFunction(List<Stop> stops) => (element, i) => Bind(stops, element, i);
+        public static Action<VisualElement, int> CreateBindFunction(List<ITarget> stops) => (element, i) => Bind(element, stops[i]);
 
-        private static void Bind(List<Stop> stops, VisualElement element, int i)
+        private static void Bind(VisualElement element, ITarget target) => Bind(
+            element,
+            target.Station.name,
+            (target as IArrival)?.Arrival.ToString() ?? "",
+            (target as IDeparture)?.Departure.ToString() ?? "",
+            (target.DockIndex + 1).ToString()
+        );
+
+        private static void Bind(VisualElement element, string station, string arrival, string departure, string dockIndex)
         {
-            var stop = stops[i];
-            element.Q<Label>("Station").text = stop.Station.name;
-            element.Q<Label>("Arrival").text = (stop as IArrival)?.Arrival.ToString() ?? "";
-            element.Q<Label>("Departure").text = (stop as IDeparture)?.Departure.ToString() ?? "";
-            element.Q<Label>("DockIndex").text = (stop.DockIndex + 1).ToString();
+            element.Q<Label>("Station").text = station;
+            element.Q<Label>("Arrival").text = arrival;
+            element.Q<Label>("Departure").text = departure;
+            element.Q<Label>("DockIndex").text = dockIndex;
         }
 
         private ScrollView _scrollView;
@@ -33,7 +40,21 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         protected override ListView GetListView(VisualElement root) => root.Q<ListView>("Stops");
 
-        protected override void BindItem(VisualElement element, int i) => Bind(Source, element, i);
+        protected override void BindItem(VisualElement element, int i)
+        {
+            var entry = Source[i];
+            element.EnableInClassList("separator", i < Source.Count - 1 && Source[i + 1] is not ExitTowards);
+            element.EnableInClassList("passthrough", entry.Target is Passthrough);
+            if (entry is not ExitTowards exitTowards)
+            {
+                Bind(element, entry.Target);
+                element.RemoveFromClassList("indent");
+                return;
+            }
+
+            Bind(element, $"» {exitTowards.Exit.ExitTowards.name}", "", "", "");
+            element.AddToClassList("indent");
+        }
 
         public override void Navigate(bool forwards)
         {

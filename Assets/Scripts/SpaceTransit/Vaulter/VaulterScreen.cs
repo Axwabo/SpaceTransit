@@ -54,6 +54,8 @@ namespace SpaceTransit.Vaulter
         {
             _root = this.RootVisual();
             _title = _root.Q<Label>("Title");
+            routes.Screen.Initialize();
+            stops.Screen.Initialize();
         }
 
         public override void OnRouteChanged() => Show(!IsInService, false);
@@ -64,7 +66,7 @@ namespace SpaceTransit.Vaulter
                 return;
             _routesShown = showRoutes;
             _current = showRoutes ? routes.Screen : stops.Screen;
-            _title.text = showRoutes ? "Pick a  Route" : $"{Parent.Route.name} {Parent.Route.Summary()}";
+            _title.text = showRoutes ? "Pick a Route" : $"{Parent.Route.name} {Parent.Route.Summary()}";
             routes.enabled = showRoutes;
             stops.enabled = !showRoutes;
         }

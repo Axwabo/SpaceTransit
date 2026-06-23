@@ -10,6 +10,8 @@ namespace SpaceTransit.Routes
 
         public IntermediateStop[] intermediateStops;
 
+        public Passthrough[] passthrough;
+
     }
 
 }

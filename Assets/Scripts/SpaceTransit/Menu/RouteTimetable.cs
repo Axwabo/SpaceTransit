@@ -11,7 +11,7 @@ namespace SpaceTransit.Menu
     public sealed class RouteTimetable : MonoBehaviour
     {
 
-        private readonly List<Stop> _stops = new();
+        private readonly List<ITarget> _stops = new();
 
         private Label _type;
 

@@ -37,6 +37,10 @@ namespace SpaceTransit.Vaulter
         {
         }
 
+        public virtual void OnTargetChanged()
+        {
+        }
+
     }
 
 }

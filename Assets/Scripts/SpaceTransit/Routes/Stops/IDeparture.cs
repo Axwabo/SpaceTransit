@@ -1,12 +1,10 @@
 ﻿namespace SpaceTransit.Routes.Stops
 {
 
-    public interface IDeparture : IStop
+    public interface IDeparture : IStop, IExitTowards
     {
 
         TimeOnly Departure { get; }
-
-        StationId ExitTowards { get; }
 
     }
 

@@ -16,6 +16,8 @@ namespace SpaceTransit.Routes
 
         private IntermediateStop[] _intermediateStops;
 
+        private Passthrough[] _passthrough;
+
         [field: SerializeField]
         public ServiceType Type { get; private set; }
 
@@ -32,16 +34,26 @@ namespace SpaceTransit.Routes
         private IntermediateStop[] intermediateStops;
 
         [SerializeField]
+        private Passthrough[] passthrough;
+
+        [SerializeField]
         private RelativeSchedule schedule;
 
         public ReadOnlySpan<IntermediateStop> IntermediateStops => _intermediateStops;
 
+        public ReadOnlySpan<Passthrough> Passthrough => _passthrough;
+
         [field: SerializeField]
         public Destination Destination { get; private set; }
 
-        private void Awake() => _intermediateStops = schedule
-            ? schedule.intermediateStops.Select(e => e.Add(Origin.Departure.Value)).ToArray()
-            : intermediateStops;
+        private void Awake()
+        {
+            var hasSchedule = schedule != null;
+            _intermediateStops = hasSchedule
+                ? schedule.intermediateStops.Select(e => e.Add(Origin.Departure.Value)).ToArray()
+                : intermediateStops;
+            _passthrough = hasSchedule ? schedule.passthrough : passthrough;
+        }
 
 #if UNITY_EDITOR
         private void OnValidate() => Awake();
