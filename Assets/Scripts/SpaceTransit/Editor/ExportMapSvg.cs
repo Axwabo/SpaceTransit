@@ -54,7 +54,7 @@ namespace SpaceTransit.Editor
                 file.Write(' ');
             }
 
-            file.Write("\" stroke=\"orange\" stroke-width=\"100\" />");
+            file.Write("\" stroke=\"orange\" stroke-width=\"100\" fill=\"transparent\" />");
         }
 
         private static void WriteStraight(TubeBase tube, StreamWriter file)
