@@ -14,12 +14,20 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         public static Action<VisualElement, int> CreateBindFunction(List<ITarget> stops) => (element, i) => Bind(element, stops[i]);
 
-        private static void Bind(VisualElement element, ITarget target)
+        private static void Bind(VisualElement element, ITarget target) => Bind(
+            element,
+            target.Station.name,
+            (target as IArrival)?.Arrival.ToString() ?? "",
+            (target as IDeparture)?.Departure.ToString() ?? "",
+            (target.DockIndex + 1).ToString()
+        );
+
+        private static void Bind(VisualElement element, string station, string arrival, string departure, string dockIndex)
         {
-            element.Q<Label>("Station").text = target.Station.name;
-            element.Q<Label>("Arrival").text = (target as IArrival)?.Arrival.ToString() ?? "";
-            element.Q<Label>("Departure").text = (target as IDeparture)?.Departure.ToString() ?? "";
-            element.Q<Label>("DockIndex").text = (target.DockIndex + 1).ToString();
+            element.Q<Label>("Station").text = station;
+            element.Q<Label>("Arrival").text = arrival;
+            element.Q<Label>("Departure").text = departure;
+            element.Q<Label>("DockIndex").text = dockIndex;
         }
 
         private ScrollView _scrollView;
@@ -42,7 +50,7 @@ namespace SpaceTransit.Ships.Driving.Screens
                 return;
             }
 
-            element.Q<Label>("Station").text = $"» {exitTowards.Exit.ExitTowards.name}";
+            Bind(element, $"» {exitTowards.Exit.ExitTowards.name}", "", "", "");
             element.AddToClassList("indent");
         }
 
