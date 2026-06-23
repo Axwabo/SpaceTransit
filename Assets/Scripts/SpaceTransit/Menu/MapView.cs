@@ -53,12 +53,12 @@ namespace SpaceTransit.Menu
 
         private void Start()
         {
+            _scale = viewportHeight / anchor.lossyScale.z;
             var root = this.RootVisual();
             var container = root.Q("Container");
             _anchor = root.Q("Anchor");
             _items = root.Q("Items");
             _items.style.translate = -GetAnchored(World.Current.InverseTransformPoint(MovementController.Current.Position));
-            _scale = viewportHeight / anchor.lossyScale.z;
             container.RegisterCallback<PointerMoveEvent>(OnPointerMove);
             container.RegisterCallback<WheelEvent>(OnWheel);
             Place();
