@@ -18,26 +18,58 @@ namespace SpaceTransit.Editor
             using var file = File.CreateText(path);
             file.Write("<svg viewBox=\"-8192 -4096 16384 8192\" xmlns=\"http://www.w3.org/2000/svg\">");
             foreach (var tube in Object.FindObjectsByType<TubeBase>(FindObjectsSortMode.None))
-            {
-                if (tube is not StraightTube straight)
-                    continue;
-                var start = straight.Sample(0).Position;
-                var end = straight.Sample(straight.Length).Position;
-                file.Write("<line x1=\"");
-                file.Write(start.x);
-                file.Write("\" x2=\"");
-                file.Write(end.x);
-                file.Write("\" y1=\"");
-                file.Write(start.z);
-                file.Write("\" y2=\"");
-                file.Write(end.z);
-                file.Write("\" stroke=\"orange\" stroke-width=\"2\" />");
-                // file.Write("<path d=\"");
-                // file.Write("M 10,30 A 20,20 0,0,1 50,30 A 20,20 0,0,1 90,30 Q 90,60 50,90 Q 10,60 10,30 z");
-                // file.Write("\" />");
-            }
+                if (tube is SplineTube spline)
+                    WriteSpline(spline, file);
+                else
+                    WriteStraight(tube, file);
 
             file.Write("</svg>");
+        }
+
+        private static void WriteSpline(SplineTube spline, StreamWriter file)
+        {
+            var nodes = spline.Nodes;
+            file.Write("<path d=\"");
+            file.Write("M ");
+            file.Write(nodes[0].Position.x);
+            file.Write(' ');
+            file.Write(-nodes[0].Position.z);
+            file.Write(' ');
+            for (var i = 0; i < nodes.Count - 1; i++)
+            {
+                var n1 = nodes[i];
+                var n2 = nodes[i + 1];
+                file.Write("C ");
+                file.Write(n1.Direction.x);
+                file.Write(' ');
+                file.Write(-n1.Direction.z);
+                file.Write(", ");
+                file.Write(n2.Direction.x);
+                file.Write(' ');
+                file.Write(-n2.Direction.z);
+                file.Write(", ");
+                file.Write(n2.Position.x);
+                file.Write(' ');
+                file.Write(-n2.Position.z);
+                file.Write(' ');
+            }
+
+            file.Write("\" stroke=\"orange\" stroke-width=\"100\" />");
+        }
+
+        private static void WriteStraight(TubeBase tube, StreamWriter file)
+        {
+            var start = tube.Sample(0).Position;
+            var end = tube.Sample(tube.Length).Position;
+            file.Write("<line x1=\"");
+            file.Write(start.x);
+            file.Write("\" x2=\"");
+            file.Write(end.x);
+            file.Write("\" y1=\"");
+            file.Write(-start.z);
+            file.Write("\" y2=\"");
+            file.Write(-end.z);
+            file.Write("\" stroke=\"orange\" stroke-width=\"100\" />");
         }
 
     }

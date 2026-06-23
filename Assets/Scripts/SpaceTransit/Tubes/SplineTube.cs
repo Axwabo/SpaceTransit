@@ -1,4 +1,5 @@
-﻿using SplineMesh;
+﻿using System.Collections.Generic;
+using SplineMesh;
 using UnityEngine;
 
 namespace SpaceTransit.Tubes
@@ -6,6 +7,8 @@ namespace SpaceTransit.Tubes
 
     public sealed class SplineTube : TubeBase
     {
+
+        public IReadOnlyList<SplineNode> Nodes => spline.nodes.AsReadOnly();
 
         [SerializeField]
         private Spline spline;
