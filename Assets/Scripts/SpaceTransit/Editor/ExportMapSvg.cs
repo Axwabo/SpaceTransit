@@ -6,21 +6,47 @@ using UnityEngine;
 namespace SpaceTransit.Editor
 {
 
-    public static class ExportMapSvg
+    public sealed class ExportMapSvg : EditorWindow
     {
 
         private const float Step = 1 / 60f;
         private const string StrokeStyle = "stroke=\"orange\" stroke-width=\"5\"";
 
         [MenuItem("Window/SpaceTransit/Export Map as SVG")]
-        public static void Export()
+        public static void ShowWindow()
+        {
+            var window = GetWindow<ExportMapSvg>();
+            window.titleContent = new GUIContent("Export Map");
+            window.Show();
+        }
+
+        private Transform _anchor;
+
+        private void OnGUI()
+        {
+            _anchor = (Transform) EditorGUILayout.ObjectField("Anchor", _anchor, typeof(Transform), true);
+            if (_anchor && GUILayout.Button("Export"))
+                Export(_anchor);
+        }
+
+        private static void Export(Transform anchor)
         {
             var path = EditorUtility.SaveFilePanel("Save Map SVG", null, null, "svg");
             if (string.IsNullOrWhiteSpace(path))
                 return;
+            var topLeft = anchor.TransformPoint(new Vector3(-0.5f, 0, 0.25f));
+            var bottomRight = anchor.TransformPoint(new Vector3(0.5f, 0, -0.25f));
             using var file = File.CreateText(path);
-            file.Write("<svg viewBox=\"-8192 -4096 16384 8192\" xmlns=\"http://www.w3.org/2000/svg\">");
-            foreach (var tube in Object.FindObjectsByType<TubeBase>(FindObjectsSortMode.None))
+            file.Write("<svg viewBox=\"");
+            file.Write(topLeft.x);
+            file.Write(' ');
+            file.Write(-topLeft.z);
+            file.Write(' ');
+            file.Write(bottomRight.x - topLeft.x);
+            file.Write(' ');
+            file.Write(topLeft.z - bottomRight.z);
+            file.Write("\" xmlns=\"http://www.w3.org/2000/svg\">");
+            foreach (var tube in FindObjectsByType<TubeBase>(FindObjectsSortMode.None))
                 if (tube is SplineTube spline)
                     WriteSpline(spline, file);
                 else
