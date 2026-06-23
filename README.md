@@ -15,10 +15,6 @@ The ships' ambience are designed to be both realistic and pleasing to listen to.
 
 # Gameplay
 
-> [!IMPORTANT]
-> If you fall out of the world, press `Tab` to open the menu, click `Exit`
-> to go back to the main menu and try again.
-
 > [!NOTE]
 > Due to arithmetic issues on WebGL and Linux, the game is only released for windows.
 > If you're using Linux, try running the game through Wine.
@@ -138,6 +134,6 @@ Future plans:
 - ~~Dynamic line loading~~ DONE
 - Ship houses
 - Even more routes & lines
-- Spline-based, auto-generated map
+- ~~Spline-based, auto-generated map~~ DONE (with SVGs, two-click export tool)
 - Touchscreen support
 - Ship summoning
