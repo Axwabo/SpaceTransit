@@ -24,6 +24,8 @@ namespace SpaceTransit.Vaulter
 
         private ITarget[] _targets = Array.Empty<ITarget>();
 
+        private StationId _passingThroughDock;
+
         [SerializeField]
         public RouteDescriptor initialRoute;
 
@@ -82,7 +84,7 @@ namespace SpaceTransit.Vaulter
             for (var i = passthroughList.Length - 1; i >= 0; i--)
             {
                 var passthrough = passthroughList[i];
-                targets.Insert(targets.FindIndex(e => e.Station == passthrough.Station) + 1, passthrough);
+                targets.Insert(targets.FindIndex(e => e.Station == passthrough.AfterStop) + 1, passthrough);
             }
 
             _targets = targets.ToArray();
@@ -133,13 +135,33 @@ namespace SpaceTransit.Vaulter
             if (_targetIndex is not (OutOfService or Destination)
                 && Parent.State is ShipState.LiftingOff or ShipState.Sailing
                 && Assembly.FrontModule.Thruster.Tube is Dock {Station: var station} && station.ID == Target?.Station)
-                UpdateTarget(_targetIndex >= _targets.Length - 1 ? Destination : _targetIndex + 1);
+                AdvanceTarget();
         }
+
+        private void AdvanceTarget() => UpdateTarget(_targetIndex >= _targets.Length - 1 ? Destination : _targetIndex + 1);
 
         private void NotifyRouteChanged()
         {
             foreach (var component in _components)
                 component.OnRouteChanged();
+        }
+
+        private void Update()
+        {
+            if (Target is not Passthrough passthrough)
+                return;
+            var tube = Assembly.FrontModule.Thruster.Tube;
+            if (tube is Dock dock)
+            {
+                if (dock.Station.ID == passthrough.Station)
+                    _passingThroughDock = passthrough.Station;
+                return;
+            }
+
+            if (!_passingThroughDock)
+                return;
+            AdvanceTarget();
+            _passingThroughDock = null;
         }
 
     }
