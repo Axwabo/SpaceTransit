@@ -33,7 +33,9 @@ namespace SpaceTransit.Vaulter
         {
             if (Screen.Source.Count == 0)
                 return;
-            Screen.Source.RemoveRange(0, Screen.Source.Count == 1 || Screen.Source[1] is ExitTowards ? 2 : 1);
+            Screen.Source.RemoveAt(0);
+            if (Screen.Source.Count != 0 && Screen.Source[0] is ExitTowards)
+                Screen.Source.RemoveAt(0);
             Screen.Refresh();
         }
 
