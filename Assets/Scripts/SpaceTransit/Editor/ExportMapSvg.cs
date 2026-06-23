@@ -16,10 +16,21 @@ namespace SpaceTransit.Editor
         public static void Export()
         {
             var path = EditorUtility.SaveFilePanel("Save Map SVG", null, null, "svg");
-            if (string.IsNullOrWhiteSpace(path))
+            if (string.IsNullOrWhiteSpace(path) || !Selection.activeGameObject)
                 return;
+            var transform = Selection.activeGameObject.transform;
+            var scale = transform.lossyScale;
+            var topLeft = transform.TransformPoint(new Vector3(-0.5f, 0, 0.5f));
             using var file = File.CreateText(path);
-            file.Write("<svg viewBox=\"-8192 -4096 16384 8192\" xmlns=\"http://www.w3.org/2000/svg\">");
+            file.Write("<svg viewBox=\"");
+            file.Write(topLeft.x);
+            file.Write(' ');
+            file.Write(-topLeft.z);
+            file.Write(' ');
+            file.Write(scale.x);
+            file.Write(' ');
+            file.Write(scale.z);
+            file.Write("\" xmlns=\"http://www.w3.org/2000/svg\">");
             foreach (var tube in Object.FindObjectsByType<TubeBase>(FindObjectsSortMode.None))
                 if (tube is SplineTube spline)
                     WriteSpline(spline, file);
