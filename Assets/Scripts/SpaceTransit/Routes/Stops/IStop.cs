@@ -1,11 +1,8 @@
 ﻿namespace SpaceTransit.Routes.Stops
 {
 
-    public interface IStop
+    public interface IStop : ITarget
     {
-
-        int DockIndex { get; }
-        StationId Station { get; }
 
     }
 
