@@ -9,7 +9,6 @@ namespace SpaceTransit.Editor
     public static class ExportMapSvg
     {
 
-        private const float Step = 1 / 60f;
         private const string StrokeStyle = "stroke=\"orange\" stroke-width=\"5\"";
 
         [MenuItem("Window/SpaceTransit/Export Map as SVG")]
@@ -42,17 +41,19 @@ namespace SpaceTransit.Editor
         private static void WriteSpline(SplineTube spline, StreamWriter file)
         {
             file.Write("<path d=\"");
-            for (var i = 0f; i <= 1; i += Step)
-            {
-                var sample = spline.Sample(i * spline.Length).Position;
-                file.Write(i is 0 ? 'M' : 'L');
-                file.Write(sample.x);
-                file.Write(' ');
-                file.Write(-sample.z);
-                file.Write(' ');
-            }
-
+            for (var i = 0; i < 10; i++)
+                WriteSample(file, spline, i * 0.1f);
             file.Write($"\" {StrokeStyle} fill=\"transparent\" />");
+        }
+
+        private static void WriteSample(StreamWriter file, SplineTube spline, float time)
+        {
+            var sample = spline.Sample(time * spline.Length).Position;
+            file.Write(time is 0 ? 'M' : 'L');
+            file.Write(sample.x);
+            file.Write(' ');
+            file.Write(-sample.z);
+            file.Write(' ');
         }
 
         private static void WriteStraight(TubeBase tube, StreamWriter file)
