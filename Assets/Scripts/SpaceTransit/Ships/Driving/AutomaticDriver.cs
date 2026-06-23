@@ -18,11 +18,15 @@ namespace SpaceTransit.Ships.Driving
 
         private float _remainingWait;
 
+        private float _readyWait;
+
         private bool _departed;
 
         private bool _stopping;
 
         private bool _entryRequested;
+
+        private bool _exitRequested;
 
         private bool _reversing;
 
@@ -30,7 +34,7 @@ namespace SpaceTransit.Ships.Driving
         {
             get
             {
-                if (Parent.Target is Passthrough || !Station.TryGetLoadedStation(Parent.Target.Station, out var station))
+                if (_exitRequested && Parent.Target is Passthrough || !Station.TryGetLoadedStation(Parent.Target.Station, out var station))
                     return false;
                 var tube = station.Docks[Parent.Target.DockIndex];
                 var overscan = DefaultOverscan * Mathf.Sqrt(Time.timeScale);
@@ -43,7 +47,7 @@ namespace SpaceTransit.Ships.Driving
             }
         }
 
-        private bool IsInDockReverse => (Parent.Route.Reverse ? Assembly.BackModule : Assembly.FrontModule).Thruster.Tube is Dock;
+        private bool IsFullyInDock => Assembly.FrontModule.Thruster.Tube is Dock && Assembly.BackModule.Thruster.Tube is Dock;
 
         private void Update()
         {
@@ -52,13 +56,14 @@ namespace SpaceTransit.Ships.Driving
             switch (Controller.State)
             {
                 case ShipState.Docked:
-                    _entryRequested = _stopping = _reversing = false;
+                    _entryRequested = _exitRequested = _stopping = _reversing = false;
                     Assembly.Reverse = Parent.Route.Reverse;
                     UpdateDocked();
                     break;
                 case ShipState.WaitingForDeparture:
-                    if (Controller.CanLiftOff)
-                        Controller.LiftOff();
+                    if ((_readyWait -= Clock.Delta) > 0 || !Controller.CanLiftOff)
+                        break;
+                    Controller.LiftOff();
                     break;
                 case ShipState.Sailing:
                     UpdateSailing();
@@ -87,6 +92,7 @@ namespace SpaceTransit.Ships.Driving
 
             Controller.MarkReady();
             _departed = false;
+            _readyWait = Parent.Target is Passthrough ? 10 : 0;
             if (!Assembly.FrontModule.Thruster.Tube.Next(Assembly.Reverse))
                 Destroy(Assembly.gameObject);
         }
@@ -104,7 +110,7 @@ namespace SpaceTransit.Ships.Driving
 
             if (_stopping || ShouldStop)
             {
-                if (!Controller.CanLand || _reversing && !IsInDockReverse)
+                if (!Controller.CanLand || _reversing && !IsFullyInDock)
                     StopOrReverse();
                 else
                     Controller.Land();
@@ -114,6 +120,8 @@ namespace SpaceTransit.Ships.Driving
             var tube = Assembly.FrontModule.Thruster.Tube;
             if (!_entryRequested && tube.TryGetEntryEnsurer(Assembly.Reverse, out var ensurer))
                 Enter(ensurer);
+            if (_entryRequested && !_exitRequested && Parent.Target is Passthrough passthrough)
+                Exit(passthrough);
             if (Controller.CanProceed && !_stopping)
                 Assembly.SetTargetSpeed(Assembly.MaxSpeed.Limit(tube.SpeedLimit));
         }
@@ -121,7 +129,7 @@ namespace SpaceTransit.Ships.Driving
         private void StopOrReverse()
         {
             _stopping = true;
-            var stop = _reversing ? IsInDockReverse : !Assembly.IsStationary();
+            var stop = _reversing ? IsFullyInDock : !Assembly.IsStationary();
             if (stop)
             {
                 Assembly.SetTargetSpeed(0);
@@ -160,7 +168,45 @@ namespace SpaceTransit.Ships.Driving
             }
         }
 
+        private void Exit(Passthrough passthrough)
+        {
+            if (!Station.TryGetLoadedStation(passthrough.Station, out var station))
+                return;
+            var dock = station.Docks[passthrough.DockIndex];
+            var exits = Parent.Route.Reverse ? dock.BackExits : dock.FrontExits;
+            if (exits.Length == 0)
+            {
+                _exitRequested = CanEnterPassthrough(dock);
+                return;
+            }
+
+            _exitRequested = false;
+            var list = Assembly.FrontModule.Cosmos.ExitList;
+            foreach (var exit in exits)
+            {
+                if (exit.Connected != passthrough.ExitTowards)
+                    continue;
+                _exitRequested = exit.Lock(Assembly);
+                if (_exitRequested && list.isActiveAndEnabled)
+                    list.Mark(exit);
+                return;
+            }
+        }
+
+        private bool CanEnterPassthrough(Dock dock)
+        {
+            foreach (var entry in dock.FrontEntries)
+                if (!entry.IsFree && !entry.IsUsedOnlyBy(Assembly))
+                    return false;
+            foreach (var entry in dock.BackEntries)
+                if (!entry.IsFree && !entry.IsUsedOnlyBy(Assembly))
+                    return false;
+            return dock.Safety.IsFreeFor(Assembly);
+        }
+
         public override void OnRouteChanged() => _departed = true;
+
+        public override void OnTargetChanged() => _exitRequested = false;
 
         private void OnEnable() => _departed = true;
 
