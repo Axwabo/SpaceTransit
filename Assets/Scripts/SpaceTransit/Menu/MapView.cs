@@ -23,7 +23,7 @@ namespace SpaceTransit.Menu
         private Transform anchor;
 
         [SerializeField]
-        private float scale = 1;
+        private float viewportHeight = 4096;
 
         [SerializeField]
         private float sensitivity = 1;
@@ -38,6 +38,8 @@ namespace SpaceTransit.Menu
         private bool _placed;
 
         private float _zoom = 1;
+
+        private float _scale;
 
         private bool _pointerDown;
 
@@ -56,6 +58,7 @@ namespace SpaceTransit.Menu
             _anchor = root.Q("Anchor");
             _items = root.Q("Items");
             _items.style.translate = -GetAnchored(World.Current.InverseTransformPoint(MovementController.Current.Position));
+            _scale = viewportHeight / anchor.lossyScale.z;
             container.RegisterCallback<PointerMoveEvent>(OnPointerMove);
             container.RegisterCallback<WheelEvent>(OnWheel);
             Place();
@@ -72,7 +75,7 @@ namespace SpaceTransit.Menu
             if (evt.pressedButtons != 1)
                 return;
             var currentTranslate = _items.style.translate.value;
-            var scalar = sensitivity / Mathf.Pow(scale, 0.75f);
+            var scalar = sensitivity / _zoom;
             _items.style.translate = new Vector2(currentTranslate.x.value + evt.deltaPosition.x * scalar, currentTranslate.y.value + evt.deltaPosition.y * scalar);
         }
 
@@ -112,7 +115,7 @@ namespace SpaceTransit.Menu
                 if (!_spawnedAssemblies.Add(assembly))
                     continue;
                 var element = CreateMapItem(shipPrefab, Vector3.zero);
-                _ships.Add(new MapShip(element, assembly, this) {Scale = scale});
+                _ships.Add(new MapShip(element, assembly, this) {Scale = _scale});
                 _items.Add(element);
             }
 
@@ -132,7 +135,7 @@ namespace SpaceTransit.Menu
         public Vector2 GetAnchored(Vector3 localPosition)
         {
             var anchored = localPosition - anchor.position;
-            return new Vector2(anchored.x * scale, -anchored.z * scale);
+            return new Vector2(anchored.x * _scale, -anchored.z * _scale);
         }
 
         private void OnSceneLoaded() => _placed = false;
