@@ -9,6 +9,9 @@ namespace SpaceTransit.Editor
     public static class ExportMapSvg
     {
 
+        private const float Step = 1 / 60f;
+        private const string StrokeStyle = "stroke=\"orange\" stroke-width=\"5\"";
+
         [MenuItem("Window/SpaceTransit/Export Map as SVG")]
         public static void Export()
         {
@@ -22,39 +25,23 @@ namespace SpaceTransit.Editor
                     WriteSpline(spline, file);
                 else
                     WriteStraight(tube, file);
-
             file.Write("</svg>");
         }
 
         private static void WriteSpline(SplineTube spline, StreamWriter file)
         {
-            var nodes = spline.Nodes;
             file.Write("<path d=\"");
-            file.Write("M ");
-            file.Write(nodes[0].Position.x);
-            file.Write(' ');
-            file.Write(-nodes[0].Position.z);
-            file.Write(' ');
-            for (var i = 0; i < nodes.Count - 1; i++)
+            for (var i = 0f; i <= 1; i += Step)
             {
-                var n1 = nodes[i];
-                var n2 = nodes[i + 1];
-                file.Write("C ");
-                file.Write(n1.Direction.x);
+                var sample = spline.Sample(i * spline.Length).Position;
+                file.Write(i is 0 ? 'M' : 'L');
+                file.Write(sample.x);
                 file.Write(' ');
-                file.Write(-n1.Direction.z);
-                file.Write(", ");
-                file.Write(n2.Direction.x);
-                file.Write(' ');
-                file.Write(-n2.Direction.z);
-                file.Write(", ");
-                file.Write(n2.Position.x);
-                file.Write(' ');
-                file.Write(-n2.Position.z);
+                file.Write(-sample.z);
                 file.Write(' ');
             }
 
-            file.Write("\" stroke=\"orange\" stroke-width=\"100\" fill=\"transparent\" />");
+            file.Write($"\" {StrokeStyle} fill=\"transparent\" />");
         }
 
         private static void WriteStraight(TubeBase tube, StreamWriter file)
@@ -69,7 +56,7 @@ namespace SpaceTransit.Editor
             file.Write(-start.z);
             file.Write("\" y2=\"");
             file.Write(-end.z);
-            file.Write("\" stroke=\"orange\" stroke-width=\"100\" />");
+            file.Write($"\" {StrokeStyle} />");
         }
 
     }
