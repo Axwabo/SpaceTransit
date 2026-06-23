@@ -1,7 +1,4 @@
 using System.IO;
-using System.Linq;
-using System.Xml;
-using System.Xml.Linq;
 using UnityEditor;
 
 namespace SpaceTransit.Editor
@@ -24,21 +21,12 @@ namespace SpaceTransit.Editor
                 new XElement().CreateWriter()
             }*/
 
-            using var file = File.Create(path);
-            using var writer = XmlWriter.Create(file);
-            writer.WriteStartElement("svg");
-            writer.WriteAttributeString("xmlns", "http://www.w3.org/2000/svg");
-            writer.WriteAttributeString("viewBox", "0 0 100 100");
-            writer.WriteStartElement("path");
-            writer.WriteAttributeString("d", "M 10,30 A 20,20 0,0,1 50,30 A 20,20 0,0,1 90,30 Q 90,60 50,90 Q 10,60 10,30 z");
-            writer.WriteEndElement();
-            writer.WriteEndElement();
-        }
-
-        private static XElement NoNamespace(XElement xElement)
-        {
-            xElement.Attributes().Where(e => e.IsNamespaceDeclaration).Remove();
-            return xElement;
+            using var file = File.CreateText(path);
+            file.Write("<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\">");
+            file.Write("<path d=\"");
+            file.Write("M 10,30 A 20,20 0,0,1 50,30 A 20,20 0,0,1 90,30 Q 90,60 50,90 Q 10,60 10,30 z");
+            file.Write("\" />");
+            file.Write("</svg>");
         }
 
     }
