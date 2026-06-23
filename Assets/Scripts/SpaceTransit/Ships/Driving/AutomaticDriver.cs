@@ -30,7 +30,7 @@ namespace SpaceTransit.Ships.Driving
         {
             get
             {
-                if (!Station.TryGetLoadedStation(Parent.Target.Station, out var station))
+                if (Parent.Target is Passthrough || !Station.TryGetLoadedStation(Parent.Target.Station, out var station))
                     return false;
                 var tube = station.Docks[Parent.Target.DockIndex];
                 var overscan = DefaultOverscan * Mathf.Sqrt(Time.timeScale);
