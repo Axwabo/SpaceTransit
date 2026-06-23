@@ -36,7 +36,7 @@ namespace SpaceTransit.Stations
 
         private readonly List<(ShipAssembly, int)> _arriving = new();
 
-        private readonly Queue<(RouteDescriptor, IntermediateStop)> _arrivedShips = new();
+        private readonly Queue<(VaulterController, RouteDescriptor, IntermediateStop)> _arrivedShips = new();
 
         private List<DepartureEntry> _departures;
 
@@ -78,9 +78,9 @@ namespace SpaceTransit.Stations
         {
             if (_queue.IsYapping || AnnounceDeparting() || AnnouncePassingThrough() || AnnounceArriving())
                 return;
-            if (_arrivedShips.TryDequeue(out var tuple))
+            if (_arrivedShips.TryDequeue(out var tuple) && tuple.Item1.Stop?.Station == _cache.StationId)
             {
-                Announce(tuple.Item1, AnnouncementCreator.Departing(tuple.Item1, tuple.Item2));
+                Announce(tuple.Item2, AnnouncementCreator.Departing(tuple.Item2, tuple.Item3));
                 return;
             }
 
@@ -153,10 +153,10 @@ namespace SpaceTransit.Stations
 
         public void EnqueueArriving(ShipAssembly assembly, int dockIndex) => _arriving.Add((assembly, dockIndex));
 
-        public void EnqueueArrived(RouteDescriptor route, Stop stop)
+        public void EnqueueArrived(VaulterController assembly, RouteDescriptor route, Stop stop)
         {
             if (stop is IntermediateStop intermediate && intermediate.Arrival.Value != intermediate.Departure.Value)
-                _arrivedShips.Enqueue((route, intermediate));
+                _arrivedShips.Enqueue((assembly, route, intermediate));
         }
 
     }

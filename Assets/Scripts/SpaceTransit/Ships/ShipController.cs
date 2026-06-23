@@ -121,7 +121,7 @@ namespace SpaceTransit.Ships
         private void NotifyArrival()
         {
             if (TryGetVaulter(out var vaulter) && vaulter.IsInService && Assembly.FrontModule.Thruster.Tube is Dock dock && dock.Station.ID == vaulter.Stop.Station && dock.Station.Announcer)
-                dock.Station.Announcer.EnqueueArrived(vaulter.Route, vaulter.Stop);
+                dock.Station.Announcer.EnqueueArrived(vaulter, vaulter.Route, vaulter.Stop);
         }
 
         private void NotifyDeparture()
