@@ -29,7 +29,7 @@ namespace SpaceTransit.Vaulter
             Screen.Refresh();
         }
 
-        public override void OnStopChanged()
+        public override void OnTargetChanged()
         {
             if (Screen.Source.Count == 0)
                 return;
@@ -46,7 +46,7 @@ namespace SpaceTransit.Vaulter
             Screen.Source.Add(Parent.Stop);
             if (Parent.Stop is Destination)
                 return;
-            foreach (var stop in Parent.NextEntries)
+            foreach (var stop in Parent.NextTargets)
                 Screen.Source.Add(stop);
             Screen.Source.Add(Parent.Route.Destination);
         }

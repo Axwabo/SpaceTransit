@@ -169,7 +169,7 @@ namespace SpaceTransit.Ships
                 return true;
             if (!TryGetVaulter(out var controller)
                 || !controller.IsInService
-                || controller.Stop is not IDeparture {ExitTowards: var towards}
+                || controller.Target is not IExitTowards {ExitTowards: var towards}
                 || Assembly.FrontModule.Thruster.Tube is not Dock dock)
             {
                 exit = null;

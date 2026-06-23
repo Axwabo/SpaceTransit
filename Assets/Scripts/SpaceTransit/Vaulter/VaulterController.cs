@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SpaceTransit.Audio;
 using SpaceTransit.Routes;
@@ -17,13 +18,11 @@ namespace SpaceTransit.Vaulter
         private const int Origin = -1;
         private const int Destination = int.MaxValue;
 
-        private int _stopIndex = OutOfService;
-
-        private int _entryIndex = OutOfService;
+        private int _targetIndex = OutOfService;
 
         private VaulterComponentBase[] _components;
 
-        private ITarget[] _entries = Array.Empty<ITarget>();
+        private ITarget[] _targets = Array.Empty<ITarget>();
 
         [SerializeField]
         public RouteDescriptor initialRoute;
@@ -37,11 +36,11 @@ namespace SpaceTransit.Vaulter
 
         public ITarget Target { get; private set; }
 
-        public bool IsInService => _stopIndex != OutOfService;
+        public bool IsInService => _targetIndex != OutOfService;
 
-        public ReadOnlySpan<ITarget> NextEntries => _entryIndex == Destination
+        public ReadOnlySpan<ITarget> NextTargets => _targetIndex == Destination
             ? ReadOnlySpan<ITarget>.Empty
-            : _entries[(_entryIndex + 1)..];
+            : _targets[(_targetIndex + 1)..];
 
         public string Announcer => _components.OfType<OnboardAnnouncer>().First().announcer;
 
@@ -65,9 +64,10 @@ namespace SpaceTransit.Vaulter
         {
             if (!IsInService)
                 return;
-            _stopIndex = OutOfService;
+            _targetIndex = OutOfService;
             Route = null;
             Stop = null;
+            Target = null;
             NotifyRouteChanged();
         }
 
@@ -75,32 +75,65 @@ namespace SpaceTransit.Vaulter
         {
             Route = descriptor;
             Assembly.Reverse = descriptor.Reverse;
+            var targets = new List<ITarget>();
+            foreach (var stop in descriptor.IntermediateStops)
+                targets.Add(stop);
+            var passthroughList = descriptor.Passthrough;
+            for (var i = passthroughList.Length - 1; i >= 0; i--)
+            {
+                var passthrough = passthroughList[i];
+                targets.Insert(targets.FindIndex(e => e.Station == passthrough.Station) + 1, passthrough);
+            }
 
-            UpdateStop(stopIndex);
+            _targets = targets.ToArray();
+            UpdateTarget(stopIndex == Origin ? Origin : targets.IndexOf(descriptor.IntermediateStops[stopIndex]));
             NotifyRouteChanged();
         }
 
-        private void UpdateStop(int index)
+        private void UpdateTarget(int index)
         {
-            _stopIndex = index;
-            _entryIndex = index == Destination ? Destination : _entryIndex + 1;
-            Stop = index switch
+            var stopChanged = false;
+            _targetIndex = index;
+            Target = index switch
             {
                 OutOfService => null,
                 Origin => Route.Origin,
                 Destination => Route.Destination,
-                _ => Route.IntermediateStops[index]
+                _ => _targets[index]
             };
+            Stop = index switch
+            {
+                OutOfService => null,
+                Origin => Route.Origin,
+                _ => NextStop(index, out stopChanged)
+            };
+            foreach (var component in _components)
+                component.OnTargetChanged();
+            if (!stopChanged)
+                return;
             foreach (var component in _components)
                 component.OnStopChanged();
         }
 
+        private Stop NextStop(int index, out bool stopChanged)
+        {
+            for (var i = index; i < _targets.Length; i++)
+                if (_targets[i] is Stop stop)
+                {
+                    stopChanged = Stop != stop;
+                    return stop;
+                }
+
+            stopChanged = Stop != Route.Destination;
+            return Route.Destination;
+        }
+
         public override void OnStateChanged(ShipState previousState)
         {
-            if (_stopIndex is not (OutOfService or Destination)
+            if (_targetIndex is not (OutOfService or Destination)
                 && Parent.State is ShipState.LiftingOff or ShipState.Sailing
-                && Assembly.FrontModule.Thruster.Tube is Dock {Station: var station} && station.ID == Stop?.Station)
-                UpdateStop(_stopIndex >= Route.IntermediateStops.Length - 1 ? Destination : _stopIndex + 1);
+                && Assembly.FrontModule.Thruster.Tube is Dock {Station: var station} && station.ID == Target?.Station)
+                UpdateTarget(_targetIndex >= _targets.Length - 1 ? Destination : _targetIndex + 1);
         }
 
         private void NotifyRouteChanged()
