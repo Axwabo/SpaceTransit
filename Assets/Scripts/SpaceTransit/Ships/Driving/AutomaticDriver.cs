@@ -206,7 +206,7 @@ namespace SpaceTransit.Ships.Driving
 
         public override void OnRouteChanged() => _departed = true;
 
-        public override void OnTargetChanged() => _exitRequested = false;
+        public override void OnTargetChanged() => _entryRequested = _exitRequested = false;
 
         private void OnEnable() => _departed = true;
 
