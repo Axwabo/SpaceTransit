@@ -46,7 +46,7 @@ namespace SpaceTransit.Vaulter
             Screen.Source.Add(Parent.Stop);
             if (Parent.Stop is Destination)
                 return;
-            foreach (var stop in Parent.NextIntermediateStops)
+            foreach (var stop in Parent.NextEntries)
                 Screen.Source.Add(stop);
             Screen.Source.Add(Parent.Route.Destination);
         }

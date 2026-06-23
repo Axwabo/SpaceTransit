@@ -30,9 +30,9 @@ namespace SpaceTransit.Ships.Driving
         {
             get
             {
-                if (!Station.TryGetLoadedStation(Parent.Stop.Station, out var station))
+                if (!Station.TryGetLoadedStation(Parent.Target.Station, out var station))
                     return false;
-                var tube = station.Docks[Parent.Stop.DockIndex];
+                var tube = station.Docks[Parent.Target.DockIndex];
                 var overscan = DefaultOverscan * Mathf.Sqrt(Time.timeScale);
                 var stopPoint = World.Current.TransformPoint(tube.Sample(Assembly.Reverse != _reversing ? overscan : tube.Length - overscan).Position);
                 var speed = Assembly.CurrentSpeed.Raw;
@@ -72,8 +72,8 @@ namespace SpaceTransit.Ships.Driving
                 return;
             if (_departed)
             {
-                var stay = Mathf.Max(MinStaySeconds, Parent.Stop is IntermediateStop {MinStayMinutes: var minStay} ? minStay * 60 : 0);
-                var departIn = Parent.Stop is IDeparture {Departure: var departure} ? departure.Value - Clock.Now : TimeSpan.Zero;
+                var stay = Mathf.Max(MinStaySeconds, Parent.Target is IntermediateStop {MinStayMinutes: var minStay} ? minStay * 60 : 0);
+                var departIn = Parent.Target is IDeparture {Departure: var departure} ? departure.Value - Clock.Now : TimeSpan.Zero;
                 Controller.TimeToDeparture = (float) departIn.TotalSeconds;
                 _remainingWait = Mathf.Max(Controller.TimeToDeparture, stay);
                 _departed = false;
@@ -135,9 +135,9 @@ namespace SpaceTransit.Ships.Driving
 
         private void Enter(EntryEnsurer ensurer)
         {
-            if (Parent.Stop is not IArrival arrival || ensurer.station != arrival.Station)
+            if (Parent.Target == null || ensurer.station != Parent.Target.Station)
                 return;
-            if (LoadingProgress.Current != null && !Parent.Stop.Station.IsLoaded() && !Assembly.IsPlayerMounted)
+            if (LoadingProgress.Current != null && !Parent.Target.Station.IsLoaded() && !Assembly.IsPlayerMounted)
             {
                 Destroy(gameObject);
                 return;
@@ -146,14 +146,14 @@ namespace SpaceTransit.Ships.Driving
             var list = Assembly.FrontModule.Cosmos.EntryList;
             if (list.isActiveAndEnabled)
             {
-                _entryRequested = list.SelectDock(arrival.DockIndex);
+                _entryRequested = list.SelectDock(Parent.Target.DockIndex);
                 return;
             }
 
             _entryRequested = false;
             foreach (var entry in ensurer.Entries)
             {
-                if (entry.Dock.Index != arrival.DockIndex)
+                if (entry.Dock.Index != Parent.Target.DockIndex)
                     continue;
                 _entryRequested = entry.Lock(Assembly);
                 break;
