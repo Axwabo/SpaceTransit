@@ -42,10 +42,12 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         protected override void BindItem(VisualElement element, int i)
         {
+            var entry = Source[i];
             element.EnableInClassList("separator", i < Source.Count - 1 && Source[i + 1] is not ExitTowards);
-            if (Source[i] is not ExitTowards exitTowards)
+            element.EnableInClassList("passthrough", entry.Target is Passthrough);
+            if (entry is not ExitTowards exitTowards)
             {
-                Bind(element, Source[i].Target);
+                Bind(element, entry.Target);
                 element.RemoveFromClassList("indent");
                 return;
             }
