@@ -54,6 +54,8 @@ namespace SpaceTransit.Vaulter
         {
             _root = this.RootVisual();
             _title = _root.Q<Label>("Title");
+            routes.Screen.Initialize();
+            stops.Screen.Initialize();
         }
 
         public override void OnRouteChanged() => Show(!IsInService, false);

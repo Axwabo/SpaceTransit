@@ -13,7 +13,11 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private void OnDisable() => _root?.SetVisibility(false);
 
-        public void Initialize() => Initialize(_root = this.RootVisual());
+        public void Initialize()
+        {
+            if (_root == null)
+                Initialize(_root = this.RootVisual());
+        }
 
         protected virtual void Initialize(VisualElement root)
         {
