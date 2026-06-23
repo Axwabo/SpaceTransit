@@ -64,7 +64,7 @@ namespace SpaceTransit.Vaulter
                 return;
             _routesShown = showRoutes;
             _current = showRoutes ? routes.Screen : stops.Screen;
-            _title.text = showRoutes ? "Pick a  Route" : $"{Parent.Route.name} {Parent.Route.Summary()}";
+            _title.text = showRoutes ? "Pick a Route" : $"{Parent.Route.name} {Parent.Route.Summary()}";
             routes.enabled = showRoutes;
             stops.enabled = !showRoutes;
         }

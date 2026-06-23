@@ -9,19 +9,17 @@ namespace SpaceTransit.Ships.Driving.Screens
 {
 
     [RequireComponent(typeof(StopListManager))]
-    public sealed class StopList : ListBase<ITarget>
+    public sealed class StopList : ListBase<StopListEntry>
     {
 
-        public static Action<VisualElement, int> CreateBindFunction(List<ITarget> stops) => (element, i) => Bind(stops, element, i);
+        public static Action<VisualElement, int> CreateBindFunction(List<ITarget> stops) => (element, i) => Bind(element, stops[i]);
 
-        private static void Bind(List<ITarget> stops, VisualElement element, int i)
+        private static void Bind(VisualElement element, ITarget target)
         {
-            var stop = stops[i];
-            element.Q<Label>("Station").text = stop.Station.name;
-            element.Q<Label>("Arrival").text = (stop as IArrival)?.Arrival.ToString() ?? "";
-            element.Q<Label>("Departure").text = (stop as IDeparture)?.Departure.ToString() ?? "";
-            element.Q<Label>("DockIndex").text = (stop.DockIndex + 1).ToString();
-            element.EnableInClassList("passthrough", stop is Passthrough);
+            element.Q<Label>("Station").text = target.Station.name;
+            element.Q<Label>("Arrival").text = (target as IArrival)?.Arrival.ToString() ?? "";
+            element.Q<Label>("Departure").text = (target as IDeparture)?.Departure.ToString() ?? "";
+            element.Q<Label>("DockIndex").text = (target.DockIndex + 1).ToString();
         }
 
         private ScrollView _scrollView;
@@ -34,7 +32,18 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         protected override ListView GetListView(VisualElement root) => root.Q<ListView>("Stops");
 
-        protected override void BindItem(VisualElement element, int i) => Bind(Source, element, i);
+        protected override void BindItem(VisualElement element, int i)
+        {
+            if (Source[i] is not ExitTowards exitTowards)
+            {
+                Bind(element, Source[i].Target);
+                element.RemoveFromClassList("towards");
+                return;
+            }
+
+            element.Q<Label>("Station").text = $"» {exitTowards.Exit.ExitTowards.name}";
+            element.AddToClassList("towards");
+        }
 
         public override void Navigate(bool forwards)
         {
