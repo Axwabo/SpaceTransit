@@ -10,13 +10,13 @@ namespace SpaceTransit.Menu
     public sealed class ShipSummoner : AutoRegisterButton
     {
 
-        public static GameObject CurrentShip { get; private set; }
+        public static ShipAssembly CurrentShip { get; private set; }
 
         public static void Destroy()
         {
-            if (!CurrentShip)
+            if (!CurrentShip || CurrentShip.IsPlayerMounted)
                 return;
-            Destroy(CurrentShip);
+            Destroy(CurrentShip.gameObject);
             CurrentShip = null;
         }
 
@@ -25,11 +25,11 @@ namespace SpaceTransit.Menu
 
         protected override void Click()
         {
-            if (CurrentShip || !MovementController.Current || TryFindDock(out var dock))
+            if (CurrentShip || !MovementController.Current || !TryFindDock(out var dock))
                 return;
             var ship = Instantiate(assembly, World.Current);
             ship.startTube = dock;
-            CurrentShip = ship.gameObject;
+            CurrentShip = ship;
         }
 
         private static bool TryFindDock(out Dock dock)
@@ -38,7 +38,7 @@ namespace SpaceTransit.Menu
                     MovementController.Current.LastPosition,
                     Vector3.down,
                     out var result,
-                    1,
+                    2,
                     LayerMask.GetMask("Dock")
                 ) && result.collider.TryGetComponent(out DockPlane plane) && !plane.Dock.Safety.IsOccupied)
             {
