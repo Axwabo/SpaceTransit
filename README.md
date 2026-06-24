@@ -136,4 +136,4 @@ Future plans:
 - Even more routes & lines
 - ~~Spline-based, auto-generated map~~ DONE (with SVGs, two-click export tool)
 - Touchscreen support
-- Ship summoning
+- ~~Ship summoning~~ DONE
