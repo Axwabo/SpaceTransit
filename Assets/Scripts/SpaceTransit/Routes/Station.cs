@@ -18,6 +18,8 @@ namespace SpaceTransit.Routes
         public static bool TryGetLoadedStation(StationId id, out Station station)
             => Loaded.TryGetValue(id.name, out station);
 
+        private Transform _t;
+
         [field: SerializeField]
         [field: FormerlySerializedAs("id")]
         public StationId ID { get; private set; }
@@ -35,6 +37,10 @@ namespace SpaceTransit.Routes
         public ReadOnlySpan<Dock> Docks => docks;
 
         public StationAnnouncer Announcer { get; set; }
+
+        public Vector3 Position => _t.position;
+
+        private void Awake() => _t = transform;
 
         private void OnEnable() => Loaded[Name] = this;
 
