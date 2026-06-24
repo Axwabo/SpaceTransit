@@ -56,8 +56,12 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         public override void OnStateChanged()
         {
-            if (State == ShipState.Docked && isActiveAndEnabled)
+            if (!isActiveAndEnabled)
+                return;
+            if (State == ShipState.Docked)
                 Refresh(Assembly.FrontModule.Thruster.Tube);
+            else
+                Screen.Clear();
         }
 
     }
