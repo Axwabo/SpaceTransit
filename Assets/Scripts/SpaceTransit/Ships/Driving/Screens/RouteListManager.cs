@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using SpaceTransit.Routes;
+using SpaceTransit.Tubes;
 using UnityEngine;
 using Cache = SpaceTransit.Vaulter.Cache;
 
@@ -18,9 +19,14 @@ namespace SpaceTransit.Ships.Driving.Screens
             if (!Parent)
                 return;
             base.OnEnable();
+            Refresh(Assembly.FrontModule.Thruster.Tube);
+        }
+
+        public void Refresh(TubeBase tube)
+        {
             Screen.Source.Clear();
             Screen.Source.Add(RoutePicker.ExitService);
-            if (Assembly.FrontModule.Thruster.Tube is Dock dock)
+            if (tube is Dock dock)
             {
                 CacheExits(dock.Station);
                 Append(World.ExtraRoutes.Length != 0 ? World.ExtraRoutes : Cache.Routes, dock);
@@ -46,6 +52,12 @@ namespace SpaceTransit.Ships.Driving.Screens
             foreach (var route in routes)
                 if (route.Origin.Station == dock.Station.ID && (AvailableExits.Count == 0 || AvailableExits.Contains(route.Origin.ExitTowards)))
                     Screen.Source.Add(new RoutePicker(route));
+        }
+
+        public override void OnStateChanged()
+        {
+            if (State == ShipState.Docked && isActiveAndEnabled)
+                Refresh(Assembly.FrontModule.Thruster.Tube);
         }
 
     }
