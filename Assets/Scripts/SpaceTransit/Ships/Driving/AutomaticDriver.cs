@@ -141,9 +141,9 @@ namespace SpaceTransit.Ships.Driving
             Assembly.SetTargetSpeed(ReversingSpeed);
         }
 
-        private void Enter(EntryEnsurer ensurer)
+        private void Enter(IEntryEnsurer ensurer)
         {
-            if (Parent.Target == null || ensurer.station != Parent.Target.Station)
+            if (Parent.Target == null || ensurer.TargetStation != Parent.Target.Station)
                 return;
             if (LoadingProgress.Current != null && !Parent.Target.Station.IsLoaded() && !Assembly.IsPlayerMounted)
             {

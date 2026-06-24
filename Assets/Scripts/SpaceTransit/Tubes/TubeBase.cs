@@ -1,5 +1,7 @@
-﻿using SpaceTransit.Cosmos;
+﻿using System.Collections.Generic;
+using SpaceTransit.Cosmos;
 using SpaceTransit.Loader;
+using SpaceTransit.Routes;
 using SpaceTransit.Ships;
 using SpaceTransit.Ships.Modules;
 using UnityEngine;
@@ -43,8 +45,8 @@ namespace SpaceTransit.Tubes
         {
             if (!TryGetComponent(out SafetyEnsurer ensurer))
                 Safety = AddDefaultSafety(gameObject);
-            else if (TryGetComponent(out EllenmenetetMegtiltóSafety second))
-                Safety = gameObject.AddComponent<CombinedSafety>().Init(ensurer, second);
+            else if (ensurer is EntryEnsurer entryEnsurer && TryGetComponent(out EllenmenetetMegtiltóSafety second))
+                Safety = gameObject.AddComponent<CombinedSafety>().Init(entryEnsurer, second);
             else
                 Safety = ensurer;
         }
@@ -101,14 +103,20 @@ namespace SpaceTransit.Tubes
             OnValidate();
         }
 
-        private sealed class CombinedSafety : SafetyEnsurer
+        private sealed class CombinedSafety : SafetyEnsurer, IEntryEnsurer
         {
 
-            private SafetyEnsurer _a;
+            private EntryEnsurer _a;
 
             private SafetyEnsurer _b;
 
-            public CombinedSafety Init(SafetyEnsurer a, SafetyEnsurer b)
+            public StationId TargetStation => _a.TargetStation;
+
+            public bool Backwards => _a.Backwards;
+
+            public List<Entry> Entries => _a.Entries;
+
+            public CombinedSafety Init(EntryEnsurer a, SafetyEnsurer b)
             {
                 _a = a;
                 _b = b;
@@ -121,12 +129,14 @@ namespace SpaceTransit.Tubes
             {
                 _a.OnEntered(module);
                 _b.Occupants.Add(module);
+                Occupants.Add(module);
             }
 
             public override void OnExited(ShipModule module)
             {
                 _a.OnExited(module);
                 _b.Occupants.Remove(module);
+                Occupants.Remove(module);
             }
 
         }

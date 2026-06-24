@@ -1,5 +1,6 @@
 ﻿using SpaceTransit.Cosmos;
 using SpaceTransit.Tubes;
+using UnityEngine;
 
 namespace SpaceTransit
 {
@@ -9,20 +10,20 @@ namespace SpaceTransit
 
         public static TubeBase Next(this TubeBase current, bool back) => back ? current.Previous : current.Next;
 
-        public static bool TryGetEntryEnsurer(this TubeBase current, bool reverse, out EntryEnsurer ensurer)
+        public static bool TryGetEntryEnsurer(this TubeBase current, bool reverse, out IEntryEnsurer ensurer)
         {
-            if (current.Safety is EntryEnsurer {Backwards: var thisBackwards} thisEntry && thisBackwards == reverse)
+            if (current.Safety is MonoBehaviour thisBehavior and IEntryEnsurer {Backwards: var thisBackwards} thisEntry && thisBackwards == reverse)
             {
                 ensurer = thisEntry;
-                return ensurer;
+                return thisBehavior;
             }
 
             if ((reverse ? current.HasPrevious : current.HasNext)
-                && current.Next(reverse).Safety is EntryEnsurer {Backwards: var nextBackwards} nextEntry
+                && current.Next(reverse).Safety is MonoBehaviour nextBehavior and IEntryEnsurer {Backwards: var nextBackwards} nextEntry
                 && nextBackwards == reverse)
             {
                 ensurer = nextEntry;
-                return ensurer;
+                return nextBehavior;
             }
 
             ensurer = null;
