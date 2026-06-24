@@ -29,6 +29,7 @@ namespace SpaceTransit.Menu
                 return;
             var ship = Instantiate(assembly, World.Current);
             ship.startTube = dock;
+            ship.Reverse = Vector3.Dot(MovementController.Current.transform.forward, dock.Transform.forward) < 0;
             CurrentShip = ship;
         }
 
