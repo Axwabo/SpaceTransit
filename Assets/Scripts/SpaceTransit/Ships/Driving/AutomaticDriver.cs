@@ -50,7 +50,7 @@ namespace SpaceTransit.Ships.Driving
         private bool IsFullyInDock => Assembly.FrontModule.Thruster.Tube is Dock && Assembly.BackModule.Thruster.Tube is Dock;
 
         private bool IsFarFromStation => !Station.TryGetLoadedStation(Parent.Target.Station, out var station)
-                                         || Vector3.Distance(station.Position, Assembly.FrontModule.Thruster.Transform.position) > 1000 * World.MetersToWorld;
+                                         || Vector3.Distance(station.Position, Assembly.FrontModule.Thruster.Transform.position) > 2000 * World.MetersToWorld;
 
         private void Update()
         {
