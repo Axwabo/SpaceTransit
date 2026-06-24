@@ -58,7 +58,7 @@ namespace SpaceTransit.Vaulter
             stops.Screen.Initialize();
             if (Parent.initialRoute)
                 return;
-            OnRouteChanged();
+            Show(!IsInService, true);
             routes.Refresh(Assembly.startTube);
         }
 
