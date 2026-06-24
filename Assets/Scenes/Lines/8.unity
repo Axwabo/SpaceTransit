@@ -1110,7 +1110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: "Assembly-CSharp::SpaceTransit.Cosmos.EllenmenetetMegtilt\xF3Safety"
   clearanceReference: 
-  <Clearance>k__BackingField: {fileID: 545912642}
+  <Clearance>k__BackingField: {fileID: 935638169}
 --- !u!114 &123931731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6984,6 +6984,10 @@ PrefabInstance:
       propertyPath: <Next>k__BackingField
       value: 
       objectReference: {fileID: 582493060}
+    - target: {fileID: 5559334861502430646, guid: a4940e1b48e661647862211f43bf483c, type: 3}
+      propertyPath: <SpeedLimit>k__BackingField
+      value: 33.333332
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7600,7 +7604,7 @@ GameObject:
   - component: {fileID: 1086175198}
   - component: {fileID: 1086175197}
   m_Layer: 0
-  m_Name: World Changer
+  m_Name: Gyuard World Changer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11210,6 +11214,7 @@ Transform:
   - {fileID: 1113362146}
   - {fileID: 1302172754}
   - {fileID: 1086175196}
+  - {fileID: 1939558495}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1571629031
@@ -12387,7 +12392,7 @@ PrefabInstance:
     - target: {fileID: 2708433068314240443, guid: d565d6906fc20f346a869be32968e482, type: 3}
       propertyPath: <Next>k__BackingField
       value: 
-      objectReference: {fileID: 794983644}
+      objectReference: {fileID: 1609574135}
     - target: {fileID: 2708433068314240443, guid: d565d6906fc20f346a869be32968e482, type: 3}
       propertyPath: <FrontExits>k__BackingField.Array.size
       value: 1
@@ -12498,6 +12503,17 @@ Transform:
 --- !u!114 &1697561733 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 342873159335543462, guid: d565d6906fc20f346a869be32968e482, type: 3}
+  m_PrefabInstance: {fileID: 1697561729}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a88da54457a84086b4bb098142a1d36b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Routes.Dock
+--- !u!114 &1697561734 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2708433068314240443, guid: d565d6906fc20f346a869be32968e482, type: 3}
   m_PrefabInstance: {fileID: 1697561729}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -13299,7 +13315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.SplineTube
   nextReference: 
   <SpeedLimit>k__BackingField: 0
-  <Next>k__BackingField: {fileID: 1247048313}
+  <Next>k__BackingField: {fileID: 1697561734}
   spline: {fileID: 1793294636}
   length: 0
 --- !u!114 &1793294635
@@ -13378,6 +13394,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1801544308}
   - component: {fileID: 1801544307}
+  - component: {fileID: 1801544309}
   m_Layer: 0
   m_Name: From Sztemland
   m_TagString: Untagged
@@ -13417,6 +13434,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1247048310}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1801544309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1801544306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0160ff52a8e42e69102a716af77b90a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.TubeRemapper
+  tubeReference: 
+  toReference: 
+  connectTube: {fileID: 2092806430}
+  connectTo: {fileID: 93211009}
 --- !u!1 &1824684375
 GameObject:
   m_ObjectHideFlags: 0
@@ -14002,6 +14035,78 @@ MonoBehaviour:
   updateInPlayMode: 1
   curveSpace: 0
   mode: 1
+--- !u!1 &1939558494
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1939558495}
+  - component: {fileID: 1939558497}
+  - component: {fileID: 1939558496}
+  m_Layer: 0
+  m_Name: Snagna World Changer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1939558495
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939558494}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.6632007, z: -0, w: 0.74844164}
+  m_LocalPosition: {x: -19704.1, y: 0, z: 3769.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1571629030}
+  m_LocalEulerAnglesHint: {x: 0, y: 83.089, z: 0}
+--- !u!114 &1939558496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939558494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4646d4f7f098491cba1384b25090dd52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Loader.WorldChanger
+  unloadFront: []
+  unloadBack:
+  - 16
+  loadFront:
+  - 16
+  loadBack: []
+--- !u!65 &1939558497
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939558494}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 247
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 10, y: 10, z: 300}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1944545840
 GameObject:
   m_ObjectHideFlags: 0
