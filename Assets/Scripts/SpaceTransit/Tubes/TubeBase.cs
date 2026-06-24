@@ -1,5 +1,7 @@
 ﻿using SpaceTransit.Cosmos;
 using SpaceTransit.Loader;
+using SpaceTransit.Ships;
+using SpaceTransit.Ships.Modules;
 using UnityEngine;
 
 namespace SpaceTransit.Tubes
@@ -33,10 +35,18 @@ namespace SpaceTransit.Tubes
         {
             Transform = transform;
             if (Application.isPlaying)
-                Safety = TryGetComponent(out SafetyEnsurer ensurer)
-                    ? ensurer
-                    : AddDefaultSafety(gameObject);
+                AssignSafety();
             OnValidate();
+        }
+
+        private void AssignSafety()
+        {
+            if (!TryGetComponent(out SafetyEnsurer ensurer))
+                Safety = AddDefaultSafety(gameObject);
+            else if (TryGetComponent(out EllenmenetetMegtiltóSafety second))
+                Safety = gameObject.AddComponent<CombinedSafety>().Init(ensurer, second);
+            else
+                Safety = ensurer;
         }
 
         private void Start()
@@ -89,6 +99,36 @@ namespace SpaceTransit.Tubes
         {
             Next = tube;
             OnValidate();
+        }
+
+        private sealed class CombinedSafety : SafetyEnsurer
+        {
+
+            private SafetyEnsurer _a;
+
+            private SafetyEnsurer _b;
+
+            public CombinedSafety Init(SafetyEnsurer a, SafetyEnsurer b)
+            {
+                _a = a;
+                _b = b;
+                return this;
+            }
+
+            public override bool CanProceed(ShipAssembly assembly) => _a.CanProceed(assembly) && _b.CanProceed(assembly);
+
+            public override void OnEntered(ShipModule module)
+            {
+                _a.OnEntered(module);
+                _b.Occupants.Add(module);
+            }
+
+            public override void OnExited(ShipModule module)
+            {
+                _a.OnExited(module);
+                _b.Occupants.Remove(module);
+            }
+
         }
 
     }
