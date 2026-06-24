@@ -1,4 +1,5 @@
 using SpaceTransit.Build;
+using SpaceTransit.Cosmos;
 using SpaceTransit.Movement;
 using SpaceTransit.Routes;
 using SpaceTransit.Ships;
@@ -30,6 +31,8 @@ namespace SpaceTransit.Menu
             var ship = Instantiate(assembly, World.Current);
             ship.startTube = dock;
             ship.Reverse = Vector3.Dot(MovementController.Current.transform.forward, dock.Transform.forward) < 0;
+            if (dock.Safety is IOpposingTrafficSafety safety)
+                safety.Clearance.Claim(ship);
             CurrentShip = ship;
         }
 

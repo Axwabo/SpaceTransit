@@ -103,12 +103,12 @@ namespace SpaceTransit.Tubes
             OnValidate();
         }
 
-        private sealed class CombinedSafety : SafetyEnsurer, IEntryEnsurer
+        private sealed class CombinedSafety : SafetyEnsurer, IEntryEnsurer, IOpposingTrafficSafety
         {
 
             private EntryEnsurer _a;
 
-            private SafetyEnsurer _b;
+            private EllenmenetetMegtiltóSafety _b;
 
             public StationId TargetStation => _a.TargetStation;
 
@@ -116,7 +116,9 @@ namespace SpaceTransit.Tubes
 
             public List<Entry> Entries => _a.Entries;
 
-            public CombinedSafety Init(EntryEnsurer a, SafetyEnsurer b)
+            public OpposingTrafficClearance Clearance => _b.Clearance;
+
+            public CombinedSafety Init(EntryEnsurer a, EllenmenetetMegtiltóSafety b)
             {
                 _a = a;
                 _b = b;

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace SpaceTransit.Cosmos
 {
 
-    public sealed class EllenmenetetMegtiltóSafety : NextSegmentSafety
+    public sealed class EllenmenetetMegtiltóSafety : NextSegmentSafety, IOpposingTrafficSafety
     {
 
         [SerializeField]
