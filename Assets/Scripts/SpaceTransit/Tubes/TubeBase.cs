@@ -129,16 +129,16 @@ namespace SpaceTransit.Tubes
 
             public override void OnEntered(ShipModule module)
             {
-                _a.OnEntered(module);
                 _b.Occupants.Add(module);
                 Occupants.Add(module);
+                _a.OnEntered(module);
             }
 
             public override void OnExited(ShipModule module)
             {
-                _a.OnExited(module);
                 _b.Occupants.Remove(module);
                 Occupants.Remove(module);
+                _a.OnExited(module);
             }
 
         }
