@@ -33,18 +33,18 @@ namespace SpaceTransit.Routes
         [SerializeField]
         private IntermediateStop[] intermediateStops;
 
-        [SerializeField]
-        private Passthrough[] passthrough;
+        [field: SerializeField]
+        public Destination Destination { get; private set; }
 
         [SerializeField]
         private RelativeSchedule schedule;
 
+        [SerializeField]
+        private Passthrough[] passthrough;
+
         public ReadOnlySpan<IntermediateStop> IntermediateStops => _intermediateStops;
 
         public ReadOnlySpan<Passthrough> Passthrough => _passthrough;
-
-        [field: SerializeField]
-        public Destination Destination { get; private set; }
 
         private void Awake()
         {
