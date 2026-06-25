@@ -66,6 +66,7 @@ namespace SpaceTransit.Routes
                 return;
             var relativeSchedule = CreateInstance<RelativeSchedule>();
             relativeSchedule.intermediateStops = intermediateStops.Select(e => e.Add(-Origin.Departure.Value)).ToArray();
+            relativeSchedule.passthrough = passthrough;
             schedule = relativeSchedule;
             EditorUtility.SetDirty(this);
             AssetDatabase.CreateAsset(relativeSchedule, Path.Combine("Assets", Path.GetRelativePath(Application.dataPath, path)));
