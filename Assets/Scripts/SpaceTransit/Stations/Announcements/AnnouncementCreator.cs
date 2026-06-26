@@ -2,6 +2,7 @@ using System.Text;
 using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
 using SpaceTransit.Ships;
+using SpaceTransit.Stations.Announcements.Katilects;
 
 namespace SpaceTransit.Stations.Announcements
 {
@@ -11,7 +12,7 @@ namespace SpaceTransit.Stations.Announcements
 
         public const string PleaseBoard = "Please board the ship.";
 
-        private static bool AnyShipWithStop(IStop stop)
+        private static bool AnyShip(this IStop stop)
         {
             foreach (var assembly in ShipAssembly.Instances)
                 if (assembly.Parent.TryGetVaulter(out var vaulter) && vaulter.Stop == stop)
@@ -28,7 +29,7 @@ namespace SpaceTransit.Stations.Announcements
             {
                 3 or 5 => katilect.DepartingIn(ref context, remaining),
                 1 => katilect.DepartingImmediately(ref context),
-                <= 15 when lastAnnounced == -1 && AnyShipWithStop(context.Stop) => katilect.DepartsFor(ref context, index),
+                <= 15 when lastAnnounced == -1 && context.Stop.AnyShip() => katilect.DepartsFor(ref context, index),
                 _ => null
             };
         }
@@ -38,7 +39,7 @@ namespace SpaceTransit.Stations.Announcements
                 ? null
                 : index != -1
                     ? katilect.ArrivingAndDepartsFor(ref context, index)
-                    : AnyShipWithStop(context.Stop)
+                    : context.Stop.AnyShip()
                         ? katilect.Arriving(ref context)
                         : null;
 

@@ -1,6 +1,6 @@
 using SpaceTransit.Routes.Stops;
 
-namespace SpaceTransit.Stations.Announcements
+namespace SpaceTransit.Stations.Announcements.Katilects
 {
 
     public interface IKatilect

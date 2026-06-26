@@ -4,6 +4,7 @@ using Katie.Unity;
 using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
 using SpaceTransit.Ships;
+using SpaceTransit.Stations.Announcements.Katilects;
 using SpaceTransit.Vaulter;
 using UnityEngine;
 

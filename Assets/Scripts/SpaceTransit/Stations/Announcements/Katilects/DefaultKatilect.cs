@@ -1,7 +1,7 @@
 ﻿using SpaceTransit.Routes.Stops;
 using static SpaceTransit.Stations.Announcements.AnnouncementCreator;
 
-namespace SpaceTransit.Stations.Announcements
+namespace SpaceTransit.Stations.Announcements.Katilects
 {
 
     public sealed class DefaultKatilect : IKatilect
