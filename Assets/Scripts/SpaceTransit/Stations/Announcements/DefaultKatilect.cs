@@ -1,5 +1,4 @@
-﻿using SpaceTransit.Routes;
-using SpaceTransit.Routes.Stops;
+﻿using SpaceTransit.Routes.Stops;
 using static SpaceTransit.Stations.Announcements.AnnouncementCreator;
 
 namespace SpaceTransit.Stations.Announcements
@@ -8,24 +7,25 @@ namespace SpaceTransit.Stations.Announcements
     public sealed class DefaultKatilect : IKatilect
     {
 
-        private static string DepartingCore(RouteDescriptor route, IDeparture departure)
-            => $"The {route.Type} ship to {route.Destination.Station.name} is departing from dock {departure.DockIndex + 1}";
+        private static string DepartingCore(AnnouncementContext<IDeparture> context)
+            => $"The {context.Type} ship to {context.Destination} is departing from dock {context.Dock}";
 
-        public string DepartsFor(RouteDescriptor route, int stopIndex, IDeparture departure) => Departs(route, stopIndex, departure);
+        public string DepartsFor(ref AnnouncementContext<IDeparture> context, int stopIndex) => Departs(context.Route, stopIndex, context.Stop);
 
-        public string DepartingIn(int minutes, RouteDescriptor route, IDeparture departure)
-            => $"The {route.Type} ship to {route.Destination.Station.name} is departing from dock {departure.DockIndex + 1} in {minutes} minutes. {PleaseBoard}";
+        public string DepartingIn(ref AnnouncementContext<IDeparture> context, int minutes)
+            => $"The {context.Type} ship to {context.Destination} is departing from dock {context.Dock} in {minutes} minutes. {PleaseBoard}";
 
-        public string DepartingImmediately(RouteDescriptor route, IDeparture departure)
-            => $"{DepartingCore(route, departure)} immediately. Please stop boarding.";
+        public string DepartingImmediately(ref AnnouncementContext<IDeparture> context)
+            => $"{DepartingCore(context)} immediately. Please stop boarding.";
 
-        public string Departing(RouteDescriptor route, IDeparture departure)
-            => $"{DepartingCore(route, departure)}. {PleaseBoard}";
+        public string Departing(ref AnnouncementContext<IDeparture> context)
+            => $"{DepartingCore(context)}. {PleaseBoard}";
 
-        public string ArrivingAndDepartsFor(RouteDescriptor route, int stopIndex, IArrival arrival) => ArrivingAndDeparts(route, stopIndex, arrival);
+        public string ArrivingAndDepartsFor(ref AnnouncementContext<IArrival> context, int stopIndex)
+            => ArrivingAndDeparts(context.Route, context.Stop, stopIndex);
 
-        public string Arriving(RouteDescriptor route, IArrival arrival)
-            => $"{route.Type} ship is arriving from {route.Origin.Station.name} at dock {arrival.DockIndex + 1}.";
+        public string Arriving(ref AnnouncementContext<IArrival> context)
+            => $"{context.Type} ship is arriving from {context.Origin} at dock {context.Dock}.";
 
     }
 

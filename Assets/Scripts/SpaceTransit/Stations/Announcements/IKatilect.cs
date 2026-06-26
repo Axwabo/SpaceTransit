@@ -1,4 +1,3 @@
-using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
 
 namespace SpaceTransit.Stations.Announcements
@@ -9,17 +8,17 @@ namespace SpaceTransit.Stations.Announcements
 
         public static IKatilect Default { get; } = new DefaultKatilect();
 
-        string DepartsFor(RouteDescriptor route, int stopIndex, IDeparture departure);
+        string DepartsFor(ref AnnouncementContext<IDeparture> context, int stopIndex);
 
-        string DepartingIn(int minutes, RouteDescriptor route, IDeparture departure);
+        string DepartingIn(ref AnnouncementContext<IDeparture> context, int minutes);
 
-        string DepartingImmediately(RouteDescriptor route, IDeparture departure);
+        string DepartingImmediately(ref AnnouncementContext<IDeparture> context);
 
-        string Departing(RouteDescriptor route, IDeparture departure);
+        string Departing(ref AnnouncementContext<IDeparture> context);
 
-        string ArrivingAndDepartsFor(RouteDescriptor route, int stopIndex, IArrival arrival);
+        string ArrivingAndDepartsFor(ref AnnouncementContext<IArrival> context, int stopIndex);
 
-        string Arriving(RouteDescriptor route, IArrival arrival);
+        string Arriving(ref AnnouncementContext<IArrival> context);
 
     }
 

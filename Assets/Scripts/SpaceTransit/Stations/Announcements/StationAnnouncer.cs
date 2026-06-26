@@ -83,25 +83,29 @@ namespace SpaceTransit.Stations.Announcements
                 return;
             if (_arrivedShips.TryDequeue(out var tuple) && tuple.Item1.Stop?.Station == _cache.StationId)
             {
-                Announce(tuple.Item2, _katilect.Departing(tuple.Item2, tuple.Item3));
+                var context = new AnnouncementContext<IDeparture>(tuple.Item2, tuple.Item3, pack);
+                var announcement = _katilect.Departing(ref context);
+                Announce(context, announcement);
                 return;
             }
 
             foreach (var (route, index, arrival) in _arrivals)
             {
+                var context = new AnnouncementContext<IArrival>(route, arrival, pack);
                 if (arrival.Arrival.Value < Clock.Now
-                    || _katilect.GetAnnouncement(route, index, arrival, _announced.GetValueOrDefault(route, -1)) is not ({ } announcement))
+                    || _katilect.GetAnnouncement(ref context, index, _announced.GetValueOrDefault(route, -1)) is not { } announcement)
                     continue;
-                Announce(route, announcement);
+                Announce(context, announcement);
                 return;
             }
 
             foreach (var (route, index, departure) in _departures)
             {
+                var context = new AnnouncementContext<IDeparture>(route, departure, pack);
                 if (departure.Departure.Value < Clock.Now
-                    || _katilect.GetAnnouncement(route, index, departure, _announced.GetValueOrDefault(route, -1)) is not ({ } announcement))
+                    || _katilect.GetAnnouncement(ref context, index, _announced.GetValueOrDefault(route, -1)) is not { } announcement)
                     continue;
-                Announce(route, announcement);
+                Announce(context, announcement);
                 return;
             }
         }
@@ -112,12 +116,12 @@ namespace SpaceTransit.Stations.Announcements
             _passingThrough.Clear();
         }
 
-        private void Announce(RouteDescriptor route, string announcement)
+        private void Announce<T>(AnnouncementContext<T> context, string announcement) where T : IStop
         {
-            _announced[route] = (int) Clock.Now.TotalMinutes;
-            var inter = route.Type == ServiceType.InterHub;
+            _announced[context.Route] = (int) Clock.Now.TotalMinutes;
+            var inter = context.Type == ServiceType.InterHub;
             var signal = inter ? interHubSignal : genericSignal;
-            _queue.EnqueueWithSubtitles(_name, announcement, pack, signal);
+            _queue.EnqueueWithSubtitles(_name, announcement, context.Pack, signal);
             _queue.Delay(3);
         }
 

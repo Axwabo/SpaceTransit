@@ -19,30 +19,30 @@ namespace SpaceTransit.Stations.Announcements
             return false;
         }
 
-        public static string GetAnnouncement(this IKatilect katilect, RouteDescriptor route, int index, IDeparture departure, int lastAnnounced)
+        public static string GetAnnouncement(this IKatilect katilect, ref AnnouncementContext<IDeparture> context, int index, int lastAnnounced)
         {
             if ((int) Clock.Now.TotalMinutes == lastAnnounced || index != -1)
                 return null;
-            var remaining = departure.MinutesToDeparture();
+            var remaining = context.Stop.MinutesToDeparture();
             return remaining switch
             {
-                3 or 5 => katilect.DepartingIn(remaining, route, departure),
-                1 => katilect.DepartingImmediately(route, departure),
-                <= 15 when lastAnnounced == -1 && AnyShipWithStop(departure) => katilect.DepartsFor(route, index, departure),
+                3 or 5 => katilect.DepartingIn(ref context, remaining),
+                1 => katilect.DepartingImmediately(ref context),
+                <= 15 when lastAnnounced == -1 && AnyShipWithStop(context.Stop) => katilect.DepartsFor(ref context, index),
                 _ => null
             };
         }
 
-        public static string GetAnnouncement(this IKatilect katilect, RouteDescriptor route, int index, IArrival arrival, int lastAnnounced)
-            => (int) Clock.Now.TotalMinutes == lastAnnounced || arrival.MinutesToArrival() is not (1 or 2)
+        public static string GetAnnouncement(this IKatilect katilect, ref AnnouncementContext<IArrival> context, int index, int lastAnnounced)
+            => (int) Clock.Now.TotalMinutes == lastAnnounced || context.Stop.MinutesToArrival() is not (1 or 2)
                 ? null
                 : index != -1
-                    ? katilect.ArrivingAndDepartsFor(route, index, arrival)
-                    : AnyShipWithStop(arrival)
-                        ? katilect.Arriving(route, arrival)
+                    ? katilect.ArrivingAndDepartsFor(ref context, index)
+                    : AnyShipWithStop(context.Stop)
+                        ? katilect.Arriving(ref context)
                         : null;
 
-        public static string ArrivingAndDeparts(RouteDescriptor route, int index, IArrival arrival)
+        public static string ArrivingAndDeparts(RouteDescriptor route, IArrival arrival, int index)
         {
             var sb = new StringBuilder()
                 .Append(route.Type)
