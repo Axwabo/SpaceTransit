@@ -42,18 +42,18 @@ namespace SpaceTransit.Stations.Announcements
                         ? katilect.Arriving(ref context)
                         : null;
 
-        public static string ArrivingAndDeparts(RouteDescriptor route, IArrival arrival, int index)
+        public static string ArrivingAndDeparts(AnnouncementContext<IArrival> context, int index)
         {
             var sb = new StringBuilder()
-                .Append(route.Type)
+                .Append(context.Type)
                 .Append(" ship is arriving from ")
-                .Append(route.Origin.Station.name)
+                .Append(context.Origin)
                 .Append(" at dock ")
-                .Append(arrival.DockIndex + 1)
+                .Append(context.Dock)
                 .Append(" and departs for ")
-                .Append(route.Destination.Station.name)
+                .Append(context.Destination)
                 .Append('.');
-            AppendIntermediateStops(route, index, sb);
+            AppendIntermediateStops(context.Route, index, sb);
             return sb.ToString();
         }
 
@@ -82,18 +82,18 @@ namespace SpaceTransit.Stations.Announcements
             sb.Append('.');
         }
 
-        public static string Departs(RouteDescriptor route, int index, IDeparture departure)
+        public static string Departs(AnnouncementContext<IDeparture> context, int index)
         {
             var sb = new StringBuilder()
-                .Append(route.Type)
+                .Append(context.Type)
                 .Append(" ship departs for ")
-                .Append(route.Destination.Station.name)
+                .Append(context.Destination)
                 .Append(" from dock ")
-                .Append(departure.DockIndex + 1)
+                .Append(context.Dock)
                 .Append(" at ")
-                .Append(departure.Departure)
+                .Append(context.Stop.Departure)
                 .Append('.');
-            AppendIntermediateStops(route, index, sb);
+            AppendIntermediateStops(context.Route, index, sb);
             return sb.ToString();
         }
 

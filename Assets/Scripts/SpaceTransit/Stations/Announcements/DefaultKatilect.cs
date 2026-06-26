@@ -10,10 +10,11 @@ namespace SpaceTransit.Stations.Announcements
         private static string DepartingCore(AnnouncementContext<IDeparture> context)
             => $"The {context.Type} ship to {context.Destination} is departing from dock {context.Dock}";
 
-        public string DepartsFor(ref AnnouncementContext<IDeparture> context, int stopIndex) => Departs(context.Route, stopIndex, context.Stop);
+        public string DepartsFor(ref AnnouncementContext<IDeparture> context, int stopIndex)
+            => Departs(context, stopIndex);
 
         public string DepartingIn(ref AnnouncementContext<IDeparture> context, int minutes)
-            => $"The {context.Type} ship to {context.Destination} is departing from dock {context.Dock} in {minutes} minutes. {PleaseBoard}";
+            => $"{DepartingCore(context)} in {minutes} minutes. {PleaseBoard}";
 
         public string DepartingImmediately(ref AnnouncementContext<IDeparture> context)
             => $"{DepartingCore(context)} immediately. Please stop boarding.";
@@ -22,7 +23,7 @@ namespace SpaceTransit.Stations.Announcements
             => $"{DepartingCore(context)}. {PleaseBoard}";
 
         public string ArrivingAndDepartsFor(ref AnnouncementContext<IArrival> context, int stopIndex)
-            => ArrivingAndDeparts(context.Route, context.Stop, stopIndex);
+            => ArrivingAndDeparts(context, stopIndex);
 
         public string Arriving(ref AnnouncementContext<IArrival> context)
             => $"{context.Type} ship is arriving from {context.Origin} at dock {context.Dock}.";
