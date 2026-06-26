@@ -45,7 +45,8 @@ namespace SpaceTransit.Stations.Announcements
 
         private string _name;
 
-        private IKatilect _katilect;
+        [SerializeField]
+        private FormattingKatilect katilect;
 
         private void Awake()
         {
@@ -84,7 +85,7 @@ namespace SpaceTransit.Stations.Announcements
             if (_arrivedShips.TryDequeue(out var tuple) && tuple.Vaulter.Stop?.Station == _cache.StationId)
             {
                 var context = new AnnouncementContext<IDeparture>(tuple.Route, tuple.Stop, pack);
-                var announcement = _katilect.Or(tuple.Route.Katilect).Departing(ref context);
+                var announcement = katilect.Or(tuple.Route.Katilect).Departing(ref context);
                 Announce(context, announcement);
                 return;
             }
@@ -93,7 +94,7 @@ namespace SpaceTransit.Stations.Announcements
             {
                 var context = new AnnouncementContext<IArrival>(route, arrival, pack);
                 if (arrival.Arrival.Value < Clock.Now
-                    || _katilect.GetAnnouncement(ref context, index, _announced.GetValueOrDefault(route, -1)) is not { } announcement)
+                    || katilect.GetAnnouncement(ref context, index, _announced.GetValueOrDefault(route, -1)) is not { } announcement)
                     continue;
                 Announce(context, announcement);
                 return;
@@ -103,7 +104,7 @@ namespace SpaceTransit.Stations.Announcements
             {
                 var context = new AnnouncementContext<IDeparture>(route, departure, pack);
                 if (departure.Departure.Value < Clock.Now
-                    || _katilect.GetAnnouncement(ref context, index, _announced.GetValueOrDefault(route, -1)) is not { } announcement)
+                    || katilect.GetAnnouncement(ref context, index, _announced.GetValueOrDefault(route, -1)) is not { } announcement)
                     continue;
                 Announce(context, announcement);
                 return;

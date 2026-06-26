@@ -10,6 +10,7 @@ namespace SpaceTransit.Stations.Announcements.Katilects
     public sealed class FormattingKatilect : ScriptableObject, IKatilect
     {
 
+        [Header("Formats")]
         [Tooltip("{0} ship\n{1} destination\n{2} dock\n{3} time")]
         public string departsFor;
 
@@ -28,6 +29,11 @@ namespace SpaceTransit.Stations.Announcements.Katilects
         [Tooltip("{0} ship\n{1} origin\n{2} dock")]
         public string arriving;
 
+        [Header("Suffixes")]
+        [Tooltip("A leading space is required")]
+        public string arrivingAndDepartsSuffix;
+
+        [Header("Pack overrides")]
         [Tooltip("Used for all \"is departing...\" announcements (but not for \"departs for...\")")]
         public PhrasePack departingOverride;
 
@@ -52,6 +58,7 @@ namespace SpaceTransit.Stations.Announcements.Katilects
             return new StringBuilder()
                 .AppendFormat(arrivingAndDeparts, context.Type, context.Origin, context.Dock, context.Destination)
                 .AppendIntermediateStops(context.Route, stopIndex)
+                .Append(arrivingAndDepartsSuffix)
                 .ToString();
         }
 
