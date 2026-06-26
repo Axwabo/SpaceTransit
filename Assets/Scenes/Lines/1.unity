@@ -11505,7 +11505,6 @@ GameObject:
   - component: {fileID: 629117166}
   - component: {fileID: 629117167}
   - component: {fileID: 629117165}
-  - component: {fileID: 629117170}
   - component: {fileID: 629117169}
   - component: {fileID: 629117171}
   m_Layer: 0
@@ -11625,21 +11624,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb0710ee48904aecb700499073be6e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.NextSegmentSafety
---- !u!114 &629117170
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 629117164}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c51f90abf83e4ac7a02989cfc140ab73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.ExitClearer
-  exit: {fileID: 833575590}
-  forwards: 0
-  backwards: 1
 --- !u!114 &629117171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15253,8 +15237,8 @@ GameObject:
   m_Component:
   - component: {fileID: 833575589}
   - component: {fileID: 833575590}
-  - component: {fileID: 833575591}
   - component: {fileID: 833575592}
+  - component: {fileID: 833575593}
   m_Layer: 0
   m_Name: To Applewillow
   m_TagString: Untagged
@@ -15295,22 +15279,6 @@ MonoBehaviour:
   - {fileID: 1462956793}
   clearanceReference: 
   <Clearance>k__BackingField: {fileID: 0}
---- !u!114 &833575591
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 833575588}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0160ff52a8e42e69102a716af77b90a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.TubeRemapper
-  tubeReference: 
-  toReference: 
-  connectTube: {fileID: 629117165}
-  connectTo: {fileID: 50568478}
 --- !u!114 &833575592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15323,6 +15291,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 166d277a1b5444daae45515d0c1a0690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Lock
+--- !u!114 &833575593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833575588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0160ff52a8e42e69102a716af77b90a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.TubeRemapper
+  tubeReference: 
+  toReference: 
+  connectTube: {fileID: 629117165}
+  connectTo: {fileID: 50568478}
 --- !u!4 &838999762 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 576458793950265353, guid: 3463dd95b250c54ad9a73b72a08ebbed, type: 3}
@@ -32806,6 +32790,7 @@ GameObject:
   - component: {fileID: 1738586178}
   - component: {fileID: 1738586179}
   - component: {fileID: 1738586180}
+  - component: {fileID: 1738586181}
   m_Layer: 0
   m_Name: To Applewillow upper
   m_TagString: Untagged
@@ -32858,6 +32843,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 166d277a1b5444daae45515d0c1a0690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Lock
+--- !u!114 &1738586181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1738586177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0160ff52a8e42e69102a716af77b90a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.TubeRemapper
+  tubeReference: 
+  toReference: 
+  connectTube: {fileID: 642813371}
+  connectTo: {fileID: 50568478}
 --- !u!1001 &1740942084
 PrefabInstance:
   m_ObjectHideFlags: 0
