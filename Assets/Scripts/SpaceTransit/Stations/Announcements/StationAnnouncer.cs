@@ -85,7 +85,7 @@ namespace SpaceTransit.Stations.Announcements
             if (_arrivedShips.TryDequeue(out var tuple) && tuple.Vaulter.Stop?.Station == _cache.StationId)
             {
                 var context = new AnnouncementContext<IDeparture>(tuple.Route, tuple.Stop, pack);
-                var announcement = katilect.Or(tuple.Route.Katilect).Departing(ref context);
+                var announcement = tuple.Route.Katilect.Or(katilect).Departing(ref context);
                 Announce(context, announcement);
                 return;
             }

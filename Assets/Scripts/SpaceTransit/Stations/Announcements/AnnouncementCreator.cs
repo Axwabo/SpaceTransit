@@ -24,7 +24,7 @@ namespace SpaceTransit.Stations.Announcements
         {
             if ((int) Clock.Now.TotalMinutes == lastAnnounced || index != -1)
                 return null;
-            var katilect = station.Or(context.Route.Katilect);
+            var katilect = context.Route.Katilect.Or(station);
             var remaining = context.Stop.MinutesToDeparture();
             return remaining switch
             {
@@ -39,7 +39,7 @@ namespace SpaceTransit.Stations.Announcements
         {
             if ((int) Clock.Now.TotalMinutes == lastAnnounced || context.Stop.MinutesToArrival() is not (1 or 2))
                 return null;
-            var katilect = station.Or(context.Route.Katilect);
+            var katilect = context.Route.Katilect.Or(station);
             return index != -1
                 ? katilect.ArrivingAndDepartsFor(ref context, index)
                 : context.Stop.AnyShip()
