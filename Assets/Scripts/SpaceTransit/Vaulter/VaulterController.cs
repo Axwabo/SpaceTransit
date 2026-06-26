@@ -160,7 +160,8 @@ namespace SpaceTransit.Vaulter
 
             if (!_passingThroughDock)
                 return;
-            AdvanceTarget();
+            if (_passingThroughDock == passthrough.Station)
+                AdvanceTarget();
             _passingThroughDock = null;
         }
 
