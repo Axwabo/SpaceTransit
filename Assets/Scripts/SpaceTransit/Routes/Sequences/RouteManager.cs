@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading;
 using SpaceTransit.Loader;
 using SpaceTransit.Routes.Stops;
@@ -16,11 +17,26 @@ namespace SpaceTransit.Routes.Sequences
 
         public static ServiceSequence[] Sequences => _sequences ??= Resources.LoadAll<ServiceSequence>("Services");
 
-        public static void Start()
+        public static void Start() => _ = StartAll();
+
+        private static async Awaitable StartAll()
         {
             var token = WorldChanger.Cts.Token;
-            foreach (var sequence in Sequences)
-                _ = Start(sequence, token);
+            foreach (var sequence in Sequences.OrderBy(GetNextSortableDeparture))
+                if (Start(sequence, token))
+                    await Awaitable.NextFrameAsync(token);
+        }
+
+        private static TimeSpan GetNextSortableDeparture(ServiceSequence sequence)
+        {
+            foreach (var route in sequence.routes)
+            {
+                var time = route.Origin.Departure.Value;
+                if (time > Clock.Now)
+                    return time;
+            }
+
+            return TimeSpan.MaxValue;
         }
 
         private static (SpawnLocation, int) GetSpawnLocation(ServiceSequence sequence)
@@ -93,10 +109,29 @@ namespace SpaceTransit.Routes.Sequences
                 : (new SpawnLocation(stopIndex), routeIndex);
         }
 
-        private static async Awaitable Start(ServiceSequence sequence, CancellationToken token)
+        private static bool Start(ServiceSequence sequence, CancellationToken token)
+        {
+            if (GetSpawnLocation(sequence) is not ({ } spawn, var index))
+            {
+                _ = StartAsync(sequence, token);
+                return false;
+            }
+
+            _ = StartAsync(sequence, spawn, index, token);
+            return true;
+        }
+
+        private static async Awaitable StartAsync(ServiceSequence sequence, SpawnLocation initialSpawn, int initialIndex, CancellationToken token)
+        {
+            await RouteRotor.Run(sequence, initialSpawn, initialIndex);
+            await StartAsync(sequence, token);
+        }
+
+        private static async Awaitable StartAsync(ServiceSequence sequence, CancellationToken token)
         {
             while (!token.IsCancellationRequested)
             {
+                await Awaitable.WaitForSecondsAsync(RouteRotor.UpdateInterval, token);
                 try
                 {
                     if (GetSpawnLocation(sequence) is ({ } spawn, var index))
@@ -105,8 +140,6 @@ namespace SpaceTransit.Routes.Sequences
                 catch (OperationCanceledException)
                 {
                 }
-
-                await Awaitable.WaitForSecondsAsync(RouteRotor.UpdateInterval, token);
             }
         }
 
