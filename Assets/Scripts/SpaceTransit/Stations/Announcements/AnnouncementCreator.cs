@@ -20,10 +20,11 @@ namespace SpaceTransit.Stations.Announcements
             return false;
         }
 
-        public static string GetAnnouncement(this IKatilect katilect, ref AnnouncementContext<IDeparture> context, int index, int lastAnnounced)
+        public static string GetAnnouncement(this IKatilect station, ref AnnouncementContext<IDeparture> context, int index, int lastAnnounced)
         {
             if ((int) Clock.Now.TotalMinutes == lastAnnounced || index != -1)
                 return null;
+            var katilect = station.Or(context.Route.Katilect);
             var remaining = context.Stop.MinutesToDeparture();
             return remaining switch
             {
@@ -34,42 +35,28 @@ namespace SpaceTransit.Stations.Announcements
             };
         }
 
-        public static string GetAnnouncement(this IKatilect katilect, ref AnnouncementContext<IArrival> context, int index, int lastAnnounced)
-            => (int) Clock.Now.TotalMinutes == lastAnnounced || context.Stop.MinutesToArrival() is not (1 or 2)
-                ? null
-                : index != -1
-                    ? katilect.ArrivingAndDepartsFor(ref context, index)
-                    : context.Stop.AnyShip()
-                        ? katilect.Arriving(ref context)
-                        : null;
-
-        public static string ArrivingAndDeparts(AnnouncementContext<IArrival> context, int index)
+        public static string GetAnnouncement(this IKatilect station, ref AnnouncementContext<IArrival> context, int index, int lastAnnounced)
         {
-            var sb = new StringBuilder()
-                .Append(context.Type)
-                .Append(" ship is arriving from ")
-                .Append(context.Origin)
-                .Append(" at dock ")
-                .Append(context.Dock)
-                .Append(" and departs for ")
-                .Append(context.Destination)
-                .Append('.');
-            AppendIntermediateStops(context.Route, index, sb);
-            return sb.ToString();
+            if ((int) Clock.Now.TotalMinutes == lastAnnounced || context.Stop.MinutesToArrival() is not (1 or 2))
+                return null;
+            var katilect = station.Or(context.Route.Katilect);
+            return index != -1
+                ? katilect.ArrivingAndDepartsFor(ref context, index)
+                : context.Stop.AnyShip()
+                    ? katilect.Arriving(ref context)
+                    : null;
         }
 
-        public static void AppendIntermediateStops(RouteDescriptor route, int index, StringBuilder sb)
+        public static IKatilect Or(this IKatilect katilect, IKatilect fallback) => katilect ?? fallback ?? IKatilect.Default;
+
+        public static StringBuilder AppendIntermediateStops(this StringBuilder sb, RouteDescriptor route, int index)
         {
             var intermediateStops = route.IntermediateStops.Length;
             if (index == intermediateStops - 1)
-                return;
+                return sb;
             sb.Append(" The ship stops ");
             if (route.EveryStation)
-            {
-                sb.Append("at every station.");
-                return;
-            }
-
+                return sb.Append("at every station.");
             sb.Append("only at ");
             for (var i = index + 1; i < intermediateStops; i++)
             {
@@ -80,23 +67,32 @@ namespace SpaceTransit.Stations.Announcements
                 sb.Append(route.IntermediateStops[i].Station.name);
             }
 
-            sb.Append('.');
+            return sb.Append('.');
         }
 
-        public static string Departs(AnnouncementContext<IDeparture> context, int index)
-        {
-            var sb = new StringBuilder()
-                .Append(context.Type)
-                .Append(" ship departs for ")
-                .Append(context.Destination)
-                .Append(" from dock ")
-                .Append(context.Dock)
-                .Append(" at ")
-                .Append(context.Stop.Departure)
-                .Append('.');
-            AppendIntermediateStops(context.Route, index, sb);
-            return sb.ToString();
-        }
+        public static string ArrivingAndDeparts(AnnouncementContext<IArrival> context, int index) => new StringBuilder()
+            .Append(context.Type)
+            .Append(" ship is arriving from ")
+            .Append(context.Origin)
+            .Append(" at dock ")
+            .Append(context.Dock)
+            .Append(" and departs for ")
+            .Append(context.Destination)
+            .Append('.')
+            .AppendIntermediateStops(context.Route, index)
+            .ToString();
+
+        public static string Departs(AnnouncementContext<IDeparture> context, int index) => new StringBuilder()
+            .Append(context.Type)
+            .Append(" ship departs for ")
+            .Append(context.Destination)
+            .Append(" from dock ")
+            .Append(context.Dock)
+            .Append(" at ")
+            .Append(context.Stop.Departure)
+            .Append('.')
+            .AppendIntermediateStops(context.Route, index)
+            .ToString();
 
     }
 

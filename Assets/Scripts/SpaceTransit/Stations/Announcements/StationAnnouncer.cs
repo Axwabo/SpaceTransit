@@ -37,7 +37,7 @@ namespace SpaceTransit.Stations.Announcements
 
         private readonly List<(ShipAssembly, int)> _arriving = new();
 
-        private readonly Queue<(VaulterController, RouteDescriptor, IntermediateStop)> _arrivedShips = new();
+        private readonly Queue<(VaulterController Vaulter, RouteDescriptor Route, IntermediateStop Stop)> _arrivedShips = new();
 
         private List<DepartureEntry> _departures;
 
@@ -82,9 +82,9 @@ namespace SpaceTransit.Stations.Announcements
         {
             if (_queue.IsYapping || AnnounceDeparting() || AnnouncePassingThrough() || AnnounceArriving())
                 return;
-            if (_arrivedShips.TryDequeue(out var tuple) && tuple.Item1.Stop?.Station == _cache.StationId)
+            if (_arrivedShips.TryDequeue(out var tuple) && tuple.Vaulter.Stop?.Station == _cache.StationId)
             {
-                var context = new AnnouncementContext<IDeparture>(tuple.Item2, tuple.Item3, pack);
+                var context = new AnnouncementContext<IDeparture>(tuple.Route, tuple.Stop, pack);
                 var announcement = _katilect.Departing(ref context);
                 Announce(context, announcement);
                 return;

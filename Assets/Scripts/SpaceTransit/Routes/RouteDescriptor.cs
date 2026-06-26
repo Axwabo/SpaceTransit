@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using SpaceTransit.Routes.Stops;
+using SpaceTransit.Stations.Announcements.Katilects;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -45,6 +46,8 @@ namespace SpaceTransit.Routes
         public ReadOnlySpan<IntermediateStop> IntermediateStops => _intermediateStops;
 
         public ReadOnlySpan<Passthrough> Passthrough => _passthrough;
+
+        public IKatilect Katilect => null; // TODO
 
         private void Awake()
         {
