@@ -41,8 +41,11 @@ namespace SpaceTransit.Editor
         private static void WriteSpline(SplineTube spline, StreamWriter file)
         {
             file.Write("<path d=\"");
-            for (var i = 0; i < 10; i++)
-                WriteSample(file, spline, i * 0.1f);
+            var steps = Mathf.Min(50, Mathf.CeilToInt(spline.Length / 30));
+            var size = 1f / steps;
+            for (var i = 0; i < steps; i++)
+                WriteSample(file, spline, i * size);
+            WriteSample(file, spline, 1);
             file.Write($"\" {StrokeStyle} fill=\"transparent\" />");
         }
 
