@@ -51,7 +51,6 @@ namespace SpaceTransit.Stations.Announcements
         {
             _queue = GetComponent<QueuePlayer>();
             _cache = GetComponentInParent<DeparturesArrivals>();
-            _katilect = IKatilect.Default;
         }
 
         private void OnEnable()
@@ -85,7 +84,7 @@ namespace SpaceTransit.Stations.Announcements
             if (_arrivedShips.TryDequeue(out var tuple) && tuple.Vaulter.Stop?.Station == _cache.StationId)
             {
                 var context = new AnnouncementContext<IDeparture>(tuple.Route, tuple.Stop, pack);
-                var announcement = _katilect.Departing(ref context);
+                var announcement = _katilect.Or(tuple.Route.Katilect).Departing(ref context);
                 Announce(context, announcement);
                 return;
             }

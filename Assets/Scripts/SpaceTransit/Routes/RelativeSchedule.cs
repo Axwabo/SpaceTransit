@@ -1,4 +1,5 @@
 using SpaceTransit.Routes.Stops;
+using SpaceTransit.Stations.Announcements.Katilects;
 using UnityEngine;
 
 namespace SpaceTransit.Routes
@@ -11,6 +12,8 @@ namespace SpaceTransit.Routes
         public IntermediateStop[] intermediateStops;
 
         public Passthrough[] passthrough;
+
+        public FormattingKatilect katilectOverride;
 
     }
 

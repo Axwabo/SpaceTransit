@@ -47,7 +47,7 @@ namespace SpaceTransit.Routes
 
         public ReadOnlySpan<Passthrough> Passthrough => _passthrough;
 
-        public IKatilect Katilect => null; // TODO
+        public IKatilect Katilect => schedule ? schedule.katilectOverride : null;
 
         private void Awake()
         {

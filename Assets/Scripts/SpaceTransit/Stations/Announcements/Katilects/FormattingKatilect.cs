@@ -13,7 +13,7 @@ namespace SpaceTransit.Stations.Announcements.Katilects
         [Tooltip("{0} ship\n{1} destination\n{2} dock\n{3} time")]
         public string departsFor;
 
-        [Tooltip("{0} ship\n{1} destination\n{2} dock\n{3} minutes")]
+        [Tooltip("{0} ship\n{1} destination\n{2} dock\n{4} minutes")]
         public string departingIn;
 
         [Tooltip("{0} ship\n{1} destination\n{2} dock")]
