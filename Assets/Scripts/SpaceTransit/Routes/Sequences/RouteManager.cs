@@ -39,7 +39,7 @@ namespace SpaceTransit.Routes.Sequences
                         return !Station.TryGetLoadedStation(stop.Station, out var station)
                             ? None
                             : stop.Arrival <= Clock.Now
-                                ? (new SpawnLocation(stopIndex), routeIndex)
+                                ? SpawnAt(station, stop, stopIndex, routeIndex)
                                 : stop.Arrival <= Clock.Now + TimeSpan.FromMinutes(1)
                                     ? Enter(station, stop, route, stopIndex, routeIndex)
                                     : None;
@@ -54,6 +54,11 @@ namespace SpaceTransit.Routes.Sequences
                 ? None
                 : (new TubeSpawn(finalDock), -1);
         }
+
+        private static (SpawnLocation, int) SpawnAt(Station station, IntermediateStop stop, int stopIndex, int routeIndex)
+            => station.Docks[stop.DockIndex].Safety.IsOccupied
+                ? None
+                : (new SpawnLocation(stopIndex), routeIndex);
 
         private static (SpawnLocation, int) Enter(Station station, IntermediateStop stop, RouteDescriptor route, int stopIndex, int routeIndex)
         {
