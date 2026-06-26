@@ -115,11 +115,11 @@ namespace SpaceTransit.Ships.Driving.Screens
             _entering = null;
         }
 
-        private void UpdateEntries(EntryEnsurer ensurer)
+        private void UpdateEntries(IEntryEnsurer ensurer)
         {
             if (LoadingProgress.Current != null || ensurer.Entries.Count == 0)
                 return;
-            var station = ensurer.station;
+            var station = ensurer.TargetStation;
             if (_previousStation == station)
                 return;
             _text.text = station.name;

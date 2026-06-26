@@ -56,6 +56,10 @@ namespace SpaceTransit.Vaulter
             _title = _root.Q<Label>("Title");
             routes.Screen.Initialize();
             stops.Screen.Initialize();
+            if (Parent.initialRoute)
+                return;
+            Show(!IsInService, true);
+            routes.Refresh(Assembly.startTube);
         }
 
         public override void OnRouteChanged() => Show(!IsInService, false);

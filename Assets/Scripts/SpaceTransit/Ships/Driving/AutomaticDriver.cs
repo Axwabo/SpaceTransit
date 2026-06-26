@@ -49,6 +49,9 @@ namespace SpaceTransit.Ships.Driving
 
         private bool IsFullyInDock => Assembly.FrontModule.Thruster.Tube is Dock && Assembly.BackModule.Thruster.Tube is Dock;
 
+        private bool IsFarFromStation => !Station.TryGetLoadedStation(Parent.Target.Station, out var station)
+                                         || Vector3.Distance(station.Position, Assembly.FrontModule.Thruster.Transform.position) > 3000 * World.MetersToWorld;
+
         private void Update()
         {
             if (!IsInService)
@@ -141,15 +144,18 @@ namespace SpaceTransit.Ships.Driving
             Assembly.SetTargetSpeed(ReversingSpeed);
         }
 
-        private void Enter(EntryEnsurer ensurer)
+        private void Enter(IEntryEnsurer ensurer)
         {
-            if (Parent.Target == null || ensurer.station != Parent.Target.Station)
+            if (Parent.Target == null || ensurer.TargetStation != Parent.Target.Station)
                 return;
             if (LoadingProgress.Current != null && !Parent.Target.Station.IsLoaded() && !Assembly.IsPlayerMounted)
             {
                 Destroy(gameObject);
                 return;
             }
+
+            if (IsFarFromStation && Assembly.FrontModule.Thruster.Tube.Safety is not IEntryEnsurer)
+                return;
 
             var list = Assembly.FrontModule.Cosmos.EntryList;
             if (list.isActiveAndEnabled)

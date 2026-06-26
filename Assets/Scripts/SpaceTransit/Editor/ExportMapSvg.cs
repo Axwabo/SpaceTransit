@@ -1,4 +1,6 @@
 using System.IO;
+using System.Text;
+using SpaceTransit.Routes;
 using SpaceTransit.Tubes;
 using UnityEditor;
 using UnityEngine;
@@ -10,6 +12,7 @@ namespace SpaceTransit.Editor
     {
 
         private const string StrokeStyle = "stroke=\"orange\" stroke-width=\"5\"";
+        private const string End = "</svg>";
 
         [MenuItem("Window/SpaceTransit/Export Map as SVG")]
         public static void Export()
@@ -17,6 +20,36 @@ namespace SpaceTransit.Editor
             var path = EditorUtility.SaveFilePanel("Save Map SVG", null, null, "svg");
             if (string.IsNullOrWhiteSpace(path) || !Selection.activeGameObject)
                 return;
+            WriteAsset(path);
+            using var html = File.CreateText("map.svg");
+            using (var original = File.OpenRead(path))
+            {
+                original.CopyTo(html.BaseStream);
+            }
+
+            html.BaseStream.Seek(-Encoding.UTF8.GetByteCount(End), SeekOrigin.Current);
+            foreach (var station in Resources.LoadAll<StationId>("Stations"))
+            {
+                html.Write("<circle cx=\"");
+                html.Write(station.position.x);
+                html.Write("\" cy=\"");
+                html.Write(-station.position.z);
+                html.Write("\" fill=\"green\" r=\"20\"/>");
+                html.Write("<text x=\"");
+                html.Write(station.position.x);
+                html.Write("\" y=\"");
+                html.Write(-station.position.z - 40);
+                html.Write("\" text-anchor=\"middle\">");
+                html.Write(station.name);
+                html.Write("</text>");
+            }
+
+            html.Write("<style>text{fill:white;font-family:sans-serif}</style>");
+            html.Write(End);
+        }
+
+        private static void WriteAsset(string path)
+        {
             var transform = Selection.activeGameObject.transform;
             var scale = transform.lossyScale;
             var topLeft = transform.TransformPoint(new Vector3(-0.5f, 0, 0.5f));
@@ -35,15 +68,18 @@ namespace SpaceTransit.Editor
                     WriteSpline(spline, file);
                 else
                     WriteStraight(tube, file);
-            file.Write("</svg>");
+            file.Write(End);
         }
 
         private static void WriteSpline(SplineTube spline, StreamWriter file)
         {
             file.Write("<path d=\"");
-            for (var i = 0; i < 10; i++)
-                WriteSample(file, spline, i * 0.1f);
-            file.Write($"\" {StrokeStyle} fill=\"transparent\" />");
+            var steps = Mathf.Clamp(Mathf.CeilToInt(spline.Length / 50), 10, 50);
+            var size = 1f / steps;
+            for (var i = 0; i < steps; i++)
+                WriteSample(file, spline, i * size);
+            WriteSample(file, spline, 1);
+            file.Write($"\" {StrokeStyle} fill=\"transparent\"/>");
         }
 
         private static void WriteSample(StreamWriter file, SplineTube spline, float time)
@@ -68,7 +104,7 @@ namespace SpaceTransit.Editor
             file.Write(-start.z);
             file.Write("\" y2=\"");
             file.Write(-end.z);
-            file.Write($"\" {StrokeStyle} />");
+            file.Write($"\" {StrokeStyle}/>");
         }
 
     }

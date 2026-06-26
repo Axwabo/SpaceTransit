@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
+using SpaceTransit.Routes;
 using UnityEditor;
-using Cache = SpaceTransit.Vaulter.Cache;
+using UnityEngine;
 
 namespace SpaceTransit.Editor
 {
@@ -14,7 +15,7 @@ namespace SpaceTransit.Editor
         {
             var routes = new List<string>();
             var stops = new List<string>();
-            foreach (var route in Cache.Routes)
+            foreach (var route in Resources.LoadAll<RouteDescriptor>("Routes"))
             {
                 routes.Add($"({route.name}, \"{route.Type}\", {route.EveryStation.ToString().ToUpper()}, {route.Reverse.ToString().ToUpper()}, \"{route.Origin.Station.name}\", {route.Origin.DockIndex}, TIME(\"{route.Origin.Departure.Value:h':'m}\"), \"{route.Destination.Station.name}\", {route.Destination.DockIndex}, TIME(\"{route.Destination.Arrival.Value:h':'m}\")),");
                 stops.Add("");

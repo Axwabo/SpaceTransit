@@ -39,7 +39,7 @@ namespace SpaceTransit.Cosmos
             return base.Lock(assembly);
         }
 
-        public override bool IsUsedOnlyBy(ShipAssembly assembly) => base.IsUsedOnlyBy(assembly) && (!Clearance || Clearance.CanClaim(assembly));
+        public override bool IsUsedOnlyBy(ShipAssembly assembly) => base.IsUsedOnlyBy(assembly) && (!Clearance || Clearance.CanProceed(assembly));
 
     }
 

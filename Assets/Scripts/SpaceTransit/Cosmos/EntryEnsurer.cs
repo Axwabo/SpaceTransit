@@ -7,11 +7,13 @@ using UnityEngine;
 namespace SpaceTransit.Cosmos
 {
 
-    public sealed class EntryEnsurer : NextSegmentSafety
+    public sealed class EntryEnsurer : NextSegmentSafety, IEntryEnsurer
     {
 
         [SerializeField]
-        public StationId station;
+        private StationId station;
+
+        public StationId TargetStation => station;
 
         [field: SerializeField]
         public bool Backwards { get; private set; }

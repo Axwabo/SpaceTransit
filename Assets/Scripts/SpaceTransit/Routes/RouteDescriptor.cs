@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using SpaceTransit.Routes.Stops;
+using SpaceTransit.Stations.Announcements.Katilects;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -33,18 +34,20 @@ namespace SpaceTransit.Routes
         [SerializeField]
         private IntermediateStop[] intermediateStops;
 
-        [SerializeField]
-        private Passthrough[] passthrough;
+        [field: SerializeField]
+        public Destination Destination { get; private set; }
 
         [SerializeField]
         private RelativeSchedule schedule;
+
+        [SerializeField]
+        private Passthrough[] passthrough;
 
         public ReadOnlySpan<IntermediateStop> IntermediateStops => _intermediateStops;
 
         public ReadOnlySpan<Passthrough> Passthrough => _passthrough;
 
-        [field: SerializeField]
-        public Destination Destination { get; private set; }
+        public IKatilect Katilect => schedule ? schedule.katilectOverride : null;
 
         private void Awake()
         {
@@ -66,6 +69,7 @@ namespace SpaceTransit.Routes
                 return;
             var relativeSchedule = CreateInstance<RelativeSchedule>();
             relativeSchedule.intermediateStops = intermediateStops.Select(e => e.Add(-Origin.Departure.Value)).ToArray();
+            relativeSchedule.passthrough = passthrough;
             schedule = relativeSchedule;
             EditorUtility.SetDirty(this);
             AssetDatabase.CreateAsset(relativeSchedule, Path.Combine("Assets", Path.GetRelativePath(Application.dataPath, path)));
