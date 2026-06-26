@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SpaceTransit.Loader;
-using SpaceTransit.Stations;
+using SpaceTransit.Stations.Announcements;
 using UnityEngine;
 using UnityEngine.Serialization;
 

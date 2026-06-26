@@ -1,15 +1,15 @@
-﻿using System.Text;
+using System.Text;
 using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
 using SpaceTransit.Ships;
 
-namespace SpaceTransit.Stations
+namespace SpaceTransit.Stations.Announcements
 {
 
     public static class AnnouncementCreator
     {
 
-        private const string PleaseBoard = "Please board the ship.";
+        public const string PleaseBoard = "Please board the ship.";
 
         private static bool AnyShipWithStop(IStop stop)
         {
@@ -19,45 +19,30 @@ namespace SpaceTransit.Stations
             return false;
         }
 
-        public static string GetAnnouncement(RouteDescriptor route, int index, IDeparture departure, int lastAnnounced)
+        public static string GetAnnouncement(this IKatilect katilect, RouteDescriptor route, int index, IDeparture departure, int lastAnnounced)
         {
             if ((int) Clock.Now.TotalMinutes == lastAnnounced || index != -1)
                 return null;
             var remaining = departure.MinutesToDeparture();
             return remaining switch
             {
-                3 or 5 => In(remaining, route, departure),
-                1 => Immediate(route, departure),
-                <= 15 when lastAnnounced == -1 && AnyShipWithStop(departure) => At(route, index, departure),
+                3 or 5 => katilect.DepartingIn(remaining, route, departure),
+                1 => katilect.DepartingImmediately(route, departure),
+                <= 15 when lastAnnounced == -1 && AnyShipWithStop(departure) => katilect.DepartsFor(route, index, departure),
                 _ => null
             };
         }
 
-        public static string GetAnnouncement(RouteDescriptor route, int index, IArrival arrival, int lastAnnounced)
+        public static string GetAnnouncement(this IKatilect katilect, RouteDescriptor route, int index, IArrival arrival, int lastAnnounced)
             => (int) Clock.Now.TotalMinutes == lastAnnounced || arrival.MinutesToArrival() is not (1 or 2)
                 ? null
                 : index != -1
-                    ? ArrivingAndDeparts(route, index, arrival)
+                    ? katilect.ArrivingAndDepartsFor(route, index, arrival)
                     : AnyShipWithStop(arrival)
-                        ? Arriving(route, arrival)
+                        ? katilect.Arriving(route, arrival)
                         : null;
 
-        private static string Arriving(RouteDescriptor route, IArrival arrival)
-            => $"{route.Type} ship is arriving from {route.Origin.Station.name} at dock {arrival.DockIndex + 1}.";
-
-        private static string In(int deltaMinutes, RouteDescriptor route, IDeparture departure)
-            => $"The {route.Type} ship to {route.Destination.Station.name} is departing from dock {departure.DockIndex + 1} in {deltaMinutes} minutes. {PleaseBoard}";
-
-        private static string Immediate(RouteDescriptor route, IDeparture departure)
-            => $"{DepartingCore(route, departure)} immediately. Please stop boarding.";
-
-        public static string Departing(RouteDescriptor route, IDeparture departure)
-            => $"{DepartingCore(route, departure)}. {PleaseBoard}";
-
-        private static string DepartingCore(RouteDescriptor route, IDeparture departure)
-            => $"The {route.Type} ship to {route.Destination.Station.name} is departing from dock {departure.DockIndex + 1}";
-
-        private static string ArrivingAndDeparts(RouteDescriptor route, int index, IArrival arrival)
+        public static string ArrivingAndDeparts(RouteDescriptor route, int index, IArrival arrival)
         {
             var sb = new StringBuilder()
                 .Append(route.Type)
@@ -72,7 +57,7 @@ namespace SpaceTransit.Stations
             return sb.ToString();
         }
 
-        private static void AppendIntermediateStops(RouteDescriptor route, int index, StringBuilder sb)
+        public static void AppendIntermediateStops(RouteDescriptor route, int index, StringBuilder sb)
         {
             var intermediateStops = route.IntermediateStops.Length;
             if (index == intermediateStops - 1)
@@ -97,7 +82,7 @@ namespace SpaceTransit.Stations
             sb.Append('.');
         }
 
-        private static string At(RouteDescriptor route, int index, IDeparture departure)
+        public static string Departs(RouteDescriptor route, int index, IDeparture departure)
         {
             var sb = new StringBuilder()
                 .Append(route.Type)

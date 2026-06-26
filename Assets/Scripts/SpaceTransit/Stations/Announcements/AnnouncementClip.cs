@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace SpaceTransit.Stations
+namespace SpaceTransit.Stations.Announcements
 {
 
     public readonly struct AnnouncementClip

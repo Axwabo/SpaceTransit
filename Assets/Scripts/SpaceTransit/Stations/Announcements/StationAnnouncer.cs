@@ -7,7 +7,7 @@ using SpaceTransit.Ships;
 using SpaceTransit.Vaulter;
 using UnityEngine;
 
-namespace SpaceTransit.Stations
+namespace SpaceTransit.Stations.Announcements
 {
 
     [RequireComponent(typeof(QueuePlayer))]
@@ -44,10 +44,13 @@ namespace SpaceTransit.Stations
 
         private string _name;
 
+        private IKatilect _katilect;
+
         private void Awake()
         {
             _queue = GetComponent<QueuePlayer>();
             _cache = GetComponentInParent<DeparturesArrivals>();
+            _katilect = IKatilect.Default;
         }
 
         private void OnEnable()
@@ -80,14 +83,14 @@ namespace SpaceTransit.Stations
                 return;
             if (_arrivedShips.TryDequeue(out var tuple) && tuple.Item1.Stop?.Station == _cache.StationId)
             {
-                Announce(tuple.Item2, AnnouncementCreator.Departing(tuple.Item2, tuple.Item3));
+                Announce(tuple.Item2, _katilect.Departing(tuple.Item2, tuple.Item3));
                 return;
             }
 
             foreach (var (route, index, arrival) in _arrivals)
             {
                 if (arrival.Arrival.Value < Clock.Now
-                    || AnnouncementCreator.GetAnnouncement(route, index, arrival, _announced.GetValueOrDefault(route, -1)) is not { } announcement)
+                    || _katilect.GetAnnouncement(route, index, arrival, _announced.GetValueOrDefault(route, -1)) is not ({ } announcement))
                     continue;
                 Announce(route, announcement);
                 return;
@@ -96,7 +99,7 @@ namespace SpaceTransit.Stations
             foreach (var (route, index, departure) in _departures)
             {
                 if (departure.Departure.Value < Clock.Now
-                    || AnnouncementCreator.GetAnnouncement(route, index, departure, _announced.GetValueOrDefault(route, -1)) is not { } announcement)
+                    || _katilect.GetAnnouncement(route, index, departure, _announced.GetValueOrDefault(route, -1)) is not ({ } announcement))
                     continue;
                 Announce(route, announcement);
                 return;
