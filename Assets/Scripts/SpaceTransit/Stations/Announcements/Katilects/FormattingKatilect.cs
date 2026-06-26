@@ -10,14 +10,6 @@ namespace SpaceTransit.Stations.Announcements.Katilects
     public sealed class FormattingKatilect : ScriptableObject, IKatilect
     {
 
-        private static string Build(string format, AnnouncementContext<IDeparture> context, int argument = 0, bool appendStops = false)
-            => !appendStops
-                ? string.Format(format, context.Type, context.Destination, context.Dock, context.Stop.Departure, argument)
-                : new StringBuilder()
-                    .AppendFormat(format, context.Type, context.Destination, context.Dock, context.Stop.Departure)
-                    .AppendIntermediateStops(context.Route, argument)
-                    .ToString();
-
         [Tooltip("{0} ship\n{1} destination\n{2} dock\n{3} time")]
         public string departsFor;
 
@@ -36,32 +28,47 @@ namespace SpaceTransit.Stations.Announcements.Katilects
         [Tooltip("{0} ship\n{1} origin\n{2} dock")]
         public string arriving;
 
-        public PhrasePack immediatelyOverride;
+        [Tooltip("Used for all \"is departing...\" announcements (but not for \"departs for...\")")]
+        public PhrasePack departingOverride;
+
+        public PhrasePack arrivingAndDepartsOverride;
 
         public string DepartsFor(ref AnnouncementContext<IDeparture> context, int stopIndex)
-            => Build(departsFor, context, stopIndex, true);
+            => Build(departsFor, ref context, stopIndex, true);
 
         public string DepartingIn(ref AnnouncementContext<IDeparture> context, int minutes)
-            => Build(departingIn, context);
+            => Build(departingIn, ref context);
 
         public string DepartingImmediately(ref AnnouncementContext<IDeparture> context)
-        {
-            if (immediatelyOverride)
-                context.Pack = immediatelyOverride;
-            return Build(departingImmediately, context);
-        }
+            => Build(departingImmediately, ref context);
 
         public string Departing(ref AnnouncementContext<IDeparture> context)
-            => Build(departing, context);
+            => Build(departing, ref context);
 
         public string ArrivingAndDepartsFor(ref AnnouncementContext<IArrival> context, int stopIndex)
-            => new StringBuilder()
+        {
+            if (arrivingAndDepartsOverride)
+                context.Pack = arrivingAndDepartsOverride;
+            return new StringBuilder()
                 .AppendFormat(arrivingAndDeparts, context.Type, context.Origin, context.Dock, context.Destination)
                 .AppendIntermediateStops(context.Route, stopIndex)
                 .ToString();
+        }
 
         public string Arriving(ref AnnouncementContext<IArrival> context)
             => string.Format(arriving, context.Type, context.Origin, context.Dock);
+
+        private string Build(string format, ref AnnouncementContext<IDeparture> context, int argument = 0, bool stops = false)
+        {
+            if (stops)
+                return new StringBuilder()
+                    .AppendFormat(format, context.Type, context.Destination, context.Dock, context.Stop.Departure)
+                    .AppendIntermediateStops(context.Route, argument)
+                    .ToString();
+            if (departingOverride)
+                context.Pack = departingOverride;
+            return string.Format(format, context.Type, context.Destination, context.Dock, context.Stop.Departure, argument);
+        }
 
     }
 
