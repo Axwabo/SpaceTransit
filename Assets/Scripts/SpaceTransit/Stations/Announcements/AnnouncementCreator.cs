@@ -52,7 +52,7 @@ namespace SpaceTransit.Stations.Announcements
         public static StringBuilder AppendIntermediateStops(this StringBuilder sb, RouteDescriptor route, int index)
         {
             var intermediateStops = route.IntermediateStops.Length;
-            if (index == intermediateStops - 1)
+            if (index >= intermediateStops - 1)
                 return sb;
             sb.Append(" The ship stops ");
             if (route.EveryStation)

@@ -29,6 +29,8 @@ namespace SpaceTransit.Stations.Announcements.Katilects
         [Tooltip("{0} ship\n{1} origin\n{2} dock")]
         public string arriving;
 
+        public bool announceIntermediateStops = true;
+
         [Header("Suffixes")]
         [Tooltip("A leading space is required")]
         public string arrivingAndDepartsSuffix;
@@ -43,7 +45,7 @@ namespace SpaceTransit.Stations.Announcements.Katilects
             => Build(departsFor, ref context, stopIndex, true);
 
         public string DepartingIn(ref AnnouncementContext<IDeparture> context, int minutes)
-            => Build(departingIn, ref context);
+            => Build(departingIn, ref context, minutes);
 
         public string DepartingImmediately(ref AnnouncementContext<IDeparture> context)
             => Build(departingImmediately, ref context);
@@ -57,7 +59,7 @@ namespace SpaceTransit.Stations.Announcements.Katilects
                 context.Pack = arrivingAndDepartsOverride;
             return new StringBuilder()
                 .AppendFormat(arrivingAndDeparts, context.Type, context.Origin, context.Dock, context.Destination)
-                .AppendIntermediateStops(context.Route, stopIndex)
+                .AppendIntermediateStops(context.Route, Index(stopIndex))
                 .Append(arrivingAndDepartsSuffix)
                 .ToString();
         }
@@ -70,12 +72,16 @@ namespace SpaceTransit.Stations.Announcements.Katilects
             if (stops)
                 return new StringBuilder()
                     .AppendFormat(format, context.Type, context.Destination, context.Dock, context.Stop.Departure)
-                    .AppendIntermediateStops(context.Route, argument)
+                    .AppendIntermediateStops(context.Route, Index(argument))
                     .ToString();
+            if (string.IsNullOrWhiteSpace(format))
+                return null;
             if (departingOverride)
                 context.Pack = departingOverride;
             return string.Format(format, context.Type, context.Destination, context.Dock, context.Stop.Departure, argument);
         }
+
+        private int Index(int stopIndex) => announceIntermediateStops ? stopIndex : int.MaxValue;
 
     }
 
