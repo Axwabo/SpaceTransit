@@ -47,14 +47,19 @@ namespace SpaceTransit.Routes.Sequences
             }
 
             var finalDestination = sequence.routes[^1].Destination;
-            return Station.TryGetLoadedStation(finalDestination.Station, out var finalStation)
-                ? (new TubeSpawn(finalStation.Docks[finalDestination.DockIndex]), -1)
-                : None;
+            if (!Station.TryGetLoadedStation(finalDestination.Station, out var finalStation))
+                return None;
+            var finalDock = finalStation.Docks[finalDestination.DockIndex];
+            return finalDock.Safety.IsOccupied
+                ? None
+                : (new TubeSpawn(finalDock), -1);
         }
 
         private static (SpawnLocation, int) Enter(Station station, IntermediateStop stop, RouteDescriptor route, int stopIndex, int routeIndex)
         {
             var dock = station.Docks[stop.DockIndex];
+            if (dock.Safety.IsOccupied)
+                return None;
             var entries = route.Reverse ? dock.FrontEntries : dock.BackEntries;
             if (entries.Length == 0)
             {
