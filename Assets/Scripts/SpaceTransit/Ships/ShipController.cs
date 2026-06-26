@@ -36,12 +36,7 @@ namespace SpaceTransit.Ships
 
         public bool CanLand => State == ShipState.Sailing
                                && Assembly.IsStationary()
-                               && Physics.Raycast(
-                                   Assembly.FrontModule.Transform.position,
-                                   Vector3.down,
-                                   1,
-                                   LayerMask.GetMask("Dock")
-                               );
+                               && Assembly.FrontModule.Thruster.Tube is Dock;
 
         public bool CanLiftOff => State == ShipState.WaitingForDeparture && ModulesReadyForDeparture;
 
