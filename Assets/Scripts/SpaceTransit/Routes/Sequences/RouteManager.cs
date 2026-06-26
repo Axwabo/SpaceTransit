@@ -29,7 +29,7 @@ namespace SpaceTransit.Routes.Sequences
             {
                 var route = sequence.routes[routeIndex];
                 if (route.Origin.Departure > Clock.Now)
-                    return route.Origin.Station.IsLoaded()
+                    return Station.TryGetLoadedStation(route.Origin.Station, out var departureStation) && !departureStation.Docks[route.Origin.DockIndex].Safety.IsOccupied
                         ? (SpawnLocation.Origin, routeIndex)
                         : None;
                 for (var stopIndex = 0; stopIndex < route.IntermediateStops.Length; stopIndex++)
