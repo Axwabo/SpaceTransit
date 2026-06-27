@@ -81,6 +81,16 @@
                 <ui:VisualElement class="line" style="flex-grow: 1; height: 55px; rotate: 90deg; top: 176px; left: 502px;" />
             </ui:VisualElement>
             <ui:Label text="When a station is marked as passthrough (gray), you can lock the entry and the exit right after.&#10;If the exit is already in use, you need to stop at the station.&#10;Don&apos;t lock the exit early if the stop is scheduled&#10;(non-passthrough) as it may prevent other ships from&#10;using other entries or exits&#10;(when there&apos;s only one tube connecting two stations, or if the entry path of another ship crosses over your exit)." />
+            <ui:VisualElement style="flex-grow: 1; align-items: center;">
+                <ui:VisualElement style="width: 50px; height: 50px; background-image: url(&quot;project://database/Assets/Sprites/Station.png?fileID=2800000&amp;guid=d8236f81379a6064c8f891fa976fa55c&amp;type=3#Station&quot;);" />
+                <ui:Label text="There are signs ~1000 meters from certains stations, indicating that you should slow down if the route contains that stop. These signs aren&apos;t placed well sometimes, they will be fixed in a future update.&#10;&#10;Each station announces the arriving and departing routes, and Vaulter announcements can be heard on-board.&#10;Be sure to watch a FLASH (semicircle-ish) ship depart or arrive, they have pretty cool sounds :3" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 1;">
+                <ui:Label text="Oh, I should probably talk about what these things do.&#10;The gray switch sets the direction (forwards/reverse).&#10;The yellow button marks ready for departure (if there are no exits or if an exit was locked).&#10;The green button toggles hovering (landing/liftoff).&#10;You must mark ready for departure before lifting off.&#10;You cannot lift off while any doors are open.&#10;After stopping at a station, land on the dock (black area).&#10;&#10;doors close -&gt; mark ready -&gt; lift off &gt; drive &gt; land" />
+                <ui:VisualElement style="flex-grow: 1; align-self: center; width: 184px; align-items: center; overflow: hidden;">
+                    <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Sprites/Control%20Panel.png?fileID=2800000&amp;guid=c00c81440ce506c52a7ba360f016f1bc&amp;type=3#Control Panel&quot;); -unity-background-scale-mode: scale-and-crop; background-position-y: bottom -22px; width: 761px; scale: 1.5 1.5;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement style="flex-direction: row; justify-content: center;">
             <ui:Button text="Close" name="Close" />
