@@ -29,7 +29,9 @@ namespace SpaceTransit.Menu
 
             list.Sort(StringComparer.OrdinalIgnoreCase);
             _stations.Sort((a, b) => StringComparer.OrdinalIgnoreCase.Compare(a.name, b.name));
-            var index = list.IndexOf(defaultValue);
+            var index = MovementController.StartingStation ? _stations.IndexOf(MovementController.StartingStation) : -1;
+            if (index == -1)
+                index = list.IndexOf(defaultValue);
             var dropdown = this.RootVisual().Q<DropdownField>("Stations");
             dropdown.choices = list;
             dropdown.index = index;
