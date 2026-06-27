@@ -15,6 +15,10 @@ The ships' ambience are designed to be both realistic and pleasing to listen to.
 
 # Gameplay
 
+> [!IMPORTANT]
+> If you fall out of the world, press `Tab` to open the menu, click `Exit`
+> to go back to the main menu and try again (it might take multiple attempts).
+
 > [!NOTE]
 > Due to arithmetic issues on WebGL and Linux, the game is only released for windows.
 > If you're using Linux, try running the game through Wine.
@@ -40,6 +44,10 @@ The closer you are to an open door and the more open it is, the less muffled sou
 Unfortunately, the low-pass filter [doesn't work on WebGL](https://docs.unity3d.com/Manual/webgl-audio.html)
 
 The game will end upon a ship crashing as the system is designed to prevent such conditions.
+
+## Controls
+
+See the in-game tutorial.
 
 # Acronyms
 
