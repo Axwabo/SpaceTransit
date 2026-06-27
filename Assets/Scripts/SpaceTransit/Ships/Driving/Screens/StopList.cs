@@ -59,7 +59,7 @@ namespace SpaceTransit.Ships.Driving.Screens
         public override void Navigate(bool forwards)
         {
             if (_scrollView != null)
-                _scrollView.scrollOffset += new Vector2(0, List.fixedItemHeight * (forwards ? -1 : 1));
+                _scrollView.scrollOffset += new Vector2(0, List.fixedItemHeight * (forwards ? 1 : -1));
         }
 
         public override void Confirm() => ResetPosition();
