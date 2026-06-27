@@ -55,6 +55,7 @@ namespace SpaceTransit.Cosmos
                 if (exit.IsUsedOnlyBy(assembly))
                 {
                     actual.Announcer.EnqueuePassingThrough(assembly, entry.Dock.Index);
+                    actual.Announcer.EnqueuePassingThrough(assembly, entry.Dock.Index);
                     return;
                 }
 
