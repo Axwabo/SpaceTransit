@@ -137,7 +137,6 @@ namespace SpaceTransit.Movement
             var spawnpoint = station.Spawnpoint + Vector3.up;
             _t.position = spawnpoint;
             World.Current.position = -spawnpoint;
-            StartingStation = null;
         }
 
     }
