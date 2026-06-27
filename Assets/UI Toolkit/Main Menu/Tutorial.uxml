@@ -3,7 +3,7 @@
     <Style src="project://database/Assets/UI%20Toolkit/Tutorial.uss?fileID=7433441132597879392&amp;guid=350762611d6598af190a3d62183c1b7a&amp;type=3#Tutorial" />
     <ui:VisualElement class="cyan-background" style="flex-grow: 1; justify-content: center; align-items: center;">
         <ui:Label text="Tutorial" class="tektur bold" style="font-size: 36px;" />
-        <ui:VisualElement name="Container" class="tektur" style="flex-grow: 0; height: 400px; width: 800px; -unity-background-scale-mode: scale-to-fit; align-items: center; justify-content: center; font-size: 30px;">
+        <ui:VisualElement name="Container" class="tektur" style="flex-grow: 0; height: 400px; width: 800px; -unity-background-scale-mode: scale-to-fit; align-items: center; justify-content: center; font-size: 27px;">
             <ui:Label text="Controls:&#10;WASD/Arrow Keys - Move&#10;Space - Jump&#10;E - Interact&#10;&#10;Tab - Toggle Menu&#10;Scroll Wheel - Change Speed&#10;(manual driving mode only)" />
             <ui:VisualElement style="flex-grow: 1;">
                 <ui:Label text="You can board ships and optionally take control by pressing &quot;AUTO&quot;&#10;Besides that, this game is kind of an idle game, just for the sake of space trains :3&#10;Ships drive themselves by default based on numerous stations and routes&#10;&#10;FLASH = fast, light, advanced space hauler&#10;ROSS = rapid, optimized space shuttle" />
@@ -13,7 +13,7 @@
                 <ui:Label text="This is the control panel&#10;Click Next to learn more" />
                 <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Sprites/Control%20Panel.png?fileID=2800000&amp;guid=c00c81440ce506c52a7ba360f016f1bc&amp;type=3#Control Panel&quot;); -unity-background-scale-mode: scale-to-fit; background-position-y: bottom 0;" />
             </ui:VisualElement>
-            <ui:VisualElement class="absolute-contents" style="flex-grow: 1; align-self: stretch; background-image: url(&quot;project://database/Assets/Sprites/Control%20Panel.png?fileID=2800000&amp;guid=c00c81440ce506c52a7ba360f016f1bc&amp;type=3#Control Panel&quot;); -unity-background-scale-mode: scale-to-fit; background-position-y: bottom 0;">
+            <ui:VisualElement class="absolute-contents" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Sprites/Control%20Panel.png?fileID=2800000&amp;guid=c00c81440ce506c52a7ba360f016f1bc&amp;type=3#Control Panel&quot;); -unity-background-scale-mode: scale-to-fit; background-position-y: bottom 0;">
                 <ui:Label text="Toggle automatic&#10;driving" style="-unity-text-align: middle-left; top: 7px; left: 3px;" />
                 <ui:VisualElement class="line" style="flex-grow: 1; height: 276px; top: 61px; left: 34px; rotate: 4deg;" />
                 <ui:VisualElement class="border" style="flex-grow: 1; width: 229px; height: 224px; top: 151px; left: 101px; rotate: 3deg;" />
@@ -24,6 +24,63 @@
                 <ui:VisualElement class="border" style="flex-grow: 1; width: 347px; height: 236px; top: 139px; left: 443px; rotate: -3deg;" />
                 <ui:Label text="Basic driving controls" style="top: 92px; left: 503px;" />
             </ui:VisualElement>
+            <ui:Label text="The COSMOS ensures the safety of ships&#10;(control-oriented safety measurement overseeing system)&#10;Some tubes (in which ships travel) have speed restrictions, which the ship will enforce.&#10;If a ship cannot proceed due to the tube ahead being used by another ship, the diode turns red, and the ship will stop and stay stationary as long as it cannot proceed.&#10;Some stations have entries and exits. You must select an entry to enter or exit such a station. An exit can be selected right after selecting an entry, allowing for passthrough.&#10;If you haven&apos;t locked an entry, COSMOS will stop the ship." />
+            <ui:VisualElement class="absolute-contents" style="flex-grow: 1;">
+                <ui:VisualElement style="background-image: url(&quot;project://database/Assets/Sprites/Control%20Panel.png?fileID=2800000&amp;guid=c00c81440ce506c52a7ba360f016f1bc&amp;type=3#Control Panel&quot;); -unity-background-scale-mode: scale-and-crop; width: 464px; background-position-x: right 0; background-position-y: bottom 0; bottom: 0; height: 347px; left: 0;" />
+                <ui:VisualElement class="line" style="height: 40px; top: 53px; left: 22px;" />
+                <ui:Label text="Can proceed? diode" style="top: 20px; left: 3px;" />
+                <ui:VisualElement class="line" style="height: 57px; top: 71px; left: 80px; rotate: 27deg;" />
+                <ui:VisualElement class="line" style="height: 140px; top: 30px; left: 227px; rotate: 40deg;" />
+                <ui:VisualElement class="line" style="height: 57px; top: 285px; left: 113px; rotate: 27deg;" />
+                <ui:Label text="Current speed" style="top: 344px; left: 34px;" />
+                <ui:VisualElement class="line" style="height: 44px; top: 92px; left: 294px; rotate: 53deg;" />
+                <ui:Label text="Station up ahead / current station" style="top: 71px; left: 296px;" />
+                <ui:Label text="Speed limit" style="top: 50px; left: 96px;" />
+                <ui:Label text="Next tube&apos;s speed limit" style="top: 19px; left: 258px;" />
+                <ui:VisualElement class="border" style="width: 139px; height: 29px; top: 140px; left: 220px;" />
+                <ui:VisualElement class="line" style="height: 30px; top: 113px; left: 341px; rotate: 72deg;" />
+                <ui:Label text="Entry options" style="top: 109px; left: 361px;" />
+                <ui:VisualElement class="line" style="height: 54px; top: 136px; left: 343px; rotate: 90deg;" />
+                <ui:Label text="Selected (locked) entry" style="top: 147px; left: 378px;" />
+                <ui:VisualElement class="border" style="width: 145px; height: 35px; top: 171px; left: 228px;" />
+                <ui:VisualElement class="line" style="height: 30px; top: 203px; left: 372px; rotate: 105deg;" />
+                <ui:VisualElement class="line" style="height: 32px; top: 177px; left: 362px; rotate: 90deg;" />
+                <ui:Label text="Selected (locked) exit" style="top: 178px; left: 380px;" />
+                <ui:Label text="Exit options" style="top: 213px; left: 392px;" />
+                <ui:VisualElement class="border" style="width: 203px; height: 52px; top: 309px; left: 254px;" />
+                <ui:VisualElement class="line" style="height: 44px; top: 272px; left: 459px; rotate: 66deg;" />
+                <ui:Label text="Entry/exit selectors&#10;Entry: press dock number&#10;Exit: # of the exit in the list" style="top: 257px; left: 487px; -unity-text-align: middle-left;" />
+            </ui:VisualElement>
+            <ui:Label text="Not all stations have exits and entries. In such cases you can simply pass through as if the dock was a regular tube.&#10;To selectan entry, press the number of the desired dock.&#10;If the dock is occupied, or if the path to it is locked by another ship, the selector will turn red. Wait until it&apos;s free or enter a different dock (if applicable).&#10;To lock an exit, press the button corresponding to its number in the exit list." />
+            <ui:Label text="The Vaulter system manages routes and stops.&#10;Grayed out stations indicate that you should pass through.&#10;Upon reaching the destination, the ship will begin the next route in 1 minute if it hasn&apos;t completed service.&#10;During this minute (or after all routes have been completed), you can choose another route if you want, or exit service; the latter guarantees fully manual driving, letting you choose exactly where you want to go.&#10;Note that you can&apos;t go &lt;b&gt;literally&lt;/b&gt; anywhere since the exits and entries restrict possible paths." />
+            <ui:VisualElement class="absolute-contents" style="flex-grow: 1;">
+                <ui:VisualElement style="background-image: url(&quot;project://database/Assets/Sprites/Control%20Panel.png?fileID=2800000&amp;guid=c00c81440ce506c52a7ba360f016f1bc&amp;type=3#Control Panel&quot;); -unity-background-scale-mode: scale-and-crop; width: 362px; background-position-x: left -100px; background-position-y: bottom 0; bottom: 0; height: 359px; left: 150px;" />
+                <ui:VisualElement class="line" style="height: 62px; top: 41px; left: 410px;" />
+                <ui:Label text="Current time" style="top: 13px; left: 361px;" />
+                <ui:VisualElement class="border" style="width: 199px; height: 15px; top: 121px; left: 264px; rotate: -2.5deg;" />
+                <ui:VisualElement class="line" style="flex-grow: 1; height: 48px; rotate: 80deg; top: 91px; left: 490px;" />
+                <ui:Label text="Route summary" style="top: 93px; left: 522px;" />
+                <ui:VisualElement class="line" style="flex-grow: 1; height: 48px; rotate: 129deg; top: 126px; left: 216px;" />
+                <ui:Label text="Station" style="top: 106px; left: 159px;" />
+                <ui:Label text="Exit towards" style="top: 156px; left: 70px;" />
+                <ui:VisualElement class="line" style="flex-grow: 1; height: 48px; rotate: 96deg; top: 152px; left: 222px;" />
+                <ui:VisualElement class="line" style="flex-grow: 1; height: 33px; rotate: 67deg; top: 336px; left: 225px;" />
+                <ui:Label text="Move down" style="top: 352px; left: 96px;" />
+                <ui:VisualElement class="line" style="flex-grow: 1; height: 33px; rotate: -59deg; top: 338px; left: 405px;" />
+                <ui:Label text="Move up" style="top: 360px; left: 426px;" />
+                <ui:VisualElement class="line" style="height: 16px; top: 359px; left: 313px;" />
+                <ui:Label text="Select/back to top" style="top: 372px; left: 221px;" />
+                <ui:VisualElement class="line" style="flex-grow: 1; height: 33px; rotate: -31deg; top: 265px; left: 384px;" />
+                <ui:Label text="Arrival" style="top: 292px; left: 363px;" />
+                <ui:VisualElement class="line" style="flex-grow: 1; height: 33px; rotate: -63deg; top: 258px; left: 439px;" />
+                <ui:Label text="Departure" style="top: 286px; left: 442px;" />
+                <ui:VisualElement class="line" style="flex-grow: 1; height: 55px; rotate: 90deg; top: 225px; left: 487px;" />
+                <ui:Label text="Dock #" style="top: 242px; left: 527px;" />
+                <ui:VisualElement class="border" style="flex-grow: 1; width: 256px; height: 30px; top: 193px; left: 216px; rotate: -2.5deg;" />
+                <ui:Label text="Pass through&#10;this station" style="top: 173px; left: 540px; -unity-text-align: middle-left;" />
+                <ui:VisualElement class="line" style="flex-grow: 1; height: 55px; rotate: 90deg; top: 176px; left: 502px;" />
+            </ui:VisualElement>
+            <ui:Label text="When a station is marked as passthrough (gray), you can lock the entry and the exit right after.&#10;If the exit is already in use, you need to stop at the station.&#10;Don&apos;t lock the exit early if the stop is scheduled&#10;(non-passthrough) as it may prevent other ships from&#10;using other entries or exits&#10;(when there&apos;s only one tube connecting two stations, or if the entry path of another ship crosses over your exit)." />
         </ui:VisualElement>
         <ui:VisualElement style="flex-direction: row; justify-content: center;">
             <ui:Button text="Close" name="Close" />
