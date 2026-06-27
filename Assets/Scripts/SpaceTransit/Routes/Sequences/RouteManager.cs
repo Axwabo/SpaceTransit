@@ -45,7 +45,7 @@ namespace SpaceTransit.Routes.Sequences
             {
                 var route = sequence.routes[routeIndex];
                 if (route.Origin.Departure > Clock.Now)
-                    return Station.TryGetLoadedStation(route.Origin.Station, out var departureStation) && !departureStation.Docks[route.Origin.DockIndex].Safety.IsOccupied
+                    return Station.TryGetLoadedStation(route.Origin.Station, out var departureStation) && departureStation.Docks[route.Origin.DockIndex].IsFree
                         ? (SpawnLocation.Origin, routeIndex)
                         : None;
                 for (var stopIndex = 0; stopIndex < route.IntermediateStops.Length; stopIndex++)
@@ -66,20 +66,20 @@ namespace SpaceTransit.Routes.Sequences
             if (!Station.TryGetLoadedStation(finalDestination.Station, out var finalStation))
                 return None;
             var finalDock = finalStation.Docks[finalDestination.DockIndex];
-            return finalDock.Safety.IsOccupied
+            return !finalDock.IsFree
                 ? None
                 : (new TubeSpawn(finalDock), -1);
         }
 
         private static (SpawnLocation, int) SpawnAt(Station station, IntermediateStop stop, int stopIndex, int routeIndex)
-            => station.Docks[stop.DockIndex].Safety.IsOccupied
+            => !station.Docks[stop.DockIndex].IsFree
                 ? None
                 : (new SpawnLocation(stopIndex), routeIndex);
 
         private static (SpawnLocation, int) Enter(Station station, IntermediateStop stop, RouteDescriptor route, int stopIndex, int routeIndex)
         {
             var dock = station.Docks[stop.DockIndex];
-            if (dock.Safety.IsOccupied)
+            if (!dock.IsFree)
                 return None;
             var entries = route.Reverse ? dock.FrontEntries : dock.BackEntries;
             if (entries.Length == 0)

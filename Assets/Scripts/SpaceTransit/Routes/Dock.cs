@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using SpaceTransit.Cosmos;
+using SpaceTransit.Cosmos.Actions;
 using SpaceTransit.Ships;
 using SpaceTransit.Tubes;
 using UnityEngine;
@@ -7,6 +8,7 @@ using UnityEngine;
 namespace SpaceTransit.Routes
 {
 
+    [RequireComponent(typeof(DockUsage))]
     public sealed class Dock : StraightTube
     {
 
@@ -33,6 +35,8 @@ namespace SpaceTransit.Routes
         public int Index { get; set; }
 
         public HashSet<ShipAssembly> UsedBy { get; } = new();
+
+        public bool IsFree => UsedBy.Count == 0 && !Safety.IsOccupied;
 
         protected override void Awake()
         {

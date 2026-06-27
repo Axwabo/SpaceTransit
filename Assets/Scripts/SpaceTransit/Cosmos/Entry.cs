@@ -18,7 +18,7 @@ namespace SpaceTransit.Cosmos
 
         public Dock Dock { get; set; }
 
-        public override bool IsFree => !Dock.Safety.IsOccupied && base.IsFree;
+        public override bool IsFree => Dock.IsFree && base.IsFree;
 
         private void Start()
         {
@@ -44,8 +44,9 @@ namespace SpaceTransit.Cosmos
 
         public override bool Lock(ShipAssembly assembly)
         {
-            if (Dock.Safety.IsOccupied || !base.Lock(assembly))
+            if (!Dock.IsFree || !base.Lock(assembly))
                 return false;
+            Dock.UsedBy.Add(assembly);
             if (assembly.FrontModule.Thruster.Tube.Safety == Ensurer && assembly.Reverse == Ensurer.Backwards && assembly.ShouldAnnounceNonScheduled(Dock.Station.ID))
                 Ensurer.EnqueueArriving(assembly, this);
             return true;
