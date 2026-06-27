@@ -1,8 +1,30 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/Main%20Menu/Main%20Menu.uss?fileID=7433441132597879392&amp;guid=beaf9333cae447ccbb8cdfc6cfde625e&amp;type=3#Main Menu" />
+    <Style src="project://database/Assets/UI%20Toolkit/Tutorial.uss?fileID=7433441132597879392&amp;guid=350762611d6598af190a3d62183c1b7a&amp;type=3#Tutorial" />
     <ui:VisualElement class="cyan-background" style="flex-grow: 1; justify-content: center; align-items: center;">
         <ui:Label text="Tutorial" class="tektur bold" style="font-size: 36px;" />
-        <ui:VisualElement name="Image" style="flex-grow: 0; height: 400px; width: 800px; -unity-background-scale-mode: scale-to-fit;" />
+        <ui:VisualElement name="Container" class="tektur" style="flex-grow: 0; height: 400px; width: 800px; -unity-background-scale-mode: scale-to-fit; align-items: center; justify-content: center; font-size: 30px;">
+            <ui:Label text="Controls:&#10;WASD/Arrow Keys - Move&#10;Space - Jump&#10;E - Interact&#10;&#10;Tab - Toggle Menu&#10;Scroll Wheel - Change Speed&#10;(manual driving mode only)" />
+            <ui:VisualElement style="flex-grow: 1;">
+                <ui:Label text="You can board ships and optionally take control by pressing &quot;AUTO&quot;&#10;Besides that, this game is kind of an idle game, just for the sake of space trains :3&#10;Ships drive themselves by default based on numerous stations and routes&#10;&#10;FLASH = fast, light, advanced space hauler&#10;ROSS = rapid, optimized space shuttle" />
+                <ui:Label text="Stadler is the best&#10;" style="flex-shrink: 1; align-self: flex-start; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; font-size: 8px;" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 1; align-self: stretch;">
+                <ui:Label text="This is the control panel&#10;Click Next to learn more" />
+                <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Sprites/Control%20Panel.png?fileID=2800000&amp;guid=c00c81440ce506c52a7ba360f016f1bc&amp;type=3#Control Panel&quot;); -unity-background-scale-mode: scale-to-fit; background-position-y: bottom 0;" />
+            </ui:VisualElement>
+            <ui:VisualElement class="absolute-contents" style="flex-grow: 1; align-self: stretch; background-image: url(&quot;project://database/Assets/Sprites/Control%20Panel.png?fileID=2800000&amp;guid=c00c81440ce506c52a7ba360f016f1bc&amp;type=3#Control Panel&quot;); -unity-background-scale-mode: scale-to-fit; background-position-y: bottom 0;">
+                <ui:Label text="Toggle automatic&#10;driving" style="-unity-text-align: middle-left; top: 7px; left: 3px;" />
+                <ui:VisualElement class="line" style="flex-grow: 1; height: 276px; top: 61px; left: 34px; rotate: 4deg;" />
+                <ui:VisualElement class="border" style="flex-grow: 1; width: 229px; height: 224px; top: 151px; left: 101px; rotate: 3deg;" />
+                <ui:Label text="Route manager" style="top: 89px; left: 139px;" />
+                <ui:VisualElement class="border" style="flex-grow: 1; width: 98px; height: 174px; top: 201px; left: 341px; rotate: -3deg;" />
+                <ui:VisualElement class="line" style="flex-grow: 1; height: 111px; top: 85px; left: 391px; rotate: -4deg;" />
+                <ui:Label text="Basic driving controls" style="top: 47px; left: 279px;" />
+                <ui:VisualElement class="border" style="flex-grow: 1; width: 347px; height: 236px; top: 139px; left: 443px; rotate: -3deg;" />
+                <ui:Label text="Basic driving controls" style="top: 92px; left: 503px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
         <ui:VisualElement style="flex-direction: row; justify-content: center;">
             <ui:Button text="Close" name="Close" />
             <ui:Button text="Next" name="Next" />
