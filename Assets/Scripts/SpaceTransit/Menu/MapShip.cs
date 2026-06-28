@@ -26,6 +26,8 @@ namespace SpaceTransit.Menu
 
         private RouteDescriptor _previousRoute;
 
+        private bool _everUpdated;
+
         public MapShip(VisualElement element, ShipAssembly assembly, MapView view)
         {
             _view = view;
@@ -65,8 +67,9 @@ namespace SpaceTransit.Menu
             if (!Assembly.didStart || !Assembly.Parent.TryGetVaulter(out var vaulter))
                 return;
             var currentRoute = vaulter.Route;
-            if (currentRoute != _previousRoute)
+            if (!_everUpdated || currentRoute != _previousRoute)
                 Apply(currentRoute);
+            _everUpdated = true;
         }
 
     }
