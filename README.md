@@ -23,7 +23,7 @@ The ships' ambience are designed to be both realistic and pleasing to listen to.
 > Due to arithmetic issues on WebGL and Linux, the game is only released for windows.
 > If you're using Linux, try running the game through Wine.
 
-[Demo video](https://drive.google.com/file/d/1Virw7fymaTBwmYMiQ48qmPxuOAxKdhMJ/view?usp=sharing)
+[Demo video](https://drive.google.com/file/d/1bwSHwmk54eV1s-IJFj7Abs6obr5ZRe6c/view?usp=sharing)
 
 Ships are automatically controlled by default. The player can choose to manually "drive" a ship.
 
@@ -141,7 +141,7 @@ Future plans:
 
 - ~~Dynamic line loading~~ DONE
 - Ship houses
-- Even more routes & lines
+- ~~Even more routes & lines~~ DONE
 - ~~Spline-based, auto-generated map~~ DONE (with SVGs, two-click export tool)
 - Touchscreen support
 - ~~Ship summoning~~ DONE
