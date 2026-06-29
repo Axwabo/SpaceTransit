@@ -39,6 +39,7 @@ namespace SpaceTransit.Routes.Sequences
 
                 if (!CompletedRoute(ship))
                     continue;
+                ship.Parent.Restart();
                 for (var i = 0; i < 60; i += UpdateInterval)
                     await WaitOrUnloadAsync(ship, token);
                 ship.BeginRoute(sequence.routes[++index]);

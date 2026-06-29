@@ -44,7 +44,9 @@ namespace SpaceTransit.Vaulter
             ? ReadOnlySpan<ITarget>.Empty
             : _targets[(_targetIndex + 1)..];
 
-        public string Announcer => _components.OfType<OnboardAnnouncer>().First().announcer;
+        public OnboardAnnouncer Announcer => _components.OfType<OnboardAnnouncer>().First();
+
+        public string AnnouncerName => Announcer.announcer;
 
         public bool SkipConditionalStop(StationId conditional) => !Parent.StopRequested && (!Station.TryGetLoadedStation(conditional, out var station) || !station.PassengersWaiting);
 

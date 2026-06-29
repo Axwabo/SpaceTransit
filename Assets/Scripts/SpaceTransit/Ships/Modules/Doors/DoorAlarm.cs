@@ -37,12 +37,27 @@ namespace SpaceTransit.Ships.Modules.Doors
 
         private float _remaining;
 
+        private float _flash;
+
         private int _count;
 
-        private void Awake() => _inactive = meshRenderer.sharedMaterial;
+        private void Awake()
+        {
+            _inactive = meshRenderer.sharedMaterial;
+            controller.Alarm = this;
+        }
 
         private void Update()
         {
+            if (_flash > 0)
+            {
+                if ((_flash -= Clock.Delta) > 0)
+                    return;
+                source.Stop();
+                Deactivate();
+                return;
+            }
+
             if (!controller.AlarmActive)
             {
                 Deactivate();
@@ -65,6 +80,13 @@ namespace SpaceTransit.Ships.Modules.Doors
                 meshRenderer.sharedMaterial = _inactive;
             _remaining = 0;
             _count = 0;
+        }
+
+        public void Flash()
+        {
+            source.PlayOneShot(beep);
+            meshRenderer.sharedMaterial = active;
+            _flash = 0.2f;
         }
 
     }

@@ -36,7 +36,7 @@ namespace SpaceTransit.Audio
         private void Play()
         {
             if (Parent.TryGetVaulter(out var vaulter) && Vector3.Distance(_t.position, MovementController.Current.LastPosition) < 10)
-                KatieSubtitleList.Add(vaulter.Announcer, "Please stand clear of the closing doors.", 0, source.clip.length);
+                KatieSubtitleList.Add(vaulter.AnnouncerName, "Please stand clear of the closing doors.", 0, source.clip.length);
             _played = true;
             source.time = 0;
             source.Play();

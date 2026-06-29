@@ -20,6 +20,9 @@ namespace SpaceTransit.Ships
         [SerializeField]
         private AnimationCurve land;
 
+        [SerializeField]
+        private RestartSequence restart;
+
         private Transform _t;
 
         private ShipComponentBase[] _components;
@@ -49,6 +52,8 @@ namespace SpaceTransit.Ships
         public float TimeToDeparture { get; set; }
 
         public bool WillBeDeparting => TimeToDeparture is > 0 and < 5 && (!TryGetExit(out var exit) || exit.IsFree || exit.IsUsedOnlyBy(Assembly));
+
+        public bool IsRestarting { get; private set; }
 
         private void Start()
         {
@@ -93,9 +98,22 @@ namespace SpaceTransit.Ships
                 Assembly.SetTargetSpeed(0);
         }
 
+        public void Restart()
+        {
+            if (!IsRestarting && restart)
+                _ = RestartAsync();
+        }
+
+        private async Awaitable RestartAsync()
+        {
+            IsRestarting = true;
+            await restart.Execute(this);
+            IsRestarting = false;
+        }
+
         public void MarkReady()
         {
-            if (State == ShipState.WaitingForDeparture)
+            if (State == ShipState.WaitingForDeparture || IsRestarting)
                 return;
             if (State != ShipState.Docked)
                 throw new InvalidOperationException("Cannot depart while not docked");

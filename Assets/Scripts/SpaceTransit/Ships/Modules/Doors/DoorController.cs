@@ -62,6 +62,8 @@ namespace SpaceTransit.Ships.Modules.Doors
 
         public bool OpenRequested { get; private set; }
 
+        public DoorAlarm Alarm { get; set; }
+
         protected override void Awake()
         {
             base.Awake();
@@ -73,6 +75,8 @@ namespace SpaceTransit.Ships.Modules.Doors
 
         public void RequestOpen()
         {
+            if (Controller.IsRestarting)
+                return;
             if (State is ShipState.Sailing or ShipState.Landing)
             {
                 OpenRequested = true;

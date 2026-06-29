@@ -28,7 +28,7 @@ namespace SpaceTransit.Ships.Modules.Doors
 
         private void Update()
         {
-            var canOpen = controller.OpenRequested || controller.Controller.State == ShipState.Docked && controller.IsCorrectSide;
+            var canOpen = !controller.Controller.IsRestarting && (controller.OpenRequested || controller.Controller.State == ShipState.Docked && controller.IsCorrectSide);
             if (canOpen == _couldOpen)
                 return;
             _couldOpen = canOpen;
