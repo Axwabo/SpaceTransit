@@ -1,3 +1,4 @@
+using System.Threading;
 using SpaceTransit.Movement;
 using UnityEngine;
 
@@ -11,24 +12,28 @@ namespace SpaceTransit.Ships
         [SerializeField]
         private AudioClip start;
 
-        public async Awaitable Execute(ShipController controller)
+        [SerializeField]
+        private AudioClip beep;
+
+        public async Awaitable Execute(ShipController controller, CancellationToken token)
         {
-            var token = controller.Assembly.destroyCancellationToken;
             if (controller.TryGetVaulter(out var vaulter))
                 vaulter.Announcer.AnnounceRestarting();
+            while (!controller.ModulesReadyForDeparture)
+                await Awaitable.NextFrameAsync(token);
             await Awaitable.WaitForSecondsAsync(10, token);
             // TODO
             AudioSource.PlayClipAtPoint(start, MovementController.Current.Position);
-            await Awaitable.WaitForSecondsAsync(10, token);
+            await Awaitable.WaitForSecondsAsync(5, token);
             FlashAlarms(controller);
             await Awaitable.WaitForSecondsAsync(10, token);
         }
 
-        private static void FlashAlarms(ShipController controller)
+        private void FlashAlarms(ShipController controller)
         {
             foreach (var module in controller.Assembly.Modules)
             foreach (var door in module.Doors)
-                door.Alarm.Flash();
+                door.Alarm.Flash(beep);
         }
 
     }

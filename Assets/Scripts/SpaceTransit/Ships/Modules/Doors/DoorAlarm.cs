@@ -53,6 +53,7 @@ namespace SpaceTransit.Ships.Modules.Doors
             {
                 if ((_flash -= Clock.Delta) > 0)
                     return;
+                _count = 1;
                 source.Stop();
                 Deactivate();
                 return;
@@ -82,9 +83,9 @@ namespace SpaceTransit.Ships.Modules.Doors
             _count = 0;
         }
 
-        public void Flash()
+        public void Flash(AudioClip shortBeep)
         {
-            source.PlayOneShot(beep);
+            source.PlayOneShot(shortBeep, 0.5f);
             meshRenderer.sharedMaterial = active;
             _flash = 0.2f;
         }

@@ -23,7 +23,9 @@ namespace SpaceTransit.Vaulter
 
         private void Update()
         {
-            if (!IsInService || (_remaining -= Clock.Delta) > 0)
+            var restarting = Controller.IsRestarting;
+            _text.enabled = !restarting;
+            if (restarting || !IsInService || (_remaining -= Clock.Delta) > 0)
                 return;
             _remaining = 5;
             if (++_type > InformationType.Time)

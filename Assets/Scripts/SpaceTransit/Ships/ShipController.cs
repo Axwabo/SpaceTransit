@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using SpaceTransit.Cosmos;
 using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
@@ -98,16 +99,16 @@ namespace SpaceTransit.Ships
                 Assembly.SetTargetSpeed(0);
         }
 
-        public void Restart()
+        public async Awaitable RestartAsync(CancellationToken token)
         {
-            if (!IsRestarting && restart)
-                _ = RestartAsync();
-        }
-
-        private async Awaitable RestartAsync()
-        {
+            if (!restart)
+                return;
+            if (!token.CanBeCanceled)
+                token = Assembly.destroyCancellationToken;
             IsRestarting = true;
-            await restart.Execute(this);
+            foreach (var component in _components)
+                component.OnRestarting();
+            await restart.Execute(this, token);
             IsRestarting = false;
         }
 
