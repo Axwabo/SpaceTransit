@@ -89,6 +89,7 @@ namespace SpaceTransit.Ships.Modules.Doors
 
         private void BeginOpen()
         {
+            OpenRequested = false;
             _state = DoorState.Opening;
             source.clip = open;
             source.Play();
@@ -149,7 +150,7 @@ namespace SpaceTransit.Ships.Modules.Doors
 
         public override void OnStateChanged()
         {
-            if (Controller.State == ShipState.Docked && _state == DoorState.Closed)
+            if (Controller.State == ShipState.Docked && _state == DoorState.Closed && OpenRequested && IsCorrectSide)
             {
                 BeginOpen();
                 return;
