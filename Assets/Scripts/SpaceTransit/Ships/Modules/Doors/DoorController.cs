@@ -60,6 +60,8 @@ namespace SpaceTransit.Ships.Modules.Doors
 
         public float Openness { get; private set; }
 
+        public bool OpenRequested { get; private set; }
+
         protected override void Awake()
         {
             base.Awake();
@@ -71,14 +73,22 @@ namespace SpaceTransit.Ships.Modules.Doors
 
         public void RequestOpen()
         {
-            if (State != ShipState.Docked || _state is DoorState.Opening || !IsCorrectSide)
-                return;
-            if (_state == DoorState.Open)
+            if (State is ShipState.Sailing or ShipState.Landing)
             {
-                _time = Mathf.Max(_time, PreAlarmThreshold + 3);
+                OpenRequested = true;
                 return;
             }
 
+            if (State != ShipState.Docked || _state is DoorState.Opening || !IsCorrectSide)
+                return;
+            if (_state == DoorState.Open)
+                _time = Mathf.Max(_time, PreAlarmThreshold + 3);
+            else
+                BeginOpen();
+        }
+
+        private void BeginOpen()
+        {
             _state = DoorState.Opening;
             source.clip = open;
             source.Play();
@@ -139,6 +149,12 @@ namespace SpaceTransit.Ships.Modules.Doors
 
         public override void OnStateChanged()
         {
+            if (Controller.State == ShipState.Docked && _state == DoorState.Closed)
+            {
+                BeginOpen();
+                return;
+            }
+
             if (Controller.State != ShipState.WaitingForDeparture || _state != DoorState.Open)
                 return;
             if (!AlarmActive || Smart)
