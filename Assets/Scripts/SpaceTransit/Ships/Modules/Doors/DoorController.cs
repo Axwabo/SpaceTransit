@@ -150,9 +150,15 @@ namespace SpaceTransit.Ships.Modules.Doors
 
         public override void OnStateChanged()
         {
-            if (Controller.State == ShipState.Docked && _state == DoorState.Closed && OpenRequested && IsCorrectSide)
+            if (Controller.State == ShipState.Docked)
             {
-                BeginOpen();
+                if (_state == DoorState.Closed && OpenRequested && IsCorrectSide)
+                {
+                    BeginOpen();
+                    return;
+                }
+
+                OpenRequested = false;
                 return;
             }
 
