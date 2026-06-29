@@ -46,6 +46,8 @@ namespace SpaceTransit.Vaulter
 
         public string Announcer => _components.OfType<OnboardAnnouncer>().First().announcer;
 
+        public bool SkipConditionalStop => !Parent.StopRequested;
+
         protected override void Awake() => _components = GetComponentsInChildren<VaulterComponentBase>(true);
 
         protected override void OnInitialized()
@@ -148,21 +150,32 @@ namespace SpaceTransit.Vaulter
 
         private void Update()
         {
-            if (Target is not Passthrough passthrough)
-                return;
-            var tube = Assembly.FrontModule.Thruster.Tube;
-            if (tube is Dock dock)
+            switch (Target)
             {
-                if (dock.Station.ID == passthrough.Station)
-                    _passingThroughDock = passthrough.Station;
-                return;
-            }
+                case IntermediateStop {Conditional: true, Station: var conditionalStation} when Parent.State == ShipState.Sailing && !Assembly.IsStationary():
+                {
+                    if (Assembly.FrontModule.Thruster.Tube is Dock dock && dock.Station.ID == conditionalStation && SkipConditionalStop)
+                        AdvanceTarget();
+                    break;
+                }
+                case Passthrough passthrough:
+                {
+                    var tube = Assembly.FrontModule.Thruster.Tube;
+                    if (tube is Dock dock)
+                    {
+                        if (dock.Station.ID == passthrough.Station)
+                            _passingThroughDock = passthrough.Station;
+                        return;
+                    }
 
-            if (!_passingThroughDock)
-                return;
-            if (_passingThroughDock == passthrough.Station)
-                AdvanceTarget();
-            _passingThroughDock = null;
+                    if (!_passingThroughDock)
+                        return;
+                    if (_passingThroughDock == passthrough.Station)
+                        AdvanceTarget();
+                    _passingThroughDock = null;
+                    break;
+                }
+            }
         }
 
     }

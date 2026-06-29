@@ -42,7 +42,9 @@ namespace SpaceTransit.Ships
 
         public bool CanProceed { get; private set; }
 
-        public bool ModulesReadyForDeparture => Assembly.Modules.All(static e => e.CanDepart);
+        public bool ModulesReadyForDeparture => Assembly.Modules.All(e => e.CanDepart);
+
+        public bool StopRequested => Assembly.Modules.Any(e => e.StopRequested);
 
         public float TimeToDeparture { get; set; }
 
