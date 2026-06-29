@@ -53,7 +53,7 @@ namespace SpaceTransit.Ships.Driving
         private bool IsFarFromStation => !Station.TryGetLoadedStation(Parent.Target.Station, out var station)
                                          || Vector3.Distance(station.Position, Assembly.FrontModule.Thruster.Transform.position) > 3000 * World.MetersToWorld;
 
-        private bool SlowDownOnly => Parent.Target is IntermediateStop {Conditional: true} && Parent.SkipConditionalStop;
+        private bool SlowDownOnly => Parent.Target is IntermediateStop {Conditional: true, Station: var conditional} && Parent.SkipConditionalStop(conditional);
 
         private void Update()
         {

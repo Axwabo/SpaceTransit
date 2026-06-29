@@ -46,7 +46,7 @@ namespace SpaceTransit.Vaulter
 
         public string Announcer => _components.OfType<OnboardAnnouncer>().First().announcer;
 
-        public bool SkipConditionalStop => !Parent.StopRequested;
+        public bool SkipConditionalStop(StationId conditional) => !Parent.StopRequested && (!Station.TryGetLoadedStation(conditional, out var station) || !station.PassengersWaiting);
 
         protected override void Awake() => _components = GetComponentsInChildren<VaulterComponentBase>(true);
 
@@ -154,7 +154,7 @@ namespace SpaceTransit.Vaulter
             {
                 case IntermediateStop {Conditional: true, Station: var conditionalStation} when Parent.State == ShipState.Sailing && !Assembly.IsStationary():
                 {
-                    if (Assembly.FrontModule.Thruster.Tube is Dock dock && dock.Station.ID == conditionalStation && SkipConditionalStop)
+                    if (Assembly.FrontModule.Thruster.Tube is Dock dock && dock.Station.ID == conditionalStation && SkipConditionalStop(conditionalStation))
                         AdvanceTarget();
                     break;
                 }
