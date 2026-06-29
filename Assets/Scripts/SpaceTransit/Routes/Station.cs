@@ -38,6 +38,8 @@ namespace SpaceTransit.Routes
 
         public StationAnnouncer Announcer { get; set; }
 
+        public bool PassengersWaiting { get; set; }
+
         public Vector3 Position => _t.position;
 
         private void Awake() => _t = transform;
@@ -57,7 +59,11 @@ namespace SpaceTransit.Routes
                 gameObject.AddComponent<Hub>();
         }
 
-        private void OnDisable() => Loaded.Remove(Name);
+        private void OnDisable()
+        {
+            Loaded.Remove(Name);
+            PassengersWaiting = false;
+        }
 
         private void OnDrawGizmosSelected()
         {

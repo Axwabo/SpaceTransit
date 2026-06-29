@@ -12,6 +12,7 @@ namespace SpaceTransit.Ships.Driving
     public sealed class AutomaticDriver : VaulterComponentBase
     {
 
+        private const float ConditionalSpeed = 40 * ShipSpeed.KmhToMps;
         private const float ReversingSpeed = 20 * ShipSpeed.KmhToMps;
         private const int MinStaySeconds = 15;
         private const float DefaultOverscan = 15 * World.MetersToWorld;
@@ -51,6 +52,8 @@ namespace SpaceTransit.Ships.Driving
 
         private bool IsFarFromStation => !Station.TryGetLoadedStation(Parent.Target.Station, out var station)
                                          || Vector3.Distance(station.Position, Assembly.FrontModule.Thruster.Transform.position) > 3000 * World.MetersToWorld;
+
+        private bool SlowDownOnly => Parent.Target is IntermediateStop {Conditional: true, Station: var conditional} && Parent.SkipConditionalStop(conditional);
 
         private void Update()
         {
@@ -135,7 +138,7 @@ namespace SpaceTransit.Ships.Driving
             var stop = _reversing ? IsFullyInDock : !Assembly.IsStationary();
             if (stop)
             {
-                Assembly.SetTargetSpeed(0);
+                Assembly.SetTargetSpeed(SlowDownOnly ? ConditionalSpeed : 0);
                 return;
             }
 
@@ -212,7 +215,7 @@ namespace SpaceTransit.Ships.Driving
 
         public override void OnRouteChanged() => _departed = true;
 
-        public override void OnTargetChanged() => _entryRequested = _exitRequested = false;
+        public override void OnTargetChanged() => _entryRequested = _exitRequested = _stopping = false;
 
         private void OnEnable() => _departed = true;
 

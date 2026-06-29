@@ -56,7 +56,7 @@ namespace SpaceTransit.Stations.Announcements
                 return sb;
             sb.Append(" The ship stops ");
             if (route.EveryStation)
-                return sb.Append("at every station.");
+                return sb.Append("at every station.").AppendConditionalStops(route, index);
             sb.Append("only at ");
             for (var i = index + 1; i < intermediateStops; i++)
             {
@@ -67,7 +67,33 @@ namespace SpaceTransit.Stations.Announcements
                 sb.Append(route.IntermediateStops[i].Station.name);
             }
 
-            return sb.Append('.');
+            return sb.Append('.').AppendConditionalStops(route, index);
+        }
+
+        private static StringBuilder AppendConditionalStops(this StringBuilder sb, RouteDescriptor route, int index)
+        {
+            var intermediateStops = route.IntermediateStops.Length;
+            var secondToLastComma = -1;
+            var count = 0;
+            for (var i = index + 1; i < intermediateStops; i++)
+            {
+                if (route.IntermediateStops[i] is not {Conditional: true} stop)
+                    continue;
+                count++;
+                if (secondToLastComma == -1)
+                    sb.Append(" Your attention, please. ");
+                secondToLastComma = sb.Length - 2;
+                sb.Append(stop.Station.name);
+                sb.Append(", ");
+            }
+
+            if (count == 0)
+                return sb;
+            if (secondToLastComma != -1 && count != 1)
+                sb.Remove(secondToLastComma, 1).Insert(secondToLastComma, " and");
+            return sb.Remove(sb.Length - 2, 1)
+                .Append(count == 1 ? "is a conditional stop" : "are conditional stops")
+                .Append(". The ship will only stop if there are passengers waiting to board or disembark.");
         }
 
         public static string ArrivingAndDeparts(AnnouncementContext<IArrival> context, int index) => new StringBuilder()

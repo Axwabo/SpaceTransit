@@ -23,6 +23,9 @@ namespace SpaceTransit.Routes.Stops
         [field: SerializeField]
         public int MinStayMinutes { get; private set; }
 
+        [field: SerializeField]
+        public bool Conditional { get; private set; }
+
         public IntermediateStop Add(TimeSpan departure) => new()
         {
             Station = Station,
@@ -31,7 +34,8 @@ namespace SpaceTransit.Routes.Stops
             Arrival = Arrival.Value + departure,
             Departure = Departure.Value + departure,
             ExitTowards = ExitTowards,
-            MinStayMinutes = MinStayMinutes
+            MinStayMinutes = MinStayMinutes,
+            Conditional = Conditional
         };
 
     }

@@ -13,6 +13,7 @@ namespace SpaceTransit.Audio
     {
 
         private const string StoppedTraffic = "The ship has stopped due to traffic reasons. We apologize for the inconvenience. Thank you.";
+        private const string ConditionalStop = ", a conditional stop. Please signal your request to stop with a button next to a door. Without a stop request, the ship will only slow down, but it won't stop.";
 
         [SerializeField]
         private Signal signal;
@@ -77,7 +78,9 @@ namespace SpaceTransit.Audio
                 _welcomePlayed = true;
             }
 
-            var nextAnnouncement = IsTerminus ? $"Next stop: {Parent.Stop.Station.name}, where this ship terminates." : $"Next stop: {Parent.Stop.Station.name}.";
+            var nextAnnouncement = IsTerminus
+                ? $"Next stop: {Parent.Stop.Station.name}, where this ship terminates."
+                : $"Next stop: {Parent.Stop.Station.name}{(Parent.Stop is IntermediateStop {Conditional: true} ? ConditionalStop : ".")}";
             _player.EnqueueWithSubtitles(announcer, nextAnnouncement, pack, welcomePlayed ? signal : null, Assembly.IsPlayerMounted);
             _player.Delay(3);
         }

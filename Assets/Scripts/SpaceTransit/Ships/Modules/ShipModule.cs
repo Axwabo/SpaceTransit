@@ -22,7 +22,9 @@ namespace SpaceTransit.Ships.Modules
         [field: SerializeField]
         public GameObject[] CullableObjects { get; private set; }
 
-        public bool CanDepart => _components.All(static e => e is not IDepartureBlocker {CanDepart: false});
+        public bool CanDepart => _components.All(e => e is not IDepartureBlocker {CanDepart: false});
+
+        public bool StopRequested => _doors.Any(e => e.OpenRequested);
 
         public ReadOnlySpan<DoorController> Doors => _doors;
 
