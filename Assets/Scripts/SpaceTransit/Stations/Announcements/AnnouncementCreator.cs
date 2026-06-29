@@ -73,23 +73,24 @@ namespace SpaceTransit.Stations.Announcements
         private static StringBuilder AppendConditionalStops(this StringBuilder sb, RouteDescriptor route, int index)
         {
             var intermediateStops = route.IntermediateStops.Length;
-            var lastComma = -1;
+            var secondToLastComma = -1;
             var count = 0;
             for (var i = index + 1; i < intermediateStops; i++)
             {
                 if (route.IntermediateStops[i] is not {Conditional: true} stop)
                     continue;
                 count++;
-                if (lastComma == -1)
+                if (secondToLastComma == -1)
                     sb.Append(" Your attention, please. ");
-                lastComma = sb.Length;
-                sb.Append(stop.Station.name).Append(", ");
+                secondToLastComma = sb.Length - 2;
+                sb.Append(stop.Station.name);
+                sb.Append(", ");
             }
 
             if (count == 0)
                 return sb;
-            if (lastComma != -1)
-                sb.Remove(lastComma, 1).Insert(lastComma, " and");
+            if (secondToLastComma != -1 && count != 1)
+                sb.Remove(secondToLastComma, 1).Insert(secondToLastComma, " and");
             return sb.Remove(sb.Length - 2, 1)
                 .Append(count == 1 ? "is a conditional stop" : "are conditional stops")
                 .Append(". The ship will only stop if there are passengers waiting to board or disembark.");
