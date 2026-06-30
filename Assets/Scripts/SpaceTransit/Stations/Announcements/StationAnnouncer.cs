@@ -167,6 +167,16 @@ namespace SpaceTransit.Stations.Announcements
                 _arrivedShips.Enqueue((assembly, route, intermediate));
         }
 
+        public void EnqueueRestarting(ShipController controller, int dockIndex)
+        {
+            // TODO
+        }
+
+        public void EnqueueRestarted(ShipController controller, int dockIndex)
+        {
+            // TODO
+        }
+
     }
 
 }

@@ -2,6 +2,7 @@
 using SpaceTransit.Loader;
 using SpaceTransit.Routes;
 using SpaceTransit.Ships.Modules.Displays;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace SpaceTransit.Ships.Driving.Screens
@@ -9,6 +10,9 @@ namespace SpaceTransit.Ships.Driving.Screens
 
     public sealed class CosmosScreen : ModuleUIComponent, ICullingListener
     {
+
+        [field: SerializeField]
+        public AudioSource RestartSource { get; private set; }
 
         public EntryList EntryList { get; private set; }
 

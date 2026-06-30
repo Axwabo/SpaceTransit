@@ -135,7 +135,7 @@ namespace SpaceTransit.Audio
         public void AnnounceRestarting()
         {
             _player.Clear();
-            _player.EnqueueWithSubtitles(announcer, "Dear passengers! This ship will now restart. Please do not board or disembark.", pack, Assembly.IsPlayerMounted);
+            _player.EnqueueWithSubtitles(announcer, "Dear passengers! This ship will now restart. Please do not board or disembark.", pack, signal, Assembly.IsPlayerMounted);
         }
 
         private enum DoorsState

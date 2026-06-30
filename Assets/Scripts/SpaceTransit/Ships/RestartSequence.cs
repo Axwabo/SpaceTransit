@@ -1,6 +1,6 @@
 using System.Linq;
 using System.Threading;
-using SpaceTransit.Movement;
+using SpaceTransit.Routes;
 using SpaceTransit.Ships.Driving.Screens;
 using UnityEngine;
 
@@ -29,8 +29,8 @@ namespace SpaceTransit.Ships
             while (!controller.ModulesReadyForDeparture)
                 await Awaitable.NextFrameAsync(token);
             await Awaitable.WaitForSecondsAsync(Random.Range(8, 12), token);
-            // TODO
-            AudioSource.PlayClipAtPoint(start, MovementController.Current.Position);
+            controller.Assembly.FrontModule.Cosmos.RestartSource.PlayOneShot(start);
+            controller.Assembly.BackModule.Cosmos.RestartSource.PlayOneShot(start);
             await Awaitable.WaitForSecondsAsync(Random.Range(7, 10), token);
             FlashAlarms(controller);
             await Awaitable.WaitForSecondsAsync(Random.Range(5, 8), token);
@@ -41,12 +41,16 @@ namespace SpaceTransit.Ships
             var vaulter = LoadVaulterAsync(controller, token);
             await cosmos;
             await vaulter;
+            if (controller.Assembly.FrontModule.Thruster.Tube is Dock dock)
+                dock.Station.Announcer.EnqueueRestarted(controller, dock.Index);
         }
 
         private static void AnnounceRestart(ShipController controller)
         {
             if (controller.TryGetVaulter(out var vaulter))
                 vaulter.Announcer.AnnounceRestarting();
+            if (controller.Assembly.FrontModule.Thruster.Tube is Dock dock)
+                dock.Station.Announcer.EnqueueRestarting(controller, dock.Index);
         }
 
         private void FlashAlarms(ShipController controller)
@@ -81,6 +85,7 @@ namespace SpaceTransit.Ships
         {
             foreach (var screen in screens)
                 screen.SetProgressVisibility(true);
+            await Awaitable.WaitForSecondsAsync(Random.Range(0.5f, 1), token);
             var progress = 0f;
             while (progress < 1)
             {
@@ -92,7 +97,7 @@ namespace SpaceTransit.Ships
 
             foreach (var screen in screens)
                 screen.Progress = 1;
-            await Awaitable.WaitForSecondsAsync(Random.Range(0.5f, 1.5f), token);
+            await Awaitable.WaitForSecondsAsync(Random.Range(showScreen ? 0.5f : 2, showScreen ? 1.5f : 4), token);
             foreach (var screen in screens)
             {
                 screen.SetProgressVisibility(false);
