@@ -23,7 +23,11 @@ namespace SpaceTransit.Vaulter
 
         private bool _routesShown = true;
 
+        private float _exitCooldown;
+
         private VisualElement _root;
+
+        private VisualElement _confirmation;
 
         public RestartableScreen Restartable { get; private set; }
 
@@ -38,24 +42,32 @@ namespace SpaceTransit.Vaulter
         private void OnDisable()
         {
             _root?.SetVisibility(false);
+            _confirmation?.SetVisibility(false);
+            _exitCooldown = 0;
             routes.enabled = false;
             stops.enabled = false;
         }
 
         private void Update()
         {
-            if (!_routesShown
-                && Parent.Stop is Destination
-                && Controller.State == ShipState.Docked
-                && Assembly.FrontModule.Thruster.Tube is Dock dock
-                && dock.Station.ID == Parent.Stop.Station)
+            if (_routesShown)
+                return;
+            if (IsDockedAt<Destination>())
                 Show(true, false);
+            if ((_exitCooldown -= Clock.Delta) <= 0)
+                _confirmation.SetVisibility(false);
         }
+
+        private bool IsDockedAt<T>() where T : IStop => Parent.Stop is T {Station: var station}
+                                                        && Controller.State == ShipState.Docked
+                                                        && Assembly.FrontModule.Thruster.Tube is Dock dock
+                                                        && dock.Station.ID == station;
 
         protected override void OnInitialized()
         {
             _root = this.RootVisual();
             _title = _root.Q<Label>("Title");
+            _confirmation = _root.Q<Label>("Cancel");
             Restartable = new RestartableScreen(_root);
             routes.Screen.Initialize();
             stops.Screen.Initialize();
@@ -66,6 +78,8 @@ namespace SpaceTransit.Vaulter
         }
 
         public override void OnRouteChanged() => Show(!IsInService, false);
+
+        public override void OnTargetChanged() => HideConfirmation();
 
         public override void OnRestarting() => Restartable.BeginRestart();
 
@@ -80,18 +94,50 @@ namespace SpaceTransit.Vaulter
             _title.text = showRoutes ? "Pick a Route" : $"{Parent.Route.name} {Parent.Route.Summary()}";
             routes.enabled = showRoutes;
             stops.enabled = !showRoutes;
+            HideConfirmation();
+        }
+
+        private void HideConfirmation()
+        {
+            if (_exitCooldown <= 0)
+                return;
+            _confirmation.SetVisibility(false);
+            _exitCooldown = 0;
         }
 
         public void Navigate(bool forwards)
         {
-            if (!Controller.IsRestarting)
-                _current.Navigate(forwards);
+            if (Controller.IsRestarting)
+                return;
+            _current.Navigate(forwards);
+            if (!_routesShown)
+                HideConfirmation();
         }
 
         public void Confirm()
         {
-            if (!Controller.IsRestarting)
-                _current.Confirm();
+            if (Controller.IsRestarting)
+                return;
+            if (!_routesShown && stops.Screen.IsAtZeroOffset && IsDockedAt<Origin>())
+            {
+                ToggleExitConfirmation();
+                return;
+            }
+
+            _current.Confirm();
+        }
+
+        private void ToggleExitConfirmation()
+        {
+            if (_exitCooldown > 0)
+            {
+                HideConfirmation();
+                Parent.ExitService();
+                return;
+            }
+
+            _exitCooldown = 5;
+            _confirmation.SetVisibility(true);
         }
 
     }

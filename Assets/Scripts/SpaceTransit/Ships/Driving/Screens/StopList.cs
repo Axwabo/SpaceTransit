@@ -70,6 +70,8 @@ namespace SpaceTransit.Ships.Driving.Screens
                 _scrollView.scrollOffset = Vector2.zero;
         }
 
+        public bool IsAtZeroOffset => _scrollView != null && Mathf.Approximately(0, _scrollView.scrollOffset.y);
+
     }
 
 }
