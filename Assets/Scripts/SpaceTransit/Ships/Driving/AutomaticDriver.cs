@@ -93,7 +93,8 @@ namespace SpaceTransit.Ships.Driving
 
             if ((_remainingWait -= Clock.Delta) > 0)
             {
-                Controller.TimeToDeparture = _remainingWait;
+                if (!Controller.IsRestarting)
+                    Controller.TimeToDeparture = _remainingWait;
                 return;
             }
 
@@ -218,7 +219,7 @@ namespace SpaceTransit.Ships.Driving
 
         public override void OnTargetChanged() => _entryRequested = _exitRequested = _stopping = false;
 
-        public override void OnRestarting() => _remainingWait = float.MaxValue;
+        public override void OnRestarting() => Controller.TimeToDeparture = float.MaxValue;
 
         public override void OnRestarted()
         {

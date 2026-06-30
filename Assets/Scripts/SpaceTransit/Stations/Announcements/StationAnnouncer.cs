@@ -186,8 +186,12 @@ namespace SpaceTransit.Stations.Announcements
                 if (route != vaulter.Route)
                     continue;
                 var context = new AnnouncementContext<IDeparture>(route, departure, pack);
-                var announcement = route.Katilect.Or(katilect).DepartsFor(ref context, index);
+                var targetKatilect = route.Katilect.Or(katilect);
+                var announcement = departure.Departure < Clock.Now
+                    ? targetKatilect.Departing(ref context)
+                    : targetKatilect.DepartsFor(ref context, index);
                 Announce(context, announcement);
+                _announced.Remove(route);
                 return true;
             }
 

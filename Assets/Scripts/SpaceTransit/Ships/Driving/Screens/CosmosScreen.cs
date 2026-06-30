@@ -97,7 +97,7 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         public void Select(int index)
         {
-            if (!_current)
+            if (!_current || Controller.IsRestarting)
                 return;
             _current.Select(index);
             _current.Confirm();
