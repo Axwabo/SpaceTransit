@@ -27,7 +27,7 @@ namespace SpaceTransit.Ships
             await Awaitable.WaitForSecondsAsync(5, token);
             FlashAlarms(controller);
             await Awaitable.WaitForSecondsAsync(10, token);
-            await LoadAsync(controller, token);
+            await LoadVaulterAsync(controller, token);
             await Awaitable.WaitForSecondsAsync(10, token);
         }
 
@@ -44,18 +44,18 @@ namespace SpaceTransit.Ships
                 door.Alarm.Flash(beep);
         }
 
-        private static async Awaitable LoadAsync(ShipController controller, CancellationToken token)
+        private static async Awaitable LoadVaulterAsync(ShipController controller, CancellationToken token)
         {
             if (!controller.TryGetVaulter(out var vaulter))
                 return;
             foreach (var screen in vaulter.Screens)
-                screen.ShowRestartingProgress();
+                screen.Restartable.SetProgressVisibility(true);
             var progress = 0f;
             while (progress < 1)
             {
                 SetProgress(vaulter, progress);
                 progress += Random.Range(0.05f, 0.1f);
-                await Awaitable.WaitForSecondsAsync(Random.Range(0, 0.2f), token);
+                await Awaitable.WaitForSecondsAsync(Random.Range(0, 0.3f), token);
             }
 
             SetProgress(vaulter, 1);
@@ -65,7 +65,7 @@ namespace SpaceTransit.Ships
         private static void SetProgress(VaulterController vaulter, float progress)
         {
             foreach (var screen in vaulter.Screens)
-                screen.RestartingProgress = progress;
+                screen.Restartable.Progress = progress;
         }
 
     }

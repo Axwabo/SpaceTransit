@@ -2,27 +2,33 @@
     <Style src="project://database/Assets/UI%20Toolkit/COSMOS%20Styles.uss?fileID=7433441132597879392&amp;guid=240d291e3b27d5e648c92a09e81f4082&amp;type=3#COSMOS Styles" />
     <Style src="project://database/Assets/UI%20Toolkit/Driver%20Styles.uss?fileID=7433441132597879392&amp;guid=dccac3a72d8c4d9fb0a7b1d3b829a1f7&amp;type=3#Driver Styles" />
     <ui:VisualElement name="Background" class="quantico" style="flex-grow: 1; background-color: rgb(0, 0, 0); padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">
-        <ui:VisualElement name="Header" style="flex-direction: row; justify-content: space-between; flex-grow: 1;">
-            <ui:VisualElement name="Proceed" style="width: 50px; height: 50px; background-color: rgb(0, 255, 0); border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%;" />
-            <ui:VisualElement name="Title" style="background-image: url(&quot;project://database/Assets/Sprites/COSMOS.png?fileID=2800000&amp;guid=b3a5e549e1fac444f956b4aa27536cf7&amp;type=3#COSMOS&quot;); width: 388px; -unity-background-scale-mode: scale-to-fit;" />
-            <ui:VisualElement style="width: 50px; height: 50px; background-color: rgb(0, 255, 0); visibility: hidden;" />
+        <ui:VisualElement name="Restarting" style="flex-grow: 1; align-items: center; justify-content: space-evenly; display: none;">
+            <ui:VisualElement style="background-image: url(&quot;project://database/Assets/Sprites/COSMOS.png?fileID=2800000&amp;guid=b3a5e549e1fac444f956b4aa27536cf7&amp;type=3#COSMOS&quot;); -unity-background-scale-mode: scale-to-fit; height: 80px; width: 100%;" />
+            <ui:ProgressBar value="0.5" name="Loading" high-value="1" style="width: 50%;" />
         </ui:VisualElement>
-        <ui:VisualElement name="Body" style="flex-direction: row; margin-top: 5px;">
-            <ui:VisualElement name="SpeedInfo" style="flex-grow: 1;">
-                <ui:VisualElement name="Limits" style="flex-grow: 1; flex-direction: row;">
-                    <ui:VisualElement name="LimitContainer" style="width: 200px; height: 200px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; border-left-color: rgb(255, 0, 0); border-right-color: rgb(255, 0, 0); border-top-color: rgb(255, 0, 0); border-bottom-color: rgb(255, 0, 0); border-top-width: 10px; border-right-width: 10px; border-bottom-width: 10px; border-left-width: 10px; align-items: center; justify-content: center;">
-                        <ui:Label text="--" name="Limit" style="font-size: 80px;" />
-                    </ui:VisualElement>
-                    <ui:Label name="Next" enable-rich-text="false" style="white-space: normal; flex-grow: 1; font-size: 50px;" />
-                </ui:VisualElement>
-                <ui:Label text="0" name="Speed" enable-rich-text="false" class="bold" style="color: rgb(255, 0, 0); font-size: 200px; height: 200px;" />
+        <ui:VisualElement name="Main">
+            <ui:VisualElement name="Header" style="flex-direction: row; justify-content: space-between; flex-grow: 1;">
+                <ui:VisualElement name="Proceed" style="width: 50px; height: 50px; background-color: rgb(0, 255, 0); border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%;" />
+                <ui:VisualElement name="Title" style="background-image: url(&quot;project://database/Assets/Sprites/COSMOS.png?fileID=2800000&amp;guid=b3a5e549e1fac444f956b4aa27536cf7&amp;type=3#COSMOS&quot;); width: 388px; -unity-background-scale-mode: scale-to-fit;" />
+                <ui:VisualElement style="width: 50px; height: 50px; background-color: rgb(0, 255, 0); visibility: hidden;" />
             </ui:VisualElement>
-            <ui:VisualElement name="Lists" style="width: 290px;">
-                <ui:Label name="Station" class="bold" style="font-size: 20px; white-space: normal;" />
-                <ui:Label name="EnterTitle" text="Entering" class="bold title" />
-                <ui:ListView name="Entries" virtualization-method="DynamicHeight" />
-                <ui:Label text="Exiting" name="ExitTitle" class="bold title" />
-                <ui:ListView name="Exits" virtualization-method="DynamicHeight" />
+            <ui:VisualElement name="Body" style="flex-direction: row; margin-top: 5px;">
+                <ui:VisualElement name="SpeedInfo" style="flex-grow: 1;">
+                    <ui:VisualElement name="Limits" style="flex-grow: 1; flex-direction: row;">
+                        <ui:VisualElement name="LimitContainer" style="width: 200px; height: 200px; border-top-left-radius: 50%; border-top-right-radius: 50%; border-bottom-right-radius: 50%; border-bottom-left-radius: 50%; border-left-color: rgb(255, 0, 0); border-right-color: rgb(255, 0, 0); border-top-color: rgb(255, 0, 0); border-bottom-color: rgb(255, 0, 0); border-top-width: 10px; border-right-width: 10px; border-bottom-width: 10px; border-left-width: 10px; align-items: center; justify-content: center;">
+                            <ui:Label text="--" name="Limit" style="font-size: 80px;" />
+                        </ui:VisualElement>
+                        <ui:Label name="Next" enable-rich-text="false" style="white-space: normal; flex-grow: 1; font-size: 50px;" />
+                    </ui:VisualElement>
+                    <ui:Label text="0" name="Speed" enable-rich-text="false" class="bold" style="color: rgb(255, 0, 0); font-size: 200px; height: 200px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Lists" style="width: 290px;">
+                    <ui:Label name="Station" class="bold" style="font-size: 20px; white-space: normal;" />
+                    <ui:Label name="EnterTitle" text="Entering" class="bold title" />
+                    <ui:ListView name="Entries" virtualization-method="DynamicHeight" />
+                    <ui:Label text="Exiting" name="ExitTitle" class="bold title" />
+                    <ui:ListView name="Exits" virtualization-method="DynamicHeight" />
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
