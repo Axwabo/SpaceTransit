@@ -7,6 +7,7 @@ using SpaceTransit.Ships;
 using SpaceTransit.Vaulter;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 namespace SpaceTransit.Routes.Sequences
 {
@@ -39,15 +40,17 @@ namespace SpaceTransit.Routes.Sequences
 
                 if (!CompletedRoute(ship))
                     continue;
+                var currentRoute = ship.Route;
+                var restartAtSeconds = Random.Range(0, 100) < index ? Random.Range(25, 40) : -1;
                 for (var i = 0; i < 60; i += UpdateInterval)
                 {
-                    // TODO: make it random
-                    if (i == 20)
+                    if (i == restartAtSeconds)
                         await ship.Parent.RestartAsync(token);
                     await WaitOrUnloadAsync(ship, token);
                 }
 
-                ship.BeginRoute(sequence.routes[++index]);
+                if (ship.Route == currentRoute)
+                    ship.BeginRoute(sequence.routes[++index]);
             }
         }
 
