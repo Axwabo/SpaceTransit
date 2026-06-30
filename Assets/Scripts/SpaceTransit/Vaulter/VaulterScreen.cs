@@ -82,9 +82,17 @@ namespace SpaceTransit.Vaulter
             stops.enabled = !showRoutes;
         }
 
-        public void Navigate(bool forwards) => _current.Navigate(forwards);
+        public void Navigate(bool forwards)
+        {
+            if (!Controller.IsRestarting)
+                _current.Navigate(forwards);
+        }
 
-        public void Confirm() => _current.Confirm();
+        public void Confirm()
+        {
+            if (!Controller.IsRestarting)
+                _current.Confirm();
+        }
 
     }
 

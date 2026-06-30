@@ -99,7 +99,7 @@ namespace SpaceTransit.Ships
                 Assembly.SetTargetSpeed(0);
         }
 
-        public async Awaitable RestartAsync(CancellationToken token)
+        public async Awaitable RestartAsync(CancellationToken token = default)
         {
             if (!restart)
                 return;
