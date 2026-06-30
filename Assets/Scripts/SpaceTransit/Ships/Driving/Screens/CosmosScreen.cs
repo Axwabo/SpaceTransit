@@ -26,6 +26,8 @@ namespace SpaceTransit.Ships.Driving.Screens
 
         private VisualElement _root;
 
+        public RestartableScreen Restartable { get; private set; }
+
         protected override void Awake()
         {
             base.Awake();
@@ -81,6 +83,7 @@ namespace SpaceTransit.Ships.Driving.Screens
         {
             _root = root;
             _text = root.Q<Label>("Station");
+            Restartable = new RestartableScreen(root);
             EntryList.Initialize();
             ExitList.Initialize();
             EntryList.SetVisibility(false);
@@ -106,6 +109,10 @@ namespace SpaceTransit.Ships.Driving.Screens
             ClearEntryList();
             UpdateExits(dock);
         }
+
+        public override void OnRestarting() => Restartable.BeginRestart();
+
+        public override void OnRestarted() => Restartable.EndRestart();
 
         private void ClearEntryList()
         {

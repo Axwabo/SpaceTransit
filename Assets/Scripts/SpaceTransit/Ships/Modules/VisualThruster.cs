@@ -131,6 +131,8 @@ namespace SpaceTransit.Ships.Modules
                 ? (backwardsPosition, backwardsRotation)
                 : (forwardsPosition, forwardsRotation);
 
+        public void Trigger(AudioClip thruster, float volume) => _source.PlayOneShot(thruster, volume);
+
     }
 
 }

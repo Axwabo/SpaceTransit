@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using SpaceTransit.Audio;
 using SpaceTransit.Movement;
@@ -28,6 +29,8 @@ namespace SpaceTransit.Ships.Modules
 
         public ReadOnlySpan<DoorController> Doors => _doors;
 
+        public IEnumerable<VisualThruster> VisualThrusters => _components.OfType<VisualThruster>();
+
         public ModuleThruster Thruster { get; private set; }
 
         private ModuleComponentBase[] _components;
@@ -52,6 +55,18 @@ namespace SpaceTransit.Ships.Modules
         {
             foreach (var component in _components)
                 component.OnStateChanged();
+        }
+
+        public override void OnRestarting()
+        {
+            foreach (var component in _components)
+                component.OnRestarting();
+        }
+
+        public override void OnRestarted()
+        {
+            foreach (var component in _components)
+                component.OnRestarted();
         }
 
         public CosmosScreen Cosmos => _components.OfType<CosmosScreen>().First();
