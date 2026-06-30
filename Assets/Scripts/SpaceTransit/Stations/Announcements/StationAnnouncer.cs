@@ -182,7 +182,7 @@ namespace SpaceTransit.Stations.Announcements
                 return false;
             var ship = _restarted[0].Item1;
             _restarted.RemoveAt(0);
-            if (!ship.TryGetVaulter(out var vaulter) || !vaulter.IsInService)
+            if (!ship.TryGetVaulter(out var vaulter) || !vaulter.IsInService || vaulter.Target.Station != _cache.StationId)
                 return false;
             foreach (var (route, index, departure) in _departures)
             {
