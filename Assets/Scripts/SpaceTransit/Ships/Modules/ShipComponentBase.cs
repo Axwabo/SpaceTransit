@@ -14,6 +14,10 @@
         {
         }
 
+        public virtual void OnRestarted()
+        {
+        }
+
     }
 
 }

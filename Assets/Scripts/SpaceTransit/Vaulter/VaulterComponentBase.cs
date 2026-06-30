@@ -41,6 +41,14 @@ namespace SpaceTransit.Vaulter
         {
         }
 
+        public virtual void OnRestarting()
+        {
+        }
+
+        public virtual void OnRestarted()
+        {
+        }
+
     }
 
 }

@@ -105,11 +105,13 @@ namespace SpaceTransit.Ships
                 return;
             if (!token.CanBeCanceled)
                 token = Assembly.destroyCancellationToken;
-            IsRestarting = true;
             foreach (var component in _components)
                 component.OnRestarting();
+            IsRestarting = true;
             await restart.Execute(this, token);
             IsRestarting = false;
+            foreach (var component in _components)
+                component.OnRestarted();
         }
 
         public void MarkReady()

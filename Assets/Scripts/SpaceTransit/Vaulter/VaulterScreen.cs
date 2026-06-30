@@ -25,6 +25,12 @@ namespace SpaceTransit.Vaulter
 
         private VisualElement _root;
 
+        private VisualElement _main;
+
+        private VisualElement _restarting;
+
+        private ProgressBar _progress;
+
         private void OnEnable()
         {
             if (_root == null)
@@ -54,6 +60,9 @@ namespace SpaceTransit.Vaulter
         {
             _root = this.RootVisual();
             _title = _root.Q<Label>("Title");
+            _main = _root.Q<VisualElement>("Main");
+            _restarting = _root.Q<VisualElement>("Restarting");
+            _progress = _root.Q<ProgressBar>("Loading");
             routes.Screen.Initialize();
             stops.Screen.Initialize();
             if (Parent.initialRoute)
@@ -63,6 +72,18 @@ namespace SpaceTransit.Vaulter
         }
 
         public override void OnRouteChanged() => Show(!IsInService, false);
+
+        public override void OnRestarting()
+        {
+            _main.SetVisibility(false);
+            _restarting.SetVisibility(false);
+        }
+
+        public override void OnRestarted()
+        {
+            _main.SetVisibility(true);
+            _restarting.SetVisibility(false);
+        }
 
         private void Show(bool showRoutes, bool force)
         {

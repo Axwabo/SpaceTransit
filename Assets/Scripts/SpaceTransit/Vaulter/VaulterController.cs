@@ -142,6 +142,18 @@ namespace SpaceTransit.Vaulter
                 AdvanceTarget();
         }
 
+        public override void OnRestarting()
+        {
+            foreach (var component in _components)
+                component.OnRestarting();
+        }
+
+        public override void OnRestarted()
+        {
+            foreach (var component in _components)
+                component.OnRestarted();
+        }
+
         private void AdvanceTarget() => UpdateTarget(_targetIndex >= _targets.Length - 1 ? Destination : _targetIndex + 1);
 
         private void NotifyRouteChanged()

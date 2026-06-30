@@ -14,6 +14,10 @@ namespace SpaceTransit.Vaulter
 
         public override void OnRouteChanged() => _text.text = IsInService ? Parent.Route.Destination.Station.name : "";
 
+        public override void OnRestarting() => _text.enabled = false;
+
+        public override void OnRestarted() => _text.enabled = true;
+
     }
 
 }

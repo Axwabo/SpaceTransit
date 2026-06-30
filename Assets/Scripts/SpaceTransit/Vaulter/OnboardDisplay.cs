@@ -23,9 +23,7 @@ namespace SpaceTransit.Vaulter
 
         private void Update()
         {
-            var restarting = Controller.IsRestarting;
-            _text.enabled = !restarting;
-            if (restarting || !IsInService || (_remaining -= Clock.Delta) > 0)
+            if (Controller.IsRestarting || !IsInService || (_remaining -= Clock.Delta) > 0)
                 return;
             _remaining = 5;
             if (++_type > InformationType.Time)
@@ -53,6 +51,10 @@ namespace SpaceTransit.Vaulter
             var (text, color) = Parent.Route.GetAbbreviation();
             _route = $"<mark=#cccccc09><size=0>.</size><space=0.2em><color={color.ToHex()}>{text}</color><space=0.2em><size=0>.</size></mark> » {Parent.Route.Destination.Station.name}";
         }
+
+        public override void OnRestarting() => _text.enabled = false;
+
+        public override void OnRestarted() => _text.enabled = true;
 
         private enum InformationType
         {
