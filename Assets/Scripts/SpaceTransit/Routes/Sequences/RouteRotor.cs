@@ -49,6 +49,8 @@ namespace SpaceTransit.Routes.Sequences
                     await WaitOrUnloadAsync(ship, token);
                 }
 
+                while (ship.Parent.IsRestarting)
+                    await WaitOrUnloadAsync(ship, token);
                 if (ship.Route == currentRoute)
                     ship.BeginRoute(sequence.routes[++index]);
             }
