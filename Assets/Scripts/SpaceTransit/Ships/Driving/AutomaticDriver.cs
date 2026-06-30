@@ -15,6 +15,7 @@ namespace SpaceTransit.Ships.Driving
         private const float ConditionalSpeed = 40 * ShipSpeed.KmhToMps;
         private const float ReversingSpeed = 20 * ShipSpeed.KmhToMps;
         private const int MinStaySeconds = 15;
+        private const int RestartedSeconds = 60;
         private const float DefaultOverscan = 15 * World.MetersToWorld;
 
         private float _remainingWait;
@@ -216,6 +217,16 @@ namespace SpaceTransit.Ships.Driving
         public override void OnRouteChanged() => _departed = true;
 
         public override void OnTargetChanged() => _entryRequested = _exitRequested = _stopping = false;
+
+        public override void OnRestarting() => _remainingWait = float.MaxValue;
+
+        public override void OnRestarted()
+        {
+            if (Parent.Target is not Origin)
+                return;
+            _remainingWait = Mathf.Max(_remainingWait, RestartedSeconds);
+            Controller.TimeToDeparture = _remainingWait;
+        }
 
         private void OnEnable() => _departed = true;
 
