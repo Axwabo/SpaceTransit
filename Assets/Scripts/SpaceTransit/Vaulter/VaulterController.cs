@@ -48,6 +48,8 @@ namespace SpaceTransit.Vaulter
 
         public string AnnouncerName => Announcer.announcer;
 
+        public IEnumerable<VaulterScreen> Screens => _components.OfType<VaulterScreen>();
+
         public bool SkipConditionalStop(StationId conditional) => !Parent.StopRequested && (!Station.TryGetLoadedStation(conditional, out var station) || !station.PassengersWaiting);
 
         protected override void Awake() => _components = GetComponentsInChildren<VaulterComponentBase>(true);

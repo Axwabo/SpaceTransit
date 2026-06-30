@@ -31,6 +31,11 @@ namespace SpaceTransit.Vaulter
 
         private ProgressBar _progress;
 
+        public float RestartingProgress
+        {
+            set => _progress.value = value;
+        }
+
         private void OnEnable()
         {
             if (_root == null)
@@ -75,6 +80,7 @@ namespace SpaceTransit.Vaulter
 
         public override void OnRestarting()
         {
+            RestartingProgress = 0;
             _main.SetVisibility(false);
             _restarting.SetVisibility(false);
         }
@@ -84,6 +90,8 @@ namespace SpaceTransit.Vaulter
             _main.SetVisibility(true);
             _restarting.SetVisibility(false);
         }
+
+        public void ShowRestartingProgress() => _restarting.SetVisibility(true);
 
         private void Show(bool showRoutes, bool force)
         {
