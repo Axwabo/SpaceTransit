@@ -15,14 +15,14 @@ namespace SpaceTransit.Stations.Announcements
         private static bool AnyShip(this IStop stop)
         {
             foreach (var assembly in ShipAssembly.Instances)
-                if (assembly.Parent.TryGetVaulter(out var vaulter) && vaulter.Stop == stop)
+                if (!assembly.Parent.IsRestarting && assembly.Parent.TryGetVaulter(out var vaulter) && vaulter.Stop == stop)
                     return true;
             return false;
         }
 
         public static string GetAnnouncement(this IKatilect station, ref AnnouncementContext<IDeparture> context, int index, int lastAnnounced)
         {
-            if ((int) Clock.Now.TotalMinutes == lastAnnounced || index != -1)
+            if ((int) Clock.Now.TotalMinutes == lastAnnounced || index != -1 || !context.Stop.AnyShip())
                 return null;
             var katilect = context.Route.Katilect.Or(station);
             var remaining = context.Stop.MinutesToDeparture();
@@ -30,7 +30,7 @@ namespace SpaceTransit.Stations.Announcements
             {
                 3 or 5 => katilect.DepartingIn(ref context, remaining),
                 1 => katilect.DepartingImmediately(ref context),
-                <= 15 when lastAnnounced == -1 && context.Stop.AnyShip() => katilect.DepartsFor(ref context, index),
+                <= 15 when lastAnnounced == -1 => katilect.DepartsFor(ref context, index),
                 _ => null
             };
         }

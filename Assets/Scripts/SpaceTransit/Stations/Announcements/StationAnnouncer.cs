@@ -37,6 +37,10 @@ namespace SpaceTransit.Stations.Announcements
 
         private readonly List<(ShipAssembly, int)> _arriving = new();
 
+        private readonly List<(ShipController, int)> _restarting = new();
+
+        private readonly List<(ShipController, int)> _restarted = new();
+
         private readonly Queue<(VaulterController Vaulter, RouteDescriptor Route, IntermediateStop Stop)> _arrivedShips = new();
 
         private List<DepartureEntry> _departures;
@@ -60,6 +64,8 @@ namespace SpaceTransit.Stations.Announcements
             _passingThrough.Clear();
             _arriving.Clear();
             _arrivedShips.Clear();
+            _restarting.Clear();
+            _restarted.Clear();
         }
 
         private void Start()
@@ -80,7 +86,7 @@ namespace SpaceTransit.Stations.Announcements
 
         private void Update()
         {
-            if (_queue.IsYapping || AnnounceDeparting() || AnnouncePassingThrough() || AnnounceArriving())
+            if (_queue.IsYapping || AnnounceDeparting() || AnnouncePassingThrough() || AnnounceArriving() || AnnounceRestarting() || AnnounceRestarted())
                 return;
             if (_arrivedShips.TryDequeue(out var tuple) && tuple.Vaulter.Stop?.Station == _cache.StationId)
             {
@@ -155,6 +161,39 @@ namespace SpaceTransit.Stations.Announcements
             return true;
         }
 
+        private bool AnnounceRestarting()
+        {
+            _restarting.RemoveAll(static e => !e.Item1);
+            if (_restarting.Count == 0)
+                return false;
+            _queue.EnqueueWithSubtitles(_name, $"The assembly on dock {_restarting[0].Item2 + 1} is being restarted. Please do not board yet.", pack, genericSignal);
+            _queue.Delay(1);
+            _restarting.RemoveAt(0);
+            return true;
+        }
+
+        private bool AnnounceRestarted()
+        {
+            _restarted.RemoveAll(static e => !e.Item1);
+            if (_restarted.Count == 0)
+                return false;
+            var ship = _restarted[0].Item1;
+            _restarted.RemoveAt(0);
+            if (!ship.TryGetVaulter(out var vaulter) || !vaulter.IsInService)
+                return false;
+            foreach (var (route, index, departure) in _departures)
+            {
+                if (route != vaulter.Route)
+                    continue;
+                var context = new AnnouncementContext<IDeparture>(route, departure, pack);
+                var announcement = route.Katilect.Or(katilect).DepartsFor(ref context, index);
+                Announce(context, announcement);
+                return true;
+            }
+
+            return false;
+        }
+
         public void EnqueueDeparting(ShipAssembly assembly, int dockIndex) => _departing.Add((assembly, dockIndex));
 
         public void EnqueuePassingThrough(ShipAssembly assembly, int dockIndex) => _passingThrough.Add((assembly, dockIndex));
@@ -167,15 +206,9 @@ namespace SpaceTransit.Stations.Announcements
                 _arrivedShips.Enqueue((assembly, route, intermediate));
         }
 
-        public void EnqueueRestarting(ShipController controller, int dockIndex)
-        {
-            // TODO
-        }
+        public void EnqueueRestarting(ShipController controller, int dockIndex) => _restarting.Add((controller, dockIndex));
 
-        public void EnqueueRestarted(ShipController controller, int dockIndex)
-        {
-            // TODO
-        }
+        public void EnqueueRestarted(ShipController controller, int dockIndex) => _restarted.Add((controller, dockIndex));
 
     }
 
