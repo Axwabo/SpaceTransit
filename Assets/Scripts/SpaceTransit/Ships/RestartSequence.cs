@@ -32,11 +32,11 @@ namespace SpaceTransit.Ships
             controller.Assembly.FrontModule.Cosmos.RestartSource.PlayOneShot(start);
             controller.Assembly.BackModule.Cosmos.RestartSource.PlayOneShot(start);
             await Awaitable.WaitForSecondsAsync(Random.Range(7, 10), token);
+            TriggerThrusters(controller);
+            await Awaitable.WaitForSecondsAsync(Random.Range(3, 5), token);
             FlashAlarms(controller);
             await Awaitable.WaitForSecondsAsync(Random.Range(5, 8), token);
             var cosmos = LoadCosmosAsync(controller, token);
-            await Awaitable.WaitForSecondsAsync(Random.Range(1, 2), token);
-            TriggerThrusters(controller);
             await Awaitable.WaitForSecondsAsync(Random.Range(5, 15), token);
             var vaulter = LoadVaulterAsync(controller, token);
             await AwaitableExtensions.WhenAll(cosmos, vaulter);
