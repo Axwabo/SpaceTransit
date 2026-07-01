@@ -11,6 +11,8 @@ namespace SpaceTransit.Menu
 
         public static bool IsOpen { get; private set; }
 
+        public static MenuScreen Current { get; private set; }
+
         private static GameObject _current;
 
         private VisualElement _root;
@@ -21,6 +23,7 @@ namespace SpaceTransit.Menu
         private void Start()
         {
             _current = gameObject;
+            Current = this;
             IsOpen = true;
             _root = this.RootVisual();
             Toggle();
@@ -32,9 +35,14 @@ namespace SpaceTransit.Menu
                 Toggle();
         }
 
-        private void OnDestroy() => IsOpen = false;
+        private void OnDestroy()
+        {
+            IsOpen = false;
+            _current = null;
+            Current = null;
+        }
 
-        private void Toggle()
+        public void Toggle()
         {
             _root.SetVisibility(IsOpen = !IsOpen);
             Cursor.lockState = IsOpen ? CursorLockMode.None : CursorLockMode.Locked;
