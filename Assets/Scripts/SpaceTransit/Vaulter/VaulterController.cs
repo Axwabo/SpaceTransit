@@ -170,8 +170,11 @@ namespace SpaceTransit.Vaulter
             {
                 case IntermediateStop {Conditional: true, Station: var conditionalStation} when Parent.State == ShipState.Sailing && !Assembly.IsStationary():
                 {
-                    if (Assembly.FrontModule.Thruster.Tube is Dock dock && dock.Station.ID == conditionalStation && SkipConditionalStop(conditionalStation))
-                        AdvanceTarget();
+                    if (Assembly.FrontModule.Thruster.Tube is not Dock dock || dock.Station.ID != conditionalStation || !SkipConditionalStop(conditionalStation))
+                        break;
+                    AdvanceTarget();
+                    foreach (var component in _components)
+                        component.OnConditionalStopSkipped();
                     break;
                 }
                 case Passthrough passthrough:

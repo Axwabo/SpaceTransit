@@ -132,6 +132,8 @@ namespace SpaceTransit.Audio
 
         public override void OnStopChanged() => _currentStopPlayed = false;
 
+        public override void OnConditionalStopSkipped() => _currentStopPlayed = false;
+
         public void AnnounceRestarting()
         {
             _player.Clear();
