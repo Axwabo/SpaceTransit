@@ -10,9 +10,10 @@ namespace SpaceTransit.Menu
 
         private void Start()
         {
-            var button = this.RootVisual().Q<Button>("Jump");
+            var button = this.RootVisual().Q("Jump");
             button.RegisterCallback<PointerDownEvent>(_ => TouchscreenMode.Jump = true);
             button.RegisterCallback<PointerUpEvent>(_ => TouchscreenMode.Jump = false);
+            button.RegisterCallback<PointerLeaveEvent>(_ => TouchscreenMode.Jump = false);
         }
 
     }
