@@ -16,18 +16,6 @@ namespace SpaceTransit.Tubes
         {
             base.Awake();
             _length = Transform.lossyScale.z;
-            RefreshLocation();
-            World.WorldRepositioned += RefreshLocation;
-        }
-
-        protected override void OnDestroy()
-        {
-            base.OnDestroy();
-            World.WorldRepositioned -= RefreshLocation;
-        }
-
-        private void RefreshLocation()
-        {
             _position = Transform.position;
             _rotation = Transform.rotation;
         }

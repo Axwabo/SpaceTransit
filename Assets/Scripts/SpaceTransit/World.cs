@@ -38,8 +38,6 @@ namespace SpaceTransit
 
         public static RouteDescriptor[] ExtraRoutes { get; private set; }
 
-        public static event Action WorldRepositioned;
-
         private string _line;
 
         private void Awake()
@@ -60,10 +58,8 @@ namespace SpaceTransit
             if (!Current)
                 return;
             var t = transform;
-            if (Current == t)
-                return;
-            t.SetParent(Current, false);
-            WorldRepositioned?.Invoke();
+            if (Current != t)
+                t.SetParent(Current, false);
         }
 
         private void OnDisable() => Worlds.Remove(_line);
