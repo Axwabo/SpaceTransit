@@ -140,5 +140,5 @@ Future plans:
 - Ship houses
 - ~~Even more routes & lines~~ DONE
 - ~~Spline-based, auto-generated map~~ DONE (with SVGs, two-click export tool)
-- Touchscreen support
+- ~~Touchscreen support~~ DONE
 - ~~Ship summoning~~ DONE
