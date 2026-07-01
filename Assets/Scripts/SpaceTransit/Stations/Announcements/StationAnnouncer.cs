@@ -166,11 +166,11 @@ namespace SpaceTransit.Stations.Announcements
             _restarting.RemoveAll(static e => !e.Item1);
             if (_restarting.Count == 0)
                 return false;
-            var ship = _restarting[0].Item1;
+            var (ship, dock) = _restarting[0];
             _restarting.RemoveAt(0);
             if (!ship.IsRestarting)
                 return false;
-            _queue.EnqueueWithSubtitles(_name, $"The assembly on dock {_restarting[0].Item2 + 1} is being restarted. Please do not board yet.", pack, genericSignal);
+            _queue.EnqueueWithSubtitles(_name, $"The assembly on dock {dock} is being restarted. Please do not board yet.", pack, genericSignal);
             _queue.Delay(1);
             return true;
         }
