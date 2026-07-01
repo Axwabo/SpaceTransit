@@ -55,6 +55,7 @@ namespace SpaceTransit.Tubes
         {
             if (!Application.isPlaying)
                 return;
+            OnStart();
             RefreshNext();
             CrossSceneObject.SubscribeToSceneChanges(RefreshNext, nextReference);
             if (HasNext)
@@ -64,6 +65,10 @@ namespace SpaceTransit.Tubes
         }
 
         private void OnDestroy() => CrossSceneObject.ScenesChanged -= RefreshNext;
+
+        protected virtual void OnStart()
+        {
+        }
 
         private void RefreshNext() => SetNext(CrossSceneObject.GetComponent(nextReference, Next));
 
