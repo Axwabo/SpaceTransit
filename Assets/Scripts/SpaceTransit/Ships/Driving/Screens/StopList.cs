@@ -45,6 +45,7 @@ namespace SpaceTransit.Ships.Driving.Screens
             var entry = Source[i];
             element.EnableInClassList("separator", i < Source.Count - 1 && Source[i + 1] is not ExitTowards);
             element.EnableInClassList("passthrough", entry.Target is Passthrough);
+            element.EnableInClassList("conditional", entry.Target is IntermediateStop {Conditional: true});
             if (entry is not ExitTowards exitTowards)
             {
                 Bind(element, entry.Target);
