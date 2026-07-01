@@ -18,10 +18,7 @@ The ships' ambience are designed to be both realistic and pleasing to listen to.
 > [!IMPORTANT]
 > If you fall out of the world, press `Tab` to open the menu, click `Exit`
 > to go back to the main menu and try again (it might take multiple attempts).
-
-> [!NOTE]
-> Due to arithmetic issues on WebGL and Linux, the game is only released for windows.
-> If you're using Linux, try running the game through Wine.
+> Known working starting stations: Norposh, Snagna, Turkentine (multiple attempts)
 
 [Demo video](https://drive.google.com/file/d/1bwSHwmk54eV1s-IJFj7Abs6obr5ZRe6c/view?usp=sharing)
 
