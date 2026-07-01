@@ -29,7 +29,7 @@ namespace SpaceTransit.Menu
             if (_current)
                 Destroy(_current.gameObject);
             _index = Wrap(_index + 1);
-            _toolkit.text = options[Wrap(_index + 1)].gameObject.name;
+            Toolkit.text = options[Wrap(_index + 1)].gameObject.name;
             _current = Instantiate(options[_index], World.Current, false);
         }
 

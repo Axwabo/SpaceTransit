@@ -1,4 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/In-Game%20Menu/Game%20Menu.uss?fileID=7433441132597879392&amp;guid=d64cdfc28921b1469a65412f69429e44&amp;type=3#Game Menu" />
     <ui:VisualElement name="CrosshairContainer" style="flex-grow: 1; align-items: center; justify-content: center;">
         <ui:VisualElement name="Crosshair" style="background-image: url(&quot;project://database/Assets/Sprites/Crosshair.png?fileID=2800000&amp;guid=25b81ab27823fa84caa92b1cb058a03b&amp;type=3#Crosshair&quot;); width: 20px; height: 20px;" />
     </ui:VisualElement>
@@ -11,5 +12,13 @@
         <ui:VisualElement style="background-color: rgba(128, 128, 128, 0.3); height: 20px; align-items: flex-start;">
             <ui:VisualElement name="Progress" class="progress-background" style="flex-grow: 1; width: 0%;" />
         </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:Button text="Menu" name="Menu" class="tektur" style="position: absolute; font-size: 20px; height: auto; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px; width: auto; left: 5px; top: 5px;" />
+    <ui:VisualElement name="Touchscreen" style="flex-grow: 1; position: absolute; left: 5px; bottom: 5px;">
+        <ui:VisualElement picking-mode="Ignore" class="tektur" style="flex-grow: 1; flex-direction: row; font-size: 24px; justify-content: space-between;">
+            <ui:Label text="Interact" name="Interact" style="width: 48%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; background-color: rgba(0, 0, 0, 0.78);" />
+            <ui:Label text="Jump" name="Jump" style="width: 48%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; background-color: rgba(0, 0, 0, 0.78);" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Joystick" style="flex-grow: 1; width: 300px; height: 300px; background-image: url(&quot;project://database/Assets/Sprites/Movement.png?fileID=2800000&amp;guid=85a61a403202032ea955e10def62a2f1&amp;type=3#Movement&quot;);" />
     </ui:VisualElement>
 </ui:UXML>

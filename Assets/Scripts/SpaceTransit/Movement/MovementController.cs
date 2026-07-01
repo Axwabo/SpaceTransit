@@ -84,7 +84,7 @@ namespace SpaceTransit.Movement
             else
                 _verticalVelocity += gravity * Clock.Delta;
 
-            var desiredMove = InputSystem.actions["Move"].ReadValue<Vector2>();
+            var desiredMove = InputSystem.actions["Move"].ReadValue<Vector2>() + TouchscreenMode.Movement;
             var move = _t.rotation * new Vector3(desiredMove.x, 0, desiredMove.y).normalized;
             move.y = _verticalVelocity;
             if (move == Vector3.zero)
@@ -96,7 +96,7 @@ namespace SpaceTransit.Movement
 
         private void UpdateLook()
         {
-            if (MenuScreen.IsOpen)
+            if (MenuScreen.IsOpen || TouchscreenMode.Movement != Vector2.zero)
                 return;
             var look = InputSystem.actions["Look"].ReadValue<Vector2>();
             if (look == Vector2.zero)
@@ -107,7 +107,7 @@ namespace SpaceTransit.Movement
 
         private void UpdateGrounded()
         {
-            if (InputSystem.actions["Jump"].IsPressed())
+            if (TouchscreenMode.Jump || InputSystem.actions["Jump"].IsPressed())
                 _verticalVelocity = jumpVelocity;
             else if (_verticalVelocity < 0)
                 _verticalVelocity = 0;
