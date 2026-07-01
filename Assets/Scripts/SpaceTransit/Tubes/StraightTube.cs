@@ -17,15 +17,13 @@ namespace SpaceTransit.Tubes
             base.Awake();
             _length = Transform.lossyScale.z;
             RefreshLocation();
-            if (!Application.isPlaying)
-                World.WorldRepositioned += RefreshLocation;
+            World.WorldRepositioned += RefreshLocation;
         }
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            if (!Application.isPlaying)
-                World.WorldRepositioned -= RefreshLocation;
+            World.WorldRepositioned -= RefreshLocation;
         }
 
         private void RefreshLocation()
