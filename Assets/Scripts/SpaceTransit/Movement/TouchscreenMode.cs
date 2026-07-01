@@ -7,13 +7,27 @@ namespace SpaceTransit.Movement
     public static class TouchscreenMode
     {
 
-        public static bool Enabled { get; set; }
+        private const string Key = "Touchscreen";
+
+        public static bool Enabled { get; private set; }
 
         [RuntimeInitializeOnLoadMethod]
         private static void Init()
         {
+            if (PlayerPrefs.HasKey(Key))
+            {
+                Enabled = PlayerPrefs.GetInt(Key) == 1;
+                return;
+            }
+
             foreach (var device in InputSystem.devices)
                 Enabled |= device is Touchscreen;
+        }
+
+        public static void Set(bool enabled)
+        {
+            Enabled = enabled;
+            PlayerPrefs.SetInt(Key, enabled ? 1 : 0);
         }
 
     }

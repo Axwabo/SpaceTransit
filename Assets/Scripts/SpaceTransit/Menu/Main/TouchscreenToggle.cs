@@ -14,7 +14,7 @@ namespace SpaceTransit.Menu.Main
         {
             _toggle = this.RootVisual().Q<Toggle>("Touchscreen");
             _toggle.value = TouchscreenMode.Enabled;
-            _toggle.RegisterValueChangedCallback(evt => TouchscreenMode.Enabled = evt.newValue);
+            _toggle.RegisterValueChangedCallback(evt => TouchscreenMode.Set(evt.newValue));
         }
 
     }
