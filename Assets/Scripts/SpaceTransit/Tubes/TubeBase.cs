@@ -63,7 +63,7 @@ namespace SpaceTransit.Tubes
                 PlaceSign(Previous, Previous.Length, Quaternion.Euler(0, 180, 0));
         }
 
-        private void OnDestroy() => CrossSceneObject.ScenesChanged -= RefreshNext;
+        protected virtual void OnDestroy() => CrossSceneObject.ScenesChanged -= RefreshNext;
 
         private void RefreshNext() => SetNext(CrossSceneObject.GetComponent(nextReference, Next));
 
