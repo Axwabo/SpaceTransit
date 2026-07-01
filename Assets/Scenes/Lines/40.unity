@@ -3775,12 +3775,16 @@ PrefabInstance:
       objectReference: {fileID: 1199741593}
     - target: {fileID: 342873159335543462, guid: d565d6906fc20f346a869be32968e482, type: 3}
       propertyPath: <BackExits>k__BackingField.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 342873159335543462, guid: d565d6906fc20f346a869be32968e482, type: 3}
       propertyPath: '<BackExits>k__BackingField.Array.data[0]'
       value: 
       objectReference: {fileID: 1333446736}
+    - target: {fileID: 342873159335543462, guid: d565d6906fc20f346a869be32968e482, type: 3}
+      propertyPath: '<BackExits>k__BackingField.Array.data[1]'
+      value: 
+      objectReference: {fileID: 152752537}
     - target: {fileID: 492205240910234349, guid: d565d6906fc20f346a869be32968e482, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -5309,6 +5313,7 @@ GameObject:
   - component: {fileID: 615842478}
   - component: {fileID: 615842477}
   - component: {fileID: 615842476}
+  - component: {fileID: 615842479}
   m_Layer: 0
   m_Name: 1 to Clipnoch
   m_TagString: Untagged
@@ -5414,6 +5419,20 @@ MonoBehaviour:
   CurveChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &615842479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 615842474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e9e199b65c24ae48f193b1c5f318c48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: "Assembly-CSharp::SpaceTransit.Cosmos.EllenmenetetMegtilt\xF3Safety"
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 966157684}
 --- !u!1 &616442666
 GameObject:
   m_ObjectHideFlags: 0
@@ -8357,6 +8376,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 966157683}
+  - component: {fileID: 966157684}
+  - component: {fileID: 966157685}
   m_Layer: 0
   m_Name: Clipnoch to Reach upper
   m_TagString: Untagged
@@ -8381,6 +8402,31 @@ Transform:
   - {fileID: 1015592218}
   m_Father: {fileID: 1382066296}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &966157684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 966157682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69e956fa279b46828768161fce047ad5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.OpposingTrafficClearance
+--- !u!114 &966157685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 966157682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb88648bd27b438c9590513426d4e114, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Loader.CrossSceneObject
+  id: 6b8fee2ec51efd4b7a5696f477e76096
 --- !u!1 &980674060
 GameObject:
   m_ObjectHideFlags: 0
@@ -8761,6 +8807,7 @@ GameObject:
   - component: {fileID: 1015592219}
   - component: {fileID: 1015592222}
   - component: {fileID: 1015592223}
+  - component: {fileID: 1015592224}
   m_Layer: 0
   m_Name: 2
   m_TagString: Untagged
@@ -8895,6 +8942,20 @@ MonoBehaviour:
   exit: {fileID: 1333446736}
   forwards: 0
   backwards: 1
+--- !u!114 &1015592224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1015592217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e9e199b65c24ae48f193b1c5f318c48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: "Assembly-CSharp::SpaceTransit.Cosmos.EllenmenetetMegtilt\xF3Safety"
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 966157684}
 --- !u!1 &1018141516
 GameObject:
   m_ObjectHideFlags: 0
@@ -11481,7 +11542,7 @@ MonoBehaviour:
   <Locks>k__BackingField:
   - {fileID: 845571768}
   clearanceReference: 
-  <Clearance>k__BackingField: {fileID: 0}
+  <Clearance>k__BackingField: {fileID: 966157684}
 --- !u!114 &1333446737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11496,7 +11557,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.TubeRemapper
   tubeReference: 
   toReference: 
-  connectTube: {fileID: 16524426}
+  connectTube: {fileID: 615842476}
   connectTo: {fileID: 387672683}
 --- !u!1001 &1337659760
 PrefabInstance:
@@ -13565,6 +13626,8 @@ GameObject:
   - component: {fileID: 1518989582}
   - component: {fileID: 1518989581}
   - component: {fileID: 1518989584}
+  - component: {fileID: 1518989586}
+  - component: {fileID: 1518989585}
   m_Layer: 0
   m_Name: 2 from Clipnoch
   m_TagString: Untagged
@@ -13690,6 +13753,36 @@ MonoBehaviour:
   exit: 1
   forwards: 1
   backwards: 0
+--- !u!114 &1518989585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518989579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd3773830b3a4f9db4187a36de84b369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.ClearanceClearer
+  clearanceReference: 
+  clearance: {fileID: 966157684}
+  forwards: 1
+  backwards: 0
+--- !u!114 &1518989586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518989579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e9e199b65c24ae48f193b1c5f318c48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: "Assembly-CSharp::SpaceTransit.Cosmos.EllenmenetetMegtilt\xF3Safety"
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 966157684}
 --- !u!1 &1526782253
 GameObject:
   m_ObjectHideFlags: 0
@@ -17061,6 +17154,7 @@ GameObject:
   - component: {fileID: 1968866157}
   - component: {fileID: 1968866161}
   - component: {fileID: 1968866162}
+  - component: {fileID: 1968866163}
   m_Layer: 0
   m_Name: 1
   m_TagString: Untagged
@@ -17217,6 +17311,20 @@ MonoBehaviour:
   exit: 1
   forwards: 1
   backwards: 0
+--- !u!114 &1968866163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968866155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e9e199b65c24ae48f193b1c5f318c48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: "Assembly-CSharp::SpaceTransit.Cosmos.EllenmenetetMegtilt\xF3Safety"
+  clearanceReference: 
+  <Clearance>k__BackingField: {fileID: 966157684}
 --- !u!1 &1982276461
 GameObject:
   m_ObjectHideFlags: 0
