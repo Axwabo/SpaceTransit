@@ -10,10 +10,16 @@ namespace SpaceTransit.Build
         public static HashSet<SceneInfo> List { get; } = new();
 
         [field: SerializeField]
+        public string SceneName { get; set; }
+
+        [field: SerializeField]
         public GameObject[] Load { get; set; }
 
         [field: SerializeField]
         public GameObject[] Activate { get; set; }
+
+        [field: SerializeField]
+        public MeshCollider[] Recalculate { get; set; }
 
         private void Awake() => List.Add(this);
 

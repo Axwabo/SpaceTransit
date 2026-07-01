@@ -1,5 +1,6 @@
 ﻿#if UNITY_EDITOR
 using System.Collections.Generic;
+using System.Linq;
 using SpaceTransit.Routes;
 using SplineMesh;
 using UnityEditor;
@@ -18,7 +19,8 @@ namespace SpaceTransit.Build
 
         public void OnProcessScene(Scene scene, BuildReport report)
         {
-            if (scene.name == "SampleScene")
+            var sceneName = scene.name;
+            if (sceneName == "SampleScene")
                 return;
             var rootGameObjects = scene.GetRootGameObjects();
             var splines = new List<Spline>();
@@ -33,8 +35,10 @@ namespace SpaceTransit.Build
             if (activate.Count == 0)
                 return;
             var loader = rootGameObjects[0].AddComponent<SceneInfo>();
+            loader.SceneName = sceneName;
             loader.Load = load.ToArray();
             loader.Activate = activate.ToArray();
+            loader.Recalculate = hoistTransforms.OfType<MeshCollider>().ToArray();
         }
 
         private static void ProcessRoot(GameObject root, List<Spline> splines, List<Activate> activates, List<GameObject> load, List<GameObject> activate, List<HoistColliders> hoist, List<Collider> hoistTransforms, List<Station> stations)
