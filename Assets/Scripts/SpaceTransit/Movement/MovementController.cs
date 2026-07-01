@@ -107,7 +107,7 @@ namespace SpaceTransit.Movement
 
         private void UpdateGrounded()
         {
-            if (InputSystem.actions["Jump"].IsPressed())
+            if (TouchscreenMode.Jump || InputSystem.actions["Jump"].IsPressed())
                 _verticalVelocity = jumpVelocity;
             else if (_verticalVelocity < 0)
                 _verticalVelocity = 0;

@@ -22,6 +22,7 @@ namespace SpaceTransit.Interactions
                 && Physics.Raycast(_t.position, _t.forward, out var hit, MaxDistance)
                 && hit.collider.TryGetComponent(out IInteractable interactable))
                 interactable.OnInteracted();
+            TouchscreenMode.Interact = false;
         }
 
     }

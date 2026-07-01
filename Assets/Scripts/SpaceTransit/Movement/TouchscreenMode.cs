@@ -13,6 +13,8 @@ namespace SpaceTransit.Movement
 
         public static bool Interact { get; set; }
 
+        public static bool Jump { get; set; }
+
         public static Vector2 Movement { get; set; }
 
         [RuntimeInitializeOnLoadMethod]
