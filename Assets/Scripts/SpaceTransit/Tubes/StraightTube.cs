@@ -15,8 +15,9 @@ namespace SpaceTransit.Tubes
         protected override void Awake()
         {
             base.Awake();
+            var world = GetComponentInParent<World>().transform;
             _length = Transform.lossyScale.z;
-            _position = Transform.position;
+            _position = world.InverseTransformPoint(Transform.position);
             _rotation = Transform.rotation;
         }
 
