@@ -92,7 +92,7 @@ namespace SpaceTransit.Stations.Announcements
             {
                 var context = new AnnouncementContext<IDeparture>(tuple.Route, tuple.Stop, pack);
                 var announcement = tuple.Route.Katilect.Or(katilect).Departing(ref context);
-                Announce(context, announcement);
+                Announce(context, announcement); // TODO "the Gyuard station is departing from" LIKE HOW
                 return;
             }
 
