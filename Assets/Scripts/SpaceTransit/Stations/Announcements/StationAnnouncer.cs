@@ -170,7 +170,7 @@ namespace SpaceTransit.Stations.Announcements
             _restarting.RemoveAt(0);
             if (!ship.IsRestarting)
                 return false;
-            _queue.EnqueueWithSubtitles(_name, $"The assembly on dock {dock} is being restarted. Please do not board yet.", pack, genericSignal);
+            _queue.EnqueueWithSubtitles(_name, $"The assembly on dock {dock + 1} is being restarted. Please do not board yet.", pack, genericSignal);
             _queue.Delay(1);
             return true;
         }
