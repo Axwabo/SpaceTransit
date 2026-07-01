@@ -84,7 +84,7 @@ namespace SpaceTransit.Movement
             else
                 _verticalVelocity += gravity * Clock.Delta;
 
-            var desiredMove = InputSystem.actions["Move"].ReadValue<Vector2>();
+            var desiredMove = InputSystem.actions["Move"].ReadValue<Vector2>() + TouchscreenMode.Movement;
             var move = _t.rotation * new Vector3(desiredMove.x, 0, desiredMove.y).normalized;
             move.y = _verticalVelocity;
             if (move == Vector3.zero)

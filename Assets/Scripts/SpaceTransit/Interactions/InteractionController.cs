@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SpaceTransit.Movement;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace SpaceTransit.Interactions
@@ -9,13 +10,15 @@ namespace SpaceTransit.Interactions
 
         private const float MaxDistance = 3 * World.MetersToWorld;
 
+        private static bool Interact => TouchscreenMode.Interact || InputSystem.actions["Interact"].WasPressedThisFrame();
+
         private Transform _t;
 
         private void Awake() => _t = transform;
 
         private void Update()
         {
-            if (InputSystem.actions["Interact"].WasPressedThisFrame()
+            if (Interact
                 && Physics.Raycast(_t.position, _t.forward, out var hit, MaxDistance)
                 && hit.collider.TryGetComponent(out IInteractable interactable))
                 interactable.OnInteracted();

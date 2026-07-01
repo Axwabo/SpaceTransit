@@ -11,6 +11,10 @@ namespace SpaceTransit.Movement
 
         public static bool Enabled { get; private set; }
 
+        public static bool Interact { get; set; }
+
+        public static Vector2 Movement { get; set; }
+
         [RuntimeInitializeOnLoadMethod]
         private static void Init()
         {
