@@ -44,8 +44,8 @@ namespace SpaceTransit.Menu
         {
             if (!_active)
                 return;
-            var relative = (Vector2) position - _joystick.localBound.center;
-            TouchscreenMode.Movement = relative.sqrMagnitude < minDistance * minDistance ? Vector2.zero : new Vector2(relative.x, -relative.y);
+            var (x, y) = (position.x - _joystick.localBound.width * 0.5f, position.y - _joystick.localBound.height * 0.5f);
+            TouchscreenMode.Movement = Mathf.Abs(x) < minDistance && Mathf.Abs(y) < minDistance ? Vector2.zero : new Vector2(x, -y);
         }
 
     }

@@ -96,7 +96,7 @@ namespace SpaceTransit.Movement
 
         private void UpdateLook()
         {
-            if (MenuScreen.IsOpen)
+            if (MenuScreen.IsOpen || TouchscreenMode.Movement != Vector2.zero)
                 return;
             var look = InputSystem.actions["Look"].ReadValue<Vector2>();
             if (look == Vector2.zero)

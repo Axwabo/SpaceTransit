@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SpaceTransit.Movement;
+using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using Cursor = UnityEngine.Cursor;
@@ -45,7 +46,7 @@ namespace SpaceTransit.Menu
         public void Toggle()
         {
             _root.SetVisibility(IsOpen = !IsOpen);
-            Cursor.lockState = IsOpen ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.lockState = IsOpen || TouchscreenMode.Enabled ? CursorLockMode.None : CursorLockMode.Locked;
             if (IsOpen)
                 return;
             foreach (var panel in toggles)
