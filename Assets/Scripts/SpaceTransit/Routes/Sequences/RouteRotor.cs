@@ -100,7 +100,7 @@ namespace SpaceTransit.Routes.Sequences
             await Awaitable.WaitForSecondsAsync(UpdateInterval, token);
             if (LoadingProgress.Current != null
                 || ship.Assembly.IsPlayerMounted
-                || ship.IsInService && ship.Stop.Station.IsLoaded()
+                || ship.IsInService && ship.Target.Station.IsLoaded()
                 || ship.Assembly.FrontModule.Thruster.Tube is Dock dock && dock.Station.ID.IsLoaded())
                 return;
             Object.Destroy(ship.gameObject);
