@@ -73,23 +73,29 @@ namespace SpaceTransit.Editor
 
         private static void WriteSpline(SplineTube spline, StreamWriter file)
         {
-            file.Write("<path d=\"");
-            var steps = Mathf.Clamp(Mathf.CeilToInt(spline.Length / 50), 10, 50);
-            var size = 1f / steps;
-            for (var i = 0; i < steps; i++)
-                WriteSample(file, spline, i * size);
-            WriteSample(file, spline, 1);
-            file.Write($"\" {StrokeStyle} fill=\"transparent\"/>");
-        }
+            file.Write("<path d=\"M");
+            var nodes = spline.Nodes;
+            file.Write(nodes[0].Position.x);
+            file.Write(' ');
+            file.Write(-nodes[0].Position.z);
+            for (var i = 1; i < nodes.Count; i++)
+            {
+                var current = nodes[i];
+                file.Write(" C");
+                file.Write(nodes[i - 1].Direction.x);
+                file.Write(' ');
+                file.Write(-nodes[i - 1].Direction.z);
+                file.Write(' ');
+                file.Write(current.Direction.x);
+                file.Write(' ');
+                file.Write(-current.Direction.z);
+                file.Write(' ');
+                file.Write(current.Position.x);
+                file.Write(' ');
+                file.Write(-current.Position.z);
+            }
 
-        private static void WriteSample(StreamWriter file, SplineTube spline, float time)
-        {
-            var sample = spline.Sample(time * spline.Length).Position;
-            file.Write(time is 0 ? 'M' : 'L');
-            file.Write(sample.x);
-            file.Write(' ');
-            file.Write(-sample.z);
-            file.Write(' ');
+            file.Write($"\" {StrokeStyle} fill=\"transparent\"/>");
         }
 
         private static void WriteStraight(TubeBase tube, StreamWriter file)

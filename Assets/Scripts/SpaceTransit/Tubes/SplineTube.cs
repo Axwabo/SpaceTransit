@@ -1,4 +1,5 @@
-﻿using SplineMesh;
+﻿using System.Collections.Generic;
+using SplineMesh;
 using UnityEngine;
 
 namespace SpaceTransit.Tubes
@@ -12,6 +13,8 @@ namespace SpaceTransit.Tubes
 
         [SerializeField]
         private float length;
+
+        public IReadOnlyList<SplineNode> Nodes => spline.nodes;
 
         public override float Length => length <= 0 ? spline.Length : length;
 
