@@ -74,7 +74,7 @@ namespace SpaceTransit.Editor
         private static void WriteSpline(SplineTube spline, StreamWriter file)
         {
             file.Write("<path d=\"");
-            var steps = Mathf.Clamp(Mathf.CeilToInt(spline.Length / 100), 10, 40);
+            var steps = Mathf.Clamp(Mathf.CeilToInt(spline.Length / 50), 10, 50);
             var size = 1f / steps;
             for (var i = 0; i < steps; i++)
                 WriteSample(file, spline, i * size);
