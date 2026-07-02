@@ -74,6 +74,19 @@ namespace SpaceTransit.Routes
             EditorUtility.SetDirty(this);
             AssetDatabase.CreateAsset(relativeSchedule, Path.Combine("Assets", Path.GetRelativePath(Application.dataPath, path)));
         }
+
+        [ContextMenu("Make Absolute")]
+        private void MakeAbsolute()
+        {
+            if (!schedule)
+                return;
+            Awake();
+            intermediateStops = _intermediateStops;
+            passthrough = _passthrough;
+            schedule = null;
+            Awake();
+            EditorUtility.SetDirty(this);
+        }
 #endif
 
     }
