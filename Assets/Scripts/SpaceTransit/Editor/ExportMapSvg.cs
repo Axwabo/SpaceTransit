@@ -82,13 +82,13 @@ namespace SpaceTransit.Editor
             {
                 var current = nodes[i];
                 file.Write(" C");
-                file.Write(nodes[i - 1].Direction.x);
+                file.Write(-nodes[i - 1].Direction.x);
                 file.Write(' ');
-                file.Write(-nodes[i - 1].Direction.z);
+                file.Write(nodes[i - 1].Direction.z);
                 file.Write(' ');
-                file.Write(current.Direction.x);
+                file.Write(-current.Direction.x);
                 file.Write(' ');
-                file.Write(-current.Direction.z);
+                file.Write(current.Direction.z);
                 file.Write(' ');
                 file.Write(current.Position.x);
                 file.Write(' ');
