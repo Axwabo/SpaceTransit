@@ -776,6 +776,51 @@ MonoBehaviour:
   CurveChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &888859747
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 888859748}
+  - component: {fileID: 888859749}
+  m_Layer: 0
+  m_Name: Mudbugd to Hillover
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &888859748
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888859747}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1748773648}
+  m_Father: {fileID: 1125675376}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &888859749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888859747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69e956fa279b46828768161fce047ad5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.OpposingTrafficClearance
 --- !u!1 &944993295
 GameObject:
   m_ObjectHideFlags: 0
@@ -1114,6 +1159,7 @@ Transform:
   m_Children:
   - {fileID: 193288253}
   - {fileID: 1028149869}
+  - {fileID: 888859748}
   m_Father: {fileID: 1194616317}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1125675377
@@ -2175,6 +2221,683 @@ MonoBehaviour:
   m_EditorClassIdentifier: "Assembly-CSharp::SpaceTransit.Cosmos.EllenmenetetMegtilt\xF3Safety"
   clearanceReference: 
   <Clearance>k__BackingField: {fileID: 193288254}
+--- !u!1 &1748773647
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1748773648}
+  - component: {fileID: 1748773651}
+  - component: {fileID: 1748773650}
+  - component: {fileID: 1748773649}
+  m_Layer: 0
+  m_Name: 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1748773648
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1748773647}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 888859748}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1748773649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1748773647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2fa6bd2fe47453bbaaf0ef35ee0f705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Tubes.SplineTube
+  nextReference: 
+  <SpeedLimit>k__BackingField: 0
+  <Next>k__BackingField: {fileID: 1359046330}
+  spline: {fileID: 1748773651}
+  length: 0
+--- !u!114 &1748773650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1748773647}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 174367e175762fb48ba55d6171e99990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SplineMesh.SplineMeshTiling
+  mesh: {fileID: 4300000, guid: fb43eafc466d9714ea870793754e3118, type: 2}
+  material: {fileID: 2100000, guid: 61e30df0606e31d448e541b5cfd26d0a, type: 2}
+  physicMaterial: {fileID: 0}
+  translation: {x: 0, y: 0.3, z: 0}
+  rotation: {x: 0, y: 90, z: 0}
+  scale: {x: 0.5, y: 0.8, z: 0.8}
+  generateCollider: 0
+  updateInPlayMode: 1
+  curveSpace: 0
+  mode: 1
+--- !u!114 &1748773651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1748773647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a85c5879d519aa4ab2ebbf42591149a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SplineMesh.Spline
+  nodes:
+  - position: {x: -11574.6455, y: 0, z: -9619.668}
+    direction: {x: -11562.924, y: 0, z: -9606.839}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -11513.871, y: 0, z: -9547.697}
+    direction: {x: -11502.278, y: 0, z: -9533.545}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -11361.501, y: 0, z: -9401.243}
+    direction: {x: -11314.824, y: 0, z: -9383.698}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -11013.262, y: 0, z: -9362.045}
+    direction: {x: -10930.759, y: 0, z: -9323.322}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -10916.962, y: 0, z: -9162.569}
+    direction: {x: -10903.354, y: 0, z: -9127.29}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -10824.386, y: 0, z: -9018.391}
+    direction: {x: -10766.285, y: 0, z: -8986.293}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -10453.568, y: 0, z: -9005.722}
+    direction: {x: -10409.2705, y: 0, z: -8970.034}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -10426.432, y: 0, z: -8842.074}
+    direction: {x: -10420.747, y: 0, z: -8798.584}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -10392.371, y: 0, z: -8728.612}
+    direction: {x: -10355.546, y: 0, z: -8689.431}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -10243.682, y: 0, z: -8647.49}
+    direction: {x: -10192.311, y: 0, z: -8623.5205}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -10058.6875, y: 0, z: -8522.963}
+    direction: {x: -10020.139, y: 0, z: -8451.372}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -9954.8545, y: 0, z: -8315.199}
+    direction: {x: -9931.184, y: 0, z: -8287.1875}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -9840.131, y: 0, z: -8115.9644}
+    direction: {x: -9849.064, y: 0, z: -8009.8833}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -9911.017, y: 0, z: -7710.177}
+    direction: {x: -9911.844, y: 0, z: -7640.621}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -9832.253, y: 0, z: -7548.1997}
+    direction: {x: -9778.772, y: 0, z: -7512.168}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -9582.673, y: 0, z: -7425.1084}
+    direction: {x: -9502.061, y: 0, z: -7370.797}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -9624.473, y: 0, z: -7178.072}
+    direction: {x: -9659.139, y: 0, z: -7101.2505}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -9725.5205, y: 0, z: -6767.317}
+    direction: {x: -9736.953, y: 0, z: -6693.8755}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -9730.233, y: 0, z: -6606.333}
+    direction: {x: -9717.927, y: 0, z: -6550.504}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -9587.554, y: 0, z: -6392.061}
+    direction: {x: -9587.614, y: 0, z: -6334.397}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -9554.771, y: 0, z: -6229.864}
+    direction: {x: -9529.653, y: 0, z: -6174.135}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -9297.797, y: 0, z: -5887.5054}
+    direction: {x: -9248.829, y: 0, z: -5837.835}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -9055.465, y: 0, z: -5702.3643}
+    direction: {x: -8985.926, y: 0, z: -5660.0747}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -8842.301, y: 0, z: -5586.156}
+    direction: {x: -8789.456, y: 0, z: -5549.9116}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -8678.311, y: 0, z: -5448.3496}
+    direction: {x: -8608.456, y: 0, z: -5429.2085}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -8419.028, y: 0, z: -5346.081}
+    direction: {x: -8368.044, y: 0, z: -5280.5176}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -8357.065, y: 0, z: -5148.2207}
+    direction: {x: -8338.258, y: 0, z: -5094.9995}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -8248.996, y: 0, z: -4832.6367}
+    direction: {x: -8246.338, y: 0, z: -4756.458}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -8212.042, y: 0, z: -4412.8154}
+    direction: {x: -8203.845, y: 0, z: -4333.4277}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  - position: {x: -8154.2266, y: 0, z: -4083.8472}
+    direction: {x: -8149.558, y: 0, z: -4014.9414}
+    up: {x: 0, y: 1, z: 0}
+    scale: {x: 1, y: 1}
+    roll: 0
+  curves:
+  - n1:
+      position: {x: -11574.6455, y: 0, z: -9619.668}
+      direction: {x: -11562.924, y: 0, z: -9606.839}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -11513.871, y: 0, z: -9547.697}
+      direction: {x: -11502.278, y: 0, z: -9533.545}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -11513.871, y: 0, z: -9547.697}
+      direction: {x: -11502.278, y: 0, z: -9533.545}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -11361.501, y: 0, z: -9401.243}
+      direction: {x: -11314.824, y: 0, z: -9383.698}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -11361.501, y: 0, z: -9401.243}
+      direction: {x: -11314.824, y: 0, z: -9383.698}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -11013.262, y: 0, z: -9362.045}
+      direction: {x: -10930.759, y: 0, z: -9323.322}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -11013.262, y: 0, z: -9362.045}
+      direction: {x: -10930.759, y: 0, z: -9323.322}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -10916.962, y: 0, z: -9162.569}
+      direction: {x: -10903.354, y: 0, z: -9127.29}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -10916.962, y: 0, z: -9162.569}
+      direction: {x: -10903.354, y: 0, z: -9127.29}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -10824.386, y: 0, z: -9018.391}
+      direction: {x: -10766.285, y: 0, z: -8986.293}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -10824.386, y: 0, z: -9018.391}
+      direction: {x: -10766.285, y: 0, z: -8986.293}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -10453.568, y: 0, z: -9005.722}
+      direction: {x: -10409.2705, y: 0, z: -8970.034}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -10453.568, y: 0, z: -9005.722}
+      direction: {x: -10409.2705, y: 0, z: -8970.034}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -10426.432, y: 0, z: -8842.074}
+      direction: {x: -10420.747, y: 0, z: -8798.584}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -10426.432, y: 0, z: -8842.074}
+      direction: {x: -10420.747, y: 0, z: -8798.584}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -10392.371, y: 0, z: -8728.612}
+      direction: {x: -10355.546, y: 0, z: -8689.431}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -10392.371, y: 0, z: -8728.612}
+      direction: {x: -10355.546, y: 0, z: -8689.431}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -10243.682, y: 0, z: -8647.49}
+      direction: {x: -10192.311, y: 0, z: -8623.5205}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -10243.682, y: 0, z: -8647.49}
+      direction: {x: -10192.311, y: 0, z: -8623.5205}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -10058.6875, y: 0, z: -8522.963}
+      direction: {x: -10020.139, y: 0, z: -8451.372}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -10058.6875, y: 0, z: -8522.963}
+      direction: {x: -10020.139, y: 0, z: -8451.372}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -9954.8545, y: 0, z: -8315.199}
+      direction: {x: -9931.184, y: 0, z: -8287.1875}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -9954.8545, y: 0, z: -8315.199}
+      direction: {x: -9931.184, y: 0, z: -8287.1875}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -9840.131, y: 0, z: -8115.9644}
+      direction: {x: -9849.064, y: 0, z: -8009.8833}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -9840.131, y: 0, z: -8115.9644}
+      direction: {x: -9849.064, y: 0, z: -8009.8833}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -9911.017, y: 0, z: -7710.177}
+      direction: {x: -9911.844, y: 0, z: -7640.621}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -9911.017, y: 0, z: -7710.177}
+      direction: {x: -9911.844, y: 0, z: -7640.621}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -9832.253, y: 0, z: -7548.1997}
+      direction: {x: -9778.772, y: 0, z: -7512.168}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -9832.253, y: 0, z: -7548.1997}
+      direction: {x: -9778.772, y: 0, z: -7512.168}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -9582.673, y: 0, z: -7425.1084}
+      direction: {x: -9502.061, y: 0, z: -7370.797}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -9582.673, y: 0, z: -7425.1084}
+      direction: {x: -9502.061, y: 0, z: -7370.797}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -9624.473, y: 0, z: -7178.072}
+      direction: {x: -9659.139, y: 0, z: -7101.2505}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -9624.473, y: 0, z: -7178.072}
+      direction: {x: -9659.139, y: 0, z: -7101.2505}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -9725.5205, y: 0, z: -6767.317}
+      direction: {x: -9736.953, y: 0, z: -6693.8755}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -9725.5205, y: 0, z: -6767.317}
+      direction: {x: -9736.953, y: 0, z: -6693.8755}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -9730.233, y: 0, z: -6606.333}
+      direction: {x: -9717.927, y: 0, z: -6550.504}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -9730.233, y: 0, z: -6606.333}
+      direction: {x: -9717.927, y: 0, z: -6550.504}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -9587.554, y: 0, z: -6392.061}
+      direction: {x: -9587.614, y: 0, z: -6334.397}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -9587.554, y: 0, z: -6392.061}
+      direction: {x: -9587.614, y: 0, z: -6334.397}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -9554.771, y: 0, z: -6229.864}
+      direction: {x: -9529.653, y: 0, z: -6174.135}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -9554.771, y: 0, z: -6229.864}
+      direction: {x: -9529.653, y: 0, z: -6174.135}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -9297.797, y: 0, z: -5887.5054}
+      direction: {x: -9248.829, y: 0, z: -5837.835}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -9297.797, y: 0, z: -5887.5054}
+      direction: {x: -9248.829, y: 0, z: -5837.835}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -9055.465, y: 0, z: -5702.3643}
+      direction: {x: -8985.926, y: 0, z: -5660.0747}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -9055.465, y: 0, z: -5702.3643}
+      direction: {x: -8985.926, y: 0, z: -5660.0747}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -8842.301, y: 0, z: -5586.156}
+      direction: {x: -8789.456, y: 0, z: -5549.9116}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -8842.301, y: 0, z: -5586.156}
+      direction: {x: -8789.456, y: 0, z: -5549.9116}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -8678.311, y: 0, z: -5448.3496}
+      direction: {x: -8608.456, y: 0, z: -5429.2085}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -8678.311, y: 0, z: -5448.3496}
+      direction: {x: -8608.456, y: 0, z: -5429.2085}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -8419.028, y: 0, z: -5346.081}
+      direction: {x: -8368.044, y: 0, z: -5280.5176}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -8419.028, y: 0, z: -5346.081}
+      direction: {x: -8368.044, y: 0, z: -5280.5176}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -8357.065, y: 0, z: -5148.2207}
+      direction: {x: -8338.258, y: 0, z: -5094.9995}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -8357.065, y: 0, z: -5148.2207}
+      direction: {x: -8338.258, y: 0, z: -5094.9995}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -8248.996, y: 0, z: -4832.6367}
+      direction: {x: -8246.338, y: 0, z: -4756.458}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -8248.996, y: 0, z: -4832.6367}
+      direction: {x: -8246.338, y: 0, z: -4756.458}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -8212.042, y: 0, z: -4412.8154}
+      direction: {x: -8203.845, y: 0, z: -4333.4277}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  - n1:
+      position: {x: -8212.042, y: 0, z: -4412.8154}
+      direction: {x: -8203.845, y: 0, z: -4333.4277}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    n2:
+      position: {x: -8154.2266, y: 0, z: -4083.8472}
+      direction: {x: -8149.558, y: 0, z: -4014.9414}
+      up: {x: 0, y: 1, z: 0}
+      scale: {x: 1, y: 1}
+      roll: 0
+    Changed:
+      m_PersistentCalls:
+        m_Calls: []
+  Length: 7545.8516
+  isLoop: 0
+  CurveChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1852343790
 GameObject:
   m_ObjectHideFlags: 0
