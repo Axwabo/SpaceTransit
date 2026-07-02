@@ -80,15 +80,18 @@ namespace SpaceTransit.Editor
             file.Write(-nodes[0].Position.z);
             for (var i = 1; i < nodes.Count; i++)
             {
+                var previous = nodes[i - 1];
                 var current = nodes[i];
-                file.Write(" C");
-                file.Write(nodes[i - 1].Direction.x);
+                var previousDelta = previous.Position - previous.Direction;
+                var currentDelta = current.Position - previous.Direction;
+                file.Write(" c");
+                file.Write(previousDelta.x);
                 file.Write(' ');
-                file.Write(-nodes[i - 1].Direction.z);
+                file.Write(-previousDelta.z);
                 file.Write(' ');
-                file.Write(current.Direction.x);
+                file.Write(currentDelta.x);
                 file.Write(' ');
-                file.Write(-current.Direction.z);
+                file.Write(-currentDelta.z);
                 file.Write(' ');
                 file.Write(current.Position.x);
                 file.Write(' ');
