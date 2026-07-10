@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SpaceTransit.Routes;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace SpaceTransit.Ships.Driving.Screens
@@ -13,7 +14,7 @@ namespace SpaceTransit.Ships.Driving.Screens
         private void Awake() => _manager = GetComponent<RouteListManager>();
 
         protected override string GetContent(RoutePicker item)
-            => ReferenceEquals(item, RoutePicker.ExitService) ? "Exit Service" : Menu.RouteList.Format(item.Descriptor);
+            => ReferenceEquals(item, RoutePicker.ExitService) ? "Exit Service" : Format(item.Descriptor);
 
         protected override void Select(RoutePicker item)
         {
@@ -32,6 +33,11 @@ namespace SpaceTransit.Ships.Driving.Screens
         }
 
         protected override ListView GetListView(VisualElement root) => root.Q<ListView>("Routes");
+
+        public static string Format(JourneyDescriptorBase journey)
+            => journey is RouteDescriptor route
+                ? $"{route.name} {route.Summary()}"
+                : journey.name;
 
     }
 

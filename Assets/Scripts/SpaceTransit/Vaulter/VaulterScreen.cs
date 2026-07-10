@@ -91,11 +91,7 @@ namespace SpaceTransit.Vaulter
                 return;
             _routesShown = showRoutes;
             _current = showRoutes ? routes.Screen : stops.Screen;
-            _title.text = showRoutes
-                ? "Pick a Route"
-                : Parent.IsInService
-                    ? $"{Parent.Route.name} {Parent.Route.Summary()}"
-                    : Parent.Journey.name;
+            _title.text = showRoutes ? "Pick a Route" : RouteList.Format(Parent.Journey);
             routes.enabled = showRoutes;
             stops.enabled = !showRoutes;
             HideConfirmation();

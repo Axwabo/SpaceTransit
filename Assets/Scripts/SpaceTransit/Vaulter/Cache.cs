@@ -7,11 +7,11 @@ namespace SpaceTransit.Vaulter
     public static class Cache
     {
 
-        private static RouteDescriptor[] _routes;
+        private static JourneyDescriptorBase[] _journeys;
 
         private static StationId[] _stations;
 
-        public static RouteDescriptor[] Routes => _routes ??= Resources.LoadAll<RouteDescriptor>("Routes");
+        public static JourneyDescriptorBase[] Journeys => _journeys ??= Resources.LoadAll<JourneyDescriptorBase>("Routes");
 
         public static StationId[] Stations => _stations ??= Resources.LoadAll<StationId>("Stations");
 

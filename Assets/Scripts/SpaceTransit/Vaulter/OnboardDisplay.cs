@@ -44,7 +44,7 @@ namespace SpaceTransit.Vaulter
         {
             if (!IsInService)
             {
-                _text.text = "";
+                _text.text = IsHouseJourney ? "DO NOT ENTER" : "";
                 return;
             }
 

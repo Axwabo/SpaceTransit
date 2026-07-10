@@ -84,7 +84,7 @@ namespace SpaceTransit.Ships.Driving
                 return;
             if (_departed)
             {
-                var minStaySeconds = Controller.IsRestarting ? RestartedStaySeconds : MinStaySeconds;
+                var minStaySeconds = Controller.IsRestarting || IsHouseJourney ? RestartedStaySeconds : MinStaySeconds;
                 var stay = Mathf.Max(minStaySeconds, Parent.Target is IntermediateStop {MinStayMinutes: var minStay} ? minStay * 60 : 0);
                 var departIn = Parent.Target is IDeparture {Departure: var departure} ? departure.Value - Clock.Now : TimeSpan.Zero;
                 Controller.TimeToDeparture = (float) departIn.TotalSeconds;

@@ -18,6 +18,8 @@ namespace SpaceTransit.Vaulter
 
         protected bool HasJourney => Parent.HasJourney;
 
+        protected bool IsHouseJourney => Parent.Journey is HouseJourneyDescriptor;
+
         protected bool IsOrigin => Parent.Stop is Origin;
 
         protected bool IsTerminus => Parent.Stop is Destination;
