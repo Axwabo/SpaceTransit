@@ -68,7 +68,7 @@ namespace SpaceTransit.Editor
         {
             if (descriptor.Beginning.Departure < lastTime)
             {
-                EditorGUILayout.HelpBox($"Routes are not continuous!\n{descriptor.name} departure {descriptor.Beginning.Departure.Value:hh':'mm} < {lastTime:hh':'mm}", MessageType.Error);
+                EditorGUILayout.HelpBox($"Routes are not continuous!\n{descriptor.name} departure {descriptor.Beginning.Departure} < {lastTime:hh':'mm}", MessageType.Error);
                 return true;
             }
 
