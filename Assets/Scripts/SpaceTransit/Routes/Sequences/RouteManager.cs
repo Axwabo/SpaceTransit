@@ -46,8 +46,8 @@ namespace SpaceTransit.Routes.Sequences
             for (var routeIndex = 0; routeIndex < sequence.routes.Length; routeIndex++)
             {
                 var route = sequence.routes[routeIndex];
-                if (route.Origin.Departure > Clock.Now)
-                    return Station.TryGetLoadedStation(route.Origin.Station, out var departureStation) && departureStation.Docks[route.Origin.DockIndex].IsFree
+                if (route.Beginning.Departure > Clock.Now)
+                    return Station.TryGetLoadedStation(route.Beginning.Station, out var departureStation) && departureStation.Docks[route.Beginning.DockIndex].IsFree
                         ? (SpawnLocation.Origin, routeIndex)
                         : None;
                 for (var stopIndex = 0; stopIndex < route.IntermediateStops.Length; stopIndex++)

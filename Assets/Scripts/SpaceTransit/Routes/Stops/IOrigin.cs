@@ -1,7 +1,7 @@
 namespace SpaceTransit.Routes.Stops
 {
 
-    public interface IOrigin : IExitTowards
+    public interface IOrigin : IDeparture
     {
 
     }

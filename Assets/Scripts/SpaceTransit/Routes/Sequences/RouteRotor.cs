@@ -33,7 +33,7 @@ namespace SpaceTransit.Routes.Sequences
                 if (index == -1 || index >= sequence.routes.Length)
                 {
                     index = 0;
-                    await TomorrowAsync(ship, sequence.routes[0].Origin.Departure.Value - TimeSpan.FromHours(1), token);
+                    await TomorrowAsync(ship, sequence.routes[0].Beginning.Departure.Value - TimeSpan.FromHours(1), token);
                     ship.BeginRoute(sequence.routes[0]);
                     continue;
                 }
