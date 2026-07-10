@@ -152,9 +152,9 @@ namespace SpaceTransit.Ships.Driving
 
         private void Enter(IEntryEnsurer ensurer)
         {
-            if (Parent.Target == null || ensurer.TargetStation != Parent.Target.Station)
+            if (Parent.Target is not {Station: var station, DockIndex: var index} || ensurer.TargetStation != station)
                 return;
-            if (LoadingProgress.Current != null && !Parent.Target.Station.IsLoaded() && !Assembly.IsPlayerMounted)
+            if (LoadingProgress.Current != null && !station.IsLoaded() && !Assembly.IsPlayerMounted)
             {
                 Destroy(gameObject);
                 return;
@@ -166,14 +166,14 @@ namespace SpaceTransit.Ships.Driving
             var list = Assembly.FrontModule.Cosmos.EntryList;
             if (list.isActiveAndEnabled)
             {
-                _entryRequested = list.SelectDock(Parent.Target.DockIndex);
+                _entryRequested = list.SelectDock(index);
                 return;
             }
 
             _entryRequested = false;
             foreach (var entry in ensurer.Entries)
             {
-                if (entry.Dock.Index != Parent.Target.DockIndex)
+                if (entry.Dock.Index != index)
                     continue;
                 _entryRequested = entry.Lock(Assembly);
                 break;
