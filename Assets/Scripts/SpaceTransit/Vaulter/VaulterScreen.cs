@@ -58,7 +58,7 @@ namespace SpaceTransit.Vaulter
                 _confirmation.SetVisibility(false);
         }
 
-        private bool IsDockedAt<T>() where T : ITarget => Parent.Stop is T {Station: var station}
+        private bool IsDockedAt<T>() where T : ITarget => Parent.Target is T {Station: var station}
                                                           && Controller.State == ShipState.Docked
                                                           && Assembly.FrontModule.Thruster.Tube is Dock dock
                                                           && dock.Station.ID == station;

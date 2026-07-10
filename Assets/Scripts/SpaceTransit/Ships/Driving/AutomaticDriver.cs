@@ -80,7 +80,7 @@ namespace SpaceTransit.Ships.Driving
 
         private void UpdateDocked()
         {
-            if (IsTerminus)
+            if (Parent.Target is IDestination)
                 return;
             if (_departed)
             {
