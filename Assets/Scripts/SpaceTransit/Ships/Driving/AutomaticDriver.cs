@@ -101,7 +101,7 @@ namespace SpaceTransit.Ships.Driving
 
             Controller.MarkReady();
             _departed = false;
-            _readyWait = Parent.Target is Passthrough ? 10 : 0;
+            _readyWait = Parent.Target is Passthrough || IsHouseJourney && Parent.Target is IOrigin ? 10 : 0;
             if (!Assembly.FrontModule.Thruster.Tube.Next(Assembly.Reverse))
                 Destroy(Assembly.gameObject);
         }
