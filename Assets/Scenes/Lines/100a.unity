@@ -5055,6 +5055,7 @@ GameObject:
   - component: {fileID: 856437960}
   - component: {fileID: 856437959}
   - component: {fileID: 856437961}
+  - component: {fileID: 856437962}
   m_Layer: 0
   m_Name: Dock
   m_TagString: Untagged
@@ -5127,6 +5128,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Loader.CrossSceneObject
   id: 22760004d35542ee0abe24c4afbd62f2
+--- !u!114 &856437962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 856437957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a1298c3074a46d3ba84027643a1e995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.DockUsage
 --- !u!1 &858632372
 GameObject:
   m_ObjectHideFlags: 0
@@ -6695,6 +6708,7 @@ GameObject:
   - component: {fileID: 1072560472}
   - component: {fileID: 1072560475}
   - component: {fileID: 1072560474}
+  - component: {fileID: 1072560476}
   m_Layer: 0
   m_Name: Dock
   m_TagString: Untagged
@@ -6754,6 +6768,18 @@ MonoBehaviour:
   <BackEntries>k__BackingField: []
   <Left>k__BackingField: 0
   <Right>k__BackingField: 1
+--- !u!114 &1072560476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072560471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a1298c3074a46d3ba84027643a1e995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.DockUsage
 --- !u!1 &1122120425
 GameObject:
   m_ObjectHideFlags: 0
@@ -9334,11 +9360,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4646d4f7f098491cba1384b25090dd52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Loader.WorldChanger
+  unloadFrontNames: []
+  unloadBackNames:
+  - Peshtadub
+  loadFrontNames:
+  - Peshtadub
+  loadBackNames: []
   unloadFront: []
   unloadBack:
-  - Peshtadub
+  - {fileID: 102900000, guid: 8ef813ca39661fa86b096dd755c9aac1, type: 3}
   loadFront:
-  - Peshtadub
+  - {fileID: 102900000, guid: 8ef813ca39661fa86b096dd755c9aac1, type: 3}
   loadBack: []
 --- !u!65 &1429213635
 BoxCollider:
@@ -9406,14 +9438,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4646d4f7f098491cba1384b25090dd52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Loader.WorldChanger
-  unloadFront:
+  unloadFrontNames:
   - 100
   - 120
+  unloadBackNames: []
+  loadFrontNames: []
+  loadBackNames:
+  - 100
+  - 120
+  unloadFront:
+  - {fileID: 102900000, guid: 6e57d2dabc3aa450497a68ad118f671b, type: 3}
+  - {fileID: 102900000, guid: 46c642121d5728a7ba9f1a8d0914eb93, type: 3}
   unloadBack: []
   loadFront: []
   loadBack:
-  - 100
-  - 120
+  - {fileID: 102900000, guid: 6e57d2dabc3aa450497a68ad118f671b, type: 3}
+  - {fileID: 102900000, guid: 46c642121d5728a7ba9f1a8d0914eb93, type: 3}
 --- !u!65 &1439306967
 BoxCollider:
   m_ObjectHideFlags: 0

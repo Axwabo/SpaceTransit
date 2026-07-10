@@ -100,7 +100,7 @@ namespace SpaceTransit.Vaulter
 
         private void UpdateTarget(int index)
         {
-            var stopChanged = false;
+            var previousStop = Stop;
             _targetIndex = index;
             Target = index switch
             {
@@ -113,26 +113,21 @@ namespace SpaceTransit.Vaulter
             {
                 OutOfService => null,
                 Origin => Route.Origin,
-                _ => NextStop(index, out stopChanged)
+                _ => NextStop(index)
             };
             foreach (var component in _components)
                 component.OnTargetChanged();
-            if (!stopChanged)
+            if (Stop == previousStop)
                 return;
             foreach (var component in _components)
                 component.OnStopChanged();
         }
 
-        private Stop NextStop(int index, out bool stopChanged)
+        private Stop NextStop(int index)
         {
             for (var i = index; i < _targets.Length; i++)
                 if (_targets[i] is Stop stop)
-                {
-                    stopChanged = Stop != stop;
                     return stop;
-                }
-
-            stopChanged = Stop != Route.Destination;
             return Route.Destination;
         }
 
@@ -166,34 +161,30 @@ namespace SpaceTransit.Vaulter
 
         private void Update()
         {
-            switch (Target)
+            switch (Target, Assembly.FrontModule.Thruster.Tube)
             {
-                case IntermediateStop {Conditional: true, Station: var conditionalStation} when Parent.State == ShipState.Sailing && !Assembly.IsStationary():
+                case (IntermediateStop {Conditional: true, Station: var conditionalStation}, Dock dock)
+                    when Parent.State == ShipState.Sailing
+                         && !Assembly.IsStationary()
+                         && dock.Station.ID == conditionalStation
+                         && SkipConditionalStop(conditionalStation):
                 {
-                    if (Assembly.FrontModule.Thruster.Tube is not Dock dock || dock.Station.ID != conditionalStation || !SkipConditionalStop(conditionalStation))
-                        break;
                     AdvanceTarget();
                     foreach (var component in _components)
                         component.OnConditionalStopSkipped();
                     break;
                 }
-                case Passthrough passthrough:
+                case (Passthrough passthrough, Dock dock):
                 {
-                    var tube = Assembly.FrontModule.Thruster.Tube;
-                    if (tube is Dock dock)
-                    {
-                        if (dock.Station.ID == passthrough.Station)
-                            _passingThroughDock = passthrough.Station;
-                        return;
-                    }
-
-                    if (!_passingThroughDock)
-                        return;
+                    if (dock.Station.ID == passthrough.Station)
+                        _passingThroughDock = passthrough.Station;
+                    break;
+                }
+                case (Passthrough passthrough, _) when _passingThroughDock:
                     if (_passingThroughDock == passthrough.Station)
                         AdvanceTarget();
                     _passingThroughDock = null;
                     break;
-                }
             }
         }
 

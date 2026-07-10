@@ -1,7 +1,11 @@
 using System;
+using System.Linq;
 using System.Threading;
 using SpaceTransit.Build;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace SpaceTransit.Loader
 {
@@ -14,16 +18,44 @@ namespace SpaceTransit.Loader
         public static event Action SceneFullyLoaded;
 
         [SerializeField]
-        private string[] unloadFront;
+        [HideInInspector]
+        private string[] unloadFrontNames;
 
         [SerializeField]
-        private string[] unloadBack;
+        [HideInInspector]
+        private string[] unloadBackNames;
 
         [SerializeField]
-        private string[] loadFront;
+        [HideInInspector]
+        private string[] loadFrontNames;
 
         [SerializeField]
-        private string[] loadBack;
+        [HideInInspector]
+        private string[] loadBackNames;
+
+#if UNITY_EDITOR
+        [SerializeField]
+        private SceneAsset[] unloadFront;
+
+        [SerializeField]
+        private SceneAsset[] unloadBack;
+
+        [SerializeField]
+        private SceneAsset[] loadFront;
+
+        [SerializeField]
+        private SceneAsset[] loadBack;
+
+        private void OnValidate()
+        {
+            Convert(unloadFront, out unloadFrontNames);
+            Convert(unloadBack, out unloadBackNames);
+            Convert(loadFront, out loadFrontNames);
+            Convert(loadBack, out loadBackNames);
+        }
+
+        private static void Convert(SceneAsset[] assets, out string[] names) => names = assets.Where(e => e).Select(e => e.name).ToArray();
+#endif
 
         private void OnTriggerEnter(Collider other)
         {
@@ -31,8 +63,8 @@ namespace SpaceTransit.Loader
                 return;
             var t = transform;
             var isBack = Vector3.Dot((other.transform.position - t.position).normalized, t.forward) < 0;
-            World.Unload(isBack ? unloadFront : unloadBack);
-            _ = Load(isBack ? loadFront : loadBack);
+            World.Unload(isBack ? unloadFrontNames : unloadBackNames);
+            _ = Load(isBack ? loadFrontNames : loadBackNames);
         }
 
         public static async Awaitable Load(params string[] lines)
