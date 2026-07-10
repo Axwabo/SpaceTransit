@@ -12,7 +12,7 @@ namespace SpaceTransit.Routes.Sequences
         public VaulterController prefab;
 
         [SerializeField]
-        public RouteDescriptor[] routes;
+        public JourneyDescriptorBase[] routes;
 
     }
 

@@ -29,8 +29,10 @@ namespace SpaceTransit.Routes.Sequences
 
         private static TimeSpan GetNextSortableDeparture(ServiceSequence sequence)
         {
-            foreach (var route in sequence.routes)
+            foreach (var descriptor in sequence.routes)
             {
+                if (descriptor is not RouteDescriptor route)
+                    continue;
                 var time = route.Origin.Departure.Value;
                 if (time > Clock.Now)
                     return time;
@@ -62,7 +64,7 @@ namespace SpaceTransit.Routes.Sequences
                 }
             }
 
-            var finalDestination = sequence.routes[^1].Destination;
+            var finalDestination = sequence.routes[^1].End;
             if (!Station.TryGetLoadedStation(finalDestination.Station, out var finalStation))
                 return None;
             var finalDock = finalStation.Docks[finalDestination.DockIndex];
@@ -76,18 +78,18 @@ namespace SpaceTransit.Routes.Sequences
                 ? None
                 : (new SpawnLocation(stopIndex), routeIndex);
 
-        private static (SpawnLocation, int) Enter(Station station, IntermediateStop stop, RouteDescriptor route, int stopIndex, int routeIndex)
+        private static (SpawnLocation, int) Enter(Station station, IntermediateStop stop, JourneyDescriptorBase descriptor, int stopIndex, int routeIndex)
         {
             var dock = station.Docks[stop.DockIndex];
             if (!dock.IsFree)
                 return None;
-            var entries = route.Reverse ? dock.FrontEntries : dock.BackEntries;
+            var entries = descriptor.Reverse ? dock.FrontEntries : dock.BackEntries;
             if (entries.Length == 0)
             {
-                var next = dock.Next(!route.Reverse);
+                var next = dock.Next(!descriptor.Reverse);
                 if (!next)
                     return (new SpawnLocation(stopIndex), routeIndex);
-                var second = dock.Next(!route.Reverse);
+                var second = dock.Next(!descriptor.Reverse);
                 return (new TubeSpawn(second ? second : next, stopIndex), routeIndex);
             }
 
@@ -103,7 +105,7 @@ namespace SpaceTransit.Routes.Sequences
             if (!finalEntry.IsFree || !finalEntry.Ensurer)
                 return None;
             var tube = finalEntry.Ensurer.Tube;
-            var finalTube = route.Reverse ? tube.Next : tube;
+            var finalTube = descriptor.Reverse ? tube.Next : tube;
             return finalTube
                 ? (new EntrySpawn(tube, finalEntry, stopIndex), routeIndex)
                 : (new SpawnLocation(stopIndex), routeIndex);
