@@ -79,6 +79,7 @@ namespace SpaceTransit.Vaulter
             _targetIndex = OutOfService;
             Journey = null;
             Route = null;
+            IsInService = false;
             Stop = null;
             Target = null;
             NotifyRouteChanged();
