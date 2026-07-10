@@ -40,15 +40,15 @@ namespace SpaceTransit.Ships
             await Awaitable.WaitForSecondsAsync(Random.Range(5, 15), token);
             var vaulter = LoadVaulterAsync(controller, token);
             await AwaitableExtensions.WhenAll(cosmos, vaulter);
-            if (controller.Assembly.FrontModule.Thruster.Tube is Dock dock)
+            if (controller.Assembly.FrontModule.Thruster.Tube is Dock dock && dock.Station.Announcer)
                 dock.Station.Announcer.EnqueueRestarted(controller, dock.Index);
         }
 
         private static void AnnounceRestart(ShipController controller)
         {
-            if (controller.TryGetVaulter(out var vaulter))
+            if (controller.TryGetVaulter(out var vaulter) && vaulter.IsInService)
                 vaulter.Announcer.AnnounceRestarting();
-            if (controller.Assembly.FrontModule.Thruster.Tube is Dock dock)
+            if (controller.Assembly.FrontModule.Thruster.Tube is Dock dock && dock.Station.Announcer)
                 dock.Station.Announcer.EnqueueRestarting(controller, dock.Index);
         }
 

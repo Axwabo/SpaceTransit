@@ -5,7 +5,7 @@ namespace SpaceTransit.Routes.Stops
 {
 
     [Serializable]
-    public sealed class Origin : Stop, IDeparture
+    public sealed class Origin : Stop, IOrigin
     {
 
         [field: SerializeField]

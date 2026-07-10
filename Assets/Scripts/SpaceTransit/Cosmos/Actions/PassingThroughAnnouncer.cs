@@ -40,7 +40,7 @@ namespace SpaceTransit.Cosmos.Actions
 
         private void Announce(ShipAssembly assembly)
         {
-            if (assembly.Parent.TryGetVaulter(out var vaulter) && vaulter.IsInService && dock.Station.ID != vaulter.Stop.Station && dock.Station.Announcer)
+            if (assembly.Parent.TryGetVaulter(out var vaulter) && (!vaulter.IsInService || dock.Station.ID != vaulter.Stop.Station) && dock.Station.Announcer)
                 dock.Station.Announcer.EnqueuePassingThrough(assembly, dock.Index);
         }
 

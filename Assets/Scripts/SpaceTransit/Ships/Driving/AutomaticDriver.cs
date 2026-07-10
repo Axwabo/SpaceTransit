@@ -58,13 +58,13 @@ namespace SpaceTransit.Ships.Driving
 
         private void Update()
         {
-            if (!IsInService)
+            if (!HasJourney)
                 return;
             switch (Controller.State)
             {
                 case ShipState.Docked:
                     _entryRequested = _exitRequested = _stopping = _reversing = false;
-                    Assembly.Reverse = Parent.Route.Reverse;
+                    Assembly.Reverse = Parent.Journey.Reverse;
                     UpdateDocked();
                     break;
                 case ShipState.WaitingForDeparture:
@@ -80,11 +80,11 @@ namespace SpaceTransit.Ships.Driving
 
         private void UpdateDocked()
         {
-            if (IsTerminus)
+            if (Parent.Target is IDestination)
                 return;
             if (_departed)
             {
-                var minStaySeconds = Controller.IsRestarting ? RestartedStaySeconds : MinStaySeconds;
+                var minStaySeconds = Controller.IsRestarting || IsHouseJourney ? RestartedStaySeconds : MinStaySeconds;
                 var stay = Mathf.Max(minStaySeconds, Parent.Target is IntermediateStop {MinStayMinutes: var minStay} ? minStay * 60 : 0);
                 var departIn = Parent.Target is IDeparture {Departure: var departure} ? departure.Value - Clock.Now : TimeSpan.Zero;
                 Controller.TimeToDeparture = (float) departIn.TotalSeconds;
@@ -101,7 +101,7 @@ namespace SpaceTransit.Ships.Driving
 
             Controller.MarkReady();
             _departed = false;
-            _readyWait = Parent.Target is Passthrough ? 10 : 0;
+            _readyWait = Parent.Target is Passthrough || IsHouseJourney && Parent.Target is IOrigin ? 10 : 0;
             if (!Assembly.FrontModule.Thruster.Tube.Next(Assembly.Reverse))
                 Destroy(Assembly.gameObject);
         }
@@ -146,15 +146,15 @@ namespace SpaceTransit.Ships.Driving
             }
 
             _reversing = true;
-            Assembly.Reverse = !Parent.Route.Reverse;
+            Assembly.Reverse = !Parent.Journey.Reverse;
             Assembly.SetTargetSpeed(ReversingSpeed);
         }
 
         private void Enter(IEntryEnsurer ensurer)
         {
-            if (Parent.Target == null || ensurer.TargetStation != Parent.Target.Station)
+            if (Parent.Target is not {Station: var station, DockIndex: var index} || ensurer.TargetStation != station)
                 return;
-            if (LoadingProgress.Current != null && !Parent.Target.Station.IsLoaded() && !Assembly.IsPlayerMounted)
+            if (LoadingProgress.Current != null && !station.IsLoaded() && !Assembly.IsPlayerMounted)
             {
                 Destroy(gameObject);
                 return;
@@ -166,14 +166,14 @@ namespace SpaceTransit.Ships.Driving
             var list = Assembly.FrontModule.Cosmos.EntryList;
             if (list.isActiveAndEnabled)
             {
-                _entryRequested = list.SelectDock(Parent.Target.DockIndex);
+                _entryRequested = list.SelectDock(index);
                 return;
             }
 
             _entryRequested = false;
             foreach (var entry in ensurer.Entries)
             {
-                if (entry.Dock.Index != Parent.Target.DockIndex)
+                if (entry.Dock.Index != index)
                     continue;
                 _entryRequested = entry.Lock(Assembly);
                 break;
@@ -185,7 +185,7 @@ namespace SpaceTransit.Ships.Driving
             if (!Station.TryGetLoadedStation(passthrough.Station, out var station))
                 return;
             var dock = station.Docks[passthrough.DockIndex];
-            var exits = Parent.Route.Reverse ? dock.BackExits : dock.FrontExits;
+            var exits = Parent.Journey.Reverse ? dock.BackExits : dock.FrontExits;
             if (exits.Length == 0)
             {
                 _exitRequested = CanEnterPassthrough(dock);

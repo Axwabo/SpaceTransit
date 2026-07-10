@@ -12,7 +12,11 @@ namespace SpaceTransit.Vaulter
 
         protected override void Awake() => _text = GetComponent<TextMeshProUGUI>();
 
-        public override void OnRouteChanged() => _text.text = IsInService ? Parent.Route.Destination.Station.name : "";
+        public override void OnRouteChanged() => _text.text = IsInService
+            ? Parent.Route.Destination.Station.name
+            : IsHouseJourney
+                ? "DO NOT ENTER"
+                : "";
 
         public override void OnRestarting() => _text.enabled = false;
 

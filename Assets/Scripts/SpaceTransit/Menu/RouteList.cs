@@ -20,7 +20,7 @@ namespace SpaceTransit.Menu
 
         private void Start()
         {
-            _routes = Cache.Routes.OrderBy(e => int.Parse(e.name)).ToArray();
+            _routes = Cache.Journeys.OfType<RouteDescriptor>().OrderBy(e => int.Parse(e.name)).ToArray();
             _list = this.RootVisual().Q<ListView>("Routes");
             _list.makeItem = () => new Label();
             _list.bindItem = Bind;
@@ -31,7 +31,8 @@ namespace SpaceTransit.Menu
         private void Bind(VisualElement element, int i)
         {
             var route = _routes[i];
-            ((Label) element).text = $"{route.name} {route.Origin.Station.name} - {route.Destination.Station.name}";
+            var label = element as Label ?? element.Q<Label>();
+            label.text = $"{route.name} {route.Beginning.Station.name} - {route.End.Station.name}";
         }
 
         private void OnSelectionChanged(IEnumerable<object> objects)

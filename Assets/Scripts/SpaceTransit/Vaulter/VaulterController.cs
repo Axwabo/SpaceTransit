@@ -27,10 +27,12 @@ namespace SpaceTransit.Vaulter
         private StationId _passingThroughDock;
 
         [SerializeField]
-        public RouteDescriptor initialRoute;
+        public JourneyDescriptorBase initialRoute;
 
         [SerializeField]
         public int initialStopIndex = Origin;
+
+        public JourneyDescriptorBase Journey { get; private set; }
 
         public RouteDescriptor Route { get; private set; }
 
@@ -38,7 +40,9 @@ namespace SpaceTransit.Vaulter
 
         public ITarget Target { get; private set; }
 
-        public bool IsInService => _targetIndex != OutOfService;
+        public bool IsInService { get; private set; }
+
+        public bool HasJourney => _targetIndex != OutOfService;
 
         public ReadOnlySpan<ITarget> NextTargets => _targetIndex == Destination
             ? ReadOnlySpan<ITarget>.Empty
@@ -60,7 +64,7 @@ namespace SpaceTransit.Vaulter
                 component.Initialize(this);
             if (!initialRoute)
                 return;
-            Stop origin = initialStopIndex == Origin ? initialRoute.Origin : initialRoute.IntermediateStops[initialStopIndex];
+            ITarget origin = initialStopIndex == Origin ? initialRoute.Beginning : initialRoute.IntermediateStops[initialStopIndex];
             if (!Station.TryGetLoadedStation(origin.Station, out var station))
                 return;
             if (!Assembly.startTube)
@@ -70,18 +74,22 @@ namespace SpaceTransit.Vaulter
 
         public void ExitService()
         {
-            if (!IsInService)
+            if (!HasJourney)
                 return;
             _targetIndex = OutOfService;
+            Journey = null;
             Route = null;
+            IsInService = false;
             Stop = null;
             Target = null;
             NotifyRouteChanged();
         }
 
-        public void BeginRoute(RouteDescriptor descriptor, int stopIndex = Origin)
+        public void BeginRoute(JourneyDescriptorBase descriptor, int stopIndex = Origin)
         {
-            Route = descriptor;
+            Journey = descriptor;
+            Route = descriptor as RouteDescriptor;
+            IsInService = descriptor is RouteDescriptor;
             Assembly.Reverse = descriptor.Reverse;
             var targets = new List<ITarget>();
             foreach (var stop in descriptor.IntermediateStops)
@@ -105,14 +113,14 @@ namespace SpaceTransit.Vaulter
             Target = index switch
             {
                 OutOfService => null,
-                Origin => Route.Origin,
-                Destination => Route.Destination,
+                Origin => Journey.Beginning,
+                Destination => Journey.End,
                 _ => _targets[index]
             };
             Stop = Target as Stop ?? index switch
             {
                 OutOfService => null,
-                Origin => Route.Origin,
+                Origin => Journey.Beginning as Stop,
                 _ => NextStop(index)
             };
             foreach (var component in _components)
@@ -128,7 +136,7 @@ namespace SpaceTransit.Vaulter
             for (var i = index; i < _targets.Length; i++)
                 if (_targets[i] is Stop stop)
                     return stop;
-            return Route.Destination;
+            return Journey.End as Stop;
         }
 
         public override void OnStateChanged(ShipState previousState)

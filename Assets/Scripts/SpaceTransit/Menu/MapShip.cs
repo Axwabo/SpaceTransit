@@ -44,7 +44,7 @@ namespace SpaceTransit.Menu
         private void Apply(RouteDescriptor currentRoute)
         {
             _previousRoute = currentRoute;
-            _route.text = currentRoute?.name ?? "---";
+            _route.text = currentRoute ? currentRoute.name : "---";
             (_type.text, _image.style.unityBackgroundImageTintColor) = currentRoute.GetAbbreviation();
         }
 

@@ -33,14 +33,14 @@ namespace SpaceTransit.Routes.Sequences
                 if (index == -1 || index >= sequence.routes.Length)
                 {
                     index = 0;
-                    await TomorrowAsync(ship, sequence.routes[0].Origin.Departure.Value - TimeSpan.FromHours(1), token);
+                    await TomorrowAsync(ship, sequence.routes[0].Beginning.Departure.Value - TimeSpan.FromHours(1), token);
                     ship.BeginRoute(sequence.routes[0]);
                     continue;
                 }
 
                 if (!CompletedRoute(ship))
                     continue;
-                var currentRoute = ship.Route;
+                var currentRoute = ship.Journey;
                 var restartAtSeconds = Random.Range(0, 100) < index ? Random.Range(25, 40) : -1;
                 for (var i = 0; i < 60; i += UpdateInterval)
                 {
@@ -51,13 +51,13 @@ namespace SpaceTransit.Routes.Sequences
 
                 while (ship.Parent.IsRestarting)
                     await WaitOrUnloadAsync(ship, token);
-                if (ship.Route == currentRoute)
+                if (ship.Journey == currentRoute)
                     ship.BeginRoute(sequence.routes[++index]);
             }
         }
 
         private static bool CompletedRoute(VaulterController ship)
-            => ship.Stop is Destination {Station: var station}
+            => ship.Target is IDestination {Station: var station}
                && ship.Parent.State == ShipState.Docked
                && ship.Assembly.IsStationary()
                && !ship.Assembly.IsManuallyDriven
@@ -100,7 +100,7 @@ namespace SpaceTransit.Routes.Sequences
             await Awaitable.WaitForSecondsAsync(UpdateInterval, token);
             if (LoadingProgress.Current != null
                 || ship.Assembly.IsPlayerMounted
-                || ship.IsInService && ship.Target.Station.IsLoaded()
+                || ship.HasJourney && ship.Target.Station.IsLoaded()
                 || ship.Assembly.FrontModule.Thruster.Tube is Dock dock && dock.Station.ID.IsLoaded())
                 return;
             Object.Destroy(ship.gameObject);

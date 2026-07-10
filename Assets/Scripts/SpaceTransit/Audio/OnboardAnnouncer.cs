@@ -42,7 +42,7 @@ namespace SpaceTransit.Audio
 
         private void Update()
         {
-            if (Controller.State != ShipState.Sailing || !Parent.IsInService)
+            if (Controller.State != ShipState.Sailing || !IsInService)
             {
                 _wasSailing = false;
                 return;

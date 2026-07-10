@@ -52,16 +52,16 @@ namespace SpaceTransit.Vaulter
         {
             if (_routesShown)
                 return;
-            if (IsDockedAt<Destination>())
+            if (IsDockedAt<IDestination>())
                 Show(true, false);
             if ((_exitCooldown -= Clock.Delta) <= 0)
                 _confirmation.SetVisibility(false);
         }
 
-        private bool IsDockedAt<T>() where T : IStop => Parent.Stop is T {Station: var station}
-                                                        && Controller.State == ShipState.Docked
-                                                        && Assembly.FrontModule.Thruster.Tube is Dock dock
-                                                        && dock.Station.ID == station;
+        private bool IsDockedAt<T>() where T : ITarget => Parent.Target is T {Station: var station}
+                                                          && Controller.State == ShipState.Docked
+                                                          && Assembly.FrontModule.Thruster.Tube is Dock dock
+                                                          && dock.Station.ID == station;
 
         protected override void OnInitialized()
         {
@@ -73,11 +73,11 @@ namespace SpaceTransit.Vaulter
             stops.Screen.Initialize();
             if (Parent.initialRoute)
                 return;
-            Show(!IsInService, true);
+            Show(!HasJourney, true);
             routes.Refresh(Assembly.startTube);
         }
 
-        public override void OnRouteChanged() => Show(!IsInService, false);
+        public override void OnRouteChanged() => Show(!HasJourney, false);
 
         public override void OnTargetChanged() => HideConfirmation();
 
@@ -91,7 +91,7 @@ namespace SpaceTransit.Vaulter
                 return;
             _routesShown = showRoutes;
             _current = showRoutes ? routes.Screen : stops.Screen;
-            _title.text = showRoutes ? "Pick a Route" : $"{Parent.Route.name} {Parent.Route.Summary()}";
+            _title.text = showRoutes ? "Pick a Route" : RouteList.Format(Parent.Journey);
             routes.enabled = showRoutes;
             stops.enabled = !showRoutes;
             HideConfirmation();
@@ -118,7 +118,7 @@ namespace SpaceTransit.Vaulter
         {
             if (Controller.IsRestarting)
                 return;
-            if (!_routesShown && stops.Screen.IsAtZeroOffset && IsDockedAt<Origin>())
+            if (!_routesShown && stops.Screen.IsAtZeroOffset && IsDockedAt<IOrigin>())
             {
                 ToggleExitConfirmation();
                 return;

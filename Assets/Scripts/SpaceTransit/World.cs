@@ -24,7 +24,7 @@ namespace SpaceTransit
         private Transform stationSignPrefab;
 
         [SerializeField]
-        private RouteDescriptor[] extraRoutes;
+        private HouseJourneyDescriptor[] extraRoutes;
 
         public static Dictionary<string, Transform> Worlds { get; } = new();
 
@@ -36,7 +36,7 @@ namespace SpaceTransit
 
         public static bool IsTestWorld => Current.name == "Test";
 
-        public static RouteDescriptor[] ExtraRoutes { get; private set; }
+        public static HouseJourneyDescriptor[] ExtraRoutes { get; private set; }
 
         private string _line;
 

@@ -12,7 +12,7 @@ namespace SpaceTransit.Routes
 {
 
     [CreateAssetMenu(fileName = "Route", menuName = "SpaceTransit/Route", order = 0)]
-    public sealed class RouteDescriptor : ScriptableObject
+    public sealed class RouteDescriptor : JourneyDescriptorBase
     {
 
         private IntermediateStop[] _intermediateStops;
@@ -24,9 +24,6 @@ namespace SpaceTransit.Routes
 
         [field: SerializeField]
         public bool EveryStation { get; private set; }
-
-        [field: SerializeField]
-        public bool Reverse { get; private set; }
 
         [field: SerializeField]
         public Origin Origin { get; private set; }
@@ -43,9 +40,13 @@ namespace SpaceTransit.Routes
         [SerializeField]
         private Passthrough[] passthrough;
 
-        public ReadOnlySpan<IntermediateStop> IntermediateStops => _intermediateStops;
+        public override ReadOnlySpan<IntermediateStop> IntermediateStops => _intermediateStops;
 
-        public ReadOnlySpan<Passthrough> Passthrough => _passthrough;
+        public override IOrigin Beginning => Origin;
+
+        public override IDestination End => Destination;
+
+        public override ReadOnlySpan<Passthrough> Passthrough => _passthrough;
 
         public IKatilect Katilect => schedule ? schedule.katilectOverride : null;
 

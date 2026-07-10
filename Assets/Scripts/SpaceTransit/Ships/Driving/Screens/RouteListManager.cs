@@ -31,7 +31,7 @@ namespace SpaceTransit.Ships.Driving.Screens
                 if (World.ExtraRoutes.Length != 0)
                     Append(World.ExtraRoutes, dock, false);
                 else
-                    Append(Cache.Routes, dock, true);
+                    Append(Cache.Journeys, dock, true);
             }
 
             Screen.Source.Insert(0, RoutePicker.ExitService);
@@ -50,10 +50,10 @@ namespace SpaceTransit.Ships.Driving.Screens
             }
         }
 
-        private void Append(ReadOnlySpan<RouteDescriptor> routes, Dock dock, bool sort)
+        private void Append(ReadOnlySpan<JourneyDescriptorBase> routes, Dock dock, bool sort)
         {
             foreach (var route in routes)
-                if (route.Origin.Station == dock.Station.ID && (AvailableExits.Count == 0 || AvailableExits.Contains(route.Origin.ExitTowards)))
+                if (route.Beginning.Station == dock.Station.ID && (AvailableExits.Count == 0 || AvailableExits.Contains(route.Beginning.ExitTowards)))
                     Screen.Source.Add(new RoutePicker(route));
             if (sort)
                 Screen.Source.Sort((a, b) =>

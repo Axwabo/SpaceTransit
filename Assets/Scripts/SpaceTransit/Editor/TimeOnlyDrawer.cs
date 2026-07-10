@@ -12,7 +12,7 @@ namespace SpaceTransit.Editor
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             var time = (TimeOnly) property.boxedValue;
-            var value = EditorGUI.TextField(position, label, $"{time.Value:hh':'mm}");
+            var value = EditorGUI.TextField(position, label, time.ToString());
             if (!value.Contains(':'))
                 return;
             var split = value.Split(':');

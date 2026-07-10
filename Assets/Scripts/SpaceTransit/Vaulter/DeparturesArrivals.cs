@@ -23,8 +23,10 @@ namespace SpaceTransit.Vaulter
             StationId = Station.ID;
             var departures = new List<DepartureEntry>();
             var arrivals = new List<ArrivalEntry>();
-            foreach (var route in Cache.Routes)
+            foreach (var journey in Cache.Journeys)
             {
+                if (journey is not RouteDescriptor route)
+                    continue;
                 if (route.Origin.Station.name == StationId.name)
                 {
                     departures.Add(new DepartureEntry(route, -1, route.Origin));
