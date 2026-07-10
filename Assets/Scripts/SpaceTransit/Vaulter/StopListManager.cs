@@ -43,7 +43,7 @@ namespace SpaceTransit.Vaulter
         {
             Screen.ResetPosition();
             Screen.Source.Clear();
-            if (!IsInService)
+            if (!HasJourney)
                 return;
             Add(Parent.Target);
             if (Parent.Target is IDestination)

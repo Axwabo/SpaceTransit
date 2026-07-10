@@ -186,7 +186,7 @@ namespace SpaceTransit.Ships
             if (list.TryGetPicked(out exit))
                 return true;
             if (!TryGetVaulter(out var controller)
-                || !controller.IsInService
+                || !controller.HasJourney
                 || controller.Target is not IExitTowards {ExitTowards: var towards}
                 || Assembly.FrontModule.Thruster.Tube is not Dock dock)
             {

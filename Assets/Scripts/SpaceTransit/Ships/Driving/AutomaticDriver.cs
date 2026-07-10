@@ -58,7 +58,7 @@ namespace SpaceTransit.Ships.Driving
 
         private void Update()
         {
-            if (!IsInService)
+            if (!HasJourney)
                 return;
             switch (Controller.State)
             {

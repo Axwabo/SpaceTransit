@@ -40,7 +40,9 @@ namespace SpaceTransit.Vaulter
 
         public ITarget Target { get; private set; }
 
-        public bool IsInService => _targetIndex != OutOfService;
+        public bool IsInService { get; private set; }
+
+        public bool HasJourney => _targetIndex != OutOfService;
 
         public ReadOnlySpan<ITarget> NextTargets => _targetIndex == Destination
             ? ReadOnlySpan<ITarget>.Empty
@@ -72,7 +74,7 @@ namespace SpaceTransit.Vaulter
 
         public void ExitService()
         {
-            if (!IsInService)
+            if (!HasJourney)
                 return;
             _targetIndex = OutOfService;
             Journey = null;
@@ -86,6 +88,7 @@ namespace SpaceTransit.Vaulter
         {
             Journey = descriptor;
             Route = descriptor as RouteDescriptor;
+            IsInService = descriptor is RouteDescriptor;
             Assembly.Reverse = descriptor.Reverse;
             var targets = new List<ITarget>();
             foreach (var stop in descriptor.IntermediateStops)

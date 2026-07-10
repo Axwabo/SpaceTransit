@@ -73,11 +73,11 @@ namespace SpaceTransit.Vaulter
             stops.Screen.Initialize();
             if (Parent.initialRoute)
                 return;
-            Show(!IsInService, true);
+            Show(!HasJourney, true);
             routes.Refresh(Assembly.startTube);
         }
 
-        public override void OnRouteChanged() => Show(!IsInService, false);
+        public override void OnRouteChanged() => Show(!HasJourney, false);
 
         public override void OnTargetChanged() => HideConfirmation();
 
@@ -91,7 +91,11 @@ namespace SpaceTransit.Vaulter
                 return;
             _routesShown = showRoutes;
             _current = showRoutes ? routes.Screen : stops.Screen;
-            _title.text = showRoutes ? "Pick a Route" : $"{Parent.Route.name} {Parent.Route.Summary()}";
+            _title.text = showRoutes
+                ? "Pick a Route"
+                : Parent.IsInService
+                    ? $"{Parent.Route.name} {Parent.Route.Summary()}"
+                    : Parent.Journey.name;
             routes.enabled = showRoutes;
             stops.enabled = !showRoutes;
             HideConfirmation();
