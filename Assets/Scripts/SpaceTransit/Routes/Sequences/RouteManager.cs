@@ -68,7 +68,7 @@ namespace SpaceTransit.Routes.Sequences
             if (!Station.TryGetLoadedStation(finalDestination.Station, out var finalStation))
                 return None;
             var finalDock = finalStation.Docks[finalDestination.DockIndex];
-            return !finalDock.IsFree
+            return !finalDock.IsFree || sequence.routes[^1] is RouteDescriptor {Destination: {Arrival: var finalArrival}} && finalArrival > Clock.Now + TimeSpan.FromMinutes(10)
                 ? None
                 : (new TubeSpawn(finalDock), -1);
         }
