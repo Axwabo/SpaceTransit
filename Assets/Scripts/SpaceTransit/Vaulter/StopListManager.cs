@@ -46,11 +46,11 @@ namespace SpaceTransit.Vaulter
             if (!IsInService)
                 return;
             Add(Parent.Target);
-            if (Parent.Target is Destination)
+            if (Parent.Target is IDestination)
                 return;
             foreach (var stop in Parent.NextTargets)
                 Add(stop);
-            Add(Parent.Route.Destination);
+            Add(Parent.Journey.End);
         }
 
         private void Add(ITarget target)

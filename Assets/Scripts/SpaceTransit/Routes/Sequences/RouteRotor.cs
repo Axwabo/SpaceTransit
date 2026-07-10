@@ -40,7 +40,7 @@ namespace SpaceTransit.Routes.Sequences
 
                 if (!CompletedRoute(ship))
                     continue;
-                var currentRoute = ship.Route;
+                var currentRoute = ship.Journey;
                 var restartAtSeconds = Random.Range(0, 100) < index ? Random.Range(25, 40) : -1;
                 for (var i = 0; i < 60; i += UpdateInterval)
                 {
@@ -51,13 +51,13 @@ namespace SpaceTransit.Routes.Sequences
 
                 while (ship.Parent.IsRestarting)
                     await WaitOrUnloadAsync(ship, token);
-                if (ship.Route == currentRoute)
+                if (ship.Journey == currentRoute)
                     ship.BeginRoute(sequence.routes[++index]);
             }
         }
 
         private static bool CompletedRoute(VaulterController ship)
-            => ship.Stop is Destination {Station: var station}
+            => ship.Target is IDestination {Station: var station}
                && ship.Parent.State == ShipState.Docked
                && ship.Assembly.IsStationary()
                && !ship.Assembly.IsManuallyDriven

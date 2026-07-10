@@ -13,7 +13,9 @@ namespace SpaceTransit.Routes
 
         public abstract IExitTowards Beginning { get; }
 
-        public abstract ITarget End { get; }
+        public abstract IDestination End { get; }
+
+        public virtual ReadOnlySpan<IntermediateStop> IntermediateStops => default;
 
         public abstract ReadOnlySpan<Passthrough> Passthrough { get; }
 

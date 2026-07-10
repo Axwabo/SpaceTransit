@@ -40,11 +40,11 @@ namespace SpaceTransit.Routes
         [SerializeField]
         private Passthrough[] passthrough;
 
-        public ReadOnlySpan<IntermediateStop> IntermediateStops => _intermediateStops;
+        public override ReadOnlySpan<IntermediateStop> IntermediateStops => _intermediateStops;
 
         public override IExitTowards Beginning => Origin;
 
-        public override ITarget End => Destination;
+        public override IDestination End => Destination;
 
         public override ReadOnlySpan<Passthrough> Passthrough => _passthrough;
 

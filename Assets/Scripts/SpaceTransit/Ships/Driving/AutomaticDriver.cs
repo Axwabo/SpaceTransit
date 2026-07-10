@@ -64,7 +64,7 @@ namespace SpaceTransit.Ships.Driving
             {
                 case ShipState.Docked:
                     _entryRequested = _exitRequested = _stopping = _reversing = false;
-                    Assembly.Reverse = Parent.Route.Reverse;
+                    Assembly.Reverse = Parent.Journey.Reverse;
                     UpdateDocked();
                     break;
                 case ShipState.WaitingForDeparture:
@@ -146,7 +146,7 @@ namespace SpaceTransit.Ships.Driving
             }
 
             _reversing = true;
-            Assembly.Reverse = !Parent.Route.Reverse;
+            Assembly.Reverse = !Parent.Journey.Reverse;
             Assembly.SetTargetSpeed(ReversingSpeed);
         }
 
@@ -185,7 +185,7 @@ namespace SpaceTransit.Ships.Driving
             if (!Station.TryGetLoadedStation(passthrough.Station, out var station))
                 return;
             var dock = station.Docks[passthrough.DockIndex];
-            var exits = Parent.Route.Reverse ? dock.BackExits : dock.FrontExits;
+            var exits = Parent.Journey.Reverse ? dock.BackExits : dock.FrontExits;
             if (exits.Length == 0)
             {
                 _exitRequested = CanEnterPassthrough(dock);

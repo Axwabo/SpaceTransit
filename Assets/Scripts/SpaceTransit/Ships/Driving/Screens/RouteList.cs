@@ -1,5 +1,4 @@
-﻿using SpaceTransit.Vaulter;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace SpaceTransit.Ships.Driving.Screens
@@ -14,7 +13,7 @@ namespace SpaceTransit.Ships.Driving.Screens
         private void Awake() => _manager = GetComponent<RouteListManager>();
 
         protected override string GetContent(RoutePicker item)
-            => ReferenceEquals(item, RoutePicker.ExitService) ? "Exit Service" : RouteDisplay.Format(item.Descriptor);
+            => ReferenceEquals(item, RoutePicker.ExitService) ? "Exit Service" : Menu.RouteList.Format(item.Descriptor);
 
         protected override void Select(RoutePicker item)
         {

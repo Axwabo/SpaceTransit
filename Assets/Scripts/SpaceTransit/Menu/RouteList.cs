@@ -41,6 +41,9 @@ namespace SpaceTransit.Menu
                 timetable.Apply(route);
         }
 
+        public static string Format(RouteDescriptor route)
+            => $"{route.name} {route.Summary()}";
+
     }
 
 }
