@@ -42,7 +42,7 @@ namespace SpaceTransit.Routes
 
         public override ReadOnlySpan<IntermediateStop> IntermediateStops => _intermediateStops;
 
-        public override IExitTowards Beginning => Origin;
+        public override IOrigin Beginning => Origin;
 
         public override IDestination End => Destination;
 

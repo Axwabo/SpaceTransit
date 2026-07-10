@@ -52,16 +52,16 @@ namespace SpaceTransit.Vaulter
         {
             if (_routesShown)
                 return;
-            if (IsDockedAt<Destination>())
+            if (IsDockedAt<IDestination>())
                 Show(true, false);
             if ((_exitCooldown -= Clock.Delta) <= 0)
                 _confirmation.SetVisibility(false);
         }
 
-        private bool IsDockedAt<T>() where T : IStop => Parent.Stop is T {Station: var station}
-                                                        && Controller.State == ShipState.Docked
-                                                        && Assembly.FrontModule.Thruster.Tube is Dock dock
-                                                        && dock.Station.ID == station;
+        private bool IsDockedAt<T>() where T : ITarget => Parent.Stop is T {Station: var station}
+                                                          && Controller.State == ShipState.Docked
+                                                          && Assembly.FrontModule.Thruster.Tube is Dock dock
+                                                          && dock.Station.ID == station;
 
         protected override void OnInitialized()
         {
@@ -122,7 +122,7 @@ namespace SpaceTransit.Vaulter
         {
             if (Controller.IsRestarting)
                 return;
-            if (!_routesShown && stops.Screen.IsAtZeroOffset && IsDockedAt<Origin>())
+            if (!_routesShown && stops.Screen.IsAtZeroOffset && IsDockedAt<IOrigin>())
             {
                 ToggleExitConfirmation();
                 return;

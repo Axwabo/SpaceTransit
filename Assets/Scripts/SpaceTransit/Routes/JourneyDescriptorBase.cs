@@ -11,7 +11,7 @@ namespace SpaceTransit.Routes
         [field: SerializeField]
         public bool Reverse { get; private set; }
 
-        public abstract IExitTowards Beginning { get; }
+        public abstract IOrigin Beginning { get; }
 
         public abstract IDestination End { get; }
 
