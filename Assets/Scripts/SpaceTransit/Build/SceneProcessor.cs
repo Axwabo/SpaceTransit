@@ -68,7 +68,7 @@ namespace SpaceTransit.Build
 
             foreach (var station in stations)
             {
-                if (!station.ID)
+                if (!station.ID || station.ID.OutOfService)
                     continue;
                 var position = station.transform.localPosition;
                 if (position == station.ID.position)

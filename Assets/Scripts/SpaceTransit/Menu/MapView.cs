@@ -86,7 +86,7 @@ namespace SpaceTransit.Menu
                 if (station.position != Vector3.zero && _placedStations.Add(station))
                     PlaceStation(station.position, station.name);
             foreach (var station in Station.LoadedStations)
-                if (_placedStations.Add(station.ID))
+                if (!station.ID.OutOfService && _placedStations.Add(station.ID))
                     PlaceStation(station.transform.localPosition, station.ID.name);
         }
 

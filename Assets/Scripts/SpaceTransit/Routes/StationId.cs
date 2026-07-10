@@ -10,6 +10,9 @@ namespace SpaceTransit.Routes
     {
 
         [field: SerializeField]
+        public bool OutOfService { get; set; }
+
+        [field: SerializeField]
         public AudioClip Announcement { get; set; }
 
         [SerializeField]
