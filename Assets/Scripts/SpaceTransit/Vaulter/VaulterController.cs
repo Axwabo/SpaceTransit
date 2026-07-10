@@ -166,34 +166,30 @@ namespace SpaceTransit.Vaulter
 
         private void Update()
         {
-            switch (Target)
+            switch (Target, Assembly.FrontModule.Thruster.Tube)
             {
-                case IntermediateStop {Conditional: true, Station: var conditionalStation} when Parent.State == ShipState.Sailing && !Assembly.IsStationary():
+                case (IntermediateStop {Conditional: true, Station: var conditionalStation}, Dock dock)
+                    when Parent.State == ShipState.Sailing
+                         && !Assembly.IsStationary()
+                         && dock.Station.ID == conditionalStation
+                         && SkipConditionalStop(conditionalStation):
                 {
-                    if (Assembly.FrontModule.Thruster.Tube is not Dock dock || dock.Station.ID != conditionalStation || !SkipConditionalStop(conditionalStation))
-                        break;
                     AdvanceTarget();
                     foreach (var component in _components)
                         component.OnConditionalStopSkipped();
                     break;
                 }
-                case Passthrough passthrough:
+                case (Passthrough passthrough, Dock dock):
                 {
-                    var tube = Assembly.FrontModule.Thruster.Tube;
-                    if (tube is Dock dock)
-                    {
-                        if (dock.Station.ID == passthrough.Station)
-                            _passingThroughDock = passthrough.Station;
-                        return;
-                    }
-
-                    if (!_passingThroughDock)
-                        return;
+                    if (dock.Station.ID == passthrough.Station)
+                        _passingThroughDock = passthrough.Station;
+                    break;
+                }
+                case (Passthrough passthrough, _) when _passingThroughDock:
                     if (_passingThroughDock == passthrough.Station)
                         AdvanceTarget();
                     _passingThroughDock = null;
                     break;
-                }
             }
         }
 

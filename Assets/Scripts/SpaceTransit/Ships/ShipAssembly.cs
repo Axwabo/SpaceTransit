@@ -66,12 +66,12 @@ namespace SpaceTransit.Ships
                 throw new MissingComponentException("Ships must have at least 1 module");
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             if (CurrentSpeed < TargetSpeed)
-                CurrentSpeed = CurrentSpeed.MoveTowards(TargetSpeed.Raw, Clock.Delta * Acceleration, MaxSpeed);
+                CurrentSpeed = CurrentSpeed.MoveTowards(TargetSpeed.Raw, Clock.FixedDelta * Acceleration, MaxSpeed);
             else if (CurrentSpeed > TargetSpeed)
-                CurrentSpeed = CurrentSpeed.MoveTowards(TargetSpeed.Raw, Clock.Delta * Deceleration, MaxSpeed);
+                CurrentSpeed = CurrentSpeed.MoveTowards(TargetSpeed.Raw, Clock.FixedDelta * Deceleration, MaxSpeed);
             IsPlayerMounted = false;
             if (!MovementController.Current.IsMounted)
                 return;
