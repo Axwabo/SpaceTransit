@@ -28,13 +28,12 @@ namespace SpaceTransit.Editor
 
             foreach (var descriptor in rotor.routes)
             {
-                if (descriptor is not RouteDescriptor route)
-                    continue;
-                if (IsInvalid(route, lastTime, lastStop, lastDock))
+                if (IsInvalid(descriptor, lastTime, lastStop, lastDock))
                     break;
-                lastTime = route.Destination.Arrival.Value;
-                lastStop = route.Destination.Station;
-                lastDock = route.Destination.DockIndex;
+                if (descriptor is RouteDescriptor route)
+                    lastTime = route.Destination.Arrival.Value;
+                lastStop = descriptor.End.Station;
+                lastDock = descriptor.End.DockIndex;
             }
 
             DefaultInspector(rotor);
@@ -65,21 +64,21 @@ namespace SpaceTransit.Editor
             return true;
         }
 
-        private static bool IsInvalid(RouteDescriptor descriptor, TimeSpan lastTime, StationId lastStop, int lastDock)
+        private static bool IsInvalid(JourneyDescriptorBase descriptor, TimeSpan lastTime, StationId lastStop, int lastDock)
         {
-            if (descriptor.Origin.Departure < lastTime)
+            if (descriptor.Beginning.Departure < lastTime)
             {
-                EditorGUILayout.HelpBox($"Routes are not continuous!\n{descriptor.name} departure {descriptor.Origin.Departure.Value:hh':'mm} < {lastTime:hh':'mm}", MessageType.Error);
+                EditorGUILayout.HelpBox($"Routes are not continuous!\n{descriptor.name} departure {descriptor.Beginning.Departure.Value:hh':'mm} < {lastTime:hh':'mm}", MessageType.Error);
                 return true;
             }
 
-            if (lastStop && lastStop != descriptor.Origin.Station)
+            if (lastStop && lastStop != descriptor.Beginning.Station)
             {
                 EditorGUILayout.HelpBox($"Routes are not continuous!\n{descriptor.name} origin != {lastStop.name}", MessageType.Error);
                 return true;
             }
 
-            if (lastDock != descriptor.Origin.DockIndex)
+            if (lastDock != descriptor.Beginning.DockIndex)
                 EditorGUILayout.HelpBox($"Routes continuity dock mismatch!\n{descriptor.name} origin dock != {lastDock}", MessageType.Warning);
             return false;
         }
