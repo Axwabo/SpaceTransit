@@ -100,7 +100,7 @@ namespace SpaceTransit.Vaulter
 
         private void UpdateTarget(int index)
         {
-            var stopChanged = false;
+            var previousStop = Stop;
             _targetIndex = index;
             Target = index switch
             {
@@ -113,26 +113,21 @@ namespace SpaceTransit.Vaulter
             {
                 OutOfService => null,
                 Origin => Route.Origin,
-                _ => NextStop(index, out stopChanged)
+                _ => NextStop(index)
             };
             foreach (var component in _components)
                 component.OnTargetChanged();
-            if (!stopChanged)
+            if (Stop == previousStop)
                 return;
             foreach (var component in _components)
                 component.OnStopChanged();
         }
 
-        private Stop NextStop(int index, out bool stopChanged)
+        private Stop NextStop(int index)
         {
             for (var i = index; i < _targets.Length; i++)
                 if (_targets[i] is Stop stop)
-                {
-                    stopChanged = Stop != stop;
                     return stop;
-                }
-
-            stopChanged = Stop != Route.Destination;
             return Route.Destination;
         }
 
