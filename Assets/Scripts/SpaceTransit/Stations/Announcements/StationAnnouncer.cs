@@ -29,6 +29,9 @@ namespace SpaceTransit.Stations.Announcements
         [SerializeField]
         private PhrasePack pack;
 
+        [SerializeField]
+        private FormattingKatilect katilect;
+
         private QueuePlayer _queue;
 
         private DeparturesArrivals _cache;
@@ -45,10 +48,9 @@ namespace SpaceTransit.Stations.Announcements
 
         private List<ArrivalEntry> _arrivals;
 
-        private string _name;
+        private int _previousDay;
 
-        [SerializeField]
-        private FormattingKatilect katilect;
+        private string _name;
 
         private void Awake()
         {
@@ -72,12 +74,16 @@ namespace SpaceTransit.Stations.Announcements
             _arrivals = _cache.Arrivals
                 .OrderBy(e => e.Arrival.Arrival.Value.TotalMinutes)
                 .ToList();
-            _queue.Delay(0.5f);
             _name = $"K.A.T.I.E. <color=#888>({_cache.StationId.name})</color>";
+            EnqueueScheduledAnnouncements();
         }
 
         private void Update()
         {
+            if (Clock.SecondsSinceLevelLoad < 0.5)
+                return;
+            if (_previousDay != Clock.Date.Day)
+                EnqueueScheduledAnnouncements();
             var previous = _current;
             var interrupt = UpdateQueue();
             if (interrupt != previous)
@@ -100,15 +106,19 @@ namespace SpaceTransit.Stations.Announcements
                 Announce(context, announcement);
                 return;
             }
+        }
 
-            foreach (var (route, index, departure) in _departures)
+        private void EnqueueScheduledAnnouncements()
+        {
+            var date = Clock.Date;
+            var now = date.TimeOfDay;
+            _previousDay = date.Day;
+            foreach (var entry in _departures)
             {
-                var context = new AnnouncementContext<IDeparture>(route, departure, pack);
-                if (departure.Departure.Value < Clock.Now
-                    || katilect.GetAnnouncement(ref context, index, _announced.GetValueOrDefault(route, -1)) is not { } announcement)
+                if (entry.Departure.Departure <= now)
                     continue;
-                Announce(context, announcement);
-                return;
+                Enqueue(DepartureAnnouncement.In15(entry, katilect));
+                Enqueue(DepartureAnnouncement.In10(entry, katilect));
             }
         }
 

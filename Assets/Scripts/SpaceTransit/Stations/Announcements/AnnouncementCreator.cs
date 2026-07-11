@@ -12,7 +12,7 @@ namespace SpaceTransit.Stations.Announcements
 
         public const string PleaseBoard = "Please board the ship.";
 
-        private static bool AnyShip(this IStop stop)
+        public static bool AnyShip(this IStop stop)
         {
             foreach (var assembly in ShipAssembly.Instances)
                 if (!assembly.Parent.IsRestarting && assembly.Parent.TryGetVaulter(out var vaulter) && vaulter.Stop == stop)

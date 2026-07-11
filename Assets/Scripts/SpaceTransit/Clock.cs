@@ -26,6 +26,8 @@ namespace SpaceTransit
 
         public static TimeSpan StartTime { get; set; } = DateTime.Now.TimeOfDay;
 
+        public static double SecondsSinceLevelLoad => Math.Max(0, Time.timeSinceLevelLoadAsDouble - OffsetSeconds);
+
         private bool _isUIDocument;
 
         private TextMeshProUGUI _text;

@@ -32,9 +32,9 @@ namespace SpaceTransit.Stations.Announcements
             ? UpdateResult.Idle
             : Clock.Now >= Expiry
                 ? UpdateResult.Remove
-                : UpdateActive();
-
-        protected abstract UpdateResult UpdateActive();
+                : Stop.AnyShip()
+                    ? UpdateResult.Ready
+                    : UpdateResult.Idle;
 
     }
 

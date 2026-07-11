@@ -23,7 +23,7 @@ namespace SpaceTransit.Loader
 
         private void Update()
         {
-            if (LoadingProgress.Current == null || Time.timeSinceLevelLoadAsDouble < Clock.OffsetSeconds + 1)
+            if (LoadingProgress.Current == null || Clock.OffsetSeconds < 1)
             {
                 _container?.SetVisibility(false);
                 return;
