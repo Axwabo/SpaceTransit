@@ -1,0 +1,37 @@
+using Katie.Unity;
+using SpaceTransit.Routes;
+using SpaceTransit.Routes.Stops;
+using SpaceTransit.Stations.Announcements.Katilects;
+
+namespace SpaceTransit.Stations.Announcements
+{
+
+    public abstract class ScheduledAnnouncementBase<TContext, TStop> : AnnouncementBase where TContext : IStop where TStop : TContext
+    {
+
+        private readonly IKatilect _station;
+
+        protected RouteDescriptor Route { get; }
+        protected TStop Stop { get; }
+
+        protected ScheduledAnnouncementBase(RouteDescriptor route, TStop stop, IKatilect station)
+        {
+            _station = station;
+            Route = route;
+            Stop = stop;
+        }
+
+        public sealed override bool InterHub => Route.Type == ServiceType.InterHub;
+
+        public sealed override void OnUtteranceStarting(ref PhrasePack pack)
+        {
+            var context = new AnnouncementContext<TContext>(Route, Stop, pack);
+            FinalAnnouncement = BuildAnnouncement(Route.Katilect.Or(_station), ref context);
+            pack = context.Pack;
+        }
+
+        protected abstract string BuildAnnouncement(IKatilect katilect, ref AnnouncementContext<TContext> context);
+
+    }
+
+}
