@@ -116,6 +116,7 @@ namespace SpaceTransit.Stations.Announcements
                 Enqueue(DepartureAnnouncement.In10(entry, katilect));
                 Enqueue(DepartureAnnouncement.In5(entry, katilect));
                 Enqueue(DepartureAnnouncement.In3(entry, katilect));
+                Enqueue(DepartureAnnouncement.Immediately(entry, katilect));
             }
         }
 

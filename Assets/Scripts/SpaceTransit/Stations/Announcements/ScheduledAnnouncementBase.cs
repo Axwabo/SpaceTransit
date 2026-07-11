@@ -14,6 +14,8 @@ namespace SpaceTransit.Stations.Announcements
 
         private readonly TimeSpan _expiry;
 
+        protected int MinuteMark { get; }
+
         protected CancellationToken Cancellation { get; init; }
 
         public bool CustomExpiry => Cancellation.CanBeCanceled;
@@ -24,6 +26,7 @@ namespace SpaceTransit.Stations.Announcements
 
         protected ScheduledAnnouncementBase(RouteDescriptor route, T stop, int minuteMark, int expiryMinutes, IKatilect station) : base(route, stop, station)
         {
+            MinuteMark = minuteMark;
             _time = stop switch
             {
                 IArrival arrival => arrival.Arrival.Value,
