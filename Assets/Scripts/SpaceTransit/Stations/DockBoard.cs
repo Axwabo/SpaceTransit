@@ -64,8 +64,6 @@ namespace SpaceTransit.Stations
 
         private void Update()
         {
-            if (string.IsNullOrEmpty(Dock))
-                Refresh();
             if ((_delay -= Clock.Delta) > 0)
                 return;
             _delay = 10;
@@ -74,7 +72,13 @@ namespace SpaceTransit.Stations
             {
                 if (entry.Time < now)
                     continue;
-                LongType = entry.Route.Type.ToStringFast();
+                LongType = entry.Route.Type switch
+                {
+                    ServiceType.Passenger => "passenger",
+                    ServiceType.Fast => "fast",
+                    ServiceType.InterHub => "IH",
+                    _ => throw new InvalidOperationException()
+                };
                 Time = entry.Time.ToString();
                 (ShortType, Color) = entry.Route.GetAbbreviation();
                 (Station, Action) = entry switch
@@ -90,8 +94,10 @@ namespace SpaceTransit.Stations
             LongType = ShortType = Time = Station = Action = "";
         }
 
-        private void Refresh()
+        private void LateUpdate()
         {
+            if (!string.IsNullOrEmpty(Dock))
+                return;
             Dock = (dock.Index + 1).ToString();
             foreach (var entry in _departuresArrivals.Departures)
                 if (entry.Departure.DockIndex == dock.Index)
