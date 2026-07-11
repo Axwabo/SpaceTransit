@@ -1,6 +1,6 @@
 using SpaceTransit.Ships;
 
-namespace SpaceTransit.Stations.Announcements
+namespace SpaceTransit.Stations.Announcements.Implementations
 {
 
     public sealed class NonScheduledAnnouncement : AnnouncementBase

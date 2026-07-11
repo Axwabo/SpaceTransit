@@ -3,7 +3,7 @@ using SpaceTransit.Routes.Stops;
 using SpaceTransit.Stations.Announcements.Katilects;
 using SpaceTransit.Vaulter;
 
-namespace SpaceTransit.Stations.Announcements
+namespace SpaceTransit.Stations.Announcements.Implementations
 {
 
     public sealed class IntermediateDepartingAnnouncement : StopAnnouncementBase<IDeparture>

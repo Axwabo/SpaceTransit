@@ -3,7 +3,7 @@ using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
 using SpaceTransit.Stations.Announcements.Katilects;
 
-namespace SpaceTransit.Stations.Announcements
+namespace SpaceTransit.Stations.Announcements.Implementations
 {
 
     public abstract class StopAnnouncementBase<T> : AnnouncementBase where T : IStop

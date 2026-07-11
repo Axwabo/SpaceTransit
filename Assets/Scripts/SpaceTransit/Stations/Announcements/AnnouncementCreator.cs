@@ -20,33 +20,6 @@ namespace SpaceTransit.Stations.Announcements
             return false;
         }
 
-        public static string GetAnnouncement(this IKatilect station, ref AnnouncementContext<IDeparture> context, int index, int lastAnnounced)
-        {
-            if ((int) Clock.Now.TotalMinutes == lastAnnounced || index != -1 || !context.Stop.AnyShip())
-                return null;
-            var katilect = context.Route.Katilect.Or(station);
-            var remaining = context.Stop.MinutesToDeparture();
-            return remaining switch
-            {
-                3 or 5 => katilect.DepartingIn(ref context, remaining),
-                1 => katilect.DepartingImmediately(ref context),
-                <= 15 when lastAnnounced == -1 => katilect.DepartsFor(ref context, index),
-                _ => null
-            };
-        }
-
-        public static string GetAnnouncement(this IKatilect station, ref AnnouncementContext<IArrival> context, int index, int lastAnnounced)
-        {
-            if ((int) Clock.Now.TotalMinutes == lastAnnounced || context.Stop.MinutesToArrival() is not (1 or 2))
-                return null;
-            var katilect = context.Route.Katilect.Or(station);
-            return index != -1
-                ? katilect.ArrivingAndDepartsFor(ref context, index)
-                : context.Stop.AnyShip()
-                    ? katilect.Arriving(ref context)
-                    : null;
-        }
-
         public static IKatilect Or(this IKatilect katilect, IKatilect fallback) => katilect ?? fallback ?? IKatilect.Default;
 
         public static StringBuilder AppendIntermediateStops(this StringBuilder sb, RouteDescriptor route, int index)

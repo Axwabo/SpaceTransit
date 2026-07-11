@@ -4,7 +4,7 @@ using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
 using SpaceTransit.Stations.Announcements.Katilects;
 
-namespace SpaceTransit.Stations.Announcements
+namespace SpaceTransit.Stations.Announcements.Implementations
 {
 
     public abstract class ScheduledAnnouncementBase<T> : StopAnnouncementBase<T> where T : IStop
@@ -40,9 +40,11 @@ namespace SpaceTransit.Stations.Announcements
             ? UpdateResult.Remove
             : Clock.Now < _time
                 ? UpdateResult.Idle
-                : Stop.AnyShip()
+                : ShipExists
                     ? UpdateResult.Ready
                     : UpdateResult.Idle;
+
+        protected virtual bool ShipExists => Stop.AnyShip();
 
         private bool HasExpired() => CustomExpiry ? Cancellation.IsCancellationRequested : Clock.Now >= _expiry;
 

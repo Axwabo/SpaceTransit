@@ -5,6 +5,7 @@ using Katie.Unity;
 using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
 using SpaceTransit.Ships;
+using SpaceTransit.Stations.Announcements.Implementations;
 using SpaceTransit.Stations.Announcements.Katilects;
 using SpaceTransit.Vaulter;
 using UnityEngine;
@@ -40,8 +41,6 @@ namespace SpaceTransit.Stations.Announcements
 
         private readonly List<AnnouncementBase> _announcements = new();
 
-        private readonly Dictionary<RouteDescriptor, int> _announced = new();
-
         private List<DepartureEntry> _departures;
 
         private List<ArrivalEntry> _arrivals;
@@ -56,10 +55,7 @@ namespace SpaceTransit.Stations.Announcements
             _cache = GetComponentInParent<DeparturesArrivals>();
         }
 
-        private void OnEnable()
-        {
-            _announcements.RemoveAll(RemoveOnEnable);
-        }
+        private void OnEnable() => _announcements.RemoveAll(RemoveOnEnable);
 
         private void Start()
         {
@@ -89,18 +85,8 @@ namespace SpaceTransit.Stations.Announcements
                 return;
             }
 
-            if (_queue.IsYapping)
-                return;
-            _current = null;
-            foreach (var (route, index, arrival) in _arrivals)
-            {
-                var context = new AnnouncementContext<IArrival>(route, arrival, pack);
-                if (arrival.Arrival.Value < Clock.Now
-                    || katilect.GetAnnouncement(ref context, index, _announced.GetValueOrDefault(route, -1)) is not { } announcement)
-                    continue;
-                Announce(context, announcement);
-                return;
-            }
+            if (!_queue.IsYapping)
+                _current = null;
         }
 
         private void EnqueueScheduledAnnouncements()
@@ -117,6 +103,14 @@ namespace SpaceTransit.Stations.Announcements
                 Enqueue(DepartureAnnouncement.In5(entry, katilect));
                 Enqueue(DepartureAnnouncement.In3(entry, katilect));
                 Enqueue(DepartureAnnouncement.Immediately(entry, katilect));
+            }
+
+            foreach (var entry in _arrivals)
+            {
+                if (entry.Arrival.Arrival <= now)
+                    continue;
+                Enqueue(new ArrivalAnnouncement(entry, 2, katilect));
+                Enqueue(new ArrivalAnnouncement(entry, 1, katilect));
             }
         }
 
@@ -174,15 +168,6 @@ namespace SpaceTransit.Stations.Announcements
             _current = null;
         }
 
-        private void Announce<T>(AnnouncementContext<T> context, string announcement) where T : IStop
-        {
-            _announced[context.Route] = (int) Clock.Now.TotalMinutes;
-            var inter = context.Type == ServiceType.InterHub;
-            var signal = inter ? interHubSignal : genericSignal;
-            _queue.EnqueueWithSubtitles(_name, announcement, context.Pack, signal);
-            _queue.Delay(3);
-        }
-
         private void Enqueue(AnnouncementBase announcement) => _announcements.Add(announcement);
 
         public void EnqueueDeparting(ShipAssembly assembly, int dockIndex) => Enqueue(NonScheduledAnnouncement.Departing(assembly, dockIndex));
@@ -208,7 +193,6 @@ namespace SpaceTransit.Stations.Announcements
                 if (entry.Route != vaulter.Route)
                     continue;
                 Enqueue(DepartureAnnouncement.AfterRestart(vaulter, entry, katilect));
-                _announced.Remove(entry.Route);
                 break;
             }
         }
