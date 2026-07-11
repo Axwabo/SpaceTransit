@@ -5718,50 +5718,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 66164893}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &881412499
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 881412500}
-  - component: {fileID: 881412501}
-  m_Layer: 0
-  m_Name: Islandcastle Lock
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &881412500
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 881412499}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2092052491}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &881412501
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 881412499}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 166d277a1b5444daae45515d0c1a0690, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Lock
 --- !u!1 &888859747
 GameObject:
   m_ObjectHideFlags: 0
@@ -6410,7 +6366,7 @@ PrefabInstance:
     - target: {fileID: 1510457187732213691, guid: dc92a2cf5de00bcc684e1f6a8e50a817, type: 3}
       propertyPath: '<Locks>k__BackingField.Array.data[1]'
       value: 
-      objectReference: {fileID: 881412501}
+      objectReference: {fileID: 2146815910}
     - target: {fileID: 1522027757424947720, guid: dc92a2cf5de00bcc684e1f6a8e50a817, type: 3}
       propertyPath: connectTo
       value: 
@@ -6514,12 +6470,12 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 5094569672825137911, guid: dc92a2cf5de00bcc684e1f6a8e50a817, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2146815911}
     - targetCorrespondingSourceObject: {fileID: 6424149418116633164, guid: dc92a2cf5de00bcc684e1f6a8e50a817, type: 3}
       insertIndex: 1
       addedObject: {fileID: 2094434812}
-    - targetCorrespondingSourceObject: {fileID: 6424149418116633164, guid: dc92a2cf5de00bcc684e1f6a8e50a817, type: 3}
-      insertIndex: 3
-      addedObject: {fileID: 881412500}
     - targetCorrespondingSourceObject: {fileID: 4194310375955224346, guid: dc92a2cf5de00bcc684e1f6a8e50a817, type: 3}
       insertIndex: 1
       addedObject: {fileID: 1858647061}
@@ -14221,7 +14177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
   <Connected>k__BackingField: {fileID: 11400000, guid: 647eda6d3a7be3c4a830a8918249cd06, type: 2}
   <Locks>k__BackingField:
-  - {fileID: 881412501}
+  - {fileID: 2146815910}
   - {fileID: 1021456691}
   clearanceReference: 19cfe70afa52f60aa88a778fafd7c398
   <Clearance>k__BackingField: {fileID: 0}
@@ -14720,6 +14676,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: "Assembly-CSharp::SpaceTransit.Cosmos.EllenmenetetMegtilt\xF3Safety"
   clearanceReference: 
   <Clearance>k__BackingField: {fileID: 2044645275}
+--- !u!1 &2146815909
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2146815911}
+  - component: {fileID: 2146815910}
+  m_Layer: 0
+  m_Name: Crossing
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2146815910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2146815909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166d277a1b5444daae45515d0c1a0690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Lock
+--- !u!4 &2146815911
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2146815909}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 977158476}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &662360756315207225
 MonoBehaviour:
   m_ObjectHideFlags: 0
