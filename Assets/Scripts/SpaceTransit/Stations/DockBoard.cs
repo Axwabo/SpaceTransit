@@ -15,6 +15,15 @@ namespace SpaceTransit.Stations
         [SerializeField]
         private Dock dock;
 
+        [SerializeField]
+        private MeshRenderer[] renderers;
+
+        [SerializeField]
+        private Material arriving;
+
+        [SerializeField]
+        private Material departing;
+
         private readonly List<StopEntry> _entries = new();
 
         private readonly List<UIDocument> _documents = new();
@@ -72,7 +81,6 @@ namespace SpaceTransit.Stations
             {
                 var root = document.rootVisualElement;
                 root.dataSource = this;
-                SetClass(root);
                 var list = root.Q<ListView>();
                 if (list != null)
                     list.itemsSource = _stops;
@@ -87,8 +95,10 @@ namespace SpaceTransit.Stations
             var now = Clock.Now;
             foreach (var entry in _entries)
             {
-                if (entry.Time < now || ReferenceEquals(entry, _previous))
+                if (entry.Time < now)
                     continue;
+                if (ReferenceEquals(entry, _previous))
+                    return;
                 _previous = entry;
                 LongType = entry.Route.Type switch
                 {
@@ -139,17 +149,9 @@ namespace SpaceTransit.Stations
         private void RefreshLists()
         {
             foreach (var document in _documents)
-            {
-                var root = document.rootVisualElement;
-                SetClass(root);
-                root.Q<ListView>()?.RefreshItems();
-            }
-        }
-
-        private void SetClass(VisualElement root)
-        {
-            root.ClearClassList();
-            root.AddToClassList(_arriving ? "arrival" : "departure");
+                document.rootVisualElement.Q<ListView>()?.RefreshItems();
+            foreach (var meshRenderer in renderers)
+                meshRenderer.sharedMaterial = _arriving ? arriving : departing;
         }
 
     }
