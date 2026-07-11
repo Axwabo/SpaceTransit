@@ -45,8 +45,8 @@ namespace SpaceTransit.Stations.Announcements.Implementations
                     : UpdateResult.Idle;
 
         protected override int CompareEqualPriority(AnnouncementBase other)
-            => other is ScheduledAnnouncementBase<T> {MinuteMark: var mark}
-                ? mark.CompareTo(MinuteMark)
+            => other is ScheduledAnnouncementBase<T> {_time: var time}
+                ? -time.CompareTo(_time)
                 : 0;
 
         protected virtual bool ShipExists => Stop.AnyShip();
