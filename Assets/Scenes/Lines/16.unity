@@ -1354,6 +1354,7 @@ GameObject:
   m_Component:
   - component: {fileID: 663417325}
   - component: {fileID: 663417326}
+  - component: {fileID: 663417327}
   m_Layer: 0
   m_Name: R >
   m_TagString: Untagged
@@ -1389,9 +1390,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Entry
   <Connected>k__BackingField: {fileID: 11400000, guid: 1a80d0b81afeef345aa5c38b00a6ba7b, type: 2}
-  <Locks>k__BackingField: []
-  ensurerReference: 
+  <Locks>k__BackingField:
+  - {fileID: 663417327}
+  ensurerReference: 30e34e2dc036d71c594b8f2f093c5b0d
   <Ensurer>k__BackingField: {fileID: 0}
+--- !u!114 &663417327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663417324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166d277a1b5444daae45515d0c1a0690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Lock
 --- !u!1 &691704875
 GameObject:
   m_ObjectHideFlags: 0
@@ -5830,6 +5844,7 @@ GameObject:
   - component: {fileID: 1989237427}
   - component: {fileID: 1989237426}
   - component: {fileID: 1989237425}
+  - component: {fileID: 1989237428}
   m_Layer: 0
   m_Name: Rowoutvilled > 2
   m_TagString: Untagged
@@ -5935,6 +5950,22 @@ MonoBehaviour:
   CurveChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1989237428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1989237423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd3773830b3a4f9db4187a36de84b369, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.ClearanceClearer
+  clearanceReference: b5b3c38468b20a6f2bfd5ba03919097e
+  clearance: {fileID: 0}
+  forwards: 1
+  backwards: 0
 --- !u!1 &1993164639
 GameObject:
   m_ObjectHideFlags: 0
@@ -6183,6 +6214,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2138718576}
   - component: {fileID: 2138718575}
+  - component: {fileID: 2138718577}
   m_Layer: 0
   m_Name: '> R'
   m_TagString: Untagged
@@ -6203,7 +6235,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
   <Connected>k__BackingField: {fileID: 11400000, guid: 1a80d0b81afeef345aa5c38b00a6ba7b, type: 2}
-  <Locks>k__BackingField: []
+  <Locks>k__BackingField:
+  - {fileID: 2138718577}
   clearanceReference: b5b3c38468b20a6f2bfd5ba03919097e
   <Clearance>k__BackingField: {fileID: 0}
 --- !u!4 &2138718576
@@ -6221,6 +6254,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1412388293}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2138718577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2138718574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166d277a1b5444daae45515d0c1a0690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Lock
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
