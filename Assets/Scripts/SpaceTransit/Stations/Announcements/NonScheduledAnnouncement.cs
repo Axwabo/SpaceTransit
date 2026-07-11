@@ -10,7 +10,7 @@ namespace SpaceTransit.Stations.Announcements
 
         public static NonScheduledAnnouncement Departing(ShipAssembly assembly, int dockIndex) => new(assembly, dockIndex, "departing from");
 
-        public static NonScheduledAnnouncement Arriving(ShipAssembly assembly, int dockIndex) => new(assembly, dockIndex, "arriving");
+        public static NonScheduledAnnouncement Arriving(ShipAssembly assembly, int dockIndex) => new(assembly, dockIndex, "arriving at");
 
         public static NonScheduledAnnouncement PassingThrough(ShipAssembly assembly, int dockIndex) => new(assembly, dockIndex, "passing through")
         {
