@@ -1,10 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<ui:UXML
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:ui="UnityEngine.UIElements"
-        xsi:noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd">
-    <ui:VisualElement style="flex-direction: row; -unity-text-align: middle-left;">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement data-source-type="SpaceTransit.Stations.StopItem, Assembly-CSharp" style="flex-direction: row; -unity-text-align: middle-left;">
         <ui:Label text="13:00" style="min-width: 280px;">
             <Bindings>
                 <ui:DataBinding property="text" data-source-path="Time" data-source-type="SpaceTransit.Stations.StopItem, Assembly-CSharp" binding-mode="ToTarget" />
