@@ -76,7 +76,7 @@ namespace SpaceTransit.Stations
             var now = Clock.Now;
             foreach (var entry in _entries)
             {
-                if (entry.Time > now)
+                if (entry.Time < now)
                     continue;
                 LongType = entry.Route.Type.ToStringFast();
                 Time = entry.Time.ToString();
