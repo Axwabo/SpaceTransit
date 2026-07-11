@@ -42,8 +42,6 @@ namespace SpaceTransit.Stations.Announcements
 
         private readonly List<(ShipController, int)> _restarted = new();
 
-        private readonly Queue<(VaulterController Vaulter, RouteDescriptor Route, IntermediateStop Stop)> _arrivedShips = new();
-
         private List<DepartureEntry> _departures;
 
         private List<ArrivalEntry> _arrivals;
@@ -61,8 +59,7 @@ namespace SpaceTransit.Stations.Announcements
 
         private void OnEnable()
         {
-            _announcements.RemoveAll(e => e is NonScheduledAnnouncement);
-            _arrivedShips.Clear();
+            _announcements.RemoveAll(e => e is NonScheduledAnnouncement or DepartingAnnouncement);
             _restarting.Clear();
             _restarted.Clear();
         }
@@ -98,14 +95,6 @@ namespace SpaceTransit.Stations.Announcements
             _current = null;
             if (AnnounceRestarting() || AnnounceRestarted())
                 return;
-            if (_arrivedShips.TryDequeue(out var tuple) && tuple.Vaulter.Stop?.Station == _cache.StationId)
-            {
-                var context = new AnnouncementContext<IDeparture>(tuple.Route, tuple.Stop, pack);
-                var announcement = tuple.Route.Katilect.Or(katilect).Departing(ref context);
-                Announce(context, announcement); // TODO "the Gyuard station is departing from" LIKE HOW
-                return;
-            }
-
             foreach (var (route, index, arrival) in _arrivals)
             {
                 var context = new AnnouncementContext<IArrival>(route, arrival, pack);
@@ -243,7 +232,7 @@ namespace SpaceTransit.Stations.Announcements
         public void EnqueueArrived(VaulterController assembly, RouteDescriptor route, Stop stop)
         {
             if (stop is IntermediateStop intermediate && intermediate.Arrival.Value != intermediate.Departure.Value)
-                _arrivedShips.Enqueue((assembly, route, intermediate));
+                Enqueue(new DepartingAnnouncement(assembly, route, intermediate, katilect));
         }
 
         public void EnqueueRestarting(ShipController controller, int dockIndex) => _restarting.Add((controller, dockIndex));
