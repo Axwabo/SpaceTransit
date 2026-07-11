@@ -18,7 +18,7 @@ namespace SpaceTransit.Stations.Announcements
 
         public static DepartureAnnouncement In3(DepartureEntry entry, IKatilect station) => new(entry, 3, 2, station);
 
-        public static DepartureAnnouncement Immediately(DepartureEntry entry, IKatilect station) => new(entry, 3, 1, station);
+        public static DepartureAnnouncement Immediately(DepartureEntry entry, IKatilect station) => new(entry, 1, 1, station);
 
         public static DepartureAnnouncement AfterRestart(VaulterController vaulter, DepartureEntry entry, IKatilect station)
             => new(entry, Restart, 0, station)
