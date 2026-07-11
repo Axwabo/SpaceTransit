@@ -2689,7 +2689,7 @@ GameObject:
   - component: {fileID: 317373154}
   - component: {fileID: 317373156}
   - component: {fileID: 317373153}
-  - component: {fileID: 317373152}
+  - component: {fileID: 317373157}
   m_Layer: 0
   m_Name: 2 > R
   m_TagString: Untagged
@@ -2712,22 +2712,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1267547344}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &317373152
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 317373150}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd3773830b3a4f9db4187a36de84b369, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.ClearanceClearer
-  clearanceReference: 
-  clearance: {fileID: 1006423182}
-  forwards: 1
-  backwards: 0
 --- !u!114 &317373153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2741,7 +2725,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: "Assembly-CSharp::SpaceTransit.Cosmos.EllenmenetetMegtilt\xF3Safety"
   clearanceReference: 
-  <Clearance>k__BackingField: {fileID: 1006423182}
+  <Clearance>k__BackingField: {fileID: 1393484499}
 --- !u!114 &317373154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2825,6 +2809,21 @@ MonoBehaviour:
   <Next>k__BackingField: {fileID: 1730280703}
   spline: {fileID: 317373155}
   length: 0
+--- !u!114 &317373157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 317373150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c51f90abf83e4ac7a02989cfc140ab73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.ExitClearer
+  exit: {fileID: 735964549}
+  forwards: 1
+  backwards: 0
 --- !u!1 &327396498
 GameObject:
   m_ObjectHideFlags: 0
@@ -5256,6 +5255,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c43dfdd9e06143cc9745b3f999851f85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
+--- !u!114 &735964549 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 744187555791451226, guid: dc92a2cf5de00bcc684e1f6a8e50a817, type: 3}
+  m_PrefabInstance: {fileID: 735964544}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c43dfdd9e06143cc9745b3f999851f85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Exit
 --- !u!1 &773547168
 GameObject:
   m_ObjectHideFlags: 0
@@ -5305,7 +5315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Cosmos.Actions.ClearanceClearer
   clearanceReference: 
-  clearance: {fileID: 1006423182}
+  clearance: {fileID: 1393484499}
   forwards: 1
   backwards: 0
 --- !u!114 &773547171
@@ -5321,7 +5331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: "Assembly-CSharp::SpaceTransit.Cosmos.EllenmenetetMegtilt\xF3Safety"
   clearanceReference: 
-  <Clearance>k__BackingField: {fileID: 1006423182}
+  <Clearance>k__BackingField: {fileID: 1393484499}
 --- !u!114 &773547172
 MonoBehaviour:
   m_ObjectHideFlags: 0
