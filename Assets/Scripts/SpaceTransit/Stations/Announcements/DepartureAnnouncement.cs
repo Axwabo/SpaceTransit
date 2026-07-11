@@ -16,6 +16,10 @@ namespace SpaceTransit.Stations.Announcements
 
         public static DepartureAnnouncement In10(DepartureEntry entry, IKatilect station) => new(entry, 10, 9, station);
 
+        public static DepartureAnnouncement In5(DepartureEntry entry, IKatilect station) => new(entry, 5, 1, station);
+
+        public static DepartureAnnouncement In3(DepartureEntry entry, IKatilect station) => new(entry, 3, 1, station);
+
         public static DepartureAnnouncement AfterRestart(VaulterController vaulter, DepartureEntry entry, IKatilect station)
             => new(entry, Restart, 0, station)
             {
@@ -36,6 +40,7 @@ namespace SpaceTransit.Stations.Announcements
         protected override string BuildAnnouncement(IKatilect katilect, ref AnnouncementContext<IDeparture> context) => _minuteMark switch
         {
             Restart when Stop.Departure.Value <= Clock.Now => katilect.Departing(ref context),
+            5 or 3 => katilect.DepartingIn(ref context, _minuteMark),
             _ => katilect.DepartsFor(ref context, _index)
         };
 

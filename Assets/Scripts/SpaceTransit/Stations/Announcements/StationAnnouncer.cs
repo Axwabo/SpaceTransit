@@ -114,6 +114,8 @@ namespace SpaceTransit.Stations.Announcements
                     continue;
                 Enqueue(DepartureAnnouncement.In15(entry, katilect));
                 Enqueue(DepartureAnnouncement.In10(entry, katilect));
+                Enqueue(DepartureAnnouncement.In5(entry, katilect));
+                Enqueue(DepartureAnnouncement.In3(entry, katilect));
             }
         }
 
