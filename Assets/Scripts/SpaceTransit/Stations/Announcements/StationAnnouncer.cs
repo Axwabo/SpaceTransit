@@ -50,8 +50,6 @@ namespace SpaceTransit.Stations.Announcements
 
         private CancellationTokenSource _cts;
 
-        public CancellationToken InterruptionToken => _cts?.Token ?? CancellationToken.None;
-
         private void Awake()
         {
             _queue = GetComponent<QueuePlayer>();
@@ -135,14 +133,16 @@ namespace SpaceTransit.Stations.Announcements
                 return;
             if (previous != null)
                 _queue.Delay(2);
+            _cts = new CancellationTokenSource();
+            var token = _cts.Token;
             var signal = interrupt.InterHub ? interHubSignal : genericSignal;
             var packToUse = pack;
             var announcement = interrupt.StartUtterance(ref packToUse);
-            _queue.EnqueueWithSubtitles(_name, announcement, packToUse, InterruptionToken, signal);
+            _queue.EnqueueWithSubtitles(_name, announcement, packToUse, token, signal);
             _queue.Delay(3);
             if (!interrupt.PlayTwice)
                 return;
-            _queue.EnqueueWithSubtitles(_name, announcement, packToUse, InterruptionToken);
+            _queue.EnqueueWithSubtitles(_name, announcement, packToUse, token);
             _queue.Delay(1);
         }
 
