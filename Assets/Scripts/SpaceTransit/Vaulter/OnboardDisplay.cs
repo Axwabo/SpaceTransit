@@ -1,7 +1,6 @@
 ﻿using SpaceTransit.Ships;
 using Unity.Properties;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace SpaceTransit.Vaulter
 {
@@ -14,8 +13,6 @@ namespace SpaceTransit.Vaulter
         private string _route;
 
         private InformationType _type;
-
-        private UIDocument _document;
 
         [CreateProperty]
         public bool Visible { get; set; }
@@ -34,13 +31,7 @@ namespace SpaceTransit.Vaulter
 
         private string Prefix => Controller.State is ShipState.LiftingOff or ShipState.Sailing ? "Next Stop: " : "";
 
-        protected override void Awake()
-        {
-            base.Awake();
-            _document = GetComponent<UIDocument>();
-        }
-
-        private void OnEnable() => _document.rootVisualElement.dataSource = this;
+        private void Start() => this.RootVisual().dataSource = this;
 
         private void Update()
         {
