@@ -33,7 +33,7 @@ namespace SpaceTransit.Stations.Announcements
                 IDeparture departure => departure.Departure.Value,
                 _ => throw new InvalidOperationException($"No timestamp could be extracted from {stop}")
             } - TimeSpan.FromMinutes(minuteMark);
-            _expiry = _time + TimeSpan.FromMinutes(expiryMinutes - 0.9);
+            _expiry = _time + TimeSpan.FromMinutes(expiryMinutes - 0.1);
         }
 
         public sealed override UpdateResult UpdateQueued() => HasExpired()
