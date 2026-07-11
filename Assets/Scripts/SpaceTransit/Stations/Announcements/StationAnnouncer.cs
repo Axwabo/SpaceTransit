@@ -139,10 +139,11 @@ namespace SpaceTransit.Stations.Announcements
             var packToUse = pack;
             interrupt.OnUtteranceStarting(ref packToUse);
             _queue.EnqueueWithSubtitles(_name, interrupt.FinalAnnouncement, packToUse, signal);
+            _queue.Delay(3);
             if (!interrupt.PlayTwice)
                 return;
-            _queue.Delay(3);
             _queue.EnqueueWithSubtitles(_name, interrupt.FinalAnnouncement, packToUse);
+            _queue.Delay(1);
         }
 
         private AnnouncementBase UpdateQueue()
