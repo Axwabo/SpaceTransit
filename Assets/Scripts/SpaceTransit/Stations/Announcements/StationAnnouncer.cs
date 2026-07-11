@@ -17,7 +17,6 @@ namespace SpaceTransit.Stations.Announcements
     public sealed class StationAnnouncer : MonoBehaviour
     {
 
-        private static readonly Comparison<AnnouncementBase> PriorityComparison = (a, b) => b.Priority - a.Priority;
         private static readonly Predicate<AnnouncementBase> RemoveOnEnable = e => e is NonScheduledAnnouncement or IntermediateDepartingAnnouncement or RestartingAnnouncement or DepartureAnnouncement {CustomExpiry: true};
 
         [Header("Signals")]
@@ -131,7 +130,7 @@ namespace SpaceTransit.Stations.Announcements
         private AnnouncementBase UpdateQueue()
         {
             var interrupt = _current;
-            _announcements.Sort(PriorityComparison);
+            _announcements.Sort();
             for (var i = 0; i < _announcements.Count; i++)
             {
                 var announcement = _announcements[i];
