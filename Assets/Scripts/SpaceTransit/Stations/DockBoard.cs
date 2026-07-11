@@ -19,7 +19,12 @@ namespace SpaceTransit.Stations
 
         private readonly List<UIDocument> _documents = new();
 
+        private readonly List<StopItem> _stops = new();
+
+        private StopEntry _previous;
+
         private float _delay;
+
         private DeparturesArrivals _departuresArrivals;
 
         [CreateProperty]
@@ -59,7 +64,13 @@ namespace SpaceTransit.Stations
         private void Init()
         {
             foreach (var document in _documents)
-                document.rootVisualElement.dataSource = this;
+            {
+                var root = document.rootVisualElement;
+                root.dataSource = this;
+                var list = root.Q<ListView>();
+                if (list != null)
+                    list.itemsSource = _stops;
+            }
         }
 
         private void Update()
@@ -70,8 +81,9 @@ namespace SpaceTransit.Stations
             var now = Clock.Now;
             foreach (var entry in _entries)
             {
-                if (entry.Time < now)
+                if (entry.Time < now || ReferenceEquals(entry, _previous))
                     continue;
+                _previous = entry;
                 LongType = entry.Route.Type switch
                 {
                     ServiceType.Passenger => "passenger",
@@ -88,6 +100,12 @@ namespace SpaceTransit.Stations
                     _ => throw new InvalidOperationException()
                 };
 
+                _stops.Clear();
+                var stops = entry.Route.IntermediateStops;
+                for (var i = entry.Index + 1; i < stops.Length; i++)
+                    _stops.Add(new StopItem(stops[i].Station.name, stops[i].Arrival.ToString()));
+                _stops.Add(new StopItem(entry.Route.Destination.Station.name, entry.Route.Destination.Arrival.ToString()));
+                RefreshLists();
                 return;
             }
 
@@ -105,6 +123,12 @@ namespace SpaceTransit.Stations
             foreach (var entry in _departuresArrivals.Arrivals)
                 if (entry.Index == -1 && entry.Arrival.DockIndex == dock.Index)
                     _entries.Add(entry);
+        }
+
+        private void RefreshLists()
+        {
+            foreach (var document in _documents)
+                document.rootVisualElement.Q<ListView>()?.RefreshItems();
         }
 
     }
