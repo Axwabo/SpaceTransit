@@ -1,4 +1,4 @@
-using UnityEngine.UIElements;
+using Unity.Properties;
 
 namespace SpaceTransit.Ships.Driving.Screens
 {
@@ -6,38 +6,30 @@ namespace SpaceTransit.Ships.Driving.Screens
     public sealed class RestartableScreen
     {
 
-        private readonly VisualElement _root;
-        private readonly VisualElement _main;
-        private readonly VisualElement _restarting;
-        private readonly ProgressBar _progress;
+        [CreateProperty]
+        public float Progress { get; set; }
 
-        public RestartableScreen(VisualElement root)
-        {
-            _root = root;
-            _main = root.Q<VisualElement>("Main");
-            _restarting = root.Q<VisualElement>("Restarting");
-            _progress = root.Q<ProgressBar>("Loading");
-        }
+        [CreateProperty]
+        public bool Main { get; set; }
 
-        public float Progress
-        {
-            set => _progress.value = value;
-        }
+        [CreateProperty]
+        public bool Restarting { get; set; }
 
         public void BeginRestart()
         {
             Progress = 0;
-            _main.SetVisibility(false);
-            _restarting.SetVisibility(false);
+            Main = Restarting = false;
         }
 
         public void EndRestart()
         {
+            Main = true;
+            Restarting = false;
             _main.SetVisibility(true);
             _restarting.SetVisibility(false);
         }
 
-        public void SetProgressVisibility(bool visible) => _restarting.SetVisibility(visible);
+        public void SetProgressVisibility(bool visible) => Restarting = (visible);
 
         public void SetClass(string className, bool enabled) => _root.EnableInClassList(className, enabled);
 
