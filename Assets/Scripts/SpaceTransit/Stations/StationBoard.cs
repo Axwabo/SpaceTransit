@@ -27,30 +27,18 @@ namespace SpaceTransit.Stations
 
         private int _previousDay;
 
-        private void Awake()
+        private void OnEnable()
+        {
+            if (didStart)
+                Init();
+        }
+
+        private void Start()
         {
             _departuresArrivals = GetComponentInParent<DeparturesArrivals>();
             Station = _departuresArrivals.StationId.name;
             GetComponentsInChildren(_documents);
-        }
-
-        private void OnEnable()
-        {
-            _previousDay = _previousMinute = -1;
-            foreach (var document in _documents)
-            {
-                var root = document.rootVisualElement;
-                root.dataSource = this;
-                foreach (var view in root.Query<ListView>().Build())
-                    view.bindItem = (element, i) =>
-                    {
-                        var item = (StationBoardItem) view.itemsSource[i];
-                        element.Q<Label>("Type").text = item.Type;
-                        element.Q<Label>("Station").text = item.Station;
-                        element.Q<Label>("Time").text = item.Time;
-                        element.Q<Label>("DockIndex").text = item.Dock;
-                    };
-            }
+            Init();
         }
 
         private void Update()
@@ -76,6 +64,25 @@ namespace SpaceTransit.Stations
             foreach (var arrival in _departuresArrivals.Arrivals)
                 if (arrival.Arrival.Arrival >= Clock.Now)
                     Arrivals.Add(arrival);
+        }
+
+        private void Init()
+        {
+            _previousDay = _previousMinute = -1;
+            foreach (var document in _documents)
+            {
+                var root = document.rootVisualElement;
+                root.dataSource = this;
+                foreach (var view in root.Query<ListView>().Build())
+                    view.bindItem = (element, i) =>
+                    {
+                        var item = (StationBoardItem) view.itemsSource[i];
+                        element.Q<Label>("Type").text = item.Type;
+                        element.Q<Label>("Station").text = item.Station;
+                        element.Q<Label>("Time").text = item.Time;
+                        element.Q<Label>("DockIndex").text = item.Dock;
+                    };
+            }
         }
 
     }
