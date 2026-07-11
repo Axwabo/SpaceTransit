@@ -5,6 +5,11 @@ namespace SpaceTransit.Stations
 {
 
     [Serializable]
-    public sealed record StopItem([property: CreateProperty] string Station, [property: CreateProperty] string Time);
+    public sealed record StopItem([property: CreateProperty] string Station, [property: CreateProperty] string Time)
+    {
+
+        public override string ToString() => $"{Time}   {Station}";
+
+    }
 
 }
