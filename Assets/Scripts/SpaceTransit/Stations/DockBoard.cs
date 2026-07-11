@@ -24,6 +24,7 @@ namespace SpaceTransit.Stations
         [CreateProperty]
         public string Dock { get; set; }
 
+        [CreateProperty]
         public string Action { get; set; }
 
         [CreateProperty]
@@ -56,7 +57,7 @@ namespace SpaceTransit.Stations
                 if (entry.Departure.DockIndex == dock.Index)
                     _entries.Add(entry);
             foreach (var entry in departuresArrivals.Arrivals)
-                if (entry.Arrival.DockIndex == dock.Index)
+                if (entry.Index == -1 && entry.Arrival.DockIndex == dock.Index)
                     _entries.Add(entry);
         }
 
