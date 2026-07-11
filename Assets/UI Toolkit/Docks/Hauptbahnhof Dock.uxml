@@ -1,0 +1,35 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Docks/Hauptbahnhof.uss?fileID=7433441132597879392&amp;guid=c37365659f846a33682bb1dbef7e0005&amp;type=3#Hauptbahnhof" />
+    <ui:VisualElement name="Container" class="oxanium row">
+        <ui:Label name="Dock" text="5">
+            <Bindings>
+                <ui:DataBinding property="text" data-source-path="Dock" data-source-type="SpaceTransit.Stations.DockBoard, Assembly-CSharp" binding-mode="ToTargetOnce" />
+            </Bindings>
+        </ui:Label>
+        <ui:VisualElement>
+            <ui:Label name="Station" text="Cenontodeb-Shearergarden">
+                <Bindings>
+                    <ui:DataBinding property="text" data-source-path="Station" data-source-type="SpaceTransit.Stations.DockBoard, Assembly-CSharp" binding-mode="ToTarget" />
+                </Bindings>
+            </ui:Label>
+            <ui:VisualElement class="row">
+                <ui:Label name="Type" text="InterHub">
+                    <Bindings>
+                        <ui:DataBinding property="text" data-source-path="FullType" data-source-type="SpaceTransit.Stations.DockBoard, Assembly-CSharp" binding-mode="ToTarget" />
+                    </Bindings>
+                </ui:Label>
+                <ui:Label name="Action" text="Arrives">
+                    <Bindings>
+                        <ui:DataBinding property="text" data-source-path="Action" data-source-type="SpaceTransit.Stations.DockBoard, Assembly-CSharp" binding-mode="ToTarget" />
+                    </Bindings>
+                </ui:Label>
+                <ui:Label name="Time" text="12:00">
+                    <Bindings>
+                        <ui:DataBinding property="text" data-source-path="Time" data-source-type="SpaceTransit.Stations.DockBoard, Assembly-CSharp" binding-mode="ToTarget" />
+                    </Bindings>
+                </ui:Label>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:ListView name="Stops" />
+    </ui:VisualElement>
+</ui:UXML>

@@ -27,6 +27,8 @@ namespace SpaceTransit.Stations
 
         private DeparturesArrivals _departuresArrivals;
 
+        private bool _arriving;
+
         [CreateProperty]
         public string Dock { get; set; }
 
@@ -38,6 +40,9 @@ namespace SpaceTransit.Stations
 
         [CreateProperty]
         public string LongType { get; private set; }
+
+        [CreateProperty]
+        public string FullType { get; private set; }
 
         [CreateProperty]
         public Color Color { get; private set; }
@@ -67,6 +72,7 @@ namespace SpaceTransit.Stations
             {
                 var root = document.rootVisualElement;
                 root.dataSource = this;
+                SetClass(root);
                 var list = root.Q<ListView>();
                 if (list != null)
                     list.itemsSource = _stops;
@@ -93,10 +99,10 @@ namespace SpaceTransit.Stations
                 };
                 Time = entry.Time.ToString();
                 (ShortType, Color) = entry.Route.GetAbbreviation();
-                (Station, Action) = entry switch
+                (Station, Action, _arriving) = entry switch
                 {
-                    ArrivalEntry arrivalEntry => (arrivalEntry.Route.Origin.Station.name, "Arrives"),
-                    DepartureEntry departureEntry => (departureEntry.Route.Destination.Station.name, "Departs"),
+                    ArrivalEntry arrivalEntry => (arrivalEntry.Route.Origin.Station.name, "Arrives", true),
+                    DepartureEntry departureEntry => (departureEntry.Route.Destination.Station.name, "Departs", false),
                     _ => throw new InvalidOperationException()
                 };
 
@@ -109,7 +115,12 @@ namespace SpaceTransit.Stations
                 return;
             }
 
-            LongType = ShortType = Time = Station = Action = "";
+            if (_previous is null)
+                return;
+            _previous = null;
+            FullType = LongType = ShortType = Time = Station = Action = "";
+            _stops.Clear();
+            RefreshLists();
         }
 
         private void LateUpdate()
@@ -128,7 +139,17 @@ namespace SpaceTransit.Stations
         private void RefreshLists()
         {
             foreach (var document in _documents)
-                document.rootVisualElement.Q<ListView>()?.RefreshItems();
+            {
+                var root = document.rootVisualElement;
+                SetClass(root);
+                root.Q<ListView>()?.RefreshItems();
+            }
+        }
+
+        private void SetClass(VisualElement root)
+        {
+            root.ClearClassList();
+            root.AddToClassList(_arriving ? "arrival" : "departure");
         }
 
     }
