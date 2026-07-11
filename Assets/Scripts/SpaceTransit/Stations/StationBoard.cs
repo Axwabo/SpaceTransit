@@ -92,6 +92,8 @@ namespace SpaceTransit.Stations
                 }
 
                 foreach (var view in _departures.Concat(_arrivals))
+                {
+                    view.Q<ScrollView>().verticalScrollerVisibility = ScrollerVisibility.Hidden;
                     view.bindItem = (element, i) =>
                     {
                         var item = (StationBoardItem) view.itemsSource[i];
@@ -100,12 +102,12 @@ namespace SpaceTransit.Stations
                         element.Q<Label>("Time").text = item.Time;
                         element.Q<Label>("DockIndex").text = item.Dock;
                     };
+                }
             }
         }
 
         private void Refresh()
         {
-            return;
             foreach (var list in _departures)
                 list.RefreshItems();
             foreach (var list in _arrivals)
