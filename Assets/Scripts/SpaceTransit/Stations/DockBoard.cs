@@ -51,6 +51,13 @@ namespace SpaceTransit.Stations
         {
             GetComponentsInChildren(_documents);
             Init();
+            var departuresArrivals = GetComponentInParent<DeparturesArrivals>();
+            foreach (var entry in departuresArrivals.Departures)
+                if (entry.Departure.DockIndex == dock.Index)
+                    _entries.Add(entry);
+            foreach (var entry in departuresArrivals.Arrivals)
+                if (entry.Arrival.DockIndex == dock.Index)
+                    _entries.Add(entry);
         }
 
         private void Init()
@@ -62,7 +69,7 @@ namespace SpaceTransit.Stations
         private void Update()
         {
             if (_entries.Count == 0)
-                Refresh();
+                Dock = (dock.Index + 1).ToString();
             if ((_delay -= Clock.Delta) > 0)
                 return;
             _delay = 10;
@@ -85,18 +92,6 @@ namespace SpaceTransit.Stations
             }
 
             LongType = ShortType = Time = Station = Action = "";
-        }
-
-        private void Refresh()
-        {
-            var departuresArrivals = dock.Station.GetComponent<DeparturesArrivals>();
-            foreach (var entry in departuresArrivals.Departures)
-                if (entry.Departure.DockIndex == dock.Index)
-                    _entries.Add(entry);
-            foreach (var entry in departuresArrivals.Arrivals)
-                if (entry.Arrival.DockIndex == dock.Index)
-                    _entries.Add(entry);
-            Dock = (dock.Index + 1).ToString();
         }
 
     }
