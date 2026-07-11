@@ -146,7 +146,6 @@ namespace SpaceTransit.Stations.Announcements
                     case (UpdateResult.Ready or UpdateResult.PlayImmediately, IInterruptable interruptable) when interruptable.ShouldBeInterruptedBy(announcement):
                         interrupt = announcement;
                         _announcements[i] = _current;
-                        _queue.Clear();
                         break;
                     case (UpdateResult.Ready or UpdateResult.PlayImmediately, null):
                         _announcements.RemoveAt(i--);
