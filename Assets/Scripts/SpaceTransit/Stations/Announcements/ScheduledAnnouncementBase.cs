@@ -24,7 +24,7 @@ namespace SpaceTransit.Stations.Announcements
                 IArrival arrival => arrival.Arrival.Value,
                 IDeparture departure => departure.Departure.Value,
                 _ => throw new InvalidOperationException($"No timestamp could be extracted from {stop}")
-            } - TimeSpan.FromSeconds(minuteMark);
+            } - TimeSpan.FromMinutes(minuteMark);
             Expiry = Time + TimeSpan.FromMinutes(expiryMinutes - 0.9);
         }
 
