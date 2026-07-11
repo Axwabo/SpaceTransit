@@ -62,16 +62,22 @@ namespace SpaceTransit.Routes.Sequences
                                     ? Enter(station, stop, route, stopIndex, routeIndex)
                                     : None;
                 }
+
+                if (IsArrivingMoreThan10MinutesLater(route))
+                    return None;
             }
 
             var finalDestination = sequence.routes[^1].End;
             if (!Station.TryGetLoadedStation(finalDestination.Station, out var finalStation))
                 return None;
             var finalDock = finalStation.Docks[finalDestination.DockIndex];
-            return !finalDock.IsFree || sequence.routes[^1] is RouteDescriptor {Destination: {Arrival: var finalArrival}} && finalArrival > Clock.Now + TimeSpan.FromMinutes(10)
+            return !finalDock.IsFree || IsArrivingMoreThan10MinutesLater(sequence.routes[^1])
                 ? None
                 : (new TubeSpawn(finalDock), -1);
         }
+
+        private static bool IsArrivingMoreThan10MinutesLater(JourneyDescriptorBase route)
+            => route is RouteDescriptor {Destination: {Arrival: var arrival}} && arrival > Clock.Now + TimeSpan.FromMinutes(10);
 
         private static (SpawnLocation, int) SpawnAt(Station station, IntermediateStop stop, int stopIndex, int routeIndex)
             => !station.Docks[stop.DockIndex].IsFree
