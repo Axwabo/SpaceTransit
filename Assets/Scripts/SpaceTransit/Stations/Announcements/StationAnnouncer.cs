@@ -17,7 +17,7 @@ namespace SpaceTransit.Stations.Announcements
     {
 
         private static readonly Comparison<AnnouncementBase> PriorityComparison = (a, b) => b.Priority - a.Priority;
-        private static readonly Predicate<AnnouncementBase> RemoveOnEnable = e => e is NonScheduledAnnouncement or IntermediateDepartingAnnouncement or RestartingAnnouncement;
+        private static readonly Predicate<AnnouncementBase> RemoveOnEnable = e => e is NonScheduledAnnouncement or IntermediateDepartingAnnouncement or RestartingAnnouncement or DepartureAnnouncement {CustomExpiry: true};
 
         [Header("Signals")]
         [SerializeField]
@@ -42,8 +42,6 @@ namespace SpaceTransit.Stations.Announcements
 
         private readonly Dictionary<RouteDescriptor, int> _announced = new();
 
-        private readonly List<(ShipController, int)> _restarted = new();
-
         private List<DepartureEntry> _departures;
 
         private List<ArrivalEntry> _arrivals;
@@ -61,7 +59,6 @@ namespace SpaceTransit.Stations.Announcements
         private void OnEnable()
         {
             _announcements.RemoveAll(RemoveOnEnable);
-            _restarted.Clear();
         }
 
         private void Start()
@@ -95,8 +92,6 @@ namespace SpaceTransit.Stations.Announcements
             if (_queue.IsYapping)
                 return;
             _current = null;
-            if (AnnounceRestarted())
-                return;
             foreach (var (route, index, arrival) in _arrivals)
             {
                 var context = new AnnouncementContext<IArrival>(route, arrival, pack);
@@ -131,12 +126,12 @@ namespace SpaceTransit.Stations.Announcements
                 _queue.Delay(2);
             var signal = interrupt.InterHub ? interHubSignal : genericSignal;
             var packToUse = pack;
-            interrupt.OnUtteranceStarting(ref packToUse);
-            _queue.EnqueueWithSubtitles(_name, interrupt.FinalAnnouncement, packToUse, signal);
+            var announcement = interrupt.StartUtterance(ref packToUse);
+            _queue.EnqueueWithSubtitles(_name, announcement, packToUse, signal);
             _queue.Delay(3);
             if (!interrupt.PlayTwice)
                 return;
-            _queue.EnqueueWithSubtitles(_name, interrupt.FinalAnnouncement, packToUse);
+            _queue.EnqueueWithSubtitles(_name, announcement, packToUse);
             _queue.Delay(1);
         }
 
@@ -184,32 +179,6 @@ namespace SpaceTransit.Stations.Announcements
             _queue.Delay(3);
         }
 
-        private bool AnnounceRestarted()
-        {
-            _restarted.RemoveAll(static e => !e.Item1);
-            if (_restarted.Count == 0)
-                return false;
-            var ship = _restarted[0].Item1;
-            _restarted.RemoveAt(0);
-            if (!ship.TryGetVaulter(out var vaulter) || !vaulter.IsInService || vaulter.Target.Station != _cache.StationId)
-                return false;
-            foreach (var (route, index, departure) in _departures)
-            {
-                if (route != vaulter.Route)
-                    continue;
-                var context = new AnnouncementContext<IDeparture>(route, departure, pack);
-                var targetKatilect = route.Katilect.Or(katilect);
-                var announcement = departure.Departure < Clock.Now
-                    ? targetKatilect.Departing(ref context)
-                    : targetKatilect.DepartsFor(ref context, index);
-                Announce(context, announcement);
-                _announced.Remove(route);
-                return true;
-            }
-
-            return false;
-        }
-
         private void Enqueue(AnnouncementBase announcement) => _announcements.Add(announcement);
 
         public void EnqueueDeparting(ShipAssembly assembly, int dockIndex) => Enqueue(NonScheduledAnnouncement.Departing(assembly, dockIndex));
@@ -226,7 +195,19 @@ namespace SpaceTransit.Stations.Announcements
 
         public void EnqueueRestarting(ShipController controller, int dockIndex) => Enqueue(new RestartingAnnouncement(controller, dockIndex));
 
-        public void EnqueueRestarted(ShipController controller, int dockIndex) => _restarted.Add((controller, dockIndex));
+        public void EnqueueRestarted(ShipController controller)
+        {
+            if (!controller.TryGetVaulter(out var vaulter) || !vaulter.IsInService || vaulter.Target.Station != _cache.StationId)
+                return;
+            foreach (var entry in _departures)
+            {
+                if (entry.Route != vaulter.Route)
+                    continue;
+                Enqueue(DepartureAnnouncement.AfterRestart(vaulter, entry, katilect));
+                _announced.Remove(entry.Route);
+                break;
+            }
+        }
 
     }
 

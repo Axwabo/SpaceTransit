@@ -24,11 +24,12 @@ namespace SpaceTransit.Stations.Announcements
 
         public sealed override bool InterHub => Route.Type == ServiceType.InterHub;
 
-        public sealed override void OnUtteranceStarting(ref PhrasePack pack)
+        public sealed override string StartUtterance(ref PhrasePack pack)
         {
             var context = new AnnouncementContext<T>(Route, Stop, pack);
-            FinalAnnouncement = BuildAnnouncement(Route.Katilect.Or(_station), ref context);
+            var announcement = BuildAnnouncement(Route.Katilect.Or(_station), ref context);
             pack = context.Pack;
+            return announcement;
         }
 
         protected abstract string BuildAnnouncement(IKatilect katilect, ref AnnouncementContext<T> context);

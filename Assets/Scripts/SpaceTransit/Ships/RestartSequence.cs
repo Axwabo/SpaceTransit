@@ -41,7 +41,7 @@ namespace SpaceTransit.Ships
             var vaulter = LoadVaulterAsync(controller, token);
             await AwaitableExtensions.WhenAll(cosmos, vaulter);
             if (controller.Assembly.FrontModule.Thruster.Tube is Dock dock && dock.Station.Announcer)
-                dock.Station.Announcer.EnqueueRestarted(controller, dock.Index);
+                dock.Station.Announcer.EnqueueRestarted(controller);
         }
 
         private static void AnnounceRestart(ShipController controller)

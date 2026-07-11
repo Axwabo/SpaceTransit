@@ -6,21 +6,19 @@ namespace SpaceTransit.Stations.Announcements
     public abstract class AnnouncementBase
     {
 
+        protected static UpdateResult ReadyOrRemove(bool ready) => ready ? UpdateResult.Ready : UpdateResult.Remove;
+
         public int Priority { get; protected init; }
 
         public bool PlayTwice { get; protected init; }
 
-        public string FinalAnnouncement { get; protected set; }
+        protected string FinalAnnouncement { get; init; }
 
         public virtual bool InterHub => false;
 
         public abstract UpdateResult UpdateQueued();
 
-        protected UpdateResult ReadyOrRemove(bool ready) => ready ? UpdateResult.Ready : UpdateResult.Remove;
-
-        public virtual void OnUtteranceStarting(ref PhrasePack pack)
-        {
-        }
+        public virtual string StartUtterance(ref PhrasePack pack) => FinalAnnouncement;
 
     }
 
