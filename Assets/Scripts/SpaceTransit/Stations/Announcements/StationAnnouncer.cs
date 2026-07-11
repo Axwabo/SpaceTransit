@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Katie.Unity;
 using SpaceTransit.Routes;
@@ -15,6 +16,8 @@ namespace SpaceTransit.Stations.Announcements
     public sealed class StationAnnouncer : MonoBehaviour
     {
 
+        private static readonly Comparison<AnnouncementBase> PriorityComparison = (a, b) => b.Priority - a.Priority;
+
         [Header("Signals")]
         [SerializeField]
         private Signal genericSignal;
@@ -29,13 +32,11 @@ namespace SpaceTransit.Stations.Announcements
 
         private DeparturesArrivals _cache;
 
+        private AnnouncementBase _current;
+
+        private readonly List<AnnouncementBase> _announcements = new();
+
         private readonly Dictionary<RouteDescriptor, int> _announced = new();
-
-        private readonly List<(ShipAssembly, int)> _departing = new();
-
-        private readonly List<(ShipAssembly, int)> _passingThrough = new();
-
-        private readonly List<(ShipAssembly, int)> _arriving = new();
 
         private readonly List<(ShipController, int)> _restarting = new();
 
@@ -60,9 +61,7 @@ namespace SpaceTransit.Stations.Announcements
 
         private void OnEnable()
         {
-            _departing.Clear();
-            _passingThrough.Clear();
-            _arriving.Clear();
+            _announcements.RemoveAll(e => e is NonScheduledAnnouncement);
             _arrivedShips.Clear();
             _restarting.Clear();
             _restarted.Clear();
@@ -86,7 +85,22 @@ namespace SpaceTransit.Stations.Announcements
 
         private void Update()
         {
-            if (_queue.IsYapping || AnnounceDeparting() || AnnouncePassingThrough() || AnnounceArriving() || AnnounceRestarting() || AnnounceRestarted())
+            var previous = _current;
+            UpdateQueue();
+            if (_queue.IsYapping)
+                return;
+            if (previous != _current)
+            {
+                if (_current != null)
+                {
+                }
+            }
+
+            if (previous == _current)
+                return;
+            if (_queue.IsYapping)
+                return;
+            if (AnnounceRestarting() || AnnounceRestarted())
                 return;
             if (_arrivedShips.TryDequeue(out var tuple) && tuple.Vaulter.Stop?.Station == _cache.StationId)
             {
@@ -117,10 +131,42 @@ namespace SpaceTransit.Stations.Announcements
             }
         }
 
+        private void UpdateQueue(out AnnouncementBase interrupt)
+        {
+            _announcements.Sort(PriorityComparison);
+            interrupt = _current;
+            for (var i = 0; i < _announcements.Count; i++)
+            {
+                var announcement = _announcements[i];
+                switch (announcement.UpdateQueued(), interrupt)
+                {
+                    case (UpdateResult.Idle, _):
+                        break;
+                    case (UpdateResult.Remove, _):
+                        _announcements.RemoveAt(i--);
+                        break;
+                    case (UpdateResult.PlayImmediately, {Priority: var currentPriority}) when currentPriority < announcement.Priority:
+                        _announcements[i] = _current;
+                        interrupt = announcement;
+                        _queue.Clear();
+                        break;
+                    case (UpdateResult.Ready or UpdateResult.PlayImmediately, null):
+                        _announcements.RemoveAt(i--);
+                        interrupt = announcement;
+                        break;
+                    case (UpdateResult.PersistentReady, null):
+                        interrupt = announcement;
+                        break;
+                }
+            }
+
+            interrupt = null;
+        }
+
         private void OnDisable()
         {
             _queue.Clear();
-            _passingThrough.Clear();
+            _current = null;
         }
 
         private void Announce<T>(AnnouncementContext<T> context, string announcement) where T : IStop
@@ -130,35 +176,6 @@ namespace SpaceTransit.Stations.Announcements
             var signal = inter ? interHubSignal : genericSignal;
             _queue.EnqueueWithSubtitles(_name, announcement, context.Pack, signal);
             _queue.Delay(3);
-        }
-
-        private bool AnnounceDeparting() => AnnounceTwice(_departing, "departing from");
-
-        private bool AnnouncePassingThrough()
-        {
-            _passingThrough.RemoveAll(static e => !e.Item1);
-            if (_passingThrough.Count == 0)
-                return false;
-            _queue.EnqueueWithSubtitles(_name, $"A ship is passing through dock {_passingThrough[0].Item2 + 1}, please stand back from the platform edge.", pack, genericSignal);
-            _queue.Delay(1);
-            _passingThrough.RemoveAt(0);
-            return true;
-        }
-
-        private bool AnnounceArriving() => AnnounceTwice(_arriving, "arriving at");
-
-        private bool AnnounceTwice(List<(ShipAssembly, int)> list, string action)
-        {
-            list.RemoveAll(static e => !e.Item1);
-            if (list.Count == 0)
-                return false;
-            var announcement = $"A ship is {action} dock {list[0].Item2 + 1}, please stand back from the platform edge.";
-            _queue.EnqueueWithSubtitles(_name, announcement, pack, genericSignal);
-            _queue.Delay(3);
-            _queue.EnqueueWithSubtitles(_name, announcement, pack);
-            _queue.Delay(1);
-            list.RemoveAt(0);
-            return true;
         }
 
         private bool AnnounceRestarting()
@@ -201,11 +218,13 @@ namespace SpaceTransit.Stations.Announcements
             return false;
         }
 
-        public void EnqueueDeparting(ShipAssembly assembly, int dockIndex) => _departing.Add((assembly, dockIndex));
+        private void Enqueue(AnnouncementBase announcement) => _announcements.Add(announcement);
 
-        public void EnqueuePassingThrough(ShipAssembly assembly, int dockIndex) => _passingThrough.Add((assembly, dockIndex));
+        public void EnqueueDeparting(ShipAssembly assembly, int dockIndex) => Enqueue(NonScheduledAnnouncement.Departing(assembly, dockIndex));
 
-        public void EnqueueArriving(ShipAssembly assembly, int dockIndex) => _arriving.Add((assembly, dockIndex));
+        public void EnqueuePassingThrough(ShipAssembly assembly, int dockIndex) => Enqueue(NonScheduledAnnouncement.PassingThrough(assembly, dockIndex));
+
+        public void EnqueueArriving(ShipAssembly assembly, int dockIndex) => Enqueue(NonScheduledAnnouncement.Arriving(assembly, dockIndex));
 
         public void EnqueueArrived(VaulterController assembly, RouteDescriptor route, Stop stop)
         {

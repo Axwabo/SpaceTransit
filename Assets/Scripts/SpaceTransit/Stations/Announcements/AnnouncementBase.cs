@@ -12,6 +12,10 @@ namespace SpaceTransit.Stations.Announcements
 
         public abstract UpdateResult UpdateQueued();
 
+        public virtual void OnUttered()
+        {
+        }
+
     }
 
 }

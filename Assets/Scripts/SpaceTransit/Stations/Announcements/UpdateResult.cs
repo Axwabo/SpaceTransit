@@ -7,8 +7,8 @@ namespace SpaceTransit.Stations.Announcements
         Idle,
         Remove,
         PlayImmediately,
-        PersistentReady,
-        Ready
+        Ready,
+        PersistentReady
 
     }
 
