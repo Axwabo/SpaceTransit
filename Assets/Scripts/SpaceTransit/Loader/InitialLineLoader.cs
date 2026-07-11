@@ -41,6 +41,7 @@ namespace SpaceTransit.Loader
 
             await Awaitable.NextFrameAsync(token);
             RouteManager.Start();
+            LoadingProgress.Current = null;
         }
 
     }

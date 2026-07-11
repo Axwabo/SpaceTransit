@@ -126,7 +126,6 @@ namespace SpaceTransit.Loader
             }
 
             SceneInfo.List.Clear();
-            LoadingProgress.Current = null;
         }
 
         public static void Cancel()
