@@ -1,0 +1,34 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Docks/Digital.uss?fileID=7433441132597879392&amp;guid=0197c6032104727099d9fe7d723135d7&amp;type=3#Digital" />
+    <ui:VisualElement class="oxanium" name="Container">
+        <ui:Label name="Dock" text="5">
+            <Bindings>
+                <ui:DataBinding property="text" data-source-path="Dock" data-source-type="SpaceTransit.Stations.DockBoard, Assembly-CSharp" binding-mode="ToTargetOnce" />
+            </Bindings>
+        </ui:Label>
+        <ui:VisualElement style="flex-grow: 1;">
+            <ui:VisualElement class="row">
+                <ui:Label name="Action" text="Arrives">
+                    <Bindings>
+                        <ui:DataBinding property="text" data-source-path="Action" data-source-type="SpaceTransit.Stations.DockBoard, Assembly-CSharp" binding-mode="ToTarget" />
+                    </Bindings>
+                </ui:Label>
+                <ui:Label name="Time" text="12:00">
+                    <Bindings>
+                        <ui:DataBinding property="text" data-source-path="Time" data-source-type="SpaceTransit.Stations.DockBoard, Assembly-CSharp" binding-mode="ToTarget" />
+                    </Bindings>
+                </ui:Label>
+                <ui:Label name="Type" text="IH">
+                    <Bindings>
+                        <ui:DataBinding property="text" data-source-path="ShortType" data-source-type="SpaceTransit.Stations.DockBoard, Assembly-CSharp" binding-mode="ToTarget" />
+                    </Bindings>
+                </ui:Label>
+            </ui:VisualElement>
+            <ui:Label name="Station" text="Cenontodeb-Shearergarden">
+                <Bindings>
+                    <ui:DataBinding property="text" data-source-path="Station" data-source-type="SpaceTransit.Stations.DockBoard, Assembly-CSharp" binding-mode="ToTarget" />
+                </Bindings>
+            </ui:Label>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
