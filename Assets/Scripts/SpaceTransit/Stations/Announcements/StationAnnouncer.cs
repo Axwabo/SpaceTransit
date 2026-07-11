@@ -87,13 +87,15 @@ namespace SpaceTransit.Stations.Announcements
         {
             var previous = _current;
             var interrupt = UpdateQueue();
-            if (interrupt == previous)
+            if (interrupt != previous)
             {
+                Play(interrupt);
                 return;
             }
 
             if (_queue.IsYapping)
                 return;
+            _current = null;
             if (AnnounceRestarting() || AnnounceRestarted())
                 return;
             if (_arrivedShips.TryDequeue(out var tuple) && tuple.Vaulter.Stop?.Station == _cache.StationId)
@@ -125,31 +127,48 @@ namespace SpaceTransit.Stations.Announcements
             }
         }
 
+        private void Play(AnnouncementBase interrupt)
+        {
+            if (interrupt == null)
+            {
+                _queue.Clear();
+                return;
+            }
+
+            var signal = interrupt.InterHub ? interHubSignal : genericSignal;
+            var packToUse = pack;
+            interrupt.OnUtteranceStarting(ref packToUse);
+            _queue.EnqueueWithSubtitles(_name, interrupt.FinalAnnouncement, packToUse, signal);
+            if (!interrupt.PlayTwice)
+                return;
+            _queue.Delay(3);
+            _queue.EnqueueWithSubtitles(_name, interrupt.FinalAnnouncement, packToUse);
+        }
+
         private AnnouncementBase UpdateQueue()
         {
             var interrupt = _current;
-            var yapping = _queue.IsYapping;
             _announcements.Sort(PriorityComparison);
             for (var i = 0; i < _announcements.Count; i++)
             {
                 var announcement = _announcements[i];
-                switch (announcement.UpdateQueued(), yapping, interrupt)
+                switch (announcement.UpdateQueued(), interrupt)
                 {
-                    case (UpdateResult.Idle, _, _):
+                    case (UpdateResult.Idle, _):
                         break;
-                    case (UpdateResult.Remove, _, _):
+                    case (UpdateResult.Remove, _):
                         _announcements.RemoveAt(i--);
                         break;
-                    case (UpdateResult.PlayImmediately, true, {Priority: var priority}) when priority < announcement.Priority:
-                    case (UpdateResult.PlayImmediately, _, null):
+                    case (UpdateResult.PlayImmediately, {Priority: var priority}) when priority < announcement.Priority:
+                        interrupt = announcement;
                         _announcements[i] = _current;
                         _queue.Clear();
                         break;
-                    case (UpdateResult.Ready or UpdateResult.PlayImmediately, false, null):
+                    case (UpdateResult.Ready or UpdateResult.PlayImmediately, null):
                         _announcements.RemoveAt(i--);
                         interrupt = announcement;
                         break;
-                    case (UpdateResult.PersistentReady, false, null):
+                    case (UpdateResult.PersistentReady, null):
                         interrupt = announcement;
                         break;
                 }

@@ -1,3 +1,5 @@
+using Katie.Unity;
+
 namespace SpaceTransit.Stations.Announcements
 {
 
@@ -10,9 +12,11 @@ namespace SpaceTransit.Stations.Announcements
 
         public string FinalAnnouncement { get; protected set; }
 
+        public virtual bool InterHub => false;
+
         public abstract UpdateResult UpdateQueued();
 
-        public virtual void OnUttered()
+        public virtual void OnUtteranceStarting(ref PhrasePack pack)
         {
         }
 
