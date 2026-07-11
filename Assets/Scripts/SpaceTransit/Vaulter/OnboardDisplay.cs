@@ -40,7 +40,11 @@ namespace SpaceTransit.Vaulter
             _document = GetComponent<UIDocument>();
         }
 
-        private void OnEnable() => _document.rootVisualElement.dataSource = this;
+        private void OnEnable()
+        {
+            _document.rootVisualElement.dataSource = this;
+            RefreshClass();
+        }
 
         private void Update()
         {
@@ -49,6 +53,7 @@ namespace SpaceTransit.Vaulter
             _remaining = 5;
             if (++_type > InformationType.Time)
                 _type = InformationType.Route;
+            RefreshClass();
             Stop = _type switch
             {
                 InformationType.NextStop when IsOrigin && Controller.State is ShipState.Docked or ShipState.WaitingForDeparture => "Welcome!",
@@ -58,6 +63,14 @@ namespace SpaceTransit.Vaulter
                 InformationType.Time => Clock.Now.ToString(TimeOnly.Format),
                 _ => ""
             };
+        }
+
+        private void RefreshClass()
+        {
+            if (_document.rootVisualElement is not { } element)
+                return;
+            element.ClearClassList();
+            element.AddToClassList(_type == InformationType.Route ? "route" : "stop");
         }
 
         public override void OnRouteChanged()
