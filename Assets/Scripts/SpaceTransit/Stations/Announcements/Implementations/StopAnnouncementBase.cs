@@ -13,7 +13,7 @@ namespace SpaceTransit.Stations.Announcements.Implementations
 
         protected RouteDescriptor Route { get; }
 
-        protected T Stop { get; }
+        public T Stop { get; }
 
         protected StopAnnouncementBase(RouteDescriptor route, T stop, IKatilect station)
         {

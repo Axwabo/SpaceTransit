@@ -20,7 +20,7 @@ namespace SpaceTransit.Stations.Announcements.Implementations
             ? katilect.Arriving(ref context)
             : katilect.ArrivingAndDepartsFor(ref context, _index);
 
-        public bool ShouldBeInterruptedBy(AnnouncementBase other) => other is IntermediateDepartingAnnouncement;
+        public bool ShouldBeInterruptedBy(AnnouncementBase other) => other is IntermediateDepartingAnnouncement departing && departing.Stop == Stop;
 
     }
 
