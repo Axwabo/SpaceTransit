@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using SpaceTransit.Vaulter;
 using Unity.Properties;
 using UnityEngine;
@@ -13,13 +14,15 @@ namespace SpaceTransit.Stations
         [CreateProperty]
         public string Station { get; set; }
 
-        [CreateProperty]
         public List<StationBoardItem> Departures { get; } = new();
 
-        [CreateProperty]
         public List<StationBoardItem> Arrivals { get; } = new();
 
         private readonly List<UIDocument> _documents = new();
+
+        private readonly List<ListView> _departures = new();
+
+        private readonly List<ListView> _arrivals = new();
 
         private DeparturesArrivals _departuresArrivals;
 
@@ -52,6 +55,7 @@ namespace SpaceTransit.Stations
             {
                 Departures.RemoveAll(e => e.TimeOfDay < Clock.Now);
                 Arrivals.RemoveAll(e => e.TimeOfDay < Clock.Now);
+                Refresh();
                 return;
             }
 
@@ -69,11 +73,25 @@ namespace SpaceTransit.Stations
         private void Init()
         {
             _previousDay = _previousMinute = -1;
+            _departures.Clear();
+            _arrivals.Clear();
             foreach (var document in _documents)
             {
                 var root = document.rootVisualElement;
                 root.dataSource = this;
-                foreach (var view in root.Query<ListView>().Build())
+                foreach (var list in root.Q(className: "departures").Query<ListView>().Build())
+                {
+                    list.itemsSource = Departures;
+                    _departures.Add(list);
+                }
+
+                foreach (var list in root.Q(className: "arrivals").Query<ListView>().Build())
+                {
+                    list.itemsSource = Arrivals;
+                    _arrivals.Add(list);
+                }
+
+                foreach (var view in _departures.Concat(_arrivals))
                     view.bindItem = (element, i) =>
                     {
                         var item = (StationBoardItem) view.itemsSource[i];
@@ -83,6 +101,15 @@ namespace SpaceTransit.Stations
                         element.Q<Label>("DockIndex").text = item.Dock;
                     };
             }
+        }
+
+        private void Refresh()
+        {
+            return;
+            foreach (var list in _departures)
+                list.RefreshItems();
+            foreach (var list in _arrivals)
+                list.RefreshItems();
         }
 
     }
