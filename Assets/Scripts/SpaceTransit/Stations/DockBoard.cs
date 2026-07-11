@@ -28,8 +28,6 @@ namespace SpaceTransit.Stations
 
         private readonly List<UIDocument> _documents = new();
 
-        private readonly List<StopItem> _stops = new();
-
         private StopEntry _previous;
 
         private float _delay;
@@ -62,6 +60,10 @@ namespace SpaceTransit.Stations
         [CreateProperty]
         public string Time { get; set; }
 
+        [CreateProperty]
+        // ReSharper disable once CollectionNeverQueried.Global
+        public List<StopItem> Stops { get; } = new();
+
         private void OnEnable()
         {
             if (didStart)
@@ -81,9 +83,6 @@ namespace SpaceTransit.Stations
             {
                 var root = document.rootVisualElement;
                 root.dataSource = this;
-                var list = root.Q<ListView>();
-                if (list != null)
-                    list.itemsSource = _stops;
             }
         }
 
@@ -106,7 +105,7 @@ namespace SpaceTransit.Stations
                 return;
             _previous = null;
             FullType = LongType = ShortType = Time = Station = Action = "";
-            _stops.Clear();
+            Stops.Clear();
             RefreshLists();
         }
 
@@ -129,7 +128,7 @@ namespace SpaceTransit.Stations
                 _ => throw new InvalidOperationException()
             };
 
-            _stops.Clear();
+            Stops.Clear();
             if (entry is ArrivalEntry)
             {
                 RefreshLists();
@@ -138,8 +137,8 @@ namespace SpaceTransit.Stations
 
             var stops = entry.Route.IntermediateStops;
             for (var i = entry.Index + 1; i < stops.Length; i++)
-                _stops.Add(new StopItem(stops[i].Station.name, stops[i].Arrival.ToString()));
-            _stops.Add(new StopItem(entry.Route.Destination.Station.name, entry.Route.Destination.Arrival.ToString()));
+                Stops.Add(new StopItem(stops[i].Station.name, stops[i].Arrival.ToString()));
+            Stops.Add(new StopItem(entry.Route.Destination.Station.name, entry.Route.Destination.Arrival.ToString()));
             RefreshLists();
         }
 
