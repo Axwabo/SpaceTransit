@@ -86,18 +86,12 @@ namespace SpaceTransit.Stations.Announcements
         private void Update()
         {
             var previous = _current;
-            UpdateQueue();
-            if (_queue.IsYapping)
-                return;
-            if (previous != _current)
+            var interrupt = UpdateQueue();
+            if (interrupt == previous)
             {
-                if (_current != null)
-                {
-                }
+                return;
             }
 
-            if (previous == _current)
-                return;
             if (_queue.IsYapping)
                 return;
             if (AnnounceRestarting() || AnnounceRestarted())
@@ -131,36 +125,37 @@ namespace SpaceTransit.Stations.Announcements
             }
         }
 
-        private void UpdateQueue(out AnnouncementBase interrupt)
+        private AnnouncementBase UpdateQueue()
         {
+            var interrupt = _current;
+            var yapping = _queue.IsYapping;
             _announcements.Sort(PriorityComparison);
-            interrupt = _current;
             for (var i = 0; i < _announcements.Count; i++)
             {
                 var announcement = _announcements[i];
-                switch (announcement.UpdateQueued(), interrupt)
+                switch (announcement.UpdateQueued(), yapping, interrupt)
                 {
-                    case (UpdateResult.Idle, _):
+                    case (UpdateResult.Idle, _, _):
                         break;
-                    case (UpdateResult.Remove, _):
+                    case (UpdateResult.Remove, _, _):
                         _announcements.RemoveAt(i--);
                         break;
-                    case (UpdateResult.PlayImmediately, {Priority: var currentPriority}) when currentPriority < announcement.Priority:
+                    case (UpdateResult.PlayImmediately, true, {Priority: var priority}) when priority < announcement.Priority:
+                    case (UpdateResult.PlayImmediately, _, null):
                         _announcements[i] = _current;
-                        interrupt = announcement;
                         _queue.Clear();
                         break;
-                    case (UpdateResult.Ready or UpdateResult.PlayImmediately, null):
+                    case (UpdateResult.Ready or UpdateResult.PlayImmediately, false, null):
                         _announcements.RemoveAt(i--);
                         interrupt = announcement;
                         break;
-                    case (UpdateResult.PersistentReady, null):
+                    case (UpdateResult.PersistentReady, false, null):
                         interrupt = announcement;
                         break;
                 }
             }
 
-            interrupt = null;
+            return interrupt;
         }
 
         private void OnDisable()
