@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Katie.Unity;
 using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
@@ -47,6 +48,10 @@ namespace SpaceTransit.Stations.Announcements
 
         private string _name;
 
+        private CancellationTokenSource _cts;
+
+        public CancellationToken InterruptionToken => _cts?.Token ?? CancellationToken.None;
+
         private void Awake()
         {
             _queue = GetComponent<QueuePlayer>();
@@ -54,6 +59,8 @@ namespace SpaceTransit.Stations.Announcements
         }
 
         private void OnEnable() => _announcements.RemoveAll(RemoveOnEnable);
+
+        private void OnDisable() => Cancel();
 
         private void Start()
         {
@@ -84,6 +91,17 @@ namespace SpaceTransit.Stations.Announcements
                 _current = null;
         }
 
+        private void Cancel()
+        {
+            if (_current == null)
+                return;
+            _queue.Clear();
+            _current = null;
+            _cts?.Cancel();
+            _cts?.Dispose();
+            _cts = null;
+        }
+
         private void EnqueueScheduledAnnouncements()
         {
             var date = Clock.Date;
@@ -111,8 +129,8 @@ namespace SpaceTransit.Stations.Announcements
 
         private void Play(AnnouncementBase interrupt, AnnouncementBase previous)
         {
+            Cancel();
             _current = interrupt;
-            _queue.Clear();
             if (interrupt == null)
                 return;
             if (previous != null)
@@ -120,11 +138,11 @@ namespace SpaceTransit.Stations.Announcements
             var signal = interrupt.InterHub ? interHubSignal : genericSignal;
             var packToUse = pack;
             var announcement = interrupt.StartUtterance(ref packToUse);
-            _queue.EnqueueWithSubtitles(_name, announcement, packToUse, signal);
+            _queue.EnqueueWithSubtitles(_name, announcement, packToUse, InterruptionToken, signal);
             _queue.Delay(3);
             if (!interrupt.PlayTwice)
                 return;
-            _queue.EnqueueWithSubtitles(_name, announcement, packToUse);
+            _queue.EnqueueWithSubtitles(_name, announcement, packToUse, InterruptionToken);
             _queue.Delay(1);
         }
 
@@ -155,12 +173,6 @@ namespace SpaceTransit.Stations.Announcements
             }
 
             return interrupt;
-        }
-
-        private void OnDisable()
-        {
-            _queue.Clear();
-            _current = null;
         }
 
         private void Enqueue(AnnouncementBase announcement) => _announcements.Add(announcement);

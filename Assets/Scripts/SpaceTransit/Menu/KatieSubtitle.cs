@@ -1,3 +1,4 @@
+using System.Threading;
 using UnityEngine;
 
 namespace SpaceTransit.Menu
@@ -5,6 +6,8 @@ namespace SpaceTransit.Menu
 
     public sealed class KatieSubtitle
     {
+
+        private readonly CancellationToken _cancellationToken;
 
         private readonly double _removeAt;
 
@@ -14,8 +17,9 @@ namespace SpaceTransit.Menu
 
         public string Text { get; }
 
-        public KatieSubtitle(string announcer, string text, double delay, double duration)
+        public KatieSubtitle(string announcer, string text, double delay, double duration, CancellationToken cancellationToken)
         {
+            _cancellationToken = cancellationToken;
             ActivateAt = AudioSettings.dspTime + delay;
             _removeAt = ActivateAt + duration + 0.5;
             Text = $"<b>{announcer}:</b> {text}";
@@ -24,7 +28,7 @@ namespace SpaceTransit.Menu
         public bool Update()
         {
             var time = AudioSettings.dspTime;
-            if (time >= _removeAt)
+            if (time >= _removeAt || _cancellationToken.IsCancellationRequested)
                 return false;
             if (Activated || time < ActivateAt)
                 return true;

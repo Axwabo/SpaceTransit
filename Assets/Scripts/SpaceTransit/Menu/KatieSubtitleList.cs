@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -58,7 +59,8 @@ namespace SpaceTransit.Menu
             _list.RefreshItems();
         }
 
-        public static void Add(string announcer, string text, double delay, double duration) => _current.Add(new KatieSubtitle(announcer, text, delay, duration));
+        public static void Add(string announcer, string text, double delay, double duration, CancellationToken cancellationToken = default)
+            => _current.Add(new KatieSubtitle(announcer, text, delay, duration, cancellationToken));
 
     }
 
