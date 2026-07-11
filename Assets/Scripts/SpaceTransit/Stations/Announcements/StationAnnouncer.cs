@@ -122,6 +122,7 @@ namespace SpaceTransit.Stations.Announcements
 
         private void Play(AnnouncementBase interrupt, AnnouncementBase previous)
         {
+            _current = interrupt;
             _queue.Clear();
             if (interrupt == null)
                 return;
