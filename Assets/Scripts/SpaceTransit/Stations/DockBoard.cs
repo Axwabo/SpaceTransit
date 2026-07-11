@@ -20,6 +20,7 @@ namespace SpaceTransit.Stations
         private readonly List<UIDocument> _documents = new();
 
         private float _delay;
+        private DeparturesArrivals _departuresArrivals;
 
         [CreateProperty]
         public string Dock { get; set; }
@@ -52,13 +53,7 @@ namespace SpaceTransit.Stations
         {
             GetComponentsInChildren(_documents);
             Init();
-            var departuresArrivals = GetComponentInParent<DeparturesArrivals>();
-            foreach (var entry in departuresArrivals.Departures)
-                if (entry.Departure.DockIndex == dock.Index)
-                    _entries.Add(entry);
-            foreach (var entry in departuresArrivals.Arrivals)
-                if (entry.Index == -1 && entry.Arrival.DockIndex == dock.Index)
-                    _entries.Add(entry);
+            _departuresArrivals = GetComponentInParent<DeparturesArrivals>();
         }
 
         private void Init()
@@ -70,7 +65,7 @@ namespace SpaceTransit.Stations
         private void Update()
         {
             if (string.IsNullOrEmpty(Dock))
-                Dock = (dock.Index + 1).ToString();
+                Refresh();
             if ((_delay -= Clock.Delta) > 0)
                 return;
             _delay = 10;
@@ -93,6 +88,17 @@ namespace SpaceTransit.Stations
             }
 
             LongType = ShortType = Time = Station = Action = "";
+        }
+
+        private void Refresh()
+        {
+            Dock = (dock.Index + 1).ToString();
+            foreach (var entry in _departuresArrivals.Departures)
+                if (entry.Departure.DockIndex == dock.Index)
+                    _entries.Add(entry);
+            foreach (var entry in _departuresArrivals.Arrivals)
+                if (entry.Index == -1 && entry.Arrival.DockIndex == dock.Index)
+                    _entries.Add(entry);
         }
 
     }
