@@ -68,7 +68,7 @@ namespace SpaceTransit.Stations
 
         private void Update()
         {
-            if (_entries.Count == 0)
+            if (string.IsNullOrEmpty(Dock))
                 Dock = (dock.Index + 1).ToString();
             if ((_delay -= Clock.Delta) > 0)
                 return;
