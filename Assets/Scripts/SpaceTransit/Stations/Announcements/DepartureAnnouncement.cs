@@ -8,7 +8,7 @@ namespace SpaceTransit.Stations.Announcements
     public sealed class DepartureAnnouncement : ScheduledAnnouncementBase<IDeparture>
     {
 
-        private const int Restart = int.MinValue;
+        private const int Restart = int.MaxValue;
 
         private readonly int _minuteMark;
 
@@ -19,7 +19,8 @@ namespace SpaceTransit.Stations.Announcements
         public static DepartureAnnouncement AfterRestart(VaulterController vaulter, DepartureEntry entry, IKatilect station)
             => new(entry, Restart, 0, station)
             {
-                Cancellation = vaulter.destroyCancellationToken
+                Cancellation = vaulter.destroyCancellationToken,
+                Priority = Priorities.IntermediateDeparting(entry.Route.Type)
             };
 
         private readonly int _index;
@@ -29,6 +30,7 @@ namespace SpaceTransit.Stations.Announcements
         {
             _minuteMark = minuteMark;
             _index = entry.Index;
+            Priority = Priorities.Departing(entry.Route.Type);
         }
 
         protected override string BuildAnnouncement(IKatilect katilect, ref AnnouncementContext<IDeparture> context) => _minuteMark switch
