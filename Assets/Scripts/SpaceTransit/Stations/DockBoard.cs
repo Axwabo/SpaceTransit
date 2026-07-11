@@ -97,31 +97,8 @@ namespace SpaceTransit.Stations
             {
                 if (entry.Time < now)
                     continue;
-                if (ReferenceEquals(entry, _previous))
-                    return;
-                _previous = entry;
-                LongType = entry.Route.Type switch
-                {
-                    ServiceType.Passenger => "passenger",
-                    ServiceType.Fast => "fast",
-                    ServiceType.InterHub => "IH",
-                    _ => throw new InvalidOperationException()
-                };
-                Time = entry.Time.ToString();
-                (ShortType, Color) = entry.Route.GetAbbreviation();
-                (Station, Action, _arriving) = entry switch
-                {
-                    ArrivalEntry arrivalEntry => (arrivalEntry.Route.Origin.Station.name, "Arrives", true),
-                    DepartureEntry departureEntry => (departureEntry.Route.Destination.Station.name, "Departs", false),
-                    _ => throw new InvalidOperationException()
-                };
-
-                _stops.Clear();
-                var stops = entry.Route.IntermediateStops;
-                for (var i = entry.Index + 1; i < stops.Length; i++)
-                    _stops.Add(new StopItem(stops[i].Station.name, stops[i].Arrival.ToString()));
-                _stops.Add(new StopItem(entry.Route.Destination.Station.name, entry.Route.Destination.Arrival.ToString()));
-                RefreshLists();
+                if (!ReferenceEquals(entry, _previous))
+                    Display(entry);
                 return;
             }
 
@@ -130,6 +107,39 @@ namespace SpaceTransit.Stations
             _previous = null;
             FullType = LongType = ShortType = Time = Station = Action = "";
             _stops.Clear();
+            RefreshLists();
+        }
+
+        private void Display(StopEntry entry)
+        {
+            _previous = entry;
+            LongType = entry.Route.Type switch
+            {
+                ServiceType.Passenger => "passenger",
+                ServiceType.Fast => "fast",
+                ServiceType.InterHub => "IH",
+                _ => throw new InvalidOperationException()
+            };
+            Time = entry.Time.ToString();
+            (ShortType, Color) = entry.Route.GetAbbreviation();
+            (Station, Action, _arriving) = entry switch
+            {
+                ArrivalEntry arrivalEntry => (arrivalEntry.Route.Origin.Station.name, "Arrives", true),
+                DepartureEntry departureEntry => (departureEntry.Route.Destination.Station.name, "Departs", false),
+                _ => throw new InvalidOperationException()
+            };
+
+            _stops.Clear();
+            if (entry is ArrivalEntry)
+            {
+                RefreshLists();
+                return;
+            }
+
+            var stops = entry.Route.IntermediateStops;
+            for (var i = entry.Index + 1; i < stops.Length; i++)
+                _stops.Add(new StopItem(stops[i].Station.name, stops[i].Arrival.ToString()));
+            _stops.Add(new StopItem(entry.Route.Destination.Station.name, entry.Route.Destination.Arrival.ToString()));
             RefreshLists();
         }
 
@@ -144,6 +154,7 @@ namespace SpaceTransit.Stations
             foreach (var entry in _departuresArrivals.Arrivals)
                 if (entry.Index == -1 && entry.Arrival.DockIndex == dock.Index)
                     _entries.Add(entry);
+            _entries.Sort((a, b) => a.Time.Value.CompareTo(b.Time.Value));
         }
 
         private void RefreshLists()
