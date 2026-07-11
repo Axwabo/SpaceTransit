@@ -6,15 +6,16 @@ using SpaceTransit.Stations.Announcements.Katilects;
 namespace SpaceTransit.Stations.Announcements
 {
 
-    public abstract class ScheduledAnnouncementBase<TContext, TStop> : AnnouncementBase where TContext : IStop where TStop : TContext
+    public abstract class ScheduledAnnouncementBase<T> : AnnouncementBase where T : IStop
     {
 
         private readonly IKatilect _station;
 
         protected RouteDescriptor Route { get; }
-        protected TStop Stop { get; }
 
-        protected ScheduledAnnouncementBase(RouteDescriptor route, TStop stop, IKatilect station)
+        protected T Stop { get; }
+
+        protected ScheduledAnnouncementBase(RouteDescriptor route, T stop, IKatilect station)
         {
             _station = station;
             Route = route;
@@ -25,12 +26,12 @@ namespace SpaceTransit.Stations.Announcements
 
         public sealed override void OnUtteranceStarting(ref PhrasePack pack)
         {
-            var context = new AnnouncementContext<TContext>(Route, Stop, pack);
+            var context = new AnnouncementContext<T>(Route, Stop, pack);
             FinalAnnouncement = BuildAnnouncement(Route.Katilect.Or(_station), ref context);
             pack = context.Pack;
         }
 
-        protected abstract string BuildAnnouncement(IKatilect katilect, ref AnnouncementContext<TContext> context);
+        protected abstract string BuildAnnouncement(IKatilect katilect, ref AnnouncementContext<T> context);
 
     }
 
