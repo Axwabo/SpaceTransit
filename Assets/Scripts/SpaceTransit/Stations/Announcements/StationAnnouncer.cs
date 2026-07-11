@@ -66,13 +66,11 @@ namespace SpaceTransit.Stations.Announcements
         {
             _cache.Station.Announcer = this;
             _departures = _cache.Departures
-                .Where(static e => e.Index == -1)
-                .OrderBy(static e => e.Departure.Departure.Value.TotalMinutes)
-                .ThenByDescending(static e => e.Route.Type)
+                .Where(e => e.Index == -1)
+                .OrderBy(e => e.Departure.Departure.Value.TotalMinutes)
                 .ToList();
             _arrivals = _cache.Arrivals
-                .OrderBy(static e => e.Arrival.Arrival.Value.TotalMinutes)
-                .ThenByDescending(static e => e.Route.Type)
+                .OrderBy(e => e.Arrival.Arrival.Value.TotalMinutes)
                 .ToList();
             _queue.Delay(0.5f);
             _name = $"K.A.T.I.E. <color=#888>({_cache.StationId.name})</color>";

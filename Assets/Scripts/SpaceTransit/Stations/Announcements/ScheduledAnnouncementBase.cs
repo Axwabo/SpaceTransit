@@ -1,4 +1,4 @@
-using Katie.Unity;
+using System;
 using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
 using SpaceTransit.Stations.Announcements.Katilects;
@@ -6,32 +6,35 @@ using SpaceTransit.Stations.Announcements.Katilects;
 namespace SpaceTransit.Stations.Announcements
 {
 
-    public abstract class ScheduledAnnouncementBase<T> : AnnouncementBase where T : IStop
+    public abstract class ScheduledAnnouncementBase<T> : StopAnnouncementBase<T> where T : IStop
     {
 
-        private readonly IKatilect _station;
+        public TimeSpan Time { get; }
 
-        protected RouteDescriptor Route { get; }
+        public TimeSpan Expiry { get; }
 
-        protected T Stop { get; }
-
-        protected ScheduledAnnouncementBase(RouteDescriptor route, T stop, IKatilect station)
+        protected ScheduledAnnouncementBase(RouteDescriptor route, T stop, int minuteMark, IKatilect station) : this(route, stop, minuteMark, 1, station)
         {
-            _station = station;
-            Route = route;
-            Stop = stop;
         }
 
-        public sealed override bool InterHub => Route.Type == ServiceType.InterHub;
-
-        public sealed override void OnUtteranceStarting(ref PhrasePack pack)
+        protected ScheduledAnnouncementBase(RouteDescriptor route, T stop, int minuteMark, int expiryMinutes, IKatilect station) : base(route, stop, station)
         {
-            var context = new AnnouncementContext<T>(Route, Stop, pack);
-            FinalAnnouncement = BuildAnnouncement(Route.Katilect.Or(_station), ref context);
-            pack = context.Pack;
+            Time = stop switch
+            {
+                IArrival arrival => arrival.Arrival.Value,
+                IDeparture departure => departure.Departure.Value,
+                _ => throw new InvalidOperationException($"No timestamp could be extracted from {stop}")
+            } - TimeSpan.FromSeconds(minuteMark);
+            Expiry = Time + TimeSpan.FromMinutes(expiryMinutes - 0.9);
         }
 
-        protected abstract string BuildAnnouncement(IKatilect katilect, ref AnnouncementContext<T> context);
+        public sealed override UpdateResult UpdateQueued() => Clock.Now < Time
+            ? UpdateResult.Idle
+            : Clock.Now >= Expiry
+                ? UpdateResult.Remove
+                : UpdateActive();
+
+        protected abstract UpdateResult UpdateActive();
 
     }
 

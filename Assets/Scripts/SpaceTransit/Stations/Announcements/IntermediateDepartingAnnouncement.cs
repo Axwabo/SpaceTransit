@@ -6,7 +6,7 @@ using SpaceTransit.Vaulter;
 namespace SpaceTransit.Stations.Announcements
 {
 
-    public sealed class IntermediateDepartingAnnouncement : ScheduledAnnouncementBase<IDeparture>
+    public sealed class IntermediateDepartingAnnouncement : StopAnnouncementBase<IDeparture>
     {
 
         private readonly VaulterController _vaulter;
