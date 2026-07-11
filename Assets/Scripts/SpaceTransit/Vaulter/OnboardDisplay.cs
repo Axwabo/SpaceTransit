@@ -1,12 +1,15 @@
 ﻿using SpaceTransit.Ships;
-using Unity.Properties;
+using TMPro;
 using UnityEngine;
 
 namespace SpaceTransit.Vaulter
 {
 
+    [RequireComponent(typeof(TextMeshProUGUI))]
     public sealed class OnboardDisplay : VaulterComponentBase
     {
+
+        private TextMeshProUGUI _text;
 
         private float _remaining;
 
@@ -14,24 +17,9 @@ namespace SpaceTransit.Vaulter
 
         private InformationType _type;
 
-        [CreateProperty]
-        public bool Visible { get; set; }
-
-        [CreateProperty]
-        public string Stop { get; set; }
-
-        [CreateProperty]
-        public string ServiceType { get; set; }
-
-        [CreateProperty]
-        public Color Color { get; set; }
-
-        [CreateProperty]
-        public string Destination { get; set; }
-
         private string Prefix => Controller.State is ShipState.LiftingOff or ShipState.Sailing ? "Next Stop: " : "";
 
-        private void Start() => this.RootVisual().dataSource = this;
+        protected override void Awake() => _text = GetComponent<TextMeshProUGUI>();
 
         private void Update()
         {
@@ -40,8 +28,9 @@ namespace SpaceTransit.Vaulter
             _remaining = 5;
             if (++_type > InformationType.Time)
                 _type = InformationType.Route;
-            Stop = _type switch
+            _text.text = _type switch
             {
+                InformationType.Route => _route,
                 InformationType.NextStop when IsOrigin && Controller.State is ShipState.Docked or ShipState.WaitingForDeparture => "Welcome!",
                 InformationType.NextStop when IsTerminus && Controller.State is ShipState.Landing or ShipState.Docked => "Goodbye!",
                 InformationType.NextStop when IsTerminus => "Next Stop Terminus",
@@ -54,14 +43,18 @@ namespace SpaceTransit.Vaulter
         public override void OnRouteChanged()
         {
             if (!IsInService)
+            {
+                _text.text = "";
                 return;
-            (ServiceType, Color) = Parent.Route.GetAbbreviation();
-            Destination = Parent.Route.Destination.Station.name;
+            }
+
+            var (text, color) = Parent.Route.GetAbbreviation();
+            _route = $"<mark=#cccccc09><size=0>.</size><space=0.2em><color={color.ToHex()}>{text}</color><space=0.2em><size=0>.</size></mark> » {Parent.Route.Destination.Station.name}";
         }
 
-        public override void OnRestarting() => Visible = false;
+        public override void OnRestarting() => _text.enabled = false;
 
-        public override void OnRestarted() => Visible = true;
+        public override void OnRestarted() => _text.enabled = true;
 
         private enum InformationType
         {
