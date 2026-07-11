@@ -112,6 +112,7 @@ namespace SpaceTransit.Stations
         private void Display(StopEntry entry)
         {
             _previous = entry;
+            FullType = entry.Route.Type.ToStringFast();
             LongType = entry.Route.Type switch
             {
                 ServiceType.Passenger => "passenger",
