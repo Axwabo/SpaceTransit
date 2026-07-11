@@ -17,17 +17,17 @@ namespace SpaceTransit.Stations
     {
 
         public static implicit operator StationBoardItem(DepartureEntry entry) => new(
-            entry.Departure.Departure,
+            entry.Time,
             entry.Route.Type.ToStringFast(),
-            entry.Departure.Departure.ToString(),
+            entry.Time.ToString(),
             entry.Route.Destination.Station.name,
             DockToString(entry.Departure)
         );
 
         public static implicit operator StationBoardItem(ArrivalEntry entry) => new(
-            entry.Arrival.Arrival,
+            entry.Time,
             entry.Route.Type.ToStringFast(),
-            entry.Arrival.Arrival.ToString(),
+            entry.Time.ToString(),
             entry.Route.Origin.Station.name,
             DockToString(entry.Arrival)
         );
