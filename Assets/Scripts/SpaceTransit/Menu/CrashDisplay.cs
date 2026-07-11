@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using SpaceTransit.Routes;
+using Unity.Properties;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Cursor = UnityEngine.Cursor;
@@ -14,14 +15,16 @@ namespace SpaceTransit.Menu
 
         private VisualElement _root;
 
-        private Label _station;
+        [CreateProperty]
+        public bool Visible { get; private set; }
+
+        [CreateProperty]
+        public string ClosestStation { get; private set; }
 
         private void Start()
         {
             Current = this;
-            _root = this.RootVisual();
-            _root.SetVisibility(false);
-            _station = _root.Q<Label>("Station");
+            this.RootVisual().dataSource = this;
         }
 
         public static void DisplayCrash(Vector3 position)
@@ -30,8 +33,8 @@ namespace SpaceTransit.Menu
             AudioListener.pause = true;
             Cursor.lockState = CursorLockMode.None;
             var closest = Station.LoadedStations.Select(e => (Vector3.Distance(e.transform.position, position), e)).OrderBy(e => e.Item1).First();
-            Current._root.SetVisibility(true);
-            Current._station.text = closest.e.Name;
+            Current.Visible = true;
+            Current.ClosestStation = closest.e.Name;
             MenuScreen.Disable();
         }
 
