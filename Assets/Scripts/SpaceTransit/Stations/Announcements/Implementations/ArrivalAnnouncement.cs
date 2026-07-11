@@ -5,7 +5,7 @@ using SpaceTransit.Vaulter;
 namespace SpaceTransit.Stations.Announcements.Implementations
 {
 
-    public sealed class ArrivalAnnouncement : ScheduledAnnouncementBase<IArrival>
+    public sealed class ArrivalAnnouncement : ScheduledAnnouncementBase<IArrival>, IInterruptable
     {
 
         private readonly int _index;
@@ -19,6 +19,8 @@ namespace SpaceTransit.Stations.Announcements.Implementations
         protected override string BuildAnnouncement(IKatilect katilect, ref AnnouncementContext<IArrival> context) => _index == -1
             ? katilect.Arriving(ref context)
             : katilect.ArrivingAndDepartsFor(ref context, _index);
+
+        public bool ShouldBeInterruptedBy(AnnouncementBase other) => other is IntermediateDepartingAnnouncement;
 
     }
 

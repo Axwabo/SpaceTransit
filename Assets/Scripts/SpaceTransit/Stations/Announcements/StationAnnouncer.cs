@@ -143,6 +143,7 @@ namespace SpaceTransit.Stations.Announcements
                         _announcements.RemoveAt(i--);
                         break;
                     case (UpdateResult.PlayImmediately, {Priority: var priority}) when priority < announcement.Priority:
+                    case (UpdateResult.Ready or UpdateResult.PlayImmediately, IInterruptable interruptable) when interruptable.ShouldBeInterruptedBy(announcement):
                         interrupt = announcement;
                         _announcements[i] = _current;
                         _queue.Clear();
