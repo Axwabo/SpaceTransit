@@ -89,7 +89,7 @@ namespace SpaceTransit.Stations.Announcements
             var interrupt = UpdateQueue();
             if (interrupt != previous)
             {
-                Play(interrupt);
+                Play(interrupt, previous);
                 return;
             }
 
@@ -127,14 +127,13 @@ namespace SpaceTransit.Stations.Announcements
             }
         }
 
-        private void Play(AnnouncementBase interrupt)
+        private void Play(AnnouncementBase interrupt, AnnouncementBase previous)
         {
+            _queue.Clear();
             if (interrupt == null)
-            {
-                _queue.Clear();
                 return;
-            }
-
+            if (previous != null)
+                _queue.Delay(2);
             var signal = interrupt.InterHub ? interHubSignal : genericSignal;
             var packToUse = pack;
             interrupt.OnUtteranceStarting(ref packToUse);
