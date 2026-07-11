@@ -6,18 +6,18 @@ using SpaceTransit.Vaulter;
 namespace SpaceTransit.Stations.Announcements
 {
 
-    public sealed class DepartingAnnouncement : ScheduledAnnouncementBase<IDeparture>
+    public sealed class IntermediateDepartingAnnouncement : ScheduledAnnouncementBase<IDeparture>
     {
 
         private readonly VaulterController _vaulter;
 
-        public DepartingAnnouncement(VaulterController vaulter, RouteDescriptor route, IntermediateStop stop, IKatilect station) : base(route, stop, station)
+        public IntermediateDepartingAnnouncement(VaulterController vaulter, RouteDescriptor route, IntermediateStop stop, IKatilect station) : base(route, stop, station)
         {
             _vaulter = vaulter;
-            Priority = (int) route.Type + 10;
+            Priority = Priorities.IntermediateDeparting(route.Type);
         }
 
-        public override UpdateResult UpdateQueued() => _vaulter && _vaulter.Target == Stop ? UpdateResult.Ready : UpdateResult.Remove;
+        public override UpdateResult UpdateQueued() => ReadyOrRemove(_vaulter && _vaulter.Target == Stop);
 
         protected override string BuildAnnouncement(IKatilect katilect, ref AnnouncementContext<IDeparture> context) => katilect.Departing(ref context);
 

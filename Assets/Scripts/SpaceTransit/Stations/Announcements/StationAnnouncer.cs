@@ -17,6 +17,7 @@ namespace SpaceTransit.Stations.Announcements
     {
 
         private static readonly Comparison<AnnouncementBase> PriorityComparison = (a, b) => b.Priority - a.Priority;
+        private static readonly Predicate<AnnouncementBase> RemoveOnEnable = e => e is NonScheduledAnnouncement or IntermediateDepartingAnnouncement or RestartingAnnouncement;
 
         [Header("Signals")]
         [SerializeField]
@@ -38,8 +39,6 @@ namespace SpaceTransit.Stations.Announcements
 
         private readonly Dictionary<RouteDescriptor, int> _announced = new();
 
-        private readonly List<(ShipController, int)> _restarting = new();
-
         private readonly List<(ShipController, int)> _restarted = new();
 
         private List<DepartureEntry> _departures;
@@ -59,8 +58,7 @@ namespace SpaceTransit.Stations.Announcements
 
         private void OnEnable()
         {
-            _announcements.RemoveAll(e => e is NonScheduledAnnouncement or DepartingAnnouncement);
-            _restarting.Clear();
+            _announcements.RemoveAll(RemoveOnEnable);
             _restarted.Clear();
         }
 
@@ -93,7 +91,7 @@ namespace SpaceTransit.Stations.Announcements
             if (_queue.IsYapping)
                 return;
             _current = null;
-            if (AnnounceRestarting() || AnnounceRestarted())
+            if (AnnounceRestarted())
                 return;
             foreach (var (route, index, arrival) in _arrivals)
             {
@@ -157,9 +155,6 @@ namespace SpaceTransit.Stations.Announcements
                         _announcements.RemoveAt(i--);
                         interrupt = announcement;
                         break;
-                    case (UpdateResult.PersistentReady, null):
-                        interrupt = announcement;
-                        break;
                 }
             }
 
@@ -179,20 +174,6 @@ namespace SpaceTransit.Stations.Announcements
             var signal = inter ? interHubSignal : genericSignal;
             _queue.EnqueueWithSubtitles(_name, announcement, context.Pack, signal);
             _queue.Delay(3);
-        }
-
-        private bool AnnounceRestarting()
-        {
-            _restarting.RemoveAll(static e => !e.Item1);
-            if (_restarting.Count == 0)
-                return false;
-            var (ship, dock) = _restarting[0];
-            _restarting.RemoveAt(0);
-            if (!ship.IsRestarting)
-                return false;
-            _queue.EnqueueWithSubtitles(_name, $"The assembly on dock {dock + 1} is being restarted. Please do not board yet.", pack, genericSignal);
-            _queue.Delay(1);
-            return true;
         }
 
         private bool AnnounceRestarted()
@@ -232,10 +213,10 @@ namespace SpaceTransit.Stations.Announcements
         public void EnqueueArrived(VaulterController assembly, RouteDescriptor route, Stop stop)
         {
             if (stop is IntermediateStop intermediate && intermediate.Arrival.Value != intermediate.Departure.Value)
-                Enqueue(new DepartingAnnouncement(assembly, route, intermediate, katilect));
+                Enqueue(new IntermediateDepartingAnnouncement(assembly, route, intermediate, katilect));
         }
 
-        public void EnqueueRestarting(ShipController controller, int dockIndex) => _restarting.Add((controller, dockIndex));
+        public void EnqueueRestarting(ShipController controller, int dockIndex) => Enqueue(new RestartingAnnouncement(controller, dockIndex));
 
         public void EnqueueRestarted(ShipController controller, int dockIndex) => _restarted.Add((controller, dockIndex));
 

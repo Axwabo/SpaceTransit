@@ -16,6 +16,8 @@ namespace SpaceTransit.Stations.Announcements
 
         public abstract UpdateResult UpdateQueued();
 
+        protected UpdateResult ReadyOrRemove(bool ready) => ready ? UpdateResult.Ready : UpdateResult.Remove;
+
         public virtual void OnUtteranceStarting(ref PhrasePack pack)
         {
         }
