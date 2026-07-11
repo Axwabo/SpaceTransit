@@ -34,7 +34,24 @@ namespace SpaceTransit.Stations
             GetComponentsInChildren(_documents);
         }
 
-        private void OnEnable() => _previousDay = _previousMinute = -1;
+        private void OnEnable()
+        {
+            _previousDay = _previousMinute = -1;
+            foreach (var document in _documents)
+            {
+                var root = document.rootVisualElement;
+                root.dataSource = this;
+                foreach (var view in root.Query<ListView>().Build())
+                    view.bindItem = (element, i) =>
+                    {
+                        var item = (StationBoardItem) view.itemsSource[i];
+                        element.Q<Label>("Type").text = item.Type;
+                        element.Q<Label>("Station").text = item.Station;
+                        element.Q<Label>("Time").text = item.Time;
+                        element.Q<Label>("DockIndex").text = item.Dock;
+                    };
+            }
+        }
 
         private void Update()
         {
