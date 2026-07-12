@@ -91,7 +91,6 @@ namespace SpaceTransit.Stations.Announcements.Katilects
             else
                 sb.AppendContextFormat(context, arrivingAndDepartsBeforeVia)
                     .AppendVia(via, viaSuffix)
-                    .Append(' ')
                     .AppendContextFormat(context, arrivingAndDepartsAfterVia);
             return sb.AppendIntermediateStops(context.Route, Index(stopIndex))
                 .Append(arrivingAndDepartsSuffix)
