@@ -35,6 +35,7 @@ namespace SpaceTransit.Audio
 
         private void LateUpdate()
         {
+            // PASSING BY, WHY DON'T YOU UPDATE
             var mounted = MovementController.Current.IsMounted && (!_hasParent || !Assembly.IsPlayerMounted);
             if (mounted == _wasMounted)
                 return;
