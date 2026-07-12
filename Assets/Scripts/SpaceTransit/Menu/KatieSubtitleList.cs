@@ -56,7 +56,7 @@ namespace SpaceTransit.Menu
         private void Add(KatieSubtitle subtitle)
         {
             _subtitles.Add(subtitle);
-            _list.RefreshItems();
+            _list?.RefreshItems();
         }
 
         public static void Add(string announcer, string text, double delay, double duration, CancellationToken cancellationToken = default)
