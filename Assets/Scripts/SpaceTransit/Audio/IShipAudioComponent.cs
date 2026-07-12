@@ -1,12 +1,14 @@
+using UnityEngine;
+
 namespace SpaceTransit.Audio
 {
 
     public interface IShipAudioComponent
     {
 
-        bool Mute { get; }
+        AudioSource Source { get; }
 
-        void UpdateMuteStatus();
+        bool Mute { get; }
 
     }
 

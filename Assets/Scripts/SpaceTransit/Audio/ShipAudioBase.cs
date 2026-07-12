@@ -19,16 +19,7 @@ namespace SpaceTransit.Audio
             set
             {
                 foreach (var source in _sources)
-                {
-                    if (value || !_muteControllers.TryGetValue(source, out var controller))
-                    {
-                        source.mute = value;
-                        continue;
-                    }
-
-                    controller.UpdateMuteStatus();
-                    source.mute = controller.Mute;
-                }
+                    source.mute = value && (!_muteControllers.TryGetValue(source, out var controller) || controller.Mute);
             }
         }
 
