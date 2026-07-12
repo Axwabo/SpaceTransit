@@ -75,7 +75,7 @@ namespace SpaceTransit.Stations.Announcements
             var via = context.Via(stopIndex);
             if (via.Length == 0)
                 return sb;
-            sb.Append(' ');
+            sb.Append(" via ");
             for (var i = 0; i < via.Length; i++)
             {
                 if (i != 0)
