@@ -16,7 +16,7 @@ namespace SpaceTransit.Audio
 
         private bool _defaultMute;
 
-        private bool _wasMounted;
+        private bool? _wasMounted;
 
         private bool _hasParent;
 
@@ -33,9 +33,10 @@ namespace SpaceTransit.Audio
             _defaultMute = _source.mute;
         }
 
+        private void OnEnable() => _wasMounted = null;
+
         private void LateUpdate()
         {
-            // PASSING BY, WHY DON'T YOU UPDATE
             var mounted = MovementController.Current.IsMounted && (!_hasParent || !Assembly.IsPlayerMounted);
             if (mounted == _wasMounted)
                 return;
