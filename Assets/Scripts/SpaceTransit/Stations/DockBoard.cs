@@ -71,6 +71,9 @@ namespace SpaceTransit.Stations
         // ReSharper disable once CollectionNeverQueried.Global
         public List<StopItem> Stops { get; } = new();
 
+        [CreateProperty]
+        public string Via { get; private set; }
+
         private void OnEnable()
         {
             if (didStart)
@@ -111,7 +114,7 @@ namespace SpaceTransit.Stations
             if (_previous is null)
                 return;
             _previous = null;
-            FullType = LongType = ShortType = Time = Station = Action = "";
+            Via = FullType = LongType = ShortType = Time = Station = Action = "";
             Stops.Clear();
             RefreshLists();
         }
@@ -149,6 +152,15 @@ namespace SpaceTransit.Stations
                 Stops.Add(new StopItem(stops[i].Station.name, stops[i].Arrival.ToString()));
             Stops.Add(new StopItem(entry.Route.Destination.Station.name, entry.Route.Destination.Arrival.ToString()));
             RefreshLists();
+            if (entry.Route.Announcement is not {Via: {Length: not 0} via})
+                return;
+            foreach (var stationId in via)
+            {
+                if (entry.Route.StopIndex(stationId) <= entry.Index)
+                    continue;
+                Via = stationId.name;
+                break;
+            }
         }
 
         private void LateUpdate()
