@@ -22,7 +22,7 @@ namespace SpaceTransit.Ships.Driving.Screens
             (target.DockIndex + 1).ToString()
         );
 
-        private static void Bind(VisualElement element, string station, string arrival, string departure, string dockIndex)
+        public static void Bind(VisualElement element, string station, string arrival, string departure, string dockIndex)
         {
             element.Q<Label>("Station").text = station;
             element.Q<Label>("Arrival").text = arrival;

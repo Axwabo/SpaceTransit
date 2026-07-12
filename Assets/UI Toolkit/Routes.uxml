@@ -5,17 +5,34 @@
     <ui:VisualElement class="tektur cyan-background" style="flex-grow: 1; align-items: center;">
         <ui:Label text="Routes" class="bold" style="font-size: 36px;" />
         <ui:VisualElement style="flex-grow: 1; width: 100%; flex-direction: row; justify-content: center;">
-            <ui:ListView name="Routes" fixed-item-height="40" style="margin-right: 10px; width: 550px; -unity-text-align: middle-left; font-size: 24px;" />
+            <ui:ListView name="Routes" fixed-item-height="40" style="margin-right: 10px; width: 550px; -unity-text-align: middle-left; font-size: 24px;">
+                <Bindings>
+                    <ui:DataBinding property="itemsSource" data-source-path="Routes" data-source-type="SpaceTransit.Menu.RouteTimetable, Assembly-CSharp" binding-mode="ToTargetOnce" />
+                    <ui:DataBinding property="selectedIndex" data-source-path="SelectedIndex" data-source-type="SpaceTransit.Menu.RouteTimetable, Assembly-CSharp" />
+                </Bindings>
+            </ui:ListView>
             <ui:VisualElement style="margin-left: 10px; width: 550px; font-size: 30px;">
-                <ui:Label name="Type" class="bold" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
-                <ui:Label name="Summary" class="bold" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; white-space: normal;" />
+                <ui:Label name="Type" class="bold" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;">
+                    <Bindings>
+                        <ui:DataBinding property="text" data-source-path="Type" data-source-type="SpaceTransit.Menu.RouteTimetable, Assembly-CSharp" binding-mode="ToTarget" />
+                    </Bindings>
+                </ui:Label>
+                <ui:Label name="Summary" class="bold" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; white-space: normal;">
+                    <Bindings>
+                        <ui:DataBinding property="text" data-source-path="Summary" data-source-type="SpaceTransit.Menu.RouteTimetable, Assembly-CSharp" binding-mode="ToTarget" />
+                    </Bindings>
+                </ui:Label>
                 <ui:Instance template="Stop Row" name="Header" class="bold">
                     <AttributeOverrides element-name="Station" text="Station" />
                     <AttributeOverrides element-name="Arrival" text="Arr." />
                     <AttributeOverrides element-name="Departure" text="Dep." />
                     <AttributeOverrides element-name="DockIndex" text="Dock" />
                 </ui:Instance>
-                <ui:ListView item-template="project://database/Assets/UI%20Toolkit/Stop%20Row.uxml?fileID=9197481963319205126&amp;guid=354f96d3d4106a892b4d626d99f60c1d&amp;type=3#Stop Row" fixed-item-height="40" name="Stops" selection-type="None" class="no-selection" />
+                <ui:ListView item-template="project://database/Assets/UI%20Toolkit/Stop%20Row.uxml?fileID=9197481963319205126&amp;guid=354f96d3d4106a892b4d626d99f60c1d&amp;type=3#Stop Row" fixed-item-height="40" name="Stops" selection-type="None" class="no-selection">
+                    <Bindings>
+                        <ui:DataBinding property="itemsSource" data-source-path="Stops" data-source-type="SpaceTransit.Menu.RouteTimetable, Assembly-CSharp" binding-mode="ToTargetOnce" />
+                    </Bindings>
+                </ui:ListView>
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:Button text="Close" name="Close" />

@@ -65,7 +65,7 @@ namespace SpaceTransit.Stations.Announcements
             _cache.Station.Announcer = this;
             _departures = _cache.Departures
                 .Where(e => e.Index == -1)
-                .OrderBy(e => e.Departure.Departure.Value.TotalMinutes)
+                .OrderBy(e => e.Time.Value.TotalMinutes)
                 .ToList();
             _name = $"K.A.T.I.E. <color=#888>({_cache.StationId.name})</color>";
             EnqueueScheduledAnnouncements();
@@ -118,7 +118,7 @@ namespace SpaceTransit.Stations.Announcements
 
             foreach (var entry in _cache.Arrivals)
             {
-                if (entry.Arrival.Arrival <= now)
+                if (entry.Time <= now)
                     continue;
                 Enqueue(new ArrivalAnnouncement(entry, 2, katilect));
                 Enqueue(new ArrivalAnnouncement(entry, 1, katilect));
