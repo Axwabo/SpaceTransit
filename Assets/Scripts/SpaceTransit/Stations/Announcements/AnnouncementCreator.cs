@@ -68,7 +68,7 @@ namespace SpaceTransit.Stations.Announcements
                 else
                     sb.Append(" From ").Append(rule.Start.name).Append(" to ");
                 sb.Append(rule.End.name).Append(first ? " the ship stops " : " it stops ");
-                sb.AppendIntermediateStops(route, rule.EveryStation, start, end);
+                sb.AppendIntermediateStops(route, rule.EveryStation, Math.Max(index, start), end);
                 first = false;
             }
 
