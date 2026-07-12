@@ -32,6 +32,12 @@ namespace SpaceTransit.Stations.Announcements.Katilects
         [Tooltip("{0} ship\n{1} origin\n{2} dock\n{3} destination")]
         public string arrivingAndDeparts;
 
+        [Tooltip("{0} ship\n{1} origin\n{2} dock\n{3} destination")]
+        public string arrivingAndDepartsBeforeVia;
+
+        [Tooltip("{0} ship\n{1} origin\n{2} dock\n{3} destination")]
+        public string arrivingAndDepartsAfterVia;
+
         [Tooltip("{0} ship\n{1} origin\n{2} dock")]
         public string arriving;
 
@@ -52,20 +58,7 @@ namespace SpaceTransit.Stations.Announcements.Katilects
         public PhrasePack arrivingAndDepartsOverride;
 
         public string DepartsFor(ref AnnouncementContext<IDeparture> context, int stopIndex)
-        {
-            var sb = new StringBuilder();
-            var via = context.Via(stopIndex);
-            if (via.Length == 0)
-                sb.AppendContextFormat(context, departsFor);
-            else
-                sb.AppendContextFormat(context, departsForBeforeVia)
-                    .AppendVia(via, viaSuffix)
-                    .Append(' ')
-                    .AppendContextFormat(context, departsForAfterVia);
-            return sb
-                .AppendIntermediateStops(context.Route, Index(stopIndex))
-                .ToString();
-        }
+            => BuildVia(context, stopIndex, departsFor, departsForBeforeVia, departsForAfterVia).ToString();
 
         public string DepartingIn(ref AnnouncementContext<IDeparture> context, int minutes)
             => Build(departingIn, ref context, minutes);
@@ -80,10 +73,7 @@ namespace SpaceTransit.Stations.Announcements.Katilects
         {
             if (arrivingAndDepartsOverride)
                 context.Pack = arrivingAndDepartsOverride;
-            return new StringBuilder()
-                .AppendFormat(arrivingAndDeparts, context.Type, context.Origin, context.Dock, context.Destination)
-                .AppendVia(context, stopIndex, viaSuffix)
-                .AppendIntermediateStops(context.Route, Index(stopIndex))
+            return BuildVia(context, stopIndex, arrivingAndDeparts, arrivingAndDepartsBeforeVia, arrivingAndDepartsAfterVia)
                 .Append(arrivingAndDepartsSuffix)
                 .ToString();
         }
@@ -98,6 +88,20 @@ namespace SpaceTransit.Stations.Announcements.Katilects
             if (departingOverride)
                 context.Pack = departingOverride;
             return string.Format(format, context.Type, context.Destination, context.Dock, context.Stop.Departure, argument);
+        }
+
+        private StringBuilder BuildVia<T>(AnnouncementContext<T> context, int stopIndex, string simple, string before, string after) where T : IStop
+        {
+            var sb = new StringBuilder();
+            var via = context.Via(stopIndex);
+            if (via.Length == 0)
+                sb.AppendContextFormat(context, simple);
+            else
+                sb.AppendContextFormat(context, before)
+                    .AppendVia(via, viaSuffix)
+                    .Append(' ')
+                    .AppendContextFormat(context, after);
+            return sb.AppendIntermediateStops(context.Route, Index(stopIndex));
         }
 
         private int Index(int stopIndex) => announceIntermediateStops ? stopIndex : int.MaxValue;
