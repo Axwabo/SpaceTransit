@@ -62,7 +62,12 @@ namespace SpaceTransit.Vaulter
                 component.Initialize(this);
             if (!initialRoute)
                 return;
-            ITarget origin = initialStopIndex == ITarget.Origin ? initialRoute.Beginning : initialRoute.IntermediateStops[initialStopIndex];
+            ITarget origin = initialStopIndex switch
+            {
+                ITarget.Origin => initialRoute.Beginning,
+                ITarget.Destination => initialRoute.End,
+                _ => initialRoute.IntermediateStops[initialStopIndex]
+            };
             if (!Station.TryGetLoadedStation(origin.Station, out var station))
                 return;
             if (!Assembly.startTube)
@@ -100,7 +105,12 @@ namespace SpaceTransit.Vaulter
             }
 
             _targets = targets.ToArray();
-            UpdateTarget(stopIndex == ITarget.Origin ? ITarget.Origin : targets.IndexOf(descriptor.IntermediateStops[stopIndex]));
+            UpdateTarget(stopIndex switch
+            {
+                ITarget.Origin => ITarget.Origin,
+                ITarget.Destination => ITarget.Destination,
+                _ => targets.IndexOf(descriptor.IntermediateStops[stopIndex])
+            });
             NotifyRouteChanged();
         }
 
