@@ -35,6 +35,10 @@ namespace SpaceTransit.Stations.Announcements.Katilects
         [Tooltip("A leading space is required")]
         public string arrivingAndDepartsSuffix;
 
+        [SerializeField]
+        [Tooltip("A leading space is required")]
+        public string viaSuffix;
+
         [Header("Pack overrides")]
         [Tooltip("Used for all \"is departing...\" announcements (but not for \"departs for...\")")]
         public PhrasePack departingOverride;
@@ -59,6 +63,7 @@ namespace SpaceTransit.Stations.Announcements.Katilects
                 context.Pack = arrivingAndDepartsOverride;
             return new StringBuilder()
                 .AppendFormat(arrivingAndDeparts, context.Type, context.Origin, context.Dock, context.Destination)
+                .AppendVia(context, stopIndex, viaSuffix)
                 .AppendIntermediateStops(context.Route, Index(stopIndex))
                 .Append(arrivingAndDepartsSuffix)
                 .ToString();
@@ -72,6 +77,7 @@ namespace SpaceTransit.Stations.Announcements.Katilects
             if (stops)
                 return new StringBuilder()
                     .AppendFormat(format, context.Type, context.Destination, context.Dock, context.Stop.Departure)
+                    .AppendVia(context, argument)
                     .AppendIntermediateStops(context.Route, Index(argument))
                     .ToString();
             if (string.IsNullOrWhiteSpace(format))
