@@ -63,6 +63,8 @@ namespace SpaceTransit.Stations.Announcements
                 var end = Math.Min(route.StopIndex(rule.End), stops.Length);
                 if (end <= index)
                     continue;
+                if (rule.EveryStation && rule == rules[^1])
+                    return sb.Append(" The ship stops at every station.");
                 if (first)
                     sb.Append(" To ");
                 else
