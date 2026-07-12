@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using SpaceTransit.Routes;
-using SpaceTransit.Routes.Stops;
-using SpaceTransit.Ships.Driving.Screens;
+using Unity.Properties;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Cache = SpaceTransit.Vaulter.Cache;
 
 namespace SpaceTransit.Menu
 {
@@ -11,33 +12,55 @@ namespace SpaceTransit.Menu
     public sealed class RouteTimetable : MonoBehaviour
     {
 
-        private readonly List<ITarget> _stops = new();
+        private int _selected = -1;
 
-        private Label _type;
+        private RouteDescriptor[] _routes;
 
-        private Label _summary;
+        [CreateProperty]
+        public string[] Routes { get; set; }
+
+        [CreateProperty]
+        public int SelectedIndex
+        {
+            get => _selected;
+            set
+            {
+                _selected = value;
+                if (value != -1)
+                    Apply(_routes[value]);
+            }
+        }
+
+        [CreateProperty]
+        public string Type { get; private set; }
+
+        [CreateProperty]
+        public string Summary { get; private set; }
+
+        [CreateProperty]
+        // ReSharper disable once CollectionNeverQueried.Global
+        public List<RouteStopItem> Stops { get; } = new();
 
         private ListView _list;
 
         private void Start()
         {
             var root = this.RootVisual();
-            _type = root.Q<Label>("Type");
-            _summary = root.Q<Label>("Summary");
             _list = root.Q<ListView>("Stops");
-            _list.itemsSource = _stops;
-            _list.bindItem = StopList.CreateBindFunction(_stops);
+            _routes = Cache.Journeys.OfType<RouteDescriptor>().OrderBy(e => int.Parse(e.name)).ToArray();
+            Routes = _routes.Select(e => $"{e.name} {e.Origin.Station.name} - {e.Destination.Station.name}").ToArray();
+            root.dataSource = this;
         }
 
-        public void Apply(RouteDescriptor descriptor)
+        private void Apply(RouteDescriptor descriptor)
         {
-            _type.text = $"{descriptor.name} {descriptor.Type.ToStringFast()}";
-            _summary.text = descriptor.Summary();
-            _stops.Clear();
-            _stops.Add(descriptor.Origin);
+            Type = $"{descriptor.name} {descriptor.Type.ToStringFast()}";
+            Summary = descriptor.Summary();
+            Stops.Clear();
+            Stops.Add(descriptor.Origin);
             foreach (var stop in descriptor.IntermediateStops)
-                _stops.Add(stop);
-            _stops.Add(descriptor.Destination);
+                Stops.Add(stop);
+            Stops.Add(descriptor.Destination);
             _list.RefreshItems();
         }
 
