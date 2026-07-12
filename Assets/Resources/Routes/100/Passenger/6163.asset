@@ -12,9 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c4c61e2d20f40129a247bc3c1d7a8cc, type: 3}
   m_Name: 6163
   m_EditorClassIdentifier: Assembly-CSharp::SpaceTransit.Routes.RouteDescriptor
+  <Reverse>k__BackingField: 0
   <Type>k__BackingField: 0
   <EveryStation>k__BackingField: 1
-  <Reverse>k__BackingField: 0
+  schedule: {fileID: 0}
+  announcement:
+    via: []
+    <MinViaDistance>k__BackingField: 0
+    rules: []
   <Origin>k__BackingField:
     <DockIndex>k__BackingField: 0
     <Station>k__BackingField: {fileID: 11400000, guid: 81ceaf4d6062ad7e8b41042719899bc1, type: 2}
@@ -34,6 +39,7 @@ MonoBehaviour:
       minutes: 23
     <ExitTowards>k__BackingField: {fileID: 0}
     <MinStayMinutes>k__BackingField: 0
+    <Conditional>k__BackingField: 0
   - <DockIndex>k__BackingField: 1
     <Station>k__BackingField: {fileID: 11400000, guid: 892b05570d05280c59934a13c4011029, type: 2}
     <ArriveFrom>k__BackingField: {fileID: 0}
@@ -45,6 +51,7 @@ MonoBehaviour:
       minutes: 28
     <ExitTowards>k__BackingField: {fileID: 0}
     <MinStayMinutes>k__BackingField: 0
+    <Conditional>k__BackingField: 0
   - <DockIndex>k__BackingField: 1
     <Station>k__BackingField: {fileID: 11400000, guid: a1b938d5c6d184be58da985b10128dda, type: 2}
     <ArriveFrom>k__BackingField: {fileID: 0}
@@ -56,6 +63,7 @@ MonoBehaviour:
       minutes: 31
     <ExitTowards>k__BackingField: {fileID: 0}
     <MinStayMinutes>k__BackingField: 0
+    <Conditional>k__BackingField: 0
   - <DockIndex>k__BackingField: 1
     <Station>k__BackingField: {fileID: 11400000, guid: 4be45094e880b002794a645344bdad32, type: 2}
     <ArriveFrom>k__BackingField: {fileID: 0}
@@ -67,6 +75,7 @@ MonoBehaviour:
       minutes: 35
     <ExitTowards>k__BackingField: {fileID: 0}
     <MinStayMinutes>k__BackingField: 0
+    <Conditional>k__BackingField: 0
   - <DockIndex>k__BackingField: 1
     <Station>k__BackingField: {fileID: 11400000, guid: 0e3a512d2f8f21b618b7f7aa3e09de8f, type: 2}
     <ArriveFrom>k__BackingField: {fileID: 0}
@@ -78,6 +87,7 @@ MonoBehaviour:
       minutes: 38
     <ExitTowards>k__BackingField: {fileID: 0}
     <MinStayMinutes>k__BackingField: 0
+    <Conditional>k__BackingField: 0
   - <DockIndex>k__BackingField: 0
     <Station>k__BackingField: {fileID: 11400000, guid: 01d40ee8d01b81b7e8b814358b4fb048, type: 2}
     <ArriveFrom>k__BackingField: {fileID: 11400000, guid: 0e3a512d2f8f21b618b7f7aa3e09de8f, type: 2}
@@ -89,6 +99,7 @@ MonoBehaviour:
       minutes: 43
     <ExitTowards>k__BackingField: {fileID: 11400000, guid: bd5d83583fe7d0842bfa71def1144f03, type: 2}
     <MinStayMinutes>k__BackingField: 2
+    <Conditional>k__BackingField: 0
   - <DockIndex>k__BackingField: 1
     <Station>k__BackingField: {fileID: 11400000, guid: bd5d83583fe7d0842bfa71def1144f03, type: 2}
     <ArriveFrom>k__BackingField: {fileID: 0}
@@ -100,6 +111,7 @@ MonoBehaviour:
       minutes: 50
     <ExitTowards>k__BackingField: {fileID: 0}
     <MinStayMinutes>k__BackingField: 0
+    <Conditional>k__BackingField: 0
   - <DockIndex>k__BackingField: 1
     <Station>k__BackingField: {fileID: 11400000, guid: 727ceab560ba6324695e3cadb592b075, type: 2}
     <ArriveFrom>k__BackingField: {fileID: 0}
@@ -111,6 +123,7 @@ MonoBehaviour:
       minutes: 0
     <ExitTowards>k__BackingField: {fileID: 0}
     <MinStayMinutes>k__BackingField: 1
+    <Conditional>k__BackingField: 0
   - <DockIndex>k__BackingField: 1
     <Station>k__BackingField: {fileID: 11400000, guid: c6832b99374167f4a8c5437f623fcd9f, type: 2}
     <ArriveFrom>k__BackingField: {fileID: 0}
@@ -122,6 +135,7 @@ MonoBehaviour:
       minutes: 11
     <ExitTowards>k__BackingField: {fileID: 0}
     <MinStayMinutes>k__BackingField: 0
+    <Conditional>k__BackingField: 0
   - <DockIndex>k__BackingField: 1
     <Station>k__BackingField: {fileID: 11400000, guid: ae7c5b67d7597f44097266849da72ca2, type: 2}
     <ArriveFrom>k__BackingField: {fileID: 0}
@@ -133,6 +147,7 @@ MonoBehaviour:
       minutes: 21
     <ExitTowards>k__BackingField: {fileID: 0}
     <MinStayMinutes>k__BackingField: 0
+    <Conditional>k__BackingField: 0
   - <DockIndex>k__BackingField: 1
     <Station>k__BackingField: {fileID: 11400000, guid: 9932cecbd6c0b47448992b5a25ca9b2e, type: 2}
     <ArriveFrom>k__BackingField: {fileID: 0}
@@ -144,11 +159,12 @@ MonoBehaviour:
       minutes: 25
     <ExitTowards>k__BackingField: {fileID: 0}
     <MinStayMinutes>k__BackingField: 0
-  passthrough: []
-  schedule: {fileID: 0}
+    <Conditional>k__BackingField: 0
   <Destination>k__BackingField:
     <DockIndex>k__BackingField: 0
     <Station>k__BackingField: {fileID: 11400000, guid: 26cdfa7e881b9db46a85c136618e7f9a, type: 2}
+    <ArriveFrom>k__BackingField: {fileID: 11400000, guid: 9932cecbd6c0b47448992b5a25ca9b2e, type: 2}
     <Arrival>k__BackingField:
       hours: 23
       minutes: 29
+  passthrough: []
