@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
@@ -69,7 +70,23 @@ namespace SpaceTransit.Stations.Announcements
                 .Append(". The ship will only stop if there are passengers waiting to board or disembark.");
         }
 
-        public static string ArrivingAndDeparts(AnnouncementContext<IArrival> context, int index) => new StringBuilder()
+        public static StringBuilder AppendVia<T>(this StringBuilder sb, AnnouncementContext<T> context, int stopIndex, string suffix = "") where T : IStop
+        {
+            var via = context.Via(stopIndex);
+            if (via.Length == 0)
+                return sb;
+            sb.Append(' ');
+            for (var i = 0; i < via.Length; i++)
+            {
+                if (i != 0)
+                    sb.Append(", ");
+                sb.Append(via[i].name);
+            }
+
+            return sb.Append(suffix);
+        }
+
+        public static string ArrivingAndDeparts(AnnouncementContext<IArrival> context, int index, string viaSuffix = "") => new StringBuilder()
             .Append(context.Type)
             .Append(" ship is arriving from ")
             .Append(context.Origin)
@@ -77,14 +94,16 @@ namespace SpaceTransit.Stations.Announcements
             .Append(context.Dock)
             .Append(" and departs for ")
             .Append(context.Destination)
+            .AppendVia(context, index, viaSuffix)
             .Append('.')
             .AppendIntermediateStops(context.Route, index)
             .ToString();
 
-        public static string Departs(AnnouncementContext<IDeparture> context, int index) => new StringBuilder()
+        public static string Departs(AnnouncementContext<IDeparture> context, int index, string viaSuffix = "") => new StringBuilder()
             .Append(context.Type)
             .Append(" ship departs for ")
             .Append(context.Destination)
+            .AppendVia(context, index, viaSuffix)
             .Append(" from dock ")
             .Append(context.Dock)
             .Append(" at ")
@@ -92,6 +111,18 @@ namespace SpaceTransit.Stations.Announcements
             .Append('.')
             .AppendIntermediateStops(context.Route, index)
             .ToString();
+
+        public static ReadOnlySpan<StationId> Via<T>(this AnnouncementContext<T> context, int stopIndex = -1) where T : IStop
+        {
+            if (context.Descriptor is not {Via: {Length: not 0} via})
+                return default;
+            if (stopIndex == -1)
+                return via;
+            for (var i = 0; i < via.Length; i++)
+                if (context.Route.StopIndex(via[i]) > stopIndex)
+                    return via[i..];
+            return default;
+        }
 
     }
 

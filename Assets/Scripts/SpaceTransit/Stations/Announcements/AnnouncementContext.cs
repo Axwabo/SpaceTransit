@@ -12,6 +12,8 @@ namespace SpaceTransit.Stations.Announcements
 
         public readonly RouteDescriptor Route;
 
+        public readonly AnnouncementDescriptor? Descriptor;
+
         public readonly T Stop;
 
         public PhrasePack Pack;
@@ -27,6 +29,7 @@ namespace SpaceTransit.Stations.Announcements
         public AnnouncementContext(RouteDescriptor route, T stop, PhrasePack pack)
         {
             Route = route;
+            Descriptor = Route.Announcement;
             Stop = stop;
             Pack = pack;
         }

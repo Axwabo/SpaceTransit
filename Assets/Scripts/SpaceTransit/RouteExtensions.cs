@@ -31,6 +31,15 @@ namespace SpaceTransit
             _ => ("-", Color.gray)
         };
 
+        public static int StopIndex(this RouteDescriptor route, StationId id)
+        {
+            var stops = route.IntermediateStops;
+            for (var i = 0; i < stops.Length; i++)
+                if (stops[i].Station == id)
+                    return i;
+            return -1;
+        }
+
     }
 
 }
