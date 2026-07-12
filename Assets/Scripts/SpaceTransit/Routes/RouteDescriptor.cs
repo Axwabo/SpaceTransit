@@ -25,6 +25,12 @@ namespace SpaceTransit.Routes
         [field: SerializeField]
         public bool EveryStation { get; private set; }
 
+        [SerializeField]
+        private RelativeSchedule schedule;
+
+        [SerializeField]
+        private AnnouncementDescriptor announcement;
+
         [field: SerializeField]
         public Origin Origin { get; private set; }
 
@@ -33,9 +39,6 @@ namespace SpaceTransit.Routes
 
         [field: SerializeField]
         public Destination Destination { get; private set; }
-
-        [SerializeField]
-        private RelativeSchedule schedule;
 
         [SerializeField]
         private Passthrough[] passthrough;
@@ -49,6 +52,8 @@ namespace SpaceTransit.Routes
         public override ReadOnlySpan<Passthrough> Passthrough => _passthrough;
 
         public IKatilect Katilect => schedule ? schedule.katilectOverride : null;
+
+        public AnnouncementDescriptor Announcement => schedule ? schedule.announcement : announcement;
 
         private void Awake()
         {
@@ -71,6 +76,7 @@ namespace SpaceTransit.Routes
             var relativeSchedule = CreateInstance<RelativeSchedule>();
             relativeSchedule.intermediateStops = intermediateStops.Select(e => e.Add(-Origin.Departure.Value)).ToArray();
             relativeSchedule.passthrough = passthrough;
+            relativeSchedule.announcement = announcement;
             schedule = relativeSchedule;
             EditorUtility.SetDirty(this);
             AssetDatabase.CreateAsset(relativeSchedule, Path.Combine("Assets", Path.GetRelativePath(Application.dataPath, path)));

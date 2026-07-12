@@ -15,6 +15,8 @@ namespace SpaceTransit.Routes
 
         public FormattingKatilect katilectOverride;
 
+        public AnnouncementDescriptor announcement;
+
     }
 
 }

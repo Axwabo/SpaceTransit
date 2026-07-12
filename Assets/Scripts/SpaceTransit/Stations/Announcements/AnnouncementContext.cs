@@ -1,3 +1,5 @@
+#nullable enable
+
 using Katie.Unity;
 using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
