@@ -135,7 +135,7 @@ namespace SpaceTransit.Stations
                 _ => throw new InvalidOperationException()
             };
             Hours = entry.Time.Value.Hours.ToString();
-            Minutes = entry.Time.Value.Minutes.ToString();
+            Minutes = entry.Time.Value.Minutes.ToString("00");
             Stops.Clear();
             if (entry is ArrivalEntry)
             {
