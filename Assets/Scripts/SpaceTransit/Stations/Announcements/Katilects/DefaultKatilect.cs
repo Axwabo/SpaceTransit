@@ -15,7 +15,7 @@ namespace SpaceTransit.Stations.Announcements.Katilects
                     .Append(context.Type)
                     .Append(" ship to ")
                     .Append(context.Destination)
-                    .AppendVia(context, -1)
+                    .AppendVia(context, ITarget.Origin)
                     .Append(" is departing from dock ")
                     .Append(context.Dock)
                     .ToString();

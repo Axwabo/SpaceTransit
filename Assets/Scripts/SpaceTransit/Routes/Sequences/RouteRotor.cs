@@ -21,7 +21,7 @@ namespace SpaceTransit.Routes.Sequences
         {
             var ship = await Spawn(sequence, spawn, index);
             var token = ship.destroyCancellationToken;
-            if (spawn is TubeSpawn {StopIndex: not -1})
+            if (spawn is TubeSpawn {StopIndex: not ITarget.Origin})
             {
                 await Awaitable.NextFrameAsync(token);
                 ship.Parent.MarkReady();
@@ -30,7 +30,7 @@ namespace SpaceTransit.Routes.Sequences
             while (!token.IsCancellationRequested)
             {
                 await WaitOrUnloadAsync(ship, token);
-                if (index == -1 || index >= sequence.routes.Length)
+                if (index == ITarget.Origin || index >= sequence.routes.Length)
                 {
                     index = 0;
                     await TomorrowAsync(ship, sequence.routes[0].Beginning.Departure.Value - TimeSpan.FromHours(1), token);
@@ -72,7 +72,7 @@ namespace SpaceTransit.Routes.Sequences
                 parent = World.Current,
                 worldSpace = false
             }))[0];
-            if (index != -1 && index < sequence.routes.Length)
+            if (index != ITarget.Origin && index < sequence.routes.Length)
                 ship.initialRoute = sequence.routes[index];
             ship.initialStopIndex = spawn.StopIndex;
             if (spawn is not TubeSpawn tubeSpawn)

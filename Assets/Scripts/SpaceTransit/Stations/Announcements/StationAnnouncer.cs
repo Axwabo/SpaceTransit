@@ -64,7 +64,7 @@ namespace SpaceTransit.Stations.Announcements
         {
             _cache.Station.Announcer = this;
             _departures = _cache.Departures
-                .Where(e => e.Index == -1)
+                .Where(e => e.Index == ITarget.Origin)
                 .OrderBy(e => e.Time.Value.TotalMinutes)
                 .ToList();
             _name = $"K.A.T.I.E. <color=#888>({_cache.StationId.name})</color>";

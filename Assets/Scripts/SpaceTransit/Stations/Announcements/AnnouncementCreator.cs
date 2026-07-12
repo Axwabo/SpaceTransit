@@ -112,11 +112,11 @@ namespace SpaceTransit.Stations.Announcements
             .AppendIntermediateStops(context.Route, index)
             .ToString();
 
-        public static ReadOnlySpan<StationId> Via<T>(this AnnouncementContext<T> context, int stopIndex = -1) where T : IStop
+        public static ReadOnlySpan<StationId> Via<T>(this AnnouncementContext<T> context, int stopIndex = ITarget.Origin) where T : IStop
         {
-            if (context.Descriptor is not {Via: {Length: not 0} via})
+            if (stopIndex == ITarget.Destination || context.Descriptor is not {Via: {Length: not 0} via})
                 return default;
-            if (stopIndex == -1)
+            if (stopIndex == ITarget.Origin)
                 return via;
             for (var i = 0; i < via.Length; i++)
                 if (context.Route.StopIndex(via[i]) > stopIndex)

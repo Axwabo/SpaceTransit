@@ -16,7 +16,7 @@ namespace SpaceTransit.Stations.Announcements.Implementations
 
         protected override bool ShipExists => true;
 
-        protected override string BuildAnnouncement(IKatilect katilect, ref AnnouncementContext<IArrival> context) => _index == -1
+        protected override string BuildAnnouncement(IKatilect katilect, ref AnnouncementContext<IArrival> context) => _index == ITarget.Destination
             ? katilect.Arriving(ref context)
             : katilect.ArrivingAndDepartsFor(ref context, _index);
 

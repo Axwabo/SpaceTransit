@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using SpaceTransit.Routes;
+using SpaceTransit.Routes.Stops;
 using SpaceTransit.Vaulter;
 using Unity.Properties;
 using UnityEngine;
@@ -159,7 +160,7 @@ namespace SpaceTransit.Stations
                 if (entry.Departure.DockIndex == dock.Index)
                     _entries.Add(entry);
             foreach (var entry in _departuresArrivals.Arrivals)
-                if (entry.Index == -1 && entry.Arrival.DockIndex == dock.Index)
+                if (entry.Index == ITarget.Destination && entry.Arrival.DockIndex == dock.Index)
                     _entries.Add(entry);
             _entries.Sort((a, b) => a.Time.Value.CompareTo(b.Time.Value));
         }
