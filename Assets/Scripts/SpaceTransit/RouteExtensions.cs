@@ -1,4 +1,5 @@
-﻿using SpaceTransit.Routes;
+﻿using System.Collections.Generic;
+using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
 using UnityEngine;
 
@@ -33,11 +34,15 @@ namespace SpaceTransit
 
         public static int StopIndex(this RouteDescriptor route, StationId id)
         {
+            if (route.Origin.Station == id)
+                return ITarget.Origin;
+            if (route.Destination.Station == id)
+                return ITarget.Destination;
             var stops = route.IntermediateStops;
             for (var i = 0; i < stops.Length; i++)
                 if (stops[i].Station == id)
                     return i;
-            return -1;
+            throw new KeyNotFoundException($"{id} is not a part of {route}");
         }
 
     }

@@ -29,26 +29,47 @@ namespace SpaceTransit.Stations.Announcements
             if (index >= intermediateStops - 1)
                 return sb;
             if (route.Announcement is {Rules: {Length: not 0} rules})
-                return sb.AppendIntermediateStopRules(route, rules, index);
-            sb.Append(" The ship stops ");
-            if (route.EveryStation)
-                return sb.Append("at every station.").AppendConditionalStops(route, index);
+                return sb.AppendIntermediateStopRules(route, rules, index)
+                    .AppendConditionalStops(route, index);
+            return sb.Append(" The ship stops ")
+                .AppendIntermediateStops(route, route.EveryStation, index, intermediateStops)
+                .AppendConditionalStops(route, index);
+        }
+
+        private static StringBuilder AppendIntermediateStops(this StringBuilder sb, RouteDescriptor route, bool everyStation, int start, int end)
+        {
+            if (everyStation)
+                return sb.Append("at every station.");
             sb.Append("only at ");
-            for (var i = index + 1; i < intermediateStops; i++)
+            for (var i = start + 1; i < end; i++)
             {
-                if (i != index + 1 && i == intermediateStops - 1)
+                if (i != start + 1 && i == end - 1)
                     sb.Append(" and ");
-                else if (i != index + 1)
+                else if (i != start + 1)
                     sb.Append(", ");
                 sb.Append(route.IntermediateStops[i].Station.name);
             }
 
-            return sb.Append('.').AppendConditionalStops(route, index);
+            return sb.Append('.');
         }
 
         public static StringBuilder AppendIntermediateStopRules(this StringBuilder sb, RouteDescriptor route, ReadOnlySpan<StopSubsetRule> rules, int index)
         {
-            // TODO
+            var first = true;
+            var stops = route.IntermediateStops;
+            foreach (var rule in rules)
+            {
+                var start = route.StopIndex(rule.Start);
+                var end = Math.Min(route.StopIndex(rule.End), stops.Length);
+                if (start >= index)
+                    sb.Append(" To ");
+                else
+                    sb.Append(" From ").Append(rule.Start.name).Append(" to ");
+                sb.Append(rule.End.name).Append(first ? " the ship stops " : " it stops ");
+                sb.AppendIntermediateStops(route, rule.EveryStation, start, end);
+                first = false;
+            }
+
             return sb;
         }
 
