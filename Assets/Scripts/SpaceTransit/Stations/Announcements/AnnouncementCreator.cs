@@ -61,6 +61,8 @@ namespace SpaceTransit.Stations.Announcements
             {
                 var start = route.StopIndex(rule.Start);
                 var end = Math.Min(route.StopIndex(rule.End), stops.Length);
+                if (end <= index)
+                    continue;
                 if (start >= index)
                     sb.Append(" To ");
                 else
