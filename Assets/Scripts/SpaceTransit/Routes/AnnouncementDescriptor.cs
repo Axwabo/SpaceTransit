@@ -11,6 +11,9 @@ namespace SpaceTransit.Routes
         [SerializeField]
         private StationId[] via;
 
+        [field: SerializeField]
+        public int MinViaDistance { get; private set; }
+
         [SerializeField]
         private StopSubsetRule[] rules;
 

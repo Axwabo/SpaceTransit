@@ -114,13 +114,17 @@ namespace SpaceTransit.Stations.Announcements
 
         public static ReadOnlySpan<StationId> Via<T>(this AnnouncementContext<T> context, int stopIndex = ITarget.Origin) where T : IStop
         {
-            if (stopIndex == ITarget.Destination || context.Descriptor is not {Via: {Length: not 0} via})
+            if (stopIndex == ITarget.Destination || context.Descriptor is not {Via: {Length: not 0} via, MinViaDistance: var minDistance})
                 return default;
             if (stopIndex == ITarget.Origin)
                 return via;
             for (var i = 0; i < via.Length; i++)
-                if (context.Route.StopIndex(via[i]) > stopIndex)
+            {
+                var index = context.Route.StopIndex(via[i]);
+                if (index > stopIndex && Math.Abs(index - stopIndex) >= minDistance)
                     return via[i..];
+            }
+
             return default;
         }
 
