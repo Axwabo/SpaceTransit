@@ -7,10 +7,12 @@ namespace SpaceTransit.Audio
 {
 
     [RequireComponent(typeof(AudioSource))]
-    public sealed class MountBasedMixerSetter : ModuleComponentBase
+    public sealed class MountBasedMixerSetter : ModuleComponentBase, IShipAudioComponent
     {
 
-        private AudioSource _source;
+        public AudioSource Source { get; private set; }
+
+        public bool Mute { get; private set; }
 
         private AudioMixerGroup _defaultGroup;
 
@@ -28,9 +30,9 @@ namespace SpaceTransit.Audio
 
         protected override void Awake()
         {
-            _source = GetComponent<AudioSource>();
-            _defaultGroup = _source.outputAudioMixerGroup;
-            _defaultMute = _source.mute;
+            Source = GetComponent<AudioSource>();
+            _defaultGroup = Source.outputAudioMixerGroup;
+            _defaultMute = Source.mute;
         }
 
         private void OnEnable() => _wasMounted = null;
@@ -41,8 +43,9 @@ namespace SpaceTransit.Audio
             if (mounted == _wasMounted)
                 return;
             _wasMounted = mounted;
-            _source.outputAudioMixerGroup = mounted ? onboardGroup : _defaultGroup;
-            _source.mute = mounted ? onboardMute : _defaultMute;
+            Mute = mounted ? onboardMute : _defaultMute;
+            Source.outputAudioMixerGroup = mounted ? onboardGroup : _defaultGroup;
+            Source.mute |= Mute;
         }
 
         protected override void OnInitialized() => _hasParent = true;
