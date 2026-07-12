@@ -11,6 +11,8 @@ namespace SpaceTransit.Menu
     public sealed class RouteList : MonoBehaviour
     {
 
+        private int _selected = -1;
+
         private ListView _list;
 
         private RouteDescriptor[] _routes;
@@ -21,7 +23,13 @@ namespace SpaceTransit.Menu
         [CreateProperty]
         public int SelectedIndex
         {
-            set => timetable.Apply(_routes[value]);
+            get => _selected;
+            set
+            {
+                _selected = value;
+                if (value != -1)
+                    timetable.Apply(_routes[value]);
+            }
         }
 
         [SerializeField]
