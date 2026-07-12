@@ -47,6 +47,7 @@ namespace SpaceTransit.Menu
         {
             var root = this.RootVisual();
             _list = root.Q<ListView>("Stops");
+            _list.bindItem = (element, i) => element.dataSource = Stops[i];
             _routes = Cache.Journeys.OfType<RouteDescriptor>().OrderBy(e => int.Parse(e.name)).ToArray();
             Routes = _routes.Select(e => $"{e.name} {e.Origin.Station.name} - {e.Destination.Station.name}").ToArray();
             root.dataSource = this;
