@@ -137,7 +137,7 @@ having to specify the audio clips in the correct order per announcement.
 Future plans:
 
 - ~~Dynamic line loading~~ DONE
-- Ship houses
+- ~~Ship houses~~ DONE
 - ~~Even more routes & lines~~ DONE
 - ~~Spline-based, auto-generated map~~ DONE (with SVGs, two-click export tool)
 - ~~Touchscreen support~~ DONE
