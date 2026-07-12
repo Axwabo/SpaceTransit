@@ -5,7 +5,12 @@
     <ui:VisualElement class="tektur cyan-background" style="flex-grow: 1; align-items: center;">
         <ui:Label text="Routes" class="bold" style="font-size: 36px;" />
         <ui:VisualElement style="flex-grow: 1; width: 100%; flex-direction: row; justify-content: center;">
-            <ui:ListView name="Routes" fixed-item-height="40" style="margin-right: 10px; width: 550px; -unity-text-align: middle-left; font-size: 24px;" />
+            <ui:ListView name="Routes" fixed-item-height="40" style="margin-right: 10px; width: 550px; -unity-text-align: middle-left; font-size: 24px;">
+                <Bindings>
+                    <ui:DataBinding property="itemsSource" data-source-path="Routes" data-source-type="SpaceTransit.Menu.RouteList, Assembly-CSharp" binding-mode="ToTarget" />
+                    <ui:DataBinding property="selectedIndex" data-source-path="SelectedIndex" data-source-type="SpaceTransit.Menu.RouteList, Assembly-CSharp" binding-mode="ToSource" />
+                </Bindings>
+            </ui:ListView>
             <ui:VisualElement style="margin-left: 10px; width: 550px; font-size: 30px;">
                 <ui:Label name="Type" class="bold" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;" />
                 <ui:Label name="Summary" class="bold" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; white-space: normal;" />
