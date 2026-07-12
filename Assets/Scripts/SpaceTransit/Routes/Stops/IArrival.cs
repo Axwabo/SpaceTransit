@@ -5,6 +5,7 @@
     {
 
         TimeOnly Arrival { get; }
+        StationId ArriveFrom { get; }
 
     }
 

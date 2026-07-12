@@ -63,28 +63,35 @@ namespace SpaceTransit.Routes.Sequences
                                     : None;
                 }
 
-                if (IsArrivingMoreThan10MinutesLater(route))
-                    return None;
+                if (EnterDestination(route, out var location))
+                    return (location, routeIndex);
             }
 
-            var finalDestination = sequence.routes[^1].End;
-            if (!Station.TryGetLoadedStation(finalDestination.Station, out var finalStation))
-                return None;
-            var finalDock = finalStation.Docks[finalDestination.DockIndex];
-            return !finalDock.IsFree || IsArrivingMoreThan10MinutesLater(sequence.routes[^1])
-                ? None
-                : (new TubeSpawn(finalDock), ITarget.Origin);
+            return EnterDestination(sequence.routes[^1], out var finalLocation)
+                ? (finalLocation, sequence.routes.Length - 1)
+                : None;
         }
 
-        private static bool IsArrivingMoreThan10MinutesLater(JourneyDescriptorBase route)
-            => route is RouteDescriptor {Destination: {Arrival: var arrival}} && arrival > Clock.Now + TimeSpan.FromMinutes(10);
+        private static bool EnterDestination(JourneyDescriptorBase journey, out SpawnLocation location)
+        {
+            if (journey.End is not Destination destination
+                || destination.Arrival > Clock.Now + TimeSpan.FromMinutes(1)
+                || !Station.TryGetLoadedStation(destination.Station, out var station))
+            {
+                location = null;
+                return false;
+            }
+
+            location = Enter(station, destination, journey, ITarget.Destination, ITarget.Destination).Item1;
+            return location is not null;
+        }
 
         private static (SpawnLocation, int) SpawnAt(Station station, IntermediateStop stop, int stopIndex, int routeIndex)
             => !station.Docks[stop.DockIndex].IsFree
                 ? None
                 : (new SpawnLocation(stopIndex), routeIndex);
 
-        private static (SpawnLocation, int) Enter(Station station, IntermediateStop stop, JourneyDescriptorBase descriptor, int stopIndex, int routeIndex)
+        private static (SpawnLocation, int) Enter(Station station, IArrival stop, JourneyDescriptorBase descriptor, int stopIndex, int routeIndex)
         {
             var dock = station.Docks[stop.DockIndex];
             if (!dock.IsFree)

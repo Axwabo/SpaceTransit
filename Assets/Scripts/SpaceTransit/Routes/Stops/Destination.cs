@@ -9,6 +9,9 @@ namespace SpaceTransit.Routes.Stops
     {
 
         [field: SerializeField]
+        public StationId ArriveFrom { get; private set; }
+
+        [field: SerializeField]
         public TimeOnly Arrival { get; set; }
 
     }
