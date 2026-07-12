@@ -1,6 +1,47 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/Docks/Old.uss?fileID=7433441132597879392&amp;guid=8c7b94b0514c422b982b4a30bee69956&amp;type=3#Old" />
-    <ui:VisualElement name="Content">
-        
+    <ui:VisualElement name="Content" class="oxanium row">
+        <ui:VisualElement name="DockContainer">
+            <ui:VisualElement name="DockAnchor" class="row">
+                <ui:Label text="5" name="DockIndex">
+                    <Bindings>
+                        <ui:DataBinding property="text" data-source-path="Dock" data-source-type="SpaceTransit.Stations.DockBoard, Assembly-CSharp" binding-mode="ToTargetOnce" />
+                    </Bindings>
+                </ui:Label>
+                <ui:Label text="DOCK" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="RouteContainer">
+            <ui:VisualElement class="row">
+                <ui:Label text="dep." name="Action">
+                    <Bindings>
+                        <ui:DataBinding property="text" data-source-path="Action" data-source-type="SpaceTransit.Stations.DockBoard, Assembly-CSharp" binding-mode="ToTarget" />
+                    </Bindings>
+                </ui:Label>
+                <ui:Label text="7" name="Hour">
+                    <Bindings>
+                        <ui:DataBinding property="text" data-source-path="Hour" data-source-type="SpaceTransit.Stations.DockBoard, Assembly-CSharp" binding-mode="ToTarget" />
+                    </Bindings>
+                </ui:Label>
+                <ui:Label text=":" name="Colon" />
+                <ui:Label text="38" name="Minute">
+                    <Bindings>
+                        <ui:DataBinding property="text" data-source-path="Minute" data-source-type="SpaceTransit.Stations.DockBoard, Assembly-CSharp" binding-mode="ToTarget" />
+                    </Bindings>
+                </ui:Label>
+            </ui:VisualElement>
+            <ui:VisualElement name="StopAndType">
+                <ui:Label text="Peshtadub-South">
+                    <Bindings>
+                        <ui:DataBinding property="text" data-source-path="Station" data-source-type="SpaceTransit.Stations.DockBoard, Assembly-CSharp" binding-mode="ToTarget" />
+                    </Bindings>
+                </ui:Label>
+                <ui:Label text="Passenger">
+                    <Bindings>
+                        <ui:DataBinding property="text" data-source-path="FullyType" data-source-type="SpaceTransit.Stations.DockBoard, Assembly-CSharp" binding-mode="ToTarget" />
+                    </Bindings>
+                </ui:Label>
+            </ui:VisualElement>
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

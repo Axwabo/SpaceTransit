@@ -55,10 +55,16 @@ namespace SpaceTransit.Stations
         public Color Color { get; private set; }
 
         [CreateProperty]
-        public string Station { get; set; }
+        public string Station { get; private set; }
 
         [CreateProperty]
-        public string Time { get; set; }
+        public string Time { get; private set; }
+
+        [CreateProperty]
+        public string Hours { get; private set; }
+
+        [CreateProperty]
+        public string Minutes { get; private set; }
 
         [CreateProperty]
         // ReSharper disable once CollectionNeverQueried.Global
@@ -124,11 +130,12 @@ namespace SpaceTransit.Stations
             (ShortType, Color) = entry.Route.GetAbbreviation();
             (Station, Action, _arriving) = entry switch
             {
-                ArrivalEntry arrivalEntry => (arrivalEntry.Route.Origin.Station.name, "Arrives", true),
-                DepartureEntry departureEntry => (departureEntry.Route.Destination.Station.name, "Departs", false),
+                ArrivalEntry arrivalEntry => (arrivalEntry.Route.Origin.Station.name, "arr.", true),
+                DepartureEntry departureEntry => (departureEntry.Route.Destination.Station.name, "dep.", false),
                 _ => throw new InvalidOperationException()
             };
-
+            Hours = entry.Time.Value.Hours.ToString();
+            Minutes = entry.Time.Value.Minutes.ToString();
             Stops.Clear();
             if (entry is ArrivalEntry)
             {
