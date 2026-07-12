@@ -30,25 +30,27 @@
                     </Bindings>
                 </ui:Label>
             </ui:VisualElement>
-            <ui:VisualElement class="stops">
-                <ui:Label text="Peshtadub-South">
-                    <Bindings>
-                        <ui:DataBinding property="text" data-source-path="Station" data-source-type="SpaceTransit.Stations.DockBoard, Assembly-CSharp" binding-mode="ToTarget" />
-                    </Bindings>
-                </ui:Label>
-                <ui:Label text="Passenger">
-                    <Bindings>
-                        <ui:DataBinding property="text" data-source-path="FullType" data-source-type="SpaceTransit.Stations.DockBoard, Assembly-CSharp" binding-mode="ToTarget" />
-                    </Bindings>
-                </ui:Label>
-            </ui:VisualElement>
-            <ui:VisualElement class="stops">
-                <ui:Label text="Cárpenter">
-                    <Bindings>
-                        <ui:DataBinding property="text" data-source-path="Via" data-source-type="SpaceTransit.Stations.DockBoard, Assembly-CSharp" binding-mode="ToTarget" />
-                    </Bindings>
-                </ui:Label>
-                <ui:Label />
+            <ui:VisualElement name="RouteInfo" class="row">
+                <ui:VisualElement class="stops">
+                    <ui:Label text="Peshtadub-South">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="Station" data-source-type="SpaceTransit.Stations.DockBoard, Assembly-CSharp" binding-mode="ToTarget" />
+                        </Bindings>
+                    </ui:Label>
+                    <ui:Label text="Passenger">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="FullType" data-source-type="SpaceTransit.Stations.DockBoard, Assembly-CSharp" binding-mode="ToTarget" />
+                        </Bindings>
+                    </ui:Label>
+                </ui:VisualElement>
+                <ui:VisualElement class="stops">
+                    <ui:Label text="Cárpenter">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="Via" data-source-type="SpaceTransit.Stations.DockBoard, Assembly-CSharp" binding-mode="ToTarget" />
+                        </Bindings>
+                    </ui:Label>
+                    <ui:Label text="Fill" name="Fill" />
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
