@@ -63,7 +63,7 @@ namespace SpaceTransit.Stations.Announcements
                 var end = Math.Min(route.StopIndex(rule.End), stops.Length);
                 if (end <= index)
                     continue;
-                if (start >= index)
+                if (start <= index)
                     sb.Append(" To ");
                 else
                     sb.Append(" From ").Append(rule.Start.name).Append(" to ");
