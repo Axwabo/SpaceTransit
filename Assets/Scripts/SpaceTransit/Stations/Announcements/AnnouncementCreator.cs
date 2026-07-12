@@ -28,6 +28,8 @@ namespace SpaceTransit.Stations.Announcements
             var intermediateStops = route.IntermediateStops.Length;
             if (index >= intermediateStops - 1)
                 return sb;
+            if (route.Announcement is {Rules: {Length: not 0} rules})
+                return sb.AppendIntermediateStopRules(route, rules, index);
             sb.Append(" The ship stops ");
             if (route.EveryStation)
                 return sb.Append("at every station.").AppendConditionalStops(route, index);
@@ -42,6 +44,12 @@ namespace SpaceTransit.Stations.Announcements
             }
 
             return sb.Append('.').AppendConditionalStops(route, index);
+        }
+
+        public static StringBuilder AppendIntermediateStopRules(this StringBuilder sb, RouteDescriptor route, ReadOnlySpan<StopSubsetRule> rules, int index)
+        {
+            // TODO
+            return sb;
         }
 
         private static StringBuilder AppendConditionalStops(this StringBuilder sb, RouteDescriptor route, int index)
@@ -73,8 +81,11 @@ namespace SpaceTransit.Stations.Announcements
         public static StringBuilder AppendVia<T>(this StringBuilder sb, AnnouncementContext<T> context, int stopIndex, string suffix = "") where T : IStop
         {
             var via = context.Via(stopIndex);
-            if (via.Length == 0)
-                return sb;
+            return via.Length == 0 ? sb : sb.AppendVia(via, suffix);
+        }
+
+        public static StringBuilder AppendVia(this StringBuilder sb, ReadOnlySpan<StationId> via, string suffix)
+        {
             sb.Append(" via ");
             for (var i = 0; i < via.Length; i++)
             {
@@ -127,6 +138,9 @@ namespace SpaceTransit.Stations.Announcements
 
             return default;
         }
+
+        public static StringBuilder AppendContextFormat(this StringBuilder sb, AnnouncementContext<IDeparture> context, string format)
+            => sb.AppendFormat(format, context.Type, context.Destination, context.Dock, context.Stop.Departure);
 
     }
 
