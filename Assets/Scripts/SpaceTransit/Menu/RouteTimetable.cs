@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using SpaceTransit.Routes;
+using SpaceTransit.Ships.Driving.Screens;
 using Unity.Properties;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -47,7 +48,11 @@ namespace SpaceTransit.Menu
         {
             var root = this.RootVisual();
             _list = root.Q<ListView>("Stops");
-            _list.bindItem = (element, i) => element.dataSource = Stops[i];
+            _list.bindItem = (element, i) =>
+            {
+                var (station, arrival, departure, dockIndex) = Stops[i];
+                StopList.Bind(element, station, arrival, departure, dockIndex);
+            };
             _routes = Cache.Journeys.OfType<RouteDescriptor>().OrderBy(e => int.Parse(e.name)).ToArray();
             Routes = _routes.Select(e => $"{e.name} {e.Origin.Station.name} - {e.Destination.Station.name}").ToArray();
             root.dataSource = this;
