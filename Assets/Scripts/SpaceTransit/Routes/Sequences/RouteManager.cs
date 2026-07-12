@@ -43,48 +43,46 @@ namespace SpaceTransit.Routes.Sequences
 
         private static (SpawnLocation, int) GetSpawnLocation(ServiceSequence sequence)
         {
+            var now = Clock.Now;
             for (var routeIndex = 0; routeIndex < sequence.routes.Length; routeIndex++)
             {
                 var route = sequence.routes[routeIndex];
-                if (route.Beginning.Departure > Clock.Now)
+                if (route.Beginning.Departure > now)
                     return Station.TryGetLoadedStation(route.Beginning.Station, out var departureStation) && departureStation.Docks[route.Beginning.DockIndex].IsFree
                         ? (SpawnLocation.Origin, routeIndex)
                         : None;
                 for (var stopIndex = 0; stopIndex < route.IntermediateStops.Length; stopIndex++)
                 {
                     var stop = route.IntermediateStops[stopIndex];
-                    if (stop.Departure >= Clock.Now + TimeSpan.FromMinutes(stop.MinStayMinutes + 1))
+                    if (stop.Departure >= now + TimeSpan.FromMinutes(stop.MinStayMinutes + 1))
                         return !Station.TryGetLoadedStation(stop.Station, out var station)
                             ? None
-                            : stop.Arrival <= Clock.Now
+                            : stop.Arrival <= now
                                 ? SpawnAt(station, stop, stopIndex, routeIndex)
-                                : stop.Arrival <= Clock.Now + TimeSpan.FromMinutes(1)
+                                : stop.Arrival <= now + TimeSpan.FromMinutes(1)
                                     ? Enter(station, stop, route, stopIndex, routeIndex)
                                     : None;
                 }
 
-                if (EnterDestination(route, out var location))
-                    return (location, routeIndex);
+                if (route.End is Destination destination
+                    && destination.Arrival < now
+                    && Station.TryGetLoadedStation(destination.Station, out var destinationStation))
+                    return destination.Arrival <= now + TimeSpan.FromMinutes(1)
+                        ? Enter(destinationStation, destination, route, ITarget.Destination, routeIndex)
+                        : None;
             }
 
-            return EnterDestination(sequence.routes[^1], out var finalLocation)
-                ? (finalLocation, sequence.routes.Length - 1)
-                : None;
+            var finalDestination = sequence.routes[^1].End;
+            if (!Station.TryGetLoadedStation(finalDestination.Station, out var finalStation))
+                return None;
+            var finalDock = finalStation.Docks[finalDestination.DockIndex];
+            return !finalDock.IsFree || IsArrivingMoreThan10MinutesLater(sequence.routes[^1])
+                ? None
+                : (new TubeSpawn(finalDock), -1);
         }
 
-        private static bool EnterDestination(JourneyDescriptorBase journey, out SpawnLocation location)
-        {
-            if (journey.End is not Destination destination
-                || destination.Arrival > Clock.Now + TimeSpan.FromMinutes(1)
-                || !Station.TryGetLoadedStation(destination.Station, out var station))
-            {
-                location = null;
-                return false;
-            }
-
-            location = Enter(station, destination, journey, ITarget.Destination, ITarget.Destination).Item1;
-            return location is not null;
-        }
+        private static bool IsArrivingMoreThan10MinutesLater(JourneyDescriptorBase route)
+            => route is RouteDescriptor {Destination: {Arrival: var arrival}} && arrival > Clock.Now + TimeSpan.FromMinutes(10);
 
         private static (SpawnLocation, int) SpawnAt(Station station, IntermediateStop stop, int stopIndex, int routeIndex)
             => !station.Docks[stop.DockIndex].IsFree
