@@ -65,7 +65,7 @@ namespace SpaceTransit.Routes.Sequences
                 }
 
                 if (route.End is Destination destination
-                    && destination.Arrival < now
+                    && destination.Arrival > now
                     && Station.TryGetLoadedStation(destination.Station, out var destinationStation))
                     return destination.Arrival <= now + TimeSpan.FromMinutes(1)
                         ? Enter(destinationStation, destination, route, ITarget.Destination, routeIndex)
