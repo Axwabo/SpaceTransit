@@ -164,12 +164,11 @@ namespace SpaceTransit.Stations.Announcements
             return default;
         }
 
-        public static StringBuilder AppendContextFormat<T>(this StringBuilder sb, AnnouncementContext<T> context, string format) where T : IStop => context switch
-        {
-            AnnouncementContext<IDeparture> departure => sb.AppendFormat(format, context.Type, context.Destination, context.Dock, departure.Stop.Departure),
-            AnnouncementContext<IArrival> => sb.AppendFormat(format, context.Type, context.Origin, context.Dock, context.Destination),
-            _ => sb
-        };
+        public static StringBuilder AppendContextFormat(this StringBuilder sb, AnnouncementContext<IDeparture> departure, string format)
+            => sb.AppendFormat(format, departure.Type, departure.Destination, departure.Dock, departure.Stop.Departure);
+
+        public static StringBuilder AppendContextFormat(this StringBuilder sb, AnnouncementContext<IArrival> arrival, string format)
+            => sb.AppendFormat(format, arrival.Type, arrival.Origin, arrival.Dock, arrival.Destination);
 
     }
 

@@ -58,7 +58,18 @@ namespace SpaceTransit.Stations.Announcements.Katilects
         public PhrasePack arrivingAndDepartsOverride;
 
         public string DepartsFor(ref AnnouncementContext<IDeparture> context, int stopIndex)
-            => BuildVia(context, stopIndex, departsFor, departsForBeforeVia, departsForAfterVia).ToString();
+        {
+            var sb = new StringBuilder();
+            var via = context.Via(stopIndex);
+            if (via.Length == 0)
+                sb.AppendContextFormat(context, departsFor);
+            else
+                sb.AppendContextFormat(context, departsForBeforeVia)
+                    .AppendVia(via, viaSuffix)
+                    .Append(' ')
+                    .AppendContextFormat(context, departsForAfterVia);
+            return sb.AppendIntermediateStops(context.Route, Index(stopIndex)).ToString();
+        }
 
         public string DepartingIn(ref AnnouncementContext<IDeparture> context, int minutes)
             => Build(departingIn, ref context, minutes);
@@ -73,7 +84,16 @@ namespace SpaceTransit.Stations.Announcements.Katilects
         {
             if (arrivingAndDepartsOverride)
                 context.Pack = arrivingAndDepartsOverride;
-            return BuildVia(context, stopIndex, arrivingAndDeparts, arrivingAndDepartsBeforeVia, arrivingAndDepartsAfterVia)
+            var sb = new StringBuilder();
+            var via = context.Via(stopIndex);
+            if (via.Length == 0)
+                sb.AppendContextFormat(context, arrivingAndDeparts);
+            else
+                sb.AppendContextFormat(context, arrivingAndDepartsBeforeVia)
+                    .AppendVia(via, viaSuffix)
+                    .Append(' ')
+                    .AppendContextFormat(context, arrivingAndDepartsAfterVia);
+            return sb.AppendIntermediateStops(context.Route, Index(stopIndex))
                 .Append(arrivingAndDepartsSuffix)
                 .ToString();
         }
@@ -88,20 +108,6 @@ namespace SpaceTransit.Stations.Announcements.Katilects
             if (departingOverride)
                 context.Pack = departingOverride;
             return string.Format(format, context.Type, context.Destination, context.Dock, context.Stop.Departure, argument);
-        }
-
-        private StringBuilder BuildVia<T>(AnnouncementContext<T> context, int stopIndex, string simple, string before, string after) where T : IStop
-        {
-            var sb = new StringBuilder();
-            var via = context.Via(stopIndex);
-            if (via.Length == 0)
-                sb.AppendContextFormat(context, simple);
-            else
-                sb.AppendContextFormat(context, before)
-                    .AppendVia(via, viaSuffix)
-                    .Append(' ')
-                    .AppendContextFormat(context, after);
-            return sb.AppendIntermediateStops(context.Route, Index(stopIndex));
         }
 
         private int Index(int stopIndex) => announceIntermediateStops ? stopIndex : int.MaxValue;
