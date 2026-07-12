@@ -11,7 +11,7 @@ namespace SpaceTransit.Routes.Sequences
     public static class RouteManager
     {
 
-        private static readonly (SpawnLocation, int) None = (null, -1);
+        private static readonly (SpawnLocation, int) None = (null, ITarget.Origin);
 
         private static ServiceSequence[] _sequences;
 
@@ -73,7 +73,7 @@ namespace SpaceTransit.Routes.Sequences
             var finalDock = finalStation.Docks[finalDestination.DockIndex];
             return !finalDock.IsFree || IsArrivingMoreThan10MinutesLater(sequence.routes[^1])
                 ? None
-                : (new TubeSpawn(finalDock), -1);
+                : (new TubeSpawn(finalDock), ITarget.Origin);
         }
 
         private static bool IsArrivingMoreThan10MinutesLater(JourneyDescriptorBase route)

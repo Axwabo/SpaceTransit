@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using SpaceTransit.Routes;
+using SpaceTransit.Routes.Stops;
 using UnityEngine;
 
 namespace SpaceTransit.Vaulter
@@ -29,13 +30,13 @@ namespace SpaceTransit.Vaulter
                     continue;
                 if (route.Origin.Station.name == StationId.name)
                 {
-                    departures.Add(new DepartureEntry(route, -1, route.Origin));
+                    departures.Add(new DepartureEntry(route, ITarget.Origin, route.Origin));
                     continue;
                 }
 
                 if (route.Destination.Station.name == StationId.name)
                 {
-                    arrivals.Add(new ArrivalEntry(route, -1, route.Destination));
+                    arrivals.Add(new ArrivalEntry(route, ITarget.Destination, route.Destination));
                     continue;
                 }
 

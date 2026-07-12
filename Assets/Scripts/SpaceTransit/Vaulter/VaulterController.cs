@@ -15,8 +15,6 @@ namespace SpaceTransit.Vaulter
     {
 
         private const int OutOfService = -2;
-        private const int Origin = -1;
-        private const int Destination = int.MaxValue;
 
         private int _targetIndex = OutOfService;
 
@@ -30,7 +28,7 @@ namespace SpaceTransit.Vaulter
         public JourneyDescriptorBase initialRoute;
 
         [SerializeField]
-        public int initialStopIndex = Origin;
+        public int initialStopIndex = ITarget.Origin;
 
         public JourneyDescriptorBase Journey { get; private set; }
 
@@ -44,7 +42,7 @@ namespace SpaceTransit.Vaulter
 
         public bool HasJourney => _targetIndex != OutOfService;
 
-        public ReadOnlySpan<ITarget> NextTargets => _targetIndex == Destination
+        public ReadOnlySpan<ITarget> NextTargets => _targetIndex == ITarget.Destination
             ? ReadOnlySpan<ITarget>.Empty
             : _targets[(_targetIndex + 1)..];
 
@@ -64,7 +62,7 @@ namespace SpaceTransit.Vaulter
                 component.Initialize(this);
             if (!initialRoute)
                 return;
-            ITarget origin = initialStopIndex == Origin ? initialRoute.Beginning : initialRoute.IntermediateStops[initialStopIndex];
+            ITarget origin = initialStopIndex == ITarget.Origin ? initialRoute.Beginning : initialRoute.IntermediateStops[initialStopIndex];
             if (!Station.TryGetLoadedStation(origin.Station, out var station))
                 return;
             if (!Assembly.startTube)
@@ -85,7 +83,7 @@ namespace SpaceTransit.Vaulter
             NotifyRouteChanged();
         }
 
-        public void BeginRoute(JourneyDescriptorBase descriptor, int stopIndex = Origin)
+        public void BeginRoute(JourneyDescriptorBase descriptor, int stopIndex = ITarget.Origin)
         {
             Journey = descriptor;
             Route = descriptor as RouteDescriptor;
@@ -102,7 +100,7 @@ namespace SpaceTransit.Vaulter
             }
 
             _targets = targets.ToArray();
-            UpdateTarget(stopIndex == Origin ? Origin : targets.IndexOf(descriptor.IntermediateStops[stopIndex]));
+            UpdateTarget(stopIndex == ITarget.Origin ? ITarget.Origin : targets.IndexOf(descriptor.IntermediateStops[stopIndex]));
             NotifyRouteChanged();
         }
 
@@ -113,14 +111,14 @@ namespace SpaceTransit.Vaulter
             Target = index switch
             {
                 OutOfService => null,
-                Origin => Journey.Beginning,
-                Destination => Journey.End,
+                ITarget.Origin => Journey.Beginning,
+                ITarget.Destination => Journey.End,
                 _ => _targets[index]
             };
             Stop = Target as Stop ?? index switch
             {
                 OutOfService => null,
-                Origin => Journey.Beginning as Stop,
+                ITarget.Origin => Journey.Beginning as Stop,
                 _ => NextStop(index)
             };
             foreach (var component in _components)
@@ -141,7 +139,7 @@ namespace SpaceTransit.Vaulter
 
         public override void OnStateChanged(ShipState previousState)
         {
-            if (_targetIndex is not (OutOfService or Destination)
+            if (_targetIndex is not (OutOfService or ITarget.Destination)
                 && Parent.State is ShipState.LiftingOff or ShipState.Sailing
                 && Assembly.FrontModule.Thruster.Tube is Dock {Station: var station} && station.ID == Target?.Station)
                 AdvanceTarget();
@@ -159,7 +157,7 @@ namespace SpaceTransit.Vaulter
                 component.OnRestarted();
         }
 
-        private void AdvanceTarget() => UpdateTarget(_targetIndex >= _targets.Length - 1 ? Destination : _targetIndex + 1);
+        private void AdvanceTarget() => UpdateTarget(_targetIndex >= _targets.Length - 1 ? ITarget.Destination : _targetIndex + 1);
 
         private void NotifyRouteChanged()
         {

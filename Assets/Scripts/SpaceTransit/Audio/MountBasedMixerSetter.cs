@@ -16,7 +16,7 @@ namespace SpaceTransit.Audio
 
         private bool _defaultMute;
 
-        private bool _wasMounted;
+        private bool? _wasMounted;
 
         private bool _hasParent;
 
@@ -32,6 +32,8 @@ namespace SpaceTransit.Audio
             _defaultGroup = _source.outputAudioMixerGroup;
             _defaultMute = _source.mute;
         }
+
+        private void OnEnable() => _wasMounted = null;
 
         private void LateUpdate()
         {

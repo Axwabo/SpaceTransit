@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using SpaceTransit.Routes;
 using SpaceTransit.Routes.Stops;
@@ -27,20 +28,53 @@ namespace SpaceTransit.Stations.Announcements
             var intermediateStops = route.IntermediateStops.Length;
             if (index >= intermediateStops - 1)
                 return sb;
-            sb.Append(" The ship stops ");
-            if (route.EveryStation)
-                return sb.Append("at every station.").AppendConditionalStops(route, index);
+            if (route.Announcement is {Rules: {Length: not 0} rules})
+                return sb.AppendIntermediateStopRules(route, rules, index)
+                    .AppendConditionalStops(route, index);
+            return sb.Append(" The ship stops ")
+                .AppendIntermediateStops(route, route.EveryStation, index, intermediateStops)
+                .AppendConditionalStops(route, index);
+        }
+
+        private static StringBuilder AppendIntermediateStops(this StringBuilder sb, RouteDescriptor route, bool everyStation, int start, int end)
+        {
+            if (everyStation)
+                return sb.Append("at every station.");
             sb.Append("only at ");
-            for (var i = index + 1; i < intermediateStops; i++)
+            for (var i = start + 1; i < end; i++)
             {
-                if (i != index + 1 && i == intermediateStops - 1)
+                if (i != start + 1 && i == end - 1)
                     sb.Append(" and ");
-                else if (i != index + 1)
+                else if (i != start + 1)
                     sb.Append(", ");
                 sb.Append(route.IntermediateStops[i].Station.name);
             }
 
-            return sb.Append('.').AppendConditionalStops(route, index);
+            return sb.Append('.');
+        }
+
+        public static StringBuilder AppendIntermediateStopRules(this StringBuilder sb, RouteDescriptor route, ReadOnlySpan<StopSubsetRule> rules, int index)
+        {
+            var first = true;
+            var stops = route.IntermediateStops;
+            foreach (var rule in rules)
+            {
+                var start = route.StopIndex(rule.Start);
+                var end = Math.Min(route.StopIndex(rule.End), stops.Length);
+                if (end <= index)
+                    continue;
+                if (rule.EveryStation && rule == rules[^1])
+                    return sb.Append(" The ship stops at every station.");
+                if (first)
+                    sb.Append(" To ");
+                else
+                    sb.Append(" From ").Append(rule.Start.name).Append(" to ");
+                sb.Append(rule.End.name).Append(first ? " the ship stops " : " it stops ");
+                sb.AppendIntermediateStops(route, rule.EveryStation, Math.Max(index, start), end);
+                first = false;
+            }
+
+            return sb;
         }
 
         private static StringBuilder AppendConditionalStops(this StringBuilder sb, RouteDescriptor route, int index)
@@ -69,7 +103,26 @@ namespace SpaceTransit.Stations.Announcements
                 .Append(". The ship will only stop if there are passengers waiting to board or disembark.");
         }
 
-        public static string ArrivingAndDeparts(AnnouncementContext<IArrival> context, int index) => new StringBuilder()
+        public static StringBuilder AppendVia<T>(this StringBuilder sb, AnnouncementContext<T> context, int stopIndex, string suffix = "") where T : IStop
+        {
+            var via = context.Via(stopIndex);
+            return via.Length == 0 ? sb : sb.AppendVia(via, suffix);
+        }
+
+        public static StringBuilder AppendVia(this StringBuilder sb, ReadOnlySpan<StationId> via, string suffix)
+        {
+            sb.Append(" via ");
+            for (var i = 0; i < via.Length; i++)
+            {
+                if (i != 0)
+                    sb.Append(", ");
+                sb.Append(via[i].name);
+            }
+
+            return sb.Append(suffix);
+        }
+
+        public static string ArrivingAndDeparts(AnnouncementContext<IArrival> context, int index, string viaSuffix = "") => new StringBuilder()
             .Append(context.Type)
             .Append(" ship is arriving from ")
             .Append(context.Origin)
@@ -77,14 +130,16 @@ namespace SpaceTransit.Stations.Announcements
             .Append(context.Dock)
             .Append(" and departs for ")
             .Append(context.Destination)
+            .AppendVia(context, index, viaSuffix)
             .Append('.')
             .AppendIntermediateStops(context.Route, index)
             .ToString();
 
-        public static string Departs(AnnouncementContext<IDeparture> context, int index) => new StringBuilder()
+        public static string Departs(AnnouncementContext<IDeparture> context, int index, string viaSuffix = "") => new StringBuilder()
             .Append(context.Type)
             .Append(" ship departs for ")
             .Append(context.Destination)
+            .AppendVia(context, index, viaSuffix)
             .Append(" from dock ")
             .Append(context.Dock)
             .Append(" at ")
@@ -92,6 +147,25 @@ namespace SpaceTransit.Stations.Announcements
             .Append('.')
             .AppendIntermediateStops(context.Route, index)
             .ToString();
+
+        public static ReadOnlySpan<StationId> Via<T>(this AnnouncementContext<T> context, int stopIndex = ITarget.Origin) where T : IStop
+        {
+            if (stopIndex == ITarget.Destination || context.Descriptor is not {Via: {Length: not 0} via, MinViaDistance: var minDistance})
+                return default;
+            if (stopIndex == ITarget.Origin)
+                return via;
+            for (var i = 0; i < via.Length; i++)
+            {
+                var index = context.Route.StopIndex(via[i]);
+                if (index > stopIndex && Math.Abs(index - stopIndex) >= minDistance)
+                    return via[i..];
+            }
+
+            return default;
+        }
+
+        public static StringBuilder AppendContextFormat(this StringBuilder sb, AnnouncementContext<IDeparture> context, string format)
+            => sb.AppendFormat(format, context.Type, context.Destination, context.Dock, context.Stop.Departure);
 
     }
 
