@@ -138,12 +138,6 @@ namespace SpaceTransit.Stations.Announcements
             var signal = interrupt.InterHub ? interHubSignal : genericSignal;
             var packToUse = pack;
             var announcement = interrupt.StartUtterance(ref packToUse);
-            if (string.IsNullOrEmpty(announcement))
-            {
-                _current = null;
-                return;
-            }
-
             _queue.EnqueueWithSubtitles(_name, announcement, packToUse, token, signal);
             _queue.Delay(3);
             if (!interrupt.PlayTwice)
