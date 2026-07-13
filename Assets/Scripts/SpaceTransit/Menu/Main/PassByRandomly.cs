@@ -43,12 +43,10 @@ namespace SpaceTransit.Menu.Main
         {
             if (source.isPlaying)
             {
-                _t.position = Vector3.Lerp(_start, _end, (float) ((AudioSettings.dspTime - _startTime) / source.clip.length));
-                return;
-            }
-
-            if ((_remaining -= Time.deltaTime) > 0)
-            {
+                var t = (float) ((AudioSettings.dspTime - _startTime) / source.clip.length);
+                _t.position = Vector3.Lerp(_start, _end, t);
+                if (t < 1)
+                    return;
                 if (_fromLeft)
                     _leftInUse = false;
                 else
@@ -56,7 +54,7 @@ namespace SpaceTransit.Menu.Main
                 return;
             }
 
-            if (_leftInUse && _rightInUse)
+            if ((_remaining -= Time.deltaTime) > 0 || _leftInUse && _rightInUse)
                 return;
             _fromLeft = !_leftInUse && (_rightInUse || Random.value < 0.5f);
             if (_fromLeft ? _leftInUse : _rightInUse)
