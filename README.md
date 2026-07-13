@@ -19,6 +19,9 @@ The ships' ambience are designed to be both realistic and pleasing to listen to.
 > If you fall out of the world, press `Tab` to open the menu, click `Exit`
 > to go back to the main menu and try again (it might take multiple attempts).
 > Known working starting stations: Solenoch, Norposh, Snagna, Uncalmine, Mend, Turkentine (multiple attempts)
+> 
+> Sometimes, cross-scene tube continuation doesn't work, leading to ships "crumpling" - I've yet to fix this,
+> but it doesn't happen in the editor, so thanks again unity...
 
 [Demo video](https://drive.google.com/file/d/1bwSHwmk54eV1s-IJFj7Abs6obr5ZRe6c/view?usp=sharing)
 
