@@ -84,6 +84,7 @@ namespace SpaceTransit.Stations
         {
             GetComponentsInChildren(_documents);
             Init();
+            _delay = 0.5f;
             _departuresArrivals = GetComponentInParent<DeparturesArrivals>();
         }
 
