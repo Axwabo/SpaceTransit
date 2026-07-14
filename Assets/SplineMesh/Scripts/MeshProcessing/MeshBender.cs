@@ -179,7 +179,11 @@ namespace SplineMesh
                 curve.Changed.RemoveListener(Compute);
             }
 
-            if (result)
+            if (result
+#if UNITY_EDITOR
+                && Application.isPlaying
+#endif
+               )
                 Destroy(result);
         }
 
