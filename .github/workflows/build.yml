@@ -1,7 +1,9 @@
 ﻿name: Build
 
 on:
-  workflow_dispatch:
+  release: 
+    types:
+      - published
 
 permissions:
   contents: write
@@ -63,3 +65,28 @@ jobs:
           name: ${{ matrix.profile }}
           path: Build
           if-no-files-found: error
+          
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    
+    steps:
+
+      - uses: actions/download-artifact@v8
+        with:
+          name: Linux
+          skip-decompress: true
+
+      - uses: actions/download-artifact@v8
+        with:
+          name: Windows
+          skip-decompress: true
+      
+      - run: |
+          mv Linux.zip SpaceTransit-linux-x64.zip
+          mv Windows.zip SpaceTransit-win-x64.zip
+
+      - uses: softprops/action-gh-release
+        with:
+          files: SpaceTransit-*.zip
+          
