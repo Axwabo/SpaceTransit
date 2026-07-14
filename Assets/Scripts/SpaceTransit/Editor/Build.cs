@@ -8,6 +8,8 @@ public static class Build
 
     private const string Folder = "Build";
 
+    public static void Linux() => BuildFor(BuildTarget.StandaloneLinux64, "x86_64");
+
     public static void Windows() => BuildFor(BuildTarget.StandaloneWindows64, "exe");
 
     private static void BuildFor(BuildTarget target, string extension)
