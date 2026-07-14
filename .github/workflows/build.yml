@@ -9,20 +9,18 @@ permissions:
 jobs:
   build:
     name: Build ${{ matrix.profile }}
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
       
     strategy:
       fail-fast: true
       matrix:
         include:
 
-          - os: ubuntu-latest
-            profile: Linux
+          - profile: Linux
             build-target: StandaloneLinux64
             modules: linux-mono
 
-          - os: windows-latest
-            profile: Windows
+          - profile: Windows
             build-target: StandaloneWindows64
             modules: windows-mono
 
