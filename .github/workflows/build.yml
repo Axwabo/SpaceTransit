@@ -8,42 +8,61 @@ permissions:
 
 jobs:
   build:
-    runs-on: self-hosted
+    name: Build ${{ matrix.profile }}
+      runs-on: ${{ matrix.os }}
+      
+      strategy:
+        max-parallel: 1
+        fail-fast: true
+        matrix:
+          include:
+
+            - os: ubuntu-latest
+              profile: Linux
+              build-target: StandaloneLinux64
+              modules: linux-mono
+
+            - os: windows-latest
+              profile: Windows
+              build-target: StandaloneWindows64
+              modules: windows-mono
+
+    env:
+      BLENDER_SHORT_VERSION: 4.5
+      BLENDER_FULL_VERSION: 4.5.4
 
     steps:
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         
-      - name: Create Docker image with Blender
-        run: docker build --build-arg GAME_CI_UNITY_EDITOR_IMAGE=unityci/editor:ubuntu-6000.2.10f1-webgl-3.2.0 . -t axwabo/unity-blender
+      - name: Setup Blender
+        run: |
+          wget https://download.blender.org/release/Blender$BLENDER_SHORT_VERSION/blender-$BLENDER_FULL_VERSION-linux-x64.tar.xz
+          tar -xf blender-$BLENDER_FULL_VERSION-linux-x64.tar.xz
+          echo "blender-$BLENDER_FULL_VERSION-linux-x64" >> "$GITHUB_PATH"      
 
-      - uses: game-ci/unity-builder@v4.7.0
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+      - uses: buildalon/unity-setup@v2.6.0
         with:
-          targetPlatform: WebGL
-          customImage: axwabo/unity-blender
+          version-file: ProjectSettings/ProjectVersion.txt
+          modules: ${{ matrix.modules }}
 
-      - uses: actions/upload-pages-artifact@v4
+      - uses: buildalon/activate-unity-license@v2.2.2
         with:
-          path: build/WebGL/WebGL
+          license: Personal
+          username: ${{ secrets.UNITY_EMAIL }}
+          password: ${{ secrets.UNITY_PASSWORD }}
 
-  deploy:
-    runs-on: ubuntu-latest
+      - uses: buildalon/unity-action@v3.1.0
+        with:
+          args: -quit -nographics -batchmode -executeMethod Build.${{ matrix.profile }}
 
-    needs: build
+      - name: Clean Directory
+        working-directory: Build
+        shell: bash
+        run: rm -r *DoNotShip* || true
 
-    permissions:
-      pages: write
-      id-token: write
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - uses: actions/upload-artifact@v7.0.1
+        with:
+          name: ${{ matrix.profile }}
+          path: Build
+          if-no-files-found: error
