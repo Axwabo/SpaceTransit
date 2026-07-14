@@ -9,23 +9,23 @@ permissions:
 jobs:
   build:
     name: Build ${{ matrix.profile }}
-      runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
       
-      strategy:
-        max-parallel: 1
-        fail-fast: true
-        matrix:
-          include:
+    strategy:
+      max-parallel: 1
+      fail-fast: true
+      matrix:
+        include:
 
-            - os: ubuntu-latest
-              profile: Linux
-              build-target: StandaloneLinux64
-              modules: linux-mono
+          - os: ubuntu-latest
+            profile: Linux
+            build-target: StandaloneLinux64
+            modules: linux-mono
 
-            - os: windows-latest
-              profile: Windows
-              build-target: StandaloneWindows64
-              modules: windows-mono
+          - os: windows-latest
+            profile: Windows
+            build-target: StandaloneWindows64
+            modules: windows-mono
 
     env:
       BLENDER_SHORT_VERSION: 4.5
