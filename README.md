@@ -15,6 +15,8 @@ The ships' ambience are designed to be both realistic and pleasing to listen to.
 
 # Gameplay
 
+**Visit the GitHub pages site (see the project description) for the web build.**
+
 > [!IMPORTANT]
 > If you fall out of the world, press `Tab` to open the menu, click `Exit`
 > to go back to the main menu and try again (it might take multiple attempts).
