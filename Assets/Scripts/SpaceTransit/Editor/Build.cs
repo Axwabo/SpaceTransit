@@ -8,9 +8,11 @@ public static class Build
 
     private const string Folder = "Build";
 
-    public static void Linux() => BuildFor(BuildTarget.StandaloneLinux64, "x86_64");
+    public static void Linux() => BuildFor(BuildTarget.StandaloneLinux64, ".x86_64");
 
-    public static void Windows() => BuildFor(BuildTarget.StandaloneWindows64, "exe");
+    public static void Windows() => BuildFor(BuildTarget.StandaloneWindows64, ".exe");
+
+    public static void WebGL() => BuildFor(BuildTarget.WebGL, "");
 
     private static void BuildFor(BuildTarget target, string extension)
     {
@@ -18,7 +20,7 @@ public static class Build
         BuildPipeline.BuildPlayer(new BuildPlayerOptions
         {
             target = target,
-            locationPathName = Path.Combine(Folder, $"SpaceTransit.{extension}"),
+            locationPathName = Path.Combine(Folder, $"SpaceTransit{extension}"),
             scenes = EditorBuildSettings.scenes.Select(e => e.path).ToArray()
         });
     }
