@@ -12,7 +12,7 @@ permissions:
 jobs:
   build:
     name: Build ${{ matrix.profile }}
-    runs-on: windows-latest
+    runs-on: ubuntu-22.04
       
     strategy:
       fail-fast: false
@@ -41,13 +41,10 @@ jobs:
         
       - name: Setup Blender
         run: |
-          curl -o blender-4.5.4-windows-x64.zip https://download.blender.org/release/Blender4.5/blender-4.5.4-windows-x64.zip
-          tar -xf blender-4.5.4-windows-x64.zip
-      
-      - name: Add to PATH
-        run: echo "blender-4.5.4-windows-x64" >> "$GITHUB_PATH"
-        shell: bash
-      
+          wget https://download.blender.org/release/Blender$BLENDER_SHORT_VERSION/blender-$BLENDER_FULL_VERSION-linux-x64.tar.xz
+          tar -xf blender-$BLENDER_FULL_VERSION-linux-x64.tar.xz
+          echo "blender-$BLENDER_FULL_VERSION-linux-x64" >> "$GITHUB_PATH"      
+
       - uses: buildalon/unity-setup@v2.6.0
         with:
           version-file: ProjectSettings/ProjectVersion.txt
@@ -94,7 +91,6 @@ jobs:
       - run: |
           mv Linux.zip SpaceTransit-linux-x64.zip
           mv Windows.zip SpaceTransit-win-x64.zip
-        shell: bash
 
       - uses: softprops/action-gh-release@v3.0.0
         with:
