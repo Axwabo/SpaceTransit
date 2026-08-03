@@ -41,9 +41,9 @@ jobs:
         
       - name: Setup Blender
         run: |
-          curl -o blender-$BLENDER_FULL_VERSION-linux-x64.tar.xz https://download.blender.org/release/Blender$BLENDER_SHORT_VERSION/blender-$BLENDER_FULL_VERSION-linux-x64.tar.xz
-          tar -xf blender-$BLENDER_FULL_VERSION-linux-x64.tar.xz
-          echo "blender-$BLENDER_FULL_VERSION-linux-x64" >> "$GITHUB_PATH"
+          curl -o blender-$BLENDER_FULL_VERSION-windows-x64.zip https://download.blender.org/release/Blender$BLENDER_SHORT_VERSION/blender-$BLENDER_FULL_VERSION-windows-x64.zip
+          tar -xf blender-$BLENDER_FULL_VERSION-windows-x64.zip
+          echo "blender-$BLENDER_FULL_VERSION-windows-x64" >> "$GITHUB_PATH"
         shell: bash
 
       - uses: buildalon/unity-setup@v2.6.0
